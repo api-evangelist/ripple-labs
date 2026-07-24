@@ -1,0 +1,402 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Payout method API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Payout method
+  description: '
+
+    Payout Method operations let receivers create and manage payout methods. Senders can generate quotes based on these receiver payout methods.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Create payout method](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/createpayoutmethod)        | POST      | Creates a payout method. For example, `LOCAL_RAILS`. |
+
+    | [Get payout methods](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/getpayoutmethods)            | GET       | Returns a list of payout methods created by a receiving partner. |
+
+    | [Get payout method by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/getpayoutmethodbyid)    | GET       | Returns a payout method by its ID. |
+
+    | [Update payout method](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/updatepayoutmethod)        | PUT       | Updates a payout method. |
+
+    | [Delete payout method](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/deletepayoutmethod)        | DELETE    | Deletes a payout method. |
+
+    | [Get all categories](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/getallcategories)  | GET       | Returns all the payout method categories. |
+
+    '
+paths:
+  /config/payout_methods:
+    post:
+      tags:
+      - Payout method
+      summary: Create payout method
+      description: Creates a payout method (for example, `LOCAL_RAILS`). <p>The Payout Method API lets receivers create and manage payout methods. Senders can generate quotes based on these receiver payout methods by enabling the flag <code>enable_quote_per_payout_method</code> in the body of the [Create quote collection] request. </p><p><b>Caution&#58;</b> The existing quote parameter is named <code>payment_method</code> while elsewhere it is <code>payout_method</code>.</p><p><b>Note&#58;</b> On-Demand Liquidity (ODL) receivers should set <code>payment_method</code> to the <code>outlet_id</code> or the string <code>none</code> (not an empty value) to keep funds at the destination exchange when paying out to a local rail.</p>
+      operationId: createPayoutMethod
+      security:
+      - Bearer: []
+      requestBody:
+        $ref: '#/components/requestBodies/PayoutMethodRequest'
+      responses:
+        '200':
+          description: Successfully created payout method.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutMethodResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+    get:
+      tags:
+      - Payout method
+      summary: Get payout methods
+      description: Returns a list of payout methods created by a receiving partner.
+      operationId: getPayoutMethods
+      security:
+      - Bearer: []
+      parameters:
+      - name: page
+        in: query
+        description: 'The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>
+
+          Set it to `0` to get the first page of results.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: Number of payments to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutMethods'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+  /config/payout_methods/{payout_method_id}:
+    parameters:
+    - in: path
+      name: payout_method_id
+      description: ID of the payout method you want to retrieve.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Payout method
+      summary: Get payout method by ID
+      description: Returns a payout method by its ID.
+      operationId: getPayoutMethodById
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Successfully returned Payout method
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutMethodResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+    put:
+      tags:
+      - Payout method
+      summary: Update payout method
+      description: Updates a payout method.
+      operationId: updatePayoutMethod
+      security:
+      - Bearer: []
+      requestBody:
+        $ref: '#/components/requestBodies/PayoutMethodRequest'
+      responses:
+        '200':
+          description: Successfully saved Payout method
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutMethodResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+    delete:
+      tags:
+      - Payout method
+      summary: Delete payout method
+      description: Deletes a payout method.
+      operationId: deletePayoutMethod
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Successfully deleted payout method.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+  /config/payout_methods/categories:
+    get:
+      tags:
+      - Payout method
+      summary: Get all categories
+      description: Returns all the payout method categories.
+      operationId: getAllCategories
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Successfully returned Payout method Categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+components:
+  schemas:
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    PayoutMethodResponse:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        payout_method_id:
+          type: string
+          format: uuid
+          example: a6dbe002-ca7f-4ec7-89e4-f44a1971a0c0
+          description: Unique identifier of a payout method.
+        payout_method:
+          type: string
+          example: LOCAL_RAILS
+          description: Unique string to identify the payout method.
+        description:
+          type: string
+          example: local rails
+          description: User defined description of a payout method.
+        is_default:
+          type: boolean
+          description: Flag to set this payout method as the default payout method.
+        payout_method_category:
+          type: string
+          example: BOOK_TRANSFER
+          description: Category of the payout method. Defaults to <code>OTHER</code> if not specified.
+          enum:
+          - REAL_TIME_GROSS_SETTLEMENT_SYSTEM
+          - REAL_TIME_NET_SETTLEMENT_SYSTEM
+          - MASS_NET_PAYMENT_SYSTEM
+          - BOOK_TRANSFER
+          - CASH_PAYOUT
+          - WALLET_PAYMENT
+          - OTHER
+        estimated_time_to_credit:
+          type: object
+          description: The estimated time to credit the beneficiary using this payout method.
+          properties:
+            time_value:
+              type: integer
+              format: int64
+              example: 5
+              description: The amount of estimated time to credit.
+            time_unit:
+              type: string
+              description: 'Unit of the estimated time to credit: <code>SECONDS</code>, <code>MINUTES</code>, <code>HOURS</code>, <code>DAYS</code>.'
+              enum:
+              - SECONDS
+              - MINUTES
+              - HOURS
+              - DAYS
+          required:
+          - time_value
+          - time_unit
+    PayoutMethodRequest:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      required:
+      - payout_method
+      properties:
+        payout_method:
+          type: string
+          example: LOCAL_RAILS
+          description: Unique string used in the quote to identify the payout method.
+        description:
+          type: string
+          example: local rails
+          description: User defined description of a payout method.
+        is_default:
+          type: boolean
+          description: Flag to set this payout method as the default payout method.
+        payout_method_category:
+          type: string
+          example: BOOK_TRANSFER
+          description: Category of the payout method. Defaults to <code>OTHER</code> if not specified.
+          enum:
+          - REAL_TIME_GROSS_SETTLEMENT_SYSTEM
+          - REAL_TIME_NET_SETTLEMENT_SYSTEM
+          - MASS_NET_PAYMENT_SYSTEM
+          - BOOK_TRANSFER
+          - CASH_PAYOUT
+          - WALLET_PAYMENT
+          - OTHER
+        estimated_time_to_credit:
+          type: object
+          description: The estimated time to credit the beneficiary using this payout method.
+          properties:
+            time_value:
+              type: integer
+              format: int64
+              example: 5
+              description: The amount of estimated time to credit.
+            time_unit:
+              type: string
+              description: 'Unit of the estimated time to credit: <code>SECONDS</code>, <code>MINUTES</code>, <code>HOURS</code>, <code>DAYS</code>.'
+              enum:
+              - SECONDS
+              - MINUTES
+              - HOURS
+              - DAYS
+          required:
+          - time_value
+          - time_unit
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    PayoutMethods:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/PayoutMethodResponse'
+  requestBodies:
+    PayoutMethodRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PayoutMethodRequest'
+      required: true
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

@@ -1,0 +1,2444 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Policies API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Policies
+  description: Used to manage connections policies
+paths:
+  /v2/policy-rules/limits:
+    get:
+      summary: List organization wallet limits
+      description: List all wallet limits within the organization
+      operationId: PolicyService_ListGlobalWalletLimits
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListGlobalWalletLimitsResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: pageSize
+        description: The number of results to return per page (default 50, max 1000)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pageToken
+        description: The token to retrieve the next page of results
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.pageSize
+        description: Number of results per page (default 50, max 1000)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pagination.pageToken
+        description: Token for pagination from previous response
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.orderBy
+        description: Field to order results by
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.order
+        description: Sort order (ASC or DESC)
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - SORT_ORDER_ASC
+          - SORT_ORDER_DESC
+      - name: filter.id.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.id.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.id.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.vaultId.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.vaultId.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.vaultId.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.vaultId.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.vaultId.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.vaultId.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.vaultId.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.vaultId.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.walletId.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.walletId.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.walletId.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.walletId.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.walletId.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.walletId.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.walletId.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.walletId.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.assetSymbol.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.assetSymbol.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.assetSymbol.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.assetSymbol.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.assetSymbol.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.assetSymbol.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.assetSymbol.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.assetSymbol.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.blockchain.eq
+        description: Exact blockchain match
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AVALANCHE
+          - ETHEREUM
+          - XRP_LEDGER
+          - POLYGON
+          - BNBCHAIN
+          - BASE
+          - HEDERA
+          - ARBITRUM
+          - ONE_MONEY
+          - SOLANA
+          - TRON
+          - BITCOIN
+      - name: filter.blockchain.notEq
+        description: Exclude this blockchain
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AVALANCHE
+          - ETHEREUM
+          - XRP_LEDGER
+          - POLYGON
+          - BNBCHAIN
+          - BASE
+          - HEDERA
+          - ARBITRUM
+          - ONE_MONEY
+          - SOLANA
+          - TRON
+          - BITCOIN
+      - name: filter.blockchain.in
+        description: Blockchain is in this list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - AVALANCHE
+            - ETHEREUM
+            - XRP_LEDGER
+            - POLYGON
+            - BNBCHAIN
+            - BASE
+            - HEDERA
+            - ARBITRUM
+            - ONE_MONEY
+            - SOLANA
+            - TRON
+            - BITCOIN
+      - name: filter.blockchain.notIn
+        description: Blockchain is not in this list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - AVALANCHE
+            - ETHEREUM
+            - XRP_LEDGER
+            - POLYGON
+            - BNBCHAIN
+            - BASE
+            - HEDERA
+            - ARBITRUM
+            - ONE_MONEY
+            - SOLANA
+            - TRON
+            - BITCOIN
+      - name: filter.limitType
+        description: Filter by limit type
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - PER_TX
+          - CONSTANT
+          - ROLLING_DURATION
+      - name: filter.status
+        description: Filter by wallet limit status
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - LIMIT_CREATED
+          - LIMIT_ENABLED
+          - LIMIT_REJECTED
+          - LIMIT_DELETED
+          - LIMIT_ERROR
+          - LIMIT_CREATION_APPROVAL_PENDING
+          - LIMIT_CREATION_APPROVAL_COMPLETE
+          - LIMIT_DELETION_APPROVAL_PENDING
+          - LIMIT_DELETION_APPROVAL_COMPLETE
+      - name: filter.active.eq
+        description: Equals
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.active.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.createdAt.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.createdAt.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: filter.updatedAt.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.updatedAt.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: search
+        description: Case-insensitive search over wallet limit ID, vault ID, wallet ID, and asset symbol.
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Policies
+  /v2/policy-rules/limits:list:
+    post:
+      summary: List organization wallet limits
+      description: List all wallet limits within the organization
+      operationId: PolicyService_ListGlobalWalletLimits2
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListGlobalWalletLimitsResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2ListGlobalWalletLimitsRequest'
+        required: true
+      tags:
+      - Policies
+  /v2/vaults/{vaultId}/wallets/{walletId}/policy-rules/limits:
+    get:
+      summary: List wallet limit policies
+      description: List wallet limit policies for the specified wallet
+      operationId: PolicyService_ListWalletLimits
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListWalletLimitsResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: walletId
+        description: The wallet ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        description: The number of results to return per page (default 50, max 1000)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pageToken
+        description: The token to retrieve the next page of results
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: blockchain
+        description: Optional filter by blockchain. If not specified, returns policies for all blockchains.
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AVALANCHE
+          - ETHEREUM
+          - XRP_LEDGER
+          - POLYGON
+          - BNBCHAIN
+          - BASE
+          - HEDERA
+          - ARBITRUM
+          - ONE_MONEY
+          - SOLANA
+          - TRON
+          - BITCOIN
+      - name: pagination.pageSize
+        description: Number of results per page (default 50, max 1000)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pagination.pageToken
+        description: Token for pagination from previous response
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.orderBy
+        description: Field to order results by
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.order
+        description: Sort order (ASC or DESC)
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - SORT_ORDER_ASC
+          - SORT_ORDER_DESC
+      - name: filter.id.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.id.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.id.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.vaultId.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.vaultId.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.vaultId.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.vaultId.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.vaultId.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.vaultId.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.vaultId.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.vaultId.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.walletId.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.walletId.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.walletId.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.walletId.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.walletId.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.walletId.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.walletId.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.walletId.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.assetSymbol.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.assetSymbol.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.assetSymbol.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.assetSymbol.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.assetSymbol.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.assetSymbol.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.assetSymbol.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.assetSymbol.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.blockchain.eq
+        description: Exact blockchain match
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AVALANCHE
+          - ETHEREUM
+          - XRP_LEDGER
+          - POLYGON
+          - BNBCHAIN
+          - BASE
+          - HEDERA
+          - ARBITRUM
+          - ONE_MONEY
+          - SOLANA
+          - TRON
+          - BITCOIN
+      - name: filter.blockchain.notEq
+        description: Exclude this blockchain
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AVALANCHE
+          - ETHEREUM
+          - XRP_LEDGER
+          - POLYGON
+          - BNBCHAIN
+          - BASE
+          - HEDERA
+          - ARBITRUM
+          - ONE_MONEY
+          - SOLANA
+          - TRON
+          - BITCOIN
+      - name: filter.blockchain.in
+        description: Blockchain is in this list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - AVALANCHE
+            - ETHEREUM
+            - XRP_LEDGER
+            - POLYGON
+            - BNBCHAIN
+            - BASE
+            - HEDERA
+            - ARBITRUM
+            - ONE_MONEY
+            - SOLANA
+            - TRON
+            - BITCOIN
+      - name: filter.blockchain.notIn
+        description: Blockchain is not in this list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - AVALANCHE
+            - ETHEREUM
+            - XRP_LEDGER
+            - POLYGON
+            - BNBCHAIN
+            - BASE
+            - HEDERA
+            - ARBITRUM
+            - ONE_MONEY
+            - SOLANA
+            - TRON
+            - BITCOIN
+      - name: filter.limitType
+        description: Filter by limit type
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - PER_TX
+          - CONSTANT
+          - ROLLING_DURATION
+      - name: filter.status
+        description: Filter by wallet limit status
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - LIMIT_CREATED
+          - LIMIT_ENABLED
+          - LIMIT_REJECTED
+          - LIMIT_DELETED
+          - LIMIT_ERROR
+          - LIMIT_CREATION_APPROVAL_PENDING
+          - LIMIT_CREATION_APPROVAL_COMPLETE
+          - LIMIT_DELETION_APPROVAL_PENDING
+          - LIMIT_DELETION_APPROVAL_COMPLETE
+      - name: filter.active.eq
+        description: Equals
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.active.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.createdAt.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.createdAt.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: filter.updatedAt.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.updatedAt.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: search
+        description: Case-insensitive search over wallet limit ID, vault ID, wallet ID, and asset symbol.
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Policies
+    put:
+      summary: Create a wallet limit policy
+      description: Create a wallet limit policy for the specified wallet
+      operationId: PolicyService_CreateWalletLimit
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2WalletLimit'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: walletId
+        description: The wallet ID
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                limitQty:
+                  type: string
+                  example: '200.00'
+                  description: The limit quantity
+                duration:
+                  type: string
+                  example: 200s
+                  description: The limit duration
+                limitType:
+                  allOf:
+                  - $ref: '#/components/schemas/v2LimitType'
+                  - type: string
+                    example: PER_TX
+                    description: The limit type
+                contract:
+                  type: string
+                  example: '0xdAC17F958D2ee523a2206206994597C13D831ec7'
+                  description: The contract/issuing address
+                symbol:
+                  type: string
+                  example: USD
+                  description: The asset symbol
+                matchers:
+                  type: array
+                  items:
+                    allOf:
+                    - $ref: '#/components/schemas/v2Matcher'
+                    - type: object
+                blockchain:
+                  allOf:
+                  - $ref: '#/components/schemas/v2Blockchain'
+                  - type: string
+                    example: ETHEREUM
+                    description: The blockchain for this policy. If not specified, defaults to the wallet's blockchain.
+              required:
+              - limitQty
+              - limitType
+              - symbol
+        required: true
+      tags:
+      - Policies
+  /v2/vaults/{vaultId}/wallets/{walletId}/policy-rules/limits/{id}:
+    get:
+      summary: Get a wallet limit policy
+      description: Get the specified wallet limit policy
+      operationId: PolicyService_GetWalletLimit
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2WalletLimit'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: walletId
+        description: The wallet ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        description: The wallet limit policy ID
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Policies
+    delete:
+      summary: Delete a wallet limit policy
+      description: Delete the specified wallet limit policy
+      operationId: PolicyService_DeleteWalletLimit
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DeleteWalletLimitResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: walletId
+        description: The wallet ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        description: The wallet limit policy ID
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Policies
+  /v2/vaults/{vaultId}/wallets/{walletId}/policy-rules/limits:list:
+    post:
+      summary: List wallet limit policies
+      description: List wallet limit policies for the specified wallet
+      operationId: PolicyService_ListWalletLimits2
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListWalletLimitsResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: walletId
+        description: The wallet ID
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pageSize:
+                  type: integer
+                  format: int32
+                  example: 1000
+                  description: The number of results to return per page (default 50, max 1000)
+                pageToken:
+                  type: string
+                  example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+                  description: The token to retrieve the next page of results
+                blockchain:
+                  allOf:
+                  - $ref: '#/components/schemas/v2Blockchain'
+                  - type: string
+                    example: ETHEREUM
+                    description: Optional filter by blockchain. If not specified, returns policies for all blockchains.
+                pagination:
+                  allOf:
+                  - $ref: '#/components/schemas/v2FilterRequest'
+                  - description: 'Pagination and sorting. Sortable fields: asset_symbol, blockchain, limit_type, status, active, created_at, updated_at.'
+                filter:
+                  allOf:
+                  - $ref: '#/components/schemas/v2WalletLimitFilter'
+                  - description: Optional wallet-limit filters. Each populated sub-filter is AND-ed.
+                search:
+                  type: string
+                  example: USDC
+                  description: Case-insensitive search over wallet limit ID, vault ID, wallet ID, and asset symbol.
+        required: true
+      tags:
+      - Policies
+components:
+  schemas:
+    v2WalletLimit:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet limit policy ID
+        createdBy:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The creator ID
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        limitQty:
+          type: string
+          example: '200.00'
+          description: The limit quantity
+        duration:
+          type: string
+          example: 200s
+          description: The limit duration
+        limitType:
+          allOf:
+          - $ref: '#/components/schemas/v2LimitType'
+          - type: string
+            example: PER_TX
+            description: The limit type
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the wallet limit policy was created
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the wallet limit policy was updated
+        asset:
+          $ref: '#/components/schemas/commonv2Asset'
+        matchers:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2Matcher'
+            - type: object
+        status:
+          allOf:
+          - $ref: '#/components/schemas/v2WalletLimitStatus'
+          - type: string
+            example: PENDING
+            description: The wallet limit status
+        active:
+          type: boolean
+          example: true
+          description: Whether the limit is active
+        blockchain:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - type: string
+            example: ETHEREUM
+            description: The blockchain associated with this policy
+      required:
+      - id
+      - createdBy
+      - walletId
+      - vaultId
+      - limitType
+      - createdAt
+      - updatedAt
+      - asset
+      - status
+      - active
+    v2ListGlobalWalletLimitsRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 1000
+          description: The number of results to return per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/v2FilterRequest'
+          - description: 'Pagination and sorting. Sortable fields: asset_symbol, blockchain, limit_type, status, active, created_at, updated_at.'
+        filter:
+          allOf:
+          - $ref: '#/components/schemas/v2WalletLimitFilter'
+          - description: Optional wallet-limit filters. Each populated sub-filter is AND-ed.
+        search:
+          type: string
+          example: limit
+          description: Case-insensitive search over wallet limit ID, vault ID, wallet ID, and asset symbol.
+    v2WalletLimitStatus:
+      type: string
+      enum:
+      - LIMIT_CREATED
+      - LIMIT_ENABLED
+      - LIMIT_REJECTED
+      - LIMIT_DELETED
+      - LIMIT_ERROR
+      - LIMIT_CREATION_APPROVAL_PENDING
+      - LIMIT_CREATION_APPROVAL_COMPLETE
+      - LIMIT_DELETION_APPROVAL_PENDING
+      - LIMIT_DELETION_APPROVAL_COMPLETE
+    v2DeleteWalletLimitResponse:
+      type: object
+    commonv2Asset:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5:0xbehbehfb:USDC
+          description: ID is unique across all blockchains and created by combining the blockchain ID, contract address, and symbol
+        standard:
+          allOf:
+          - $ref: '#/components/schemas/v2Standard'
+          - type: string
+            example: ERC20
+            description: The standard of the asset
+        symbol:
+          type: string
+          example: LINK
+          description: The currency symbol of the asset
+        name:
+          type: string
+          example: Chainlink
+          description: The human readable name of the asset
+        blockchain:
+          $ref: '#/components/schemas/v2Blockchain'
+        decimals:
+          type: integer
+          format: int32
+          example: 18
+          description: Count of decimal places for the asset
+        vetted:
+          type: boolean
+          example: true
+          description: Whether the asset is vetted on the regulated platform
+        enabled:
+          type: boolean
+          example: true
+          description: Whether the asset is currently enabled on the platform
+        contract:
+          type: string
+          example: '0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e'
+          description: The token contract address. This field will be empty if the asset is the native coin of the blockchain
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the asset was created
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the asset was last updated
+        organizationId:
+          type: string
+          description: Organization ID for custom assets
+        coingeckoId:
+          type: string
+          example: ethereum
+          description: CoinGecko identifier for price data (optional for testnet assets)
+        source:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetSource'
+          - type: string
+            example: ASSET_SOURCE_COINGECKO
+            description: Data source for this asset
+        sourceMetadata:
+          allOf:
+          - $ref: '#/components/schemas/protobufAny'
+          - type: object
+            description: JSON metadata about the source
+        lastSyncedAt:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:22:22.420Z'
+          description: When this asset was last synchronized
+        syncVersion:
+          type: integer
+          format: int32
+          example: 1
+          description: Version counter for sync updates
+        contractAddressChecksummed:
+          type: string
+          example: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+          description: Checksummed version of the contract address
+        iconUrl:
+          type: string
+          example: https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png
+          description: Public URL for the asset icon. Registry asset REST endpoints populate this when configured; other Asset responses may omit it.
+          readOnly: true
+      required:
+      - id
+      - standard
+      - symbol
+      - blockchain
+      - createdAt
+    v2ListWalletLimitsResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        walletLimits:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2WalletLimit'
+            - type: object
+    v2LimitType:
+      type: string
+      enum:
+      - PER_TX
+      - CONSTANT
+      - ROLLING_DURATION
+    v2Standard:
+      type: string
+      enum:
+      - NATIVE
+      - ERC20
+      - ISSUED_CURRENCY
+      - ERC721
+      - SPL
+      - CUSTOM
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2BoolFilter:
+      type: object
+      properties:
+        eq:
+          type: boolean
+          description: Equals
+        isNull:
+          type: boolean
+          description: Check if field is null
+    TimestampFilterTimestampRange:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          example: '2024-08-01T00:00:00Z'
+          description: Start of time range (inclusive)
+        end:
+          type: string
+          format: date-time
+          example: '2024-08-31T23:59:59Z'
+          description: End of time range (inclusive)
+    v2TimestampFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Exact timestamp match
+        notEq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Not equal to timestamp
+        before:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Before this timestamp
+        after:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: After this timestamp
+        gte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Greater than or equal to timestamp
+        lte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Less than or equal to timestamp
+        between:
+          allOf:
+          - $ref: '#/components/schemas/TimestampFilterTimestampRange'
+          - description: Between two timestamps (inclusive)
+        isNull:
+          type: boolean
+          description: Check if field is null
+        relativeDays:
+          type: integer
+          format: int32
+          example: -7
+          description: Relative days from now (negative for past, positive for future)
+    v2Matcher:
+      type: object
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/v2MatcherType'
+          - type: string
+            description: Type of the matcher. The `value` field depends on this field.
+        value:
+          type: string
+          description: Comma seperated list of matcher values.
+        values:
+          type: array
+          items:
+            type: string
+          description: Matcher values.
+      required:
+      - type
+    v2ListGlobalWalletLimitsResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        walletLimits:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2WalletLimit'
+            - type: object
+    v2FilterResponse:
+      type: object
+      properties:
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
+    v2AssetSource:
+      type: string
+      enum:
+      - ASSET_SOURCE_LEGACY
+      - ASSET_SOURCE_AUTO
+      - ASSET_SOURCE_COINGECKO
+      - ASSET_SOURCE_PALISADE
+      - ASSET_SOURCE_CUSTOMER
+    v2MatcherType:
+      type: string
+      enum:
+      - USER
+      - API_CREDENTIAL
+      - COUNTERPARTY
+      - TRANSACTION_TYPE
+      - SIGN_FOR
+      - COUNTERPARTY_ID
+      - ADDRESS_ID
+      - WALLET_ID
+      - CHAIN_ID
+    v2WalletLimitFilter:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by wallet limit ID
+        vaultId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by vault ID. For ListWalletLimits, the top-level vault_id still scopes the request; if both are supplied, both predicates are AND-ed.
+        walletId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by wallet ID. For ListWalletLimits, the top-level wallet_id still scopes the request; if both are supplied, both predicates are AND-ed.
+        assetSymbol:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by asset symbol
+        blockchain:
+          allOf:
+          - $ref: '#/components/schemas/v2BlockchainFilter'
+          - description: Filter by blockchain
+        limitType:
+          allOf:
+          - $ref: '#/components/schemas/v2LimitType'
+          - description: Filter by limit type
+        status:
+          allOf:
+          - $ref: '#/components/schemas/v2WalletLimitStatus'
+          - description: Filter by wallet limit status
+        active:
+          allOf:
+          - $ref: '#/components/schemas/v2BoolFilter'
+          - description: Filter by active status
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by creation timestamp
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-update timestamp
+    v2Blockchain:
+      type: string
+      enum:
+      - AVALANCHE
+      - ETHEREUM
+      - XRP_LEDGER
+      - POLYGON
+      - BNBCHAIN
+      - BASE
+      - HEDERA
+      - ARBITRUM
+      - ONE_MONEY
+      - SOLANA
+      - TRON
+      - BITCOIN
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+    v2SortOrder:
+      type: string
+      enum:
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+    v2BlockchainFilter:
+      type: object
+      properties:
+        eq:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - description: Exact blockchain match
+        notEq:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - description: Exclude this blockchain
+        in:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Blockchain'
+          description: Blockchain is in this list
+        notIn:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Blockchain'
+          description: Blockchain is not in this list
+    v2FilterRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 50
+          description: Number of results per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: Token for pagination from previous response
+        orderBy:
+          type: string
+          example: created_at
+          description: Field to order results by
+        order:
+          allOf:
+          - $ref: '#/components/schemas/v2SortOrder'
+          - description: Sort order (ASC or DESC)
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

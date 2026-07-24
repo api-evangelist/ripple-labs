@@ -1,0 +1,938 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Platform accounts API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Platform accounts
+  description: '
+
+    Use these operations to configure your RippleNet platform accounts.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Create platform](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/createplatform)                                         | POST      | Creates a RippleNet platform that represents a financial entity that holds accounts in the real world. For example, a Bank, Exchange, or Wallet provider.  |
+
+    | [Get all platforms](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getallplatforms)                                          | GET       | Returns a list of all active RippleNet platforms. |
+
+    | [Get platform by platform ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformbyplatformid)                             | GET       | Get a RippleNet platform by its platform ID. |
+
+    | [Update platform](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/updateplatform)                                         | PUT       | Updates a RippleNet platform. |
+
+    | [Delete platform by platform ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/deleteplatformbyplatformid)                  | DELETE    | Deletes a RippleNet platform by its platform ID. |
+
+    | [Create platform account](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/createplatformaccount)                          | POST      | Creates a RippleNet platform account, which represents a real-world account owned by a financial entity. |
+
+    | [Get platform accounts](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccounts)                              | GET       | Returns a paged list of all active RippleNet platform accounts. |
+
+    | [Get platform account by platform account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccountbyplatformaccountid)       | GET       | Gets a RippleNet platform account by its platform account ID. |
+
+    | [Update platform account](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/updateplatformaccount)                          | PUT       | Updates a RippleNet platform account. |
+
+    | [Delete platform account by platform account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/deleteplatformaccountbyplatformaccountid) | DELETE    | Deletes a RippleNet platform account by its platform account ID. |
+
+    | [Get platform accounts balances](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccountsbalances)             | GET       | Get balances for local Platform Accounts |
+
+    | [Get platform account statement](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccountstatement)             | GET       | Get statement for a specified Platform Account |
+
+    '
+paths:
+  /config/platforms:
+    post:
+      tags:
+      - Platform accounts
+      summary: Create platform
+      description: Creates a RippleNet platform, which represents a financial entity that holds accounts in the real world (e.g. Bank, Exchange or Wallet provider). This operation creates a database record for a platform account on a RippleNet node.
+      operationId: createPlatform
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePlatformRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully created RippleNet platform.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+    get:
+      summary: Get all platforms
+      description: Returns a list of all active RippleNet platforms.
+      operationId: getAllPlatforms
+      tags:
+      - Platform accounts
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of all active RippleNet platforms.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: List of all active RippleNet platforms.
+                items:
+                  $ref: '#/components/schemas/PlatformResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+  /config/platforms/{platform_id}:
+    parameters:
+    - in: path
+      name: platform_id
+      description: ID of the platform you want to retrieve.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      summary: Get platform by platform ID
+      description: Get a RippleNet platform by its platform ID.
+      operationId: getPlatformByPlatformId
+      tags:
+      - Platform accounts
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns a RippleNet platform for the given platform ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+    put:
+      summary: Update platform
+      description: Updates a RippleNet platform, which represents a financial entity that holds accounts in the real world (e.g. Bank, Exchange or Wallet provider). This operation creates a database record for a platform account on a RippleNet node.
+      operationId: updatePlatform
+      tags:
+      - Platform accounts
+      security:
+      - Bearer: []
+      parameters:
+      - in: path
+        name: platform_id
+        description: ID of the platform you want to update.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePlatformRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully updated RippleNet platform.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+    delete:
+      summary: Delete platform by platform ID
+      description: Deletes a RippleNet platform by its platform ID.
+      operationId: deletePlatformByPlatformId
+      tags:
+      - Platform accounts
+      security:
+      - Bearer: []
+      parameters:
+      - in: path
+        name: platform_id
+        description: ID of the platform you want to delete.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Deleted platform successfully.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+  /config/platforms/accounts:
+    post:
+      tags:
+      - Platform accounts
+      summary: Create platform account
+      description: Creates a RippleNet platform account, which represents a real-world account owned by a financial entity (e.g. Bank, Exchange or Wallet provider). This operation creates a database record for a platform account on a RippleNet node.
+      operationId: createPlatformAccount
+      security:
+      - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePlatformAccountRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully created RippleNet platform account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformAccountResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+    get:
+      tags:
+      - Platform accounts
+      summary: Get platform accounts
+      description: Returns a paged list of all active RippleNet platform accounts.
+      operationId: getPlatformAccounts
+      parameters:
+      - name: page
+        in: query
+        description: 'The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>
+
+          Set it to `0` to get the first page of results.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: Number of objects to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+      responses:
+        '200':
+          description: Paged list of all active RippleNet platform accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformAccountsPage'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /config/platforms/accounts/{platform_account_id}:
+    parameters:
+    - in: path
+      name: platform_account_id
+      description: ID of the platform account you want to retrieve.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      summary: Get platform account by platform account ID
+      description: Gets a RippleNet platform account by its platform account ID.
+      operationId: getPlatformAccountByPlatformAccountId
+      tags:
+      - Platform accounts
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns a RippleNet platform account for the given platform account ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformAccountResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+    put:
+      summary: Update platform account
+      description: Updates a RippleNet platform account, which represents a real-world account owned by a financial entity (e.g. Bank, Exchange or Wallet provider).
+      operationId: updatePlatformAccount
+      tags:
+      - Platform accounts
+      security:
+      - Bearer: []
+      parameters:
+      - in: path
+        name: platform_account_id
+        description: ID of the platform account you want to update.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePlatformAccountRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully updated RippleNet platform account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformAccountResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+    delete:
+      summary: Delete platform account by platform account ID
+      description: Deletes a RippleNet platform account by its platform account ID.
+      operationId: deletePlatformAccountByPlatformAccountId
+      tags:
+      - Platform accounts
+      security:
+      - Bearer: []
+      parameters:
+      - in: path
+        name: platform_account_id
+        description: ID of the platform account you want to delete.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Deleted platform account successfully.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+  /monitor/platform/accounts/balances:
+    get:
+      tags:
+      - Platform accounts
+      summary: Get platform accounts balances
+      description: Get balances for local Platform Accounts
+      operationId: getPlatformAccountsBalances
+      responses:
+        '200':
+          description: Successfully returned balances for all platform accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformAccountsBalances'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /monitor/platform/accounts/{platformAccountId}/statement:
+    get:
+      tags:
+      - Platform accounts
+      summary: Get platform account statement
+      description: Get statement for a specified Platform Account
+      operationId: getPlatformAccountStatement
+      parameters:
+      - name: platformAccountId
+        in: path
+        description: 'The RippleNet platform account ID that you want to get a statement for. Example: `bitso`'
+        required: true
+        schema:
+          type: string
+      - name: start-date
+        in: query
+        description: The lower bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`.
+        required: true
+        schema:
+          type: string
+      - name: end-date
+        in: query
+        description: The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC For example, `2018-08-06T23:15:13.218Z`.
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: 'The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>
+
+          Set it to `0` to get the first page of results.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: Number of payment and transfer objects to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+      responses:
+        '200':
+          description: Successfully returned statement for a specified platform account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatementResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+components:
+  schemas:
+    PlatformAccountsPage:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/PlatformAccountResponse'
+      description: Paged response for account lookups
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    UpdatePlatformRequest:
+      type: object
+      description: 'Request object for updating a RippleNet platform, which maps to a real world financial institution. **Note**: `platform_type` is set on the creation of the platform and cannot be updated.'
+      properties:
+        name:
+          type: string
+          description: Name of the platform.
+        platform_type:
+          type: string
+          description: The type of institution this platform represents (WALLET_PROVIDER, FIAT_INSTITUTION, or DIGITAL_EXCHANGE).
+          enum:
+          - WALLET_PROVIDER
+          - FIAT_INSTITUTION
+          - DIGITAL_EXCHANGE
+        description:
+          type: string
+          maxLength: 512
+          description: A short description of the platform.
+        institution:
+          type: string
+          description: Name of the institution this platform represents.
+        servicer_code:
+          type: string
+          description: Akin to the routing number (US), Sort Code (UK), or IFSC code (India).
+    UpdatePlatformAccountRequest:
+      type: object
+      description: Request object for updating a Ripplenet platform account.
+      properties:
+        name:
+          type: string
+          description: Name of the platform account.
+        platform_id:
+          type: string
+          format: uuid
+          description: The unique identifier for the RippleNet platform where this account is defined.
+        description:
+          type: string
+          maxLength: 512
+          description: A short description of the platform account.
+        external_account_id:
+          type: string
+          description: Unique reference identifier for the real world account which is represented by this platform account.
+        currency:
+          type: string
+          maxLength: 3
+          description: The currency of the account. Ripple recommends using ISO-4217 currency codes.
+    Transactions:
+      type: object
+      required:
+      - content
+      - first
+      - last
+      - number
+      - numberOfElements
+      - size
+      - sort
+      - totalPages
+      - total_elements
+      properties:
+        content:
+          type: array
+          description: Provides an array of statement record objects.
+          items:
+            $ref: '#/components/schemas/StatementRecord'
+        total_elements:
+          type: integer
+          format: int64
+          example: 1
+          description: total elements in paginated response
+        sort:
+          type: string
+          description: retained for backward compatibility
+        first:
+          type: boolean
+          example: true
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          example: true
+          description: true if  this is the last page.
+        number:
+          type: integer
+          example: 0
+          description: page number
+        numberOfElements:
+          type: integer
+          example: 1
+          description: Number Of elements in this request
+        size:
+          type: integer
+          example: 10
+          description: page size
+        totalPages:
+          type: integer
+          example: 1
+          description: Total number of pages for the given request
+      description: Provides a `content` array of statement record objects and a set of pagination information fields.
+    PlatformAccountsBalances:
+      type: object
+      description: Object representing list of platforms, their accounts and their respective balances
+      properties:
+        platforms:
+          type: array
+          description: List of platforms
+          items:
+            $ref: '#/components/schemas/PlatformItem'
+    PlatformResponse:
+      type: object
+      description: Response object for creating a Ripplenet platform, which maps to a real world financial institution.
+      properties:
+        platform_id:
+          type: string
+          format: uuid
+          description: Unique identifier for the RippleNet platform.
+        name:
+          type: string
+          description: Name of the RippleNet platform.
+        platform_type:
+          type: string
+          description: The type of institution this RippleNet platform represents (WALLET_PROVIDER, FIAT_INSTITUTION, or DIGITAL_EXCHANGE).
+          enum:
+          - WALLET_PROVIDER
+          - FIAT_INSTITUTION
+          - DIGITAL_EXCHANGE
+        description:
+          type: string
+          maxLength: 512
+          description: A short description of the RippleNet platform.
+        institution:
+          type: string
+          description: Name of the institution this RippleNet platform represents.
+        servicer_code:
+          type: string
+          description: Akin to the routing number (US), Sort Code (UK), or IFSC code (India).
+    CreatePlatformAccountRequest:
+      type: object
+      description: Request object for creating a Ripplenet platform account.
+      required:
+      - name
+      - platform_id
+      - external_account_id
+      - currency
+      properties:
+        name:
+          type: string
+          description: Name of the platform account.
+        platform_id:
+          type: string
+          format: uuid
+          description: The unique identifier for the RippleNet platform where this account is defined.
+        description:
+          type: string
+          maxLength: 512
+          description: A short description of the platform account.
+        external_account_id:
+          type: string
+          description: Unique reference identifier for the real world account which is represented by this platform account.
+        currency:
+          type: string
+          maxLength: 3
+          description: The currency of the account. Ripple recommends using ISO-4217 currency codes.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    PlatformItem:
+      type: object
+      description: Represents a Platform
+      properties:
+        platform_id:
+          description: Platform ID
+          type: string
+          format: uuid
+        name:
+          description: Identifier representing the name of the platform
+          type: string
+        institution:
+          description: Institution being represented by this platform
+          type: string
+        type:
+          description: Type of the platform
+          type: string
+        servicer_code:
+          description: Account servicer code, if applicable of the real world platform
+          type: string
+        accounts:
+          type: array
+          description: List of Platform Accounts a Platform
+          items:
+            $ref: '#/components/schemas/PlatformAccountItem'
+    PlatformAccountItem:
+      type: object
+      description: Represents a Platform Account
+      properties:
+        platform_account_id:
+          description: Platform Account ID (UUID)
+          type: string
+          format: uuid
+        name:
+          description: Name of the Platform Account
+          type: string
+        external_account_id:
+          description: External ID of the real world account that is represented by this Platform Account
+          type: string
+        currency:
+          description: Platform account currency
+          type: string
+        total_balance:
+          description: Total balance amount
+          type: number
+        available_balance:
+          description: Available balance amount
+          type: number
+        errors:
+          description: List of error messages, if any
+          type: array
+          items:
+            type: string
+    StatementResponse:
+      type: object
+      required:
+      - account_name
+      - closing_balance
+      - currency
+      - end_datetime
+      - generated_at
+      - opening_balance
+      - owner
+      - start_datetime
+      - transactions
+      properties:
+        account_name:
+          type: string
+          example: trans_usd_sf
+          description: Name of the account the statement covers.
+        start_datetime:
+          type: string
+          format: date-time
+          example: '2018-08-06T23:13:55.997Z'
+          description: Lower bound of the date-time range the statement covers, as an ISO-8601 timestamp in UTC.
+        end_datetime:
+          type: string
+          format: date-time
+          example: '2020-08-06T23:13:55.997Z'
+          description: Upper bound of the date-time range the statement covers, as an ISO-8601 timestamp in UTC.
+        generated_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T21:58:23.621Z'
+          description: Time at which the statement was generated, as an ISO-8601 timestamp in UTC.
+        currency:
+          type: string
+          example: USD
+          description: Currency supported by the account.
+        owner:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: Owner of the account
+        opening_balance:
+          type: number
+          example: 0
+          description: Opening balance of the account for the given date range.
+        closing_balance:
+          type: number
+          example: -909
+          description: Closing balance of the account for the given date range.
+        transactions:
+          $ref: '#/components/schemas/Transactions'
+      description: Provides a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range.
+    PlatformAccountResponse:
+      type: object
+      description: Response object for creating a Ripplenet platform account.
+      properties:
+        platform_account_id:
+          type: string
+          format: uuid
+          description: Unique identifier for the platform account.
+        name:
+          type: string
+          description: Name of the platform account.
+        platform_id:
+          type: string
+          format: uuid
+          description: The unique identifier for the RippleNet platform where this account is defined.
+        description:
+          type: string
+          maxLength: 512
+          description: A short description of the platform account.
+        external_account_id:
+          type: string
+          description: Unique reference identifier for the real world account which is represented by this platform account.
+        currency:
+          type: string
+          description: The currency of the account. Ripple recommends using ISO-4217 currency codes.
+        balance:
+          type: number
+          description: Real world account balance of the platform account (if available)
+    CreatePlatformRequest:
+      type: object
+      description: Request object for creating a RippleNet platform, which maps to a real world financial institution.
+      required:
+      - name
+      - platform_type
+      - institution
+      - servicer_code
+      properties:
+        name:
+          type: string
+          description: Name of the platform.
+        platform_type:
+          type: string
+          description: The type of institution this platform represents (WALLET_PROVIDER, FIAT_INSTITUTION, or DIGITAL_EXCHANGE).
+          enum:
+          - WALLET_PROVIDER
+          - FIAT_INSTITUTION
+          - DIGITAL_EXCHANGE
+        description:
+          type: string
+          maxLength: 512
+          description: A short description of the platform.
+        institution:
+          type: string
+          description: Name of the institution this platform represents.
+        servicer_code:
+          type: string
+          description: Akin to the routing number (US), Sort Code (UK), or IFSC code (India).
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    StatementRecord:
+      type: object
+      required:
+      - balance_change
+      - balance_result
+      - created_at
+      - end_to_end_id
+      - internal_id
+      - returned_by_payment_with_id
+      - returns_payment_with_id
+      - transaction_id
+      - transaction_state
+      - transaction_type
+      - sender_address
+      - receiver_address
+      properties:
+        transaction_id:
+          type: string
+          format: uuid
+          example: 9eca588f-e89d-4629-82fa-da9c4646310f
+          description: ID of the payment or transfer that caused an account balance change.
+        transaction_type:
+          type: string
+          example: PAYMENT
+          description: Type of transaction that caused an account balance change.
+          enum:
+          - PAYMENT
+          - TRANSFER
+          - EXCHANGE_TRANSFER
+        transaction_state:
+          type: string
+          example: COMPLETED
+          description: Current state of the payment or transfer.
+        balance_change:
+          type: number
+          example: -15
+          description: Account balance change caused by the transaction.
+        balance_result:
+          type: number
+          example: -909
+          description: Account balance after the transaction.
+        created_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T21:28:28.354Z'
+          description: Time at which the transaction was created, as an ISO-8601 timestamp in UTC.
+        end_to_end_id:
+          type: string
+          example: 91ecb6bd-4dd8-4b53-a900-72b79f3064e4
+          description: ID that the sender of a transaction can specify. Persisted on all xCurrent instances that participated in the transaction.
+        internal_id:
+          type: string
+          example: 8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c
+          description: Internal identifier that the sender can optionally specify. Only visible to the sender. Only the sending xCurrent instance stores this ID.
+        venue_id:
+          type: string
+          example: nz7RpAujYgnQtjEM
+          description: The id from an exchange associated with a transaction involving an exchange account.
+        transaction_hash:
+          type: string
+          example: DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6
+          description: Hash representing the unique identifier for the transfer of funds in the XRP ledger.
+        returns_payment_with_id:
+          type: string
+          format: uuid
+          description: The `payment_id` of the original payment that this payment returns, if this is a returned payment. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
+        returned_by_payment_with_id:
+          type: string
+          format: uuid
+          description: The `payment_id` of the return payment that returned this payment, if this is a returned payment. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
+        balance_change_created_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T21:28:28.354Z'
+          description: Timestamp of when the balance change was created
+        sender_address:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the sending account. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
+        receiver_address:
+          type: string
+          example: rn.mx.mexico
+          description: RippleNet address of the recieving account. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
+      description: Provides details about a transaction included in an account statement.
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

@@ -1,0 +1,228 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Market Cap API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Market Cap
+  x-displayName: Market Cap
+  description: 'Use these API operations to obtain details about market-capitalization supply for a stablecoin currency.
+
+
+    | Operation | Method | Description |
+
+    | --------- | ------ | ----------- |
+
+    | [Get total supply](#operation/getMarketCapTotal) | GET | Get the total amount of currency supply, with a per-chain breakdown. |
+
+    | [Get total supply amount](#operation/getMarketCapTotalAmount) | GET | Get the total supply as a plain decimal string. |
+
+    | [Get circulating supply](#operation/getMarketCapCirculating) | GET | Get the circulating amount of currency supply, with a per-chain breakdown. |
+
+    | [Get circulating supply amount](#operation/getMarketCapCirculatingAmount) | GET | Get the circulating supply as a plain decimal string. |
+
+
+    **Note:** These Market Cap operations do not require authentication.
+
+    '
+paths:
+  /v1/stablecoin/market-cap/{currencyCode}/total:
+    get:
+      summary: Get total supply
+      description: 'Returns the total RLUSD supply (all issued tokens, regardless of circulating status)
+
+        with a per-chain breakdown. No authentication required.
+
+        '
+      operationId: getMarketCapTotal
+      security: []
+      tags:
+      - Market Cap
+      parameters:
+      - $ref: '#/components/parameters/currencyCode'
+      responses:
+        '200':
+          description: Total supply
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketCapSupply'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v1/stablecoin/market-cap/{currencyCode}/total/amount:
+    get:
+      summary: Get total supply amount
+      description: 'Returns the total RLUSD supply as a plain decimal string (e.g. `"1000000000.00"`).
+
+        Useful for lightweight integrations that only need the aggregate figure.
+
+        No authentication required.
+
+        '
+      operationId: getMarketCapTotalAmount
+      security: []
+      tags:
+      - Market Cap
+      parameters:
+      - $ref: '#/components/parameters/currencyCode'
+      responses:
+        '200':
+          description: Total supply amount as plain text
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: '1000000000.00'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v1/stablecoin/market-cap/{currencyCode}/circulating:
+    get:
+      summary: Get circulating supply
+      description: 'Returns the circulating RLUSD supply with a per-chain breakdown.
+
+        Returns `404` if the circulating supply API is not enabled.
+
+        No authentication required.
+
+        '
+      operationId: getMarketCapCirculating
+      security: []
+      tags:
+      - Market Cap
+      parameters:
+      - $ref: '#/components/parameters/currencyCode'
+      responses:
+        '200':
+          description: Circulating supply
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketCapSupply'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v1/stablecoin/market-cap/{currencyCode}/circulating/amount:
+    get:
+      summary: Get circulating supply amount
+      description: 'Returns the circulating RLUSD supply as a plain decimal string.
+
+        Returns `404` if the circulating supply API is not enabled.
+
+        No authentication required.
+
+        '
+      operationId: getMarketCapCirculatingAmount
+      security: []
+      tags:
+      - Market Cap
+      parameters:
+      - $ref: '#/components/parameters/currencyCode'
+      responses:
+        '200':
+          description: Circulating supply amount as plain text
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: '950000000.00'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    MarketCapBalance:
+      type: object
+      required:
+      - amount
+      description: Balance for a single currency or chain.
+      properties:
+        amount:
+          type: string
+          description: Balance as a decimal string (e.g. "1000000000.00")
+        ledgerIndex:
+          type: integer
+          nullable: true
+          description: Ledger index at which this balance was last observed. Absent when not applicable.
+    ProblemDetail:
+      type: object
+      description: 'Error response following RFC 9457 (Problem Details for HTTP APIs), the successor to RFC 7807.
+
+        '
+      properties:
+        type:
+          type: string
+          format: uri
+          description: URI reference identifying the problem type
+        title:
+          type: string
+          description: Short, human-readable summary of the problem
+        status:
+          type: integer
+          description: HTTP status code
+        code:
+          type: string
+          description: Machine-readable error code
+          enum:
+          - TRANSACTION_NOT_FOUND
+          - TRANSACTION_INVALID_STATUS_TRANSITION
+          - TRANSACTION_DESTINATION_TYPE_IMMUTABLE
+          - INVALID_REQUEST_BODY
+          - UNKNOWN_EXCEPTION
+    MarketCapSupply:
+      type: object
+      required:
+      - balance
+      - chainBalances
+      description: Aggregate supply figure with a per-chain breakdown.
+      properties:
+        balance:
+          $ref: '#/components/schemas/MarketCapBalance'
+          description: Aggregate balance across all chains.
+        chainBalances:
+          type: object
+          description: Per-chain balance breakdown. Keys are blockchain network names (e.g. `XRPL`, `ETH`).
+          additionalProperties:
+            $ref: '#/components/schemas/MarketCapBalance'
+  responses:
+    NotFound:
+      description: Resource does not exist
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    InternalServerError:
+      description: Unexpected server error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+  parameters:
+    currencyCode:
+      name: currencyCode
+      in: path
+      required: true
+      description: Currency code (e.g. `RLUSD`)
+      schema:
+        type: string
+        example: RLUSD
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

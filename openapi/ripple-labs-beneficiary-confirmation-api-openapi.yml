@@ -1,0 +1,595 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Beneficiary confirmation API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Beneficiary confirmation
+  description: '
+
+    Use these operations to perform beneficiary confirmations.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get account lookup by status](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/getaccountlookupbystatus)  | GET    | Get Account Lookup entities by status and other filters. |
+
+    | [Initiate account lookup](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/initiateaccountlookup) | POST   | Creates an Account Lookup request to validate a beneficiary''s account details before sending a payment. |
+
+    | [Complete account lookup](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/completeaccountlookup) | POST   | Posts an Account Lookup response to validate a beneficiary''s account details before payment. |
+
+    | [Get account lookup by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/getaccountlookupbyid) | GET    | Gets an Account Lookup entity for its `account_lookup_id` value. |
+
+    '
+paths:
+  /account_lookups:
+    get:
+      tags:
+      - Beneficiary confirmation
+      summary: Get account lookup by status
+      description: Get Account Lookup entities by status and other filters. Status defaults to `REQUESTED`.
+      operationId: getAccountLookupByStatus
+      parameters:
+      - name: page
+        in: query
+        description: 'The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>
+
+          Set it to `0` to get the first page of results.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: Number of objects to return per page
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+      - name: account_lookup_status
+        in: query
+        description: Account Lookup status
+        required: false
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountLookupStatus'
+          default:
+          - REQUESTED
+      - name: start-date
+        in: query
+        description: The lower bound of the date-time range you want to return account lookup for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`.
+        required: false
+        schema:
+          type: string
+      - name: end-date
+        in: query
+        description: The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC For example, `2018-08-06T23:15:13.218Z`.
+        required: false
+        schema:
+          type: string
+      - name: sort_field
+        in: query
+        description: Attribute for how to sort the results
+        required: false
+        schema:
+          type: string
+          enum:
+          - CREATED_DATE
+          - LAST_MODIFIED_DATE
+          default: LAST_MODIFIED_DATE
+      - name: sort_direction
+        in: query
+        description: Direction of sorted results.
+        required: false
+        schema:
+          type: string
+          enum:
+          - ASC
+          - DESC
+          default: ASC
+      responses:
+        '200':
+          description: Successfully returned response for Account Lookup
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountLookups'
+        '400':
+          description: Bad request problem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+        '404':
+          description: Account Lookup Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+        '500':
+          description: Server Error - No valid network path to receiver. Account Lookup is not supported by a participant in the network path.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /account_lookups/request:
+    post:
+      tags:
+      - Beneficiary confirmation
+      summary: Initiate account lookup
+      description: Creates an Account Lookup request to validate a beneficiary's account details before sending a payment. Account lookups are not part of the payment flow and can be made at any time in the payment process.
+      operationId: initiateAccountLookup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitiateAccountLookupRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully returned Account Lookup response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountLookup'
+        '400':
+          description: Bad Request Problem.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+        '500':
+          description: Server Error - No valid network path to receiver. Account Lookup is not supported by a participant in the network path.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /account_lookups/response:
+    post:
+      tags:
+      - Beneficiary confirmation
+      summary: Complete account lookup
+      description: Posts an Account Lookup response to validate a beneficiary's account details before payment.
+      operationId: completeAccountLookup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteAccountLookupRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully returns acknowledgement for Account Lookup response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountLookup'
+        '400':
+          description: Bad request problem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+        '404':
+          description: Account Lookup Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+        '500':
+          description: Server Error - No valid network path to receiver. Account Lookup is not supported by a participant in the network path.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /account_lookups/{account_lookup_id}:
+    get:
+      tags:
+      - Beneficiary confirmation
+      summary: Get account lookup by ID
+      description: Gets an Account Lookup entity for its `account_lookup_id` value.
+      operationId: getAccountLookupById
+      parameters:
+      - name: account_lookup_id
+        in: path
+        description: AccountLookupId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully returned Account Lookup response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountLookup'
+        '400':
+          description: Bad request problem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+        '404':
+          description: Account Lookup Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+        '500':
+          description: Server Error - No valid network path to receiver. Account Lookup is not supported by a participant in the network path.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+components:
+  schemas:
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    CompleteAccountLookupRequest:
+      type: object
+      description: Complete account lookup request to validate the Beneficiary before initiating the payment.
+      required:
+      - account_lookup_id
+      - result_code
+      - result_status
+      - result_description
+      properties:
+        account_lookup_id:
+          type: string
+          description: UUID that links Account Lookup request and response.
+          format: uuid
+        result_code:
+          type: string
+          pattern: ^RNCB\d{4}
+          description: "Result code of the Account Lookup response. Possible values are\n  - `RNCB0000` - Pass- Name and Identifier are correct and linked\n  - `RNCB0001` - Fail- Name and Identifier not found\n  - `RNCB0002` - Fail- Name and Identifier do not match"
+        result_status:
+          type: string
+          description: Result status of Account Lookup response
+          enum:
+          - PASS
+          - FAIL
+        result_description:
+          type: string
+          description: Result description of Account Lookup response
+        redacted_first_name:
+          type: string
+          maxLength: 40
+          description: First name of the beneficiary.
+        redacted_middle_name:
+          type: string
+          maxLength: 40
+          description: Middle name of the beneficiary.
+        redacted_last_name:
+          type: string
+          maxLength: 40
+          description: Last name of the beneficiary.
+        redacted_org_name:
+          type: string
+          maxLength: 140
+          description: Name of the organization.
+        redacted_country_code:
+          type: string
+          description: Country of the beneficiary. Alpha-2 Code format per ISO 3166-1.
+        redacted_account_id:
+          type: string
+          maxLength: 40
+          description: Identifier for the Account, e.g account number.
+        redacted_account_id_type:
+          type: string
+          description: "Account ID type, redacted by the receiver. Possible values are\n  - `AIIN` - (default) Account Issue Identification Number\n  - `BBAN` - Basic Bank Account Number\n  - `CARD` - PAN of the card identifying the account\n  - `CUID` - CHIPS Universal Identifier\n  - `UPIC` - Universal Payment Identification Code\n  - `EMail` - Email Address\n  - `MSISDN` - Mobile Subscriber Integrated Service Digital Network (i.e., phone number)\n  - `DMST` - Domestic\n  - `Other` - Other identifier (e.g., PayID)"
+          enum:
+          - AIIN
+          - BBAN
+          - CARD
+          - CUID
+          - UPIC
+          - EMAIL
+          - MSISDN
+          - DMST
+          - OTHER
+        redacted_clearing_system_code:
+          type: string
+          description: Clearing system code
+        redacted_branch_code:
+          type: string
+          description: The Branch code (e.g., routing code) that the receiver has on their system.
+        redacted_account_currency:
+          type: string
+          description: The 3 character currency code for the account as per ISO-4217 standards
+    AccountLookups:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccountLookup'
+      description: Paged response for account lookups
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    InitiateAccountLookupRequest:
+      type: object
+      description: Initiate account lookup request to validate a beneficiary's account details before sending a payment.
+      required:
+      - destination_address
+      - country_code
+      - account_id
+      - account_id_type
+      properties:
+        account_currency:
+          type: string
+          description: The 3 character currency code for the account as per ISO-4217 standards
+        clearing_system_code:
+          type: string
+          maxLength: 50
+          description: Clearing system code
+        destination_address:
+          type: string
+          description: RippleNet address of the receiver.
+        first_name:
+          type: string
+          maxLength: 40
+          description: First name of the beneficiary.
+        middle_name:
+          type: string
+          maxLength: 40
+          description: Middle name of the beneficiary.
+        last_name:
+          type: string
+          maxLength: 40
+          description: Last name of the beneficiary.
+        org_name:
+          type: string
+          maxLength: 140
+          description: Name of the organization.
+        country_code:
+          type: string
+          maxLength: 2
+          description: Country of the beneficiary. Alpha-2 Code format per ISO 3166-1.
+        account_id:
+          type: string
+          maxLength: 40
+          description: Identifier for the Account, e.g account number.
+        account_id_type:
+          type: string
+          description: "Account ID type. Possible values are\n  - `AIIN` - (default) Account Issue Identification Number\n  - `BBAN` - Basic Bank Account Number\n  - `CARD` - PAN of the card identifying the account\n  - `CUID` - CHIPS Universal Identifier\n  - `UPIC` - Universal Payment Identification Code\n  - `EMail` - Email Address\n  - `MSISDN` - Mobile Subscriber Integrated Service Digital Network (i.e., phone number)\n  - `DMST` - Domestic\n  - `Other` - Other identifier (e.g., PayID)"
+          enum:
+          - AIIN
+          - BBAN
+          - CARD
+          - CUID
+          - UPIC
+          - EMAIL
+          - MSISDN
+          - DMST
+          - OTHER
+    AccountLookup:
+      type: object
+      description: Response to the sender/receiver for Account Lookup.
+      required:
+      - account_lookup_id
+      - account_lookup_status
+      properties:
+        account_lookup_id:
+          type: string
+          description: UUID that links Account lookup request and response.
+          format: uuid
+        account_lookup_status:
+          type: string
+          description: State of the Account Lookup object. Should be `REQUESTED`/`PROCESSED`/`FAILED`.
+          enum:
+          - REQUESTED
+          - PROCESSED
+          - FAILED
+          - EXPIRED
+        first_name:
+          type: string
+          maxLength: 40
+          description: First name of the beneficiary.
+        middle_name:
+          type: string
+          maxLength: 40
+          description: Middle name of the beneficiary.
+        last_name:
+          type: string
+          maxLength: 40
+          description: Last name of the beneficiary.
+        org_name:
+          type: string
+          maxLength: 140
+          description: Name of the organization.
+        country_code:
+          type: string
+          description: Country of the beneficiary. Alpha-2 Code format per ISO 3166-1.
+        account_currency:
+          type: string
+          description: The 3 character currency code for the account as per ISO-4217 standards
+        account_id:
+          type: string
+          maxLength: 40
+          description: Identifier for the Account, e.g account number.
+        account_id_type:
+          type: string
+          description: "Account ID type. Possible values are\n  - `AIIN` - (default) Account Issue Identification Number\n  - `BBAN` - Basic Bank Account Number\n  - `CARD` - PAN of the card identifying the account\n  - `CUID` - CHIPS Universal Identifier\n  - `UPIC` - Universal Payment Identification Code\n  - `EMail` - Email Address\n  - `MSISDN` - Mobile Subscriber Integrated Service Digital Network (i.e., phone number)\n  - `DMST` - Domestic\n  - `Other` - Other identifier (e.g., PayID)"
+          enum:
+          - AIIN
+          - BBAN
+          - CARD
+          - CUID
+          - UPIC
+          - EMAIL
+          - MSISDN
+          - DMST
+          - OTHER
+        result_code:
+          type: string
+          description: "Result code of the Account Lookup response. Possible values are\n  - `RNCB0000` - Pass- Name and Identifier are correct and linked\n  - `RNCB0001` - Fail- Name and Identifier not found\n  - `RNCB0002` - Fail- Name and Identifier do not match"
+        result_status:
+          type: string
+          description: Result status of Account Lookup response.
+          enum:
+          - PASS
+          - FAIL
+        result_description:
+          type: string
+          description: Result description of Account Lookup response.
+        redacted_first_name:
+          type: string
+          maxLength: 40
+          description: First name of the beneficiary redacted by the receiver.
+        redacted_middle_name:
+          type: string
+          maxLength: 40
+          description: Middle name of the beneficiary redacted by the receiver.
+        redacted_last_name:
+          type: string
+          maxLength: 40
+          description: Last name of the beneficiary redacted by the receiver.
+        redacted_org_name:
+          type: string
+          maxLength: 140
+          description: Name of the organization redacted by the receiver.
+        redacted_country_code:
+          type: string
+          description: Country of the beneficiary redacted by the receiver.
+        redacted_account_id:
+          type: string
+          maxLength: 40
+          description: Identifier for the Account, e.g account number, redacted by the receiver.
+        redacted_account_id_type:
+          type: string
+          description: "Account ID type, redacted by the receiver. Possible values are\n  - `AIIN` - (default) Account Issue Identification Number\n  - `BBAN` - Basic Bank Account Number\n  - `CARD` - PAN of the card identifying the account\n  - `CUID` - CHIPS Universal Identifier\n  - `UPIC` - Universal Payment Identification Code\n  - `EMail` - Email Address\n  - `MSISDN` - Mobile Subscriber Integrated Service Digital Network (i.e., phone number)\n  - `DMST` - Domestic\n  - `Other` - Other identifier (e.g., PayID)"
+          enum:
+          - AIIN
+          - BBAN
+          - CARD
+          - CUID
+          - UPIC
+          - EMAIL
+          - MSISDN
+          - DMST
+          - OTHER
+        redacted_account_currency:
+          type: string
+          description: The 3 character currency code for the account as per ISO-4217 standards
+        clearing_system_code:
+          type: string
+          description: Clearing system code
+        branch_code:
+          type: string
+          description: The Branch code (e.g., routing code) that the receiver has on their system.
+    AccountLookupStatus:
+      type: string
+      enum:
+      - REQUESTED
+      - PROCESSED
+      - FAILED
+      - EXPIRED
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

@@ -1,0 +1,1299 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Vaults API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Vaults
+  description: Used to manage vaults
+paths:
+  /v2/vaults:
+    get:
+      summary: List vaults
+      description: List all vaults within the organization
+      operationId: VaultService_ListVaults
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListVaultsResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: pageSize
+        description: The number of results to return per page (default 50, max 1000)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pageToken
+        description: The token to retrieve the next page of results
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: correlationId
+        description: Correlation ID for tracking various actions on the vault
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.pageSize
+        description: Number of results per page (default 50, max 1000)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pagination.pageToken
+        description: Token for pagination from previous response
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.orderBy
+        description: Field to order results by
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.order
+        description: Sort order (ASC or DESC)
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - SORT_ORDER_ASC
+          - SORT_ORDER_DESC
+      - name: filter.id.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.id.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.id.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.name.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.name.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.name.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.name.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.name.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.name.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.name.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.name.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.description.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.description.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.description.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.description.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.description.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.description.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.description.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.description.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.externalId.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.externalId.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.externalId.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.externalId.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.externalId.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.externalId.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.externalId.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.externalId.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.correlationId.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.correlationId.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.correlationId.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.correlationId.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.correlationId.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.correlationId.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.correlationId.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.correlationId.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.createdAt.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.createdAt.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: filter.updatedAt.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.updatedAt.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: search
+        description: Case-insensitive search over vault ID, name, description, external ID, and correlation ID.
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Vaults
+    post:
+      summary: Create a vault
+      description: Create a new vault
+      operationId: VaultService_CreateVault
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2Vault'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2CreateVaultRequest'
+        required: true
+      tags:
+      - Vaults
+  /v2/vaults/{id}:
+    get:
+      summary: Get a vault
+      description: Get a vault by ID
+      operationId: VaultService_GetVault
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2Vault'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: id
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Vaults
+    put:
+      summary: Update a vault
+      description: Update a vault's name and description by ID
+      operationId: VaultService_UpdateVault
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2Vault'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: id
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Treasury vault
+                  description: The name of the vault
+                description:
+                  type: string
+                  example: A vault used by the treasury department
+                  description: The description of the vault
+                correlationId:
+                  type: string
+                  example: ce4918bf-a199-4ce2-85a3-d0d296855384
+                  description: Correlation ID for tracking various actions on the vault
+              required:
+              - name
+        required: true
+      tags:
+      - Vaults
+  /v2/vaults:list:
+    post:
+      summary: List vaults
+      description: List all vaults within the organization
+      operationId: VaultService_ListVaults2
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListVaultsResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2ListVaultsRequest'
+        required: true
+      tags:
+      - Vaults
+components:
+  schemas:
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2SortOrder:
+      type: string
+      enum:
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+    v2VaultFilter:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by vault ID
+        name:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by vault name
+        description:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by vault description
+        externalId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by external ID
+        correlationId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by correlation ID
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by creation timestamp
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-update timestamp
+    v2ListVaultsRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 1000
+          description: The number of results to return per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        correlationId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Correlation ID for tracking various actions on the vault
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/v2FilterRequest'
+          - description: 'Pagination and sorting. Sortable fields: name, created_at, updated_at.'
+        filter:
+          allOf:
+          - $ref: '#/components/schemas/v2VaultFilter'
+          - description: Optional vault filters. Each populated sub-filter is AND-ed.
+        search:
+          type: string
+          example: Treasury
+          description: Case-insensitive search over vault ID, name, description, external ID, and correlation ID.
+    TimestampFilterTimestampRange:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          example: '2024-08-01T00:00:00Z'
+          description: Start of time range (inclusive)
+        end:
+          type: string
+          format: date-time
+          example: '2024-08-31T23:59:59Z'
+          description: End of time range (inclusive)
+    v2TimestampFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Exact timestamp match
+        notEq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Not equal to timestamp
+        before:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Before this timestamp
+        after:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: After this timestamp
+        gte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Greater than or equal to timestamp
+        lte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Less than or equal to timestamp
+        between:
+          allOf:
+          - $ref: '#/components/schemas/TimestampFilterTimestampRange'
+          - description: Between two timestamps (inclusive)
+        isNull:
+          type: boolean
+          description: Check if field is null
+        relativeDays:
+          type: integer
+          format: int32
+          example: -7
+          description: Relative days from now (negative for past, positive for future)
+    v2FilterRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 50
+          description: Number of results per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: Token for pagination from previous response
+        orderBy:
+          type: string
+          example: created_at
+          description: Field to order results by
+        order:
+          allOf:
+          - $ref: '#/components/schemas/v2SortOrder'
+          - description: Sort order (ASC or DESC)
+    v2Vault:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        createdBy:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The user ID that created the vault
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the vault was created
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the vault was updated
+        name:
+          type: string
+          example: Treasury vault
+          description: The name of the vault
+        description:
+          type: string
+          example: A vault used by the treasury department
+          description: The description of the vault
+        externalId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: External ID of this vault, unique to the organization
+        correlationId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Correlation ID for the vault
+      required:
+      - id
+      - createdBy
+      - createdAt
+      - updatedAt
+      - name
+    v2ListVaultsResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        vaults:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2Vault'
+            - type: object
+    v2FilterResponse:
+      type: object
+      properties:
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+    v2CreateVaultRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Treasury vault
+          description: The name of the vault
+        description:
+          type: string
+          example: A vault used by the treasury department
+          description: The description of the vault
+        externalId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: External ID of this vault, unique to the organization
+        correlationId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Correlation ID for tracking correlating actions with this vault creation
+      required:
+      - name
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

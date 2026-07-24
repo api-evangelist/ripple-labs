@@ -1,0 +1,178 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Diagnostics API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Diagnostics
+  description: '
+
+    Use these operations to view RippleNet Server health.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Check health](/products/payments-odl/api-docs/ripplenet/reference/openapi/diagnostics/checkhealth)       | GET | Gets the health status of the xCurrent server. |
+
+    | [Check heartbeat](/products/payments-odl/api-docs/ripplenet/reference/openapi/diagnostics/checkheartbeat) | GET | Gets the health status of the xCurrent server''s peers.  |
+
+    '
+paths:
+  /health:
+    get:
+      tags:
+      - Diagnostics
+      summary: Check health
+      description: Gets the health status of the xCurrent server.
+      operationId: checkHealth
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /heartbeat:
+    get:
+      tags:
+      - Diagnostics
+      summary: Check heartbeat
+      description: Gets the health status of the xCurrent server's peers. This request requires authorization. The timeout for this operation is 5 seconds.
+      operationId: checkHeartbeat
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Heartbeat'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+components:
+  schemas:
+    Heartbeat:
+      type: object
+      required:
+      - errors
+      - peer_heartbeat_results
+      - time_checked
+      - xcurrent_node
+      properties:
+        time_checked:
+          type: string
+          format: date
+          example: '2019-10-01'
+          description: Time at which the heartbeat was checked, as an ISO-8601 timestamp in UTC.
+        xcurrent_node:
+          type: string
+          example: rn.us.ny.new_york
+          description: RippleNet address of the RippleNet server for which the heartbeat was checked. (Deprecated in favor of 'ripplenet_node' field, has exactly the same value).
+        ripplenet_node:
+          type: string
+          example: rn.us.ny.new_york
+          description: RippleNet address of the RippleNet server for which the heartbeat was checked.
+        peer_heartbeat_results:
+          type: object
+          description: Provides a list of peer RippleNet addresses and their health statuses.
+          additionalProperties:
+            type: string
+            enum:
+            - HEALTHY
+            - UNHEALTHY
+        errors:
+          type: array
+          description: If applicable, provides one or more messages describing the error.
+          items:
+            type: string
+      description: Provides the health status of the xCurrent server’s peers.
+    Health:
+      type: object
+      required:
+      - healthy
+      properties:
+        healthy:
+          type: boolean
+          example: true
+          description: If set to `true`, the xCurrent server is up and running. If set to `false`, the xCurrent server is down.
+        services:
+          type: array
+          description: List of services and their statuses returned by the health check.
+          items:
+            $ref: '#/components/schemas/HealthCheck'
+        detail:
+          type: string
+          example: Failed to perform health check
+          description: Reason for health check failure, if any.
+      description: Provides a high-level status of the health of the xCurrent server.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    HealthCheck:
+      type: object
+      properties:
+        service:
+          type: string
+          example: database
+          description: Name of the service.
+        healthy:
+          type: boolean
+          description: Returns `true` if the service is up and running, and `false` if it is down or unreachable.
+        detail:
+          type: string
+          example: Message queue unreachable.
+          description: Reason for health check failure, if any.
+      description: Health check information for a single component.
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

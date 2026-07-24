@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Pool accounts API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Pool accounts
+  description: '
+
+    Use these operations to configure your RippleNet pool accounts.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get all pool accounts](/products/payments-odl/api-docs/ripplenet/reference/openapi/pool-accounts/getallpoolaccounts)                               | GET    | Returns a list of all pool accounts on a RippleNet node. |
+
+    | [Get pool account by pool account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/pool-accounts/getpoolaccountbypoolaccountid)               | GET    | Get a pool account by its pool account ID. |
+
+    '
+paths:
+  /config/pool_accounts:
+    get:
+      tags:
+      - Pool accounts
+      summary: Get all pool accounts
+      description: Returns a list of all pool accounts on a RippleNet node.
+      operationId: getAllPoolAccounts
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of all pool accounts.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: List of all pool accounts.
+                items:
+                  $ref: '#/components/schemas/PoolAccountResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+  /config/pool_accounts/{pool_account_id}:
+    parameters:
+    - in: path
+      name: pool_account_id
+      description: Unique name to identify the pool account.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      summary: Get pool account by pool account ID
+      description: Get a pool account by its pool account ID.
+      operationId: getPoolAccountByPoolAccountId
+      tags:
+      - Pool accounts
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns pool account for the given pool account ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoolAccountResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+components:
+  schemas:
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    PoolAccountResponse:
+      type: object
+      description: Pool Account object returned to the user.
+      properties:
+        pool_account_id:
+          type: string
+          format: uuid
+          description: The Account ID of the pool account.
+        pool_account_name:
+          type: string
+          description: The name of the pool account.
+        currency:
+          type: string
+          description: Currency of the pool account.
+        description:
+          type: string
+          description: Description of the pool account.
+        owner:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the owner of the pool account.
+        linkedAccountNames:
+          type: array
+          items:
+            type: string
+          description: RippleNet accounts linked to the pool account.
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

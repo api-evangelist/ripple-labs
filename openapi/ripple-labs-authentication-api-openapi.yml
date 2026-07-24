@@ -1,0 +1,135 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Authentication API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Authentication
+  x-displayName: Authentication
+  description: 'Use this API operation to manage your authentication tokens.
+
+
+    | Operation | Method | Description |
+
+    | --------- | ------ | ----------- |
+
+    | [Obtain an access token](#operation/getAccessToken) | POST | Request an access token for authentication with the API. |
+
+    '
+paths:
+  /v2/oauth/token:
+    post:
+      summary: Obtain an access token
+      description: 'OAuth 2.0 Client Credentials grant. Returns a Bearer token valid for 1 hour.
+
+        Credentials may be passed in the request body or via HTTP Basic Auth header.
+
+        '
+      operationId: getAccessToken
+      security: []
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - grant_type
+              - audience
+              properties:
+                grant_type:
+                  type: string
+                  enum:
+                  - client_credentials
+                client_id:
+                  type: string
+                  description: Your API client ID (or use Basic Auth header instead)
+                client_secret:
+                  type: string
+                  description: Your API client secret (or use Basic Auth header instead)
+                audience:
+                  type: string
+                  description: Audience URN for your tenant (e.g. urn:ripplexcurrent-prod:<your_tenant_id>)
+      responses:
+        '200':
+          description: Access token issued successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: JWT to include in all API requests
+                  token_type:
+                    type: string
+                    enum:
+                    - Bearer
+                  expires_in:
+                    type: integer
+                    description: Token validity in seconds (3600 = 1 hour)
+              example:
+                access_token: <jwt_token>
+                token_type: Bearer
+                expires_in: 3600
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    ProblemDetail:
+      type: object
+      description: 'Error response following RFC 9457 (Problem Details for HTTP APIs), the successor to RFC 7807.
+
+        '
+      properties:
+        type:
+          type: string
+          format: uri
+          description: URI reference identifying the problem type
+        title:
+          type: string
+          description: Short, human-readable summary of the problem
+        status:
+          type: integer
+          description: HTTP status code
+        code:
+          type: string
+          description: Machine-readable error code
+          enum:
+          - TRANSACTION_NOT_FOUND
+          - TRANSACTION_INVALID_STATUS_TRANSITION
+          - TRANSACTION_DESTINATION_TYPE_IMMUTABLE
+          - INVALID_REQUEST_BODY
+          - UNKNOWN_EXCEPTION
+  responses:
+    BadRequest:
+      description: Invalid request parameters or body
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    Unauthorized:
+      description: Missing or expired access token
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

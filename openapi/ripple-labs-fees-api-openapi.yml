@@ -1,0 +1,502 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Fees API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Fees
+  description: '
+
+    Use these operations to configure fees.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get fees](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/getfees)           | GET       | List all fees. |
+
+    | [Create fee](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/createfee)       | POST      | Creates a fee.   |
+
+    | [Get fee by ID ](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/getfeebyid)  | GET       | Gets a fee by ID. |
+
+    | [Update fee ](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/updatefee)      | PUT       | Updates an existing fee. |
+
+    | [Delete fee ](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/deletefee)      | DELETE    | Deletes a fee. Once deleted, a fee cannot be accessed. |
+
+    '
+paths:
+  /config/fees:
+    get:
+      tags:
+      - Fees
+      summary: Get fees
+      description: Gets a list of fees.
+      operationId: getFees
+      parameters:
+      - name: page
+        in: query
+        description: Number of pages returned. Returns one page of results when set to `0`.
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: Number of objects returned per page.
+        required: false
+        schema:
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: Successfully returns list of fees.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fees'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - Fees
+      summary: Create fee
+      description: Creates a fee.
+      operationId: createFee
+      requestBody:
+        $ref: '#/components/requestBodies/FiatFeeRequest'
+      responses:
+        '200':
+          description: Successfully created fee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FiatFee'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /config/fees/{id}:
+    get:
+      tags:
+      - Fees
+      summary: Get fee by ID
+      description: Gets a fee by ID.
+      operationId: getFeeById
+      parameters:
+      - name: id
+        in: path
+        description: Provide the `feeId` of the fee you want to retrieve.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved fee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FiatFee'
+        '404':
+          description: Fee not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+    put:
+      tags:
+      - Fees
+      summary: Update fee
+      description: Updates an existing fee.
+      operationId: updateFee
+      parameters:
+      - name: id
+        in: path
+        description: Provide the `feeId` of the fee you want to update.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        $ref: '#/components/requestBodies/FiatFeeRequest'
+      responses:
+        '200':
+          description: Successfully updated fee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FiatFee'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+    delete:
+      tags:
+      - Fees
+      summary: Delete fee
+      description: Deletes a fee. Once deleted, a fee cannot be accessed.
+      operationId: deleteFee
+      parameters:
+      - name: id
+        in: path
+        description: Provide the `feeId` of the fee you want to delete.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully deleted fee.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+components:
+  schemas:
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    Fees:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            description: Provides an array of fee objects.
+            items:
+              $ref: '#/components/schemas/FiatFee'
+      description: Provides a `content` array of fee objects and a set of pagination information fields.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    FiatFeeRequest:
+      type: object
+      required:
+      - currency_code
+      - fee_type
+      - node_type
+      - payment_type
+      - role_type
+      - value
+      properties:
+        value:
+          type: number
+          example: 0.025
+          description: 'Value of the fee to apply.
+
+
+            Set the value of this parameter according to the fee type you are using:
+
+
+            | [fee_type](#operation/createFee!path=fee_type&t=request) | Corresponding value to use |
+
+            | --- | --- |
+
+            | PERCENTAGE | `value` must be >`0` and <`100`. |
+
+            | FLAT_RATE | `value` can be negative. |
+
+
+            **Note**: The final amount of the fee is applied either as a percentage or a flat rate depending on the `value` you specify for the `fee_type` parameter.
+
+            '
+        currency_code:
+          type: string
+          example: USD
+          description: Currency the fee is applied in. Ripple recommends using [ISO-4217](https://www.iso.org/iso-4217-currency-codes.html) currency codes, although no formal constraint is enforced.
+        role_type:
+          type: string
+          example: SENDING
+          description: Role of the party to which the fee applies.
+          enum:
+          - SENDING
+          - RECEIVING
+          - INSTITUTION_SENDING
+          - INSTITUTION_RECEIVING
+          x-enumDescriptions:
+            SENDING: Charge the originator of the payment.
+            RECEIVING: Charge the beneficiary of the payment.
+            INSTITUTION_SENDING: Charge the financial institution sending the payment.
+            INSTITUTION_RECEIVING: Charge the financial institution receiving the payment.
+        payment_type:
+          type: string
+          example: REGULAR
+          description: Type of payment to which the fee applies.</p>
+          enum:
+          - REGULAR
+          - RETURN
+          x-enumDescriptions:
+            REGULAR: Apply the fee to a regular payment.
+            RETURN: Apply the fee to a return payment.
+        node_type:
+          type: string
+          example: INITIAL
+          description: Fiat instance to which the fee applies.
+          enum:
+          - INITIAL
+          - INTERMEDIATE
+          - TERMINAL
+          x-enumDescriptions:
+            INITIAL: Apply the fee to the first fiat instance in the payment chain.
+            INTERMEDIATE: Apply the fee to each fiat instance in the payment chain that is not the first or last.
+            TERMINAL: Apply the fee to the last fiat instance in the payment chain.
+        fee_type:
+          type: string
+          example: FLAT_RATE
+          description: Type of fee to apply. This is used with fee [value](#operation/createFee!path=value&t=request) to calculate the fee.
+          enum:
+          - PERCENTAGE
+          - FLAT_RATE
+          x-enumDescriptions:
+            PERCENTAGE: Apply the fee `value` as a percentage.
+            FLAT_RATE: Apply the fee `value` as a flat rate.
+        partner_name:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: Owner of the account involved in the payment, in RippleNet Address format. For example, `rn.us.ca.san_francisco`.
+        account_name:
+          type: string
+          example: conct_usd_sf
+          description: Account to apply the fee to. Specify the account name. For example, `conct_usd_sf`. If specified, you must also specify a `partner_name` value.
+        upper_limit:
+          type: number
+          example: 1000
+          description: Maximum amount for the range of a slab-based fee. If specified, you must also specify a `lower_limit` value.
+        lower_limit:
+          type: number
+          example: 0
+          description: Minimum amount for the range of a slab-based fee. If specified, you must also specify an `upper_limit` value.
+        payout_method:
+          type: string
+          example: LOCAL_RAILS
+          description: The payout method by which the receiving institution delivers the funds to the end customer.
+        fee_category:
+          type: string
+          example: BENEFICIARY_BANK_CHARGE
+          description: Category that describes the purpose of the fee.
+          default: NONE
+          enum:
+          - NONE
+          - OVERSEAS_DELIVERY_CHARGES
+          - BENEFICIARY_BANK_CHARGE
+          - PROCESSING_HANDLING_CHARGE
+          - LOCAL_GOVERNMENT_CHARGE
+          - OTHER
+          x-enumDescriptions:
+            NONE: None
+            OVERSEAS_DELIVERY_CHARGES: Overseas delivery charges.
+            BENEFICIARY_BANK_CHARGE: Charge from beneficiary bank.
+            PROCESSING_HANDLING_CHARGE: Processing and handling charge.
+            LOCAL_GOVERNMENT_CHARGE: Local government charge.
+            OTHER: Other charges.
+        fee_description:
+          type: string
+          description: Optional free-form description for the fee.
+      description: Use this JSON request object to create a fee that can be applied to payments.
+    FiatFee:
+      type: object
+      required:
+      - currency_code
+      - feeId
+      - fee_type
+      - node_type
+      - payment_type
+      - role_type
+      - value
+      properties:
+        value:
+          type: number
+          example: 2
+          description: Value of the fee to be applied. fiat node uses this value and `fee_type` to calculate the fee.
+        currency_code:
+          type: string
+          example: USD
+          description: Currency this fee applies to.
+        role_type:
+          type: string
+          example: SENDING
+          description: Role of the party to which the fee applies.<p>If set to `SENDING`, the fee is charged to the originator of the payment.</p> <p>If set to `RECEIVING`, the fee is charged to the beneficiary of the payment.</p> <p>If set to `INSTITUTION_SENDING`, the fee is charged to the financial institution that is sending the payment.</p> <p>If set to `INSTITUTION_RECEIVING`, the fee is charged to the financial institution that is receiving the payment.</p>
+          enum:
+          - SENDING
+          - RECEIVING
+          - INSTITUTION_SENDING
+          - INSTITUTION_RECEIVING
+        payment_type:
+          type: string
+          example: REGULAR
+          description: Payment type the fee applies to.
+          enum:
+          - REGULAR
+          - RETURN
+        node_type:
+          type: string
+          example: INITIAL
+          description: Fiat node to which the fee applies.<p>If set to `INITIAL`, the fee is charged to the first fiat instance in the payment chain.</p> <p>If set to `INTERMEDIATE`, the fee is charged to each fiat instance in the payment chain that is not the first or last fiat instance.</p> <p>If set to `TERMINAL`, the fee is charged to the last fiat instance in the payment chain.</p>
+          enum:
+          - INITIAL
+          - INTERMEDIATE
+          - TERMINAL
+        fee_type:
+          type: string
+          example: FLAT_RATE
+          description: Method used to calculate the fee.
+          enum:
+          - PERCENTAGE
+          - FLAT_RATE
+        partner_name:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: Owner of the account involved in the payment, in RippleNet Address format. For example, `rn.us.ca.san_francisco`.
+        account_name:
+          type: string
+          example: conct_usd_sf
+          description: For a fee that applies to a specific account, provides the account name. Used in combination with the `partner_name` value.
+        upper_limit:
+          type: number
+          example: 1000
+          description: For a slab-based fee, provides the upper limit of the slab. Used in combination with the `lower_limit` value.
+        lower_limit:
+          type: number
+          example: 0
+          description: For a slab-based fee, provides the lower limit of the slab. Used in combination wtih the `upper_limit` value.
+        feeId:
+          type: string
+          format: uuid
+          example: 7740f31c-ca03-4414-b491-b285aef71eb1
+          description: Unique identifier of the fee.
+        payout_method:
+          type: string
+          example: LOCAL_RAILS
+          description: The payout method for this fee.
+        fee_category:
+          type: string
+          example: BENEFICIARY_BANK_CHARGE
+          description: Category that describes the purpose of the fee.
+          default: NONE
+          enum:
+          - NONE
+          - OVERSEAS_DELIVERY_CHARGES
+          - BENEFICIARY_BANK_CHARGE
+          - PROCESSING_HANDLING_CHARGE
+          - LOCAL_GOVERNMENT_CHARGE
+          - OTHER
+        fee_description:
+          type: string
+          description: Optional free-form description for the fee.
+      description: Represents a fee to be applied based on various criteria.
+  requestBodies:
+    FiatFeeRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FiatFeeRequest'
+      required: true
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

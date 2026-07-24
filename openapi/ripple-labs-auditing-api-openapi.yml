@@ -1,0 +1,338 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Auditing API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Auditing
+  description: '
+
+    Use these operations to audit your accounts.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get audits](/products/payments-odl/api-docs/ripplenet/reference/openapi/auditing/getaudits) | GET   | Gets an audit trail of user actions and configuration changes (to accounts, fees, and rates) on a RippleNet instance. |
+
+    | [Get event trail for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/auditing/geteventtrailforpayment)  | GET   | Gets an audit trail of a payment''s state changes on a local RippleNet instance. |
+
+    '
+paths:
+  /audit:
+    get:
+      tags:
+      - Auditing
+      summary: Get audits
+      description: Gets an audit trail of user actions and configuration changes (to accounts, fees, and rates) on a RippleNet instance.
+      operationId: getAudits
+      parameters:
+      - name: page
+        in: query
+        description: 'The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>
+
+          Set it to `0` to get the first page of results.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: Number of payments to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+      - name: before
+        in: query
+        description: Filters for audit events where the `range_field` value is before this specified time stamp (not inclusive). You can also specify `after` to create a time range between `after` and `before`. If before is specified, `range_field` must also be specified.
+        required: false
+        schema:
+          type: string
+      - name: after
+        in: query
+        description: Filters for audit events where the `range_field` value is after this specified time stamp (not inclusive). You can also specify `before` to create a time range between `after` and `before`. If `after` is specified, `range_field` must also be specified.
+        required: false
+        schema:
+          type: string
+      - name: range_field
+        in: query
+        description: Filters payments before/after/between created and modified timestamps (`CREATED_AT`, `MODIFIED_AT`). For example, if you specify `range_field`=`CREATED_AT`, you would specify a timestamp (in the 24-character ISO 8601 YYYY-MM-DDTHH:mm:ss.sssZ format used in payment objects) as the value for `before` and/or `after` to fetch audit events before, after, or between the specified time range(s) (not inclusive). If `range_field` is specified, `before` and/or `after` must also be specified.
+        required: false
+        schema:
+          type: string
+      - name: actor
+        in: query
+        description: Filters for audit events based upon actor.
+        required: false
+        schema:
+          type: string
+      - name: action
+        in: query
+        description: Filters for audit events based upon action.
+        required: false
+        schema:
+          type: string
+      - name: level
+        in: query
+        description: Filters for audit events based upon audit level.
+        required: false
+        schema:
+          type: string
+          enum:
+          - INFO
+          - WARN
+          - ERROR
+      - name: domain
+        in: query
+        description: Filters for audit events based upon audit domain.
+        required: false
+        schema:
+          type: string
+          enum:
+          - USER_MANAGEMENT
+          - CONFIG_MANAGEMENT
+          - OTHER
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditEventResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /audit/payment/{id}:
+    get:
+      tags:
+      - Auditing
+      summary: Get event trail for payment
+      description: Gets an audit trail of a payment's state changes on a local RippleNet instance.
+      operationId: getEventTrailForPayment
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier of a payment.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Payment state change event trail.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventTrailEvent'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+components:
+  schemas:
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    AuditEventResponse:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/AuditEvent'
+      description: Paged response for AuditEvent
+    AuditEvent:
+      type: object
+      description: Represents an audit trail of user actions and configuration changes (to accounts, fees, and rates) on RippleNet.
+      properties:
+        actor:
+          type: string
+          example: super_user_client
+          description: Person or middleware who took the action.
+        action:
+          type: string
+          example: KEY_UPDATE
+          description: Action that triggered the event.
+        eventId:
+          type: string
+          format: uuid
+          example: 3d5d0831-762c-4e0c-980c-635b38fd9caf
+          description: UUID representing the event.
+        message:
+          type: string
+          example: "Added public key class PublicKeyRecord {\n    publicKey: MCowBQYDK2VwAyEAb8Q2YzrbTIwrUn7u5Q6hJimp7jBFHx500MfDM4XVNJ0=\n    keyIntent: SIGNING_PUBLIC_KEY\n    keyType: ED_25519\n    keyVersion: 1\n    expiryDateTime: 2089-09-23T17:27:50.331Z\n} for RippleNet address rn.us.ny.new_york"
+          description: Message describing the audit event.
+        metadata:
+          type: string
+          example: '{"ip":"0:0:0:0:0:0:0:1","uri":"/internal/key_service/addresses/rn.us.ny.new_york/keys"}'
+          description: Information about the event, such as IP Address and URI.
+        domain:
+          type: string
+          example: CONFIG_MANAGEMENT
+          enum:
+          - USER_MANAGEMENT
+          - CONFIG_MANAGEMENT
+          - OTHER
+          description: Represents the audit event domain.
+        level:
+          type: string
+          example: INFO
+          enum:
+          - INFO
+          - WARN
+          - ERROR
+          description: Represents the audit event level.
+        timeStamp:
+          type: string
+          example: '2019-09-30T22:55:41.365000Z'
+          description: Timestamp of the audit event.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    EventTrailEvent:
+      type: object
+      description: Represents a single event along the audit trail of a payment on RippleNet.
+      properties:
+        featureName:
+          type: string
+          example: payment
+          description: Feature name associated with the entityId. Possible values are `payment`.
+        eventDetail:
+          type: string
+          example: Updated Payment to state PREPARED
+          description: Detailed description of the event.
+        entityId:
+          type: string
+          format: uuid
+          example: d485f100-2af7-4e48-9ab1-3c7e28775691
+          description: UUID representing an event.
+        messageAction:
+          type: string
+          example: STATE_CHANGE
+          description: String representation of the action being taken, where `DS` = downstream and `US` = upstream in the messaging processing pipeline.
+          enum:
+          - DS_STARTED
+          - DS_COMPLETED
+          - US_STARTED
+          - US_COMPLETED
+          - STATE_CHANGE
+          - FAILURE
+        createdAt:
+          type: string
+          example: '2019-10-01T18:24:28.040000Z'
+          description: Timestamp of the audit event.
+        messageSender:
+          type: string
+          format: RippleNetAddress
+          example: default
+          description: The RippleNetAddress of the originator of the message that triggered the creation of this event.
+        messageType:
+          type: string
+          example: SETTLEMENT_PREPARE
+          description: The type of message that was being processed that triggered the creation of this event.
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

@@ -1,0 +1,767 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Balances API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Balances
+  description: Used to view balances
+paths:
+  /v2/balances:
+    get:
+      summary: Get Organization Balances
+      description: Get the balance of an organization
+      operationId: BalanceService_GetOrgBalances
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2GetOrgBalancesResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: currencyCode
+        description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Balances
+  /v2/vaults/{vaultId}/balances:
+    get:
+      summary: Get Vault Balances
+      description: Get the balances of a vault
+      operationId: BalanceService_GetVaultBalances
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2GetVaultBalancesResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID that the connection is associated with
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: currencyCode
+        description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Balances
+  /v2/vaults/{vaultId}/wallets/{walletId}/balances:
+    get:
+      summary: Get Wallet Balances
+      description: Get the balances of a wallet
+      operationId: BalanceService_GetWalletBalances
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2GetWalletBalancesResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: walletId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: currencyCode
+        description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.source.eq
+        description: "Exact asset source match\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ASSET_SOURCE_LEGACY
+          - ASSET_SOURCE_AUTO
+          - ASSET_SOURCE_COINGECKO
+          - ASSET_SOURCE_PALISADE
+          - ASSET_SOURCE_CUSTOMER
+      - name: filter.source.notEq
+        description: "Exclude this asset source\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ASSET_SOURCE_LEGACY
+          - ASSET_SOURCE_AUTO
+          - ASSET_SOURCE_COINGECKO
+          - ASSET_SOURCE_PALISADE
+          - ASSET_SOURCE_CUSTOMER
+      - name: filter.source.in
+        description: "Asset source is in this list\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ASSET_SOURCE_LEGACY
+            - ASSET_SOURCE_AUTO
+            - ASSET_SOURCE_COINGECKO
+            - ASSET_SOURCE_PALISADE
+            - ASSET_SOURCE_CUSTOMER
+      - name: filter.source.notIn
+        description: "Asset source is not in this list\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ASSET_SOURCE_LEGACY
+            - ASSET_SOURCE_AUTO
+            - ASSET_SOURCE_COINGECKO
+            - ASSET_SOURCE_PALISADE
+            - ASSET_SOURCE_CUSTOMER
+      tags:
+      - Balances
+  /v2/vaults/{vaultId}/wallets/{walletId}/balances/sync:
+    post:
+      summary: Sync Wallet Balances
+      description: 'Trigger a refresh of the balances for a wallet. Note: This only syncs balances for assets already known to the system. It will not discover new tokens that were received but not yet tracked.'
+      operationId: BalanceService_SyncWalletBalances
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2SyncWalletBalancesResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: walletId
+        description: The wallet ID
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Balances
+components:
+  schemas:
+    v2AssetSource:
+      type: string
+      enum:
+      - ASSET_SOURCE_LEGACY
+      - ASSET_SOURCE_AUTO
+      - ASSET_SOURCE_COINGECKO
+      - ASSET_SOURCE_PALISADE
+      - ASSET_SOURCE_CUSTOMER
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2SyncWalletBalancesResponse:
+      type: object
+    v2GetWalletBalancesResponse:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          example: USD
+          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
+        aggregatedFiatValue:
+          type: string
+        balances:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2Balance'
+            - type: object
+      required:
+      - currencyCode
+    v2GetVaultBalancesResponse:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          example: USD
+          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the vault's balances
+        balances:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2WalletBalance'
+            - type: object
+      required:
+      - currencyCode
+    v2Standard:
+      type: string
+      enum:
+      - NATIVE
+      - ERC20
+      - ISSUED_CURRENCY
+      - ERC721
+      - SPL
+      - CUSTOM
+    v2Blockchain:
+      type: string
+      enum:
+      - AVALANCHE
+      - ETHEREUM
+      - XRP_LEDGER
+      - POLYGON
+      - BNBCHAIN
+      - BASE
+      - HEDERA
+      - ARBITRUM
+      - ONE_MONEY
+      - SOLANA
+      - TRON
+      - BITCOIN
+    v2GetOrgBalancesResponse:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          example: USD
+          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the organization's balances
+        balances:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2VaultBalance'
+            - type: object
+      required:
+      - currencyCode
+    v2WalletBalance:
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID that the connection is associated with
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the wallet
+    v2Balance:
+      type: object
+      properties:
+        asset:
+          $ref: '#/components/schemas/commonv2Asset'
+        balance:
+          type: string
+          example: '200.00'
+          description: The total balance of the asset on the blockchain. When breakdown fields are present, this equals available_balance + pending_balance + frozen_balance
+        rate:
+          type: string
+          example: '0.50'
+          description: The exchange rate between the asset and 'currencyCode'
+        fiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of an asset for a wallet
+        availableBalance:
+          type: string
+          example: '150.00'
+          description: The available balance that can be spent
+        pendingBalance:
+          type: string
+          example: '30.00'
+          description: The balance tied up in pending transactions
+        frozenBalance:
+          type: string
+          example: '20.00'
+          description: The balance frozen by policy actions
+    commonv2Asset:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5:0xbehbehfb:USDC
+          description: ID is unique across all blockchains and created by combining the blockchain ID, contract address, and symbol
+        standard:
+          allOf:
+          - $ref: '#/components/schemas/v2Standard'
+          - type: string
+            example: ERC20
+            description: The standard of the asset
+        symbol:
+          type: string
+          example: LINK
+          description: The currency symbol of the asset
+        name:
+          type: string
+          example: Chainlink
+          description: The human readable name of the asset
+        blockchain:
+          $ref: '#/components/schemas/v2Blockchain'
+        decimals:
+          type: integer
+          format: int32
+          example: 18
+          description: Count of decimal places for the asset
+        vetted:
+          type: boolean
+          example: true
+          description: Whether the asset is vetted on the regulated platform
+        enabled:
+          type: boolean
+          example: true
+          description: Whether the asset is currently enabled on the platform
+        contract:
+          type: string
+          example: '0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e'
+          description: The token contract address. This field will be empty if the asset is the native coin of the blockchain
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the asset was created
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the asset was last updated
+        organizationId:
+          type: string
+          description: Organization ID for custom assets
+        coingeckoId:
+          type: string
+          example: ethereum
+          description: CoinGecko identifier for price data (optional for testnet assets)
+        source:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetSource'
+          - type: string
+            example: ASSET_SOURCE_COINGECKO
+            description: Data source for this asset
+        sourceMetadata:
+          allOf:
+          - $ref: '#/components/schemas/protobufAny'
+          - type: object
+            description: JSON metadata about the source
+        lastSyncedAt:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:22:22.420Z'
+          description: When this asset was last synchronized
+        syncVersion:
+          type: integer
+          format: int32
+          example: 1
+          description: Version counter for sync updates
+        contractAddressChecksummed:
+          type: string
+          example: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+          description: Checksummed version of the contract address
+        iconUrl:
+          type: string
+          example: https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png
+          description: Public URL for the asset icon. Registry asset REST endpoints populate this when configured; other Asset responses may omit it.
+          readOnly: true
+      required:
+      - id
+      - standard
+      - symbol
+      - blockchain
+      - createdAt
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2VaultBalance:
+      type: object
+      properties:
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID that the connection is associated with
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the vault
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

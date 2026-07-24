@@ -1,0 +1,1536 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Orchestration payments API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Orchestration payments
+  description: ' '
+paths:
+  /v4/orchestration/payment:
+    post:
+      tags:
+      - Orchestration payments
+      summary: Create orchestration payment
+      description: Creates an orchestration payment.
+      operationId: createOrchestrationPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrchestrationPaymentRequest'
+        required: true
+      responses:
+        '201':
+          description: Successfully created orchestration payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrchestrationPaymentSubmitResponse'
+    get:
+      tags:
+      - Orchestration payments
+      summary: Get orchestration payments
+      description: Gets a list of orchestration payments.
+      operationId: getOrchestrationPayments
+      parameters:
+      - name: page
+        in: query
+        description: 'The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/).
+
+
+          The value is zero-based, where `0` represents the first page.
+
+
+          Set it to `0` to get the first page of results.
+
+          '
+        required: false
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: Number of objects to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+      - name: sort_field
+        in: query
+        description: 'Attribute to sort the results on.
+
+
+          | Enum: | Sort by |
+
+          | --- | --- |
+
+          | CREATED_AT | Created date-time |
+
+          | MODIFIED_AT | Modified date-time |
+
+          '
+        required: false
+        schema:
+          type: string
+          enum:
+          - CREATED_AT
+          - MODIFIED_AT
+          default: MODIFIED_AT
+      - name: sort_direction
+        in: query
+        description: 'Direction of sorted results based on `sort_field`.
+
+
+          | Enum: | Description |
+
+          | --- | --- |
+
+          | ASC | Sort ascending |
+
+          | DESC | Sort descending |
+
+          '
+        required: false
+        schema:
+          type: string
+          enum:
+          - ASC
+          - DESC
+          default: ASC
+      - name: unique_reference_number
+        in: query
+        description: Parameter for filtering with unique reference number.
+        required: false
+        schema:
+          type: string
+      - name: orchestration_status
+        in: query
+        description: 'Parameter for filtering with status of the orchestration payment.
+
+
+          | Enum | Description |
+
+          | --- | --- |
+
+          | INITIAL | Filter by payments in the initial state |
+
+          | RUNNING | Filter by payments in the running state |
+
+          | COMPLETED | Filter by completed payments |
+
+          | PAUSED | Filter by paused payments |
+
+          | FAILURE | Filter by payment failures |
+
+          | DECLINED | Filter by declined payments |
+
+          | RETRY | Filter by payments that have a retry status |
+
+          '
+        required: false
+        schema:
+          type: string
+          enum:
+          - INITIAL
+          - RUNNING
+          - COMPLETED
+          - PAUSED
+          - FAILURE
+          - DECLINED
+          - RETRY
+      - name: range_field
+        in: query
+        description: "**Range field**\n\nDesignates the column name of the payments database table that is used for filtering payments before/after/between time stamps.\n\nThe following options are valid:\n\n  | Range field | Description |\n  | --- | --- |\n  | CREATED_AT | Filter by created date-time |\n  | MODIFIED_AT | Filter by modified date-time |\n\n**Example usage**\n\nIf you specify `range_field` = `MODIFIED_AT`, you need to specify a time stamp (in the 24 character ISO 8601 format used in payment objects: `YYYY-MM-DDTHH:mm:ss.sssZ`) as the value for `before` and/or `after` to fetch payments before, after, or between the specified time range(s) (inclusive).\n\n**Dependency**: If you specify `range_field`, you must also specify `before` and/or `after`.\n"
+        required: false
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: '**Before** time stamp
+
+
+          Filters for payments where the `range_field` column value is before this specified time stamp (inclusive).
+
+
+          You can also specify `after` to create a time range between `after` and `before`.
+
+
+          **Dependency**: If you specify `before`, you must also specify `range_field`.
+
+
+          **Example**: `2023-10-13T10:16:29.000Z`
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: after
+        in: query
+        description: '**After** time stamp
+
+
+          Filters for payments where the `range_field` column value is after this specified time stamp (inclusive).
+
+
+          You can also specify `before` to create a time range between `after` and `before`.
+
+
+          **Dependency**: If you specify `after`, you must also specify `range_field`.
+
+
+          **Example**: `2023-10-13T10:16:29.000Z`
+
+          '
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully fetched all orchestration payments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrchestrationPayments'
+  /v4/orchestration/payment/{uniqueReferenceNumber}:
+    get:
+      tags:
+      - Orchestration payments
+      summary: Get orchestration payment
+      description: Gets orchestration payment by unique reference number.
+      operationId: getOrchestrationPayment
+      parameters:
+      - name: uniqueReferenceNumber
+        in: path
+        description: Unique reference number of the orchestration payment to fetch.
+        required: true
+        schema:
+          type: string
+          format: String
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+      responses:
+        '200':
+          description: Successfully returned orchestration payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrchestrationPaymentResponse'
+  /v4/orchestration/payment/return:
+    post:
+      tags:
+      - Orchestration payments
+      summary: Return orchestration payment
+      description: Returns the orchestration payment with customer end-to-end ID.
+      operationId: returnOrchestrationPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrchestrationPaymentReturnRequest'
+        required: true
+      responses:
+        '201':
+          description: Successfully returned orchestration payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrchestrationPaymentSubmitResponse'
+  /v4/orchestration/payment/accept:
+    post:
+      tags:
+      - Orchestration payments
+      summary: Accept orchestration payment
+      description: Accepts the orchestration payment with customer end-to-end ID and Quote ID.
+      operationId: acceptOrchestrationPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrchestrationPaymentAcceptRequest'
+        required: true
+      responses:
+        '201':
+          description: Successfully accepted orchestration payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrchestrationPaymentSubmitResponse'
+  /v4/orchestration/payment/reversal:
+    post:
+      tags:
+      - Orchestration payments
+      summary: Reverse orchestration payment
+      description: Reverses the orchestration payment with customer end-to-end ID.
+      operationId: reverseOrchestrationPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrchestrationPaymentReversalRequest'
+        required: true
+      responses:
+        '201':
+          description: Successfully returned orchestration payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrchestrationPaymentSubmitResponse'
+  /v4/orchestration/payment/notification:
+    get:
+      tags:
+      - Orchestration payments
+      summary: Get orchestration notifications by status
+      description: Gets a list of orchestration payment notifications with a given status.
+      operationId: getOrchestrationPaymentNotifications
+      parameters:
+      - name: status
+        in: query
+        description: The 'status' of the notifications to retrieve.
+        required: true
+        schema:
+          type: string
+          enum:
+          - NEW
+          - SENT
+      - name: size
+        in: query
+        description: Number of objects to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+      - name: delay_time
+        in: query
+        description: Delay time in minutes to retrieve the SENT notifications.
+        required: false
+        schema:
+          type: integer
+          default: 30
+      - name: range_field
+        in: query
+        description: "**Range Field**\n\nDesignates the column name of the notifications database table that is used for filtering notifications before/after/between time stamps.\n\nThe following options are valid:\n\n  | Range field | Description |\n  | --- | --- |\n  | CREATED_AT | Filter by created date-time |\n  | MODIFIED_AT | Filter by modified date-time |\n\n**Example usage**\n\nIf you specify `range_field` = `MODIFIED_AT`, you need to specify a time stamp (in the 24 character ISO 8601 format used in notifications objects: `YYYY-MM-DDTHH:mm:ss.sssZ`) as the value for `before` and/or `after` to fetch notifications before, after, or between the specified time range(s) (inclusive).\n\n**Dependency**: If `range_field` is specified, `before` and/or `after` must also be specified.\n"
+        required: false
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: '**Before** time stamp
+
+
+          Filters for notifications where the notifications `range_field` column value is before this specified time stamp (inclusive).
+
+
+          You can also specify `after` to create a time range between `after` and `before`.
+
+
+          **Dependency**: If you specify `before`, you must also specify `range_field`.
+
+
+          **Example**: `2023-10-13T10:16:29.000Z`
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: after
+        in: query
+        description: '**After** time stamp
+
+
+          Filters for notifications where the notifications `range_field` column value is after this specified time stamp (inclusive).
+
+
+          You can also specify `before` to create a time range between `after` and `before`.
+
+
+          **Dependency**: If you specify `after`, you must also specify `range_field`.
+
+
+          **Example**: `2023-10-13T10:16:29.000Z`
+
+          '
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully fetched orchestration payment notifications list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationList'
+  /v4/orchestration/payment/notification/urn/{uniqueReferenceNumber}:
+    get:
+      tags:
+      - Orchestration payments
+      summary: Get orchestration notifications by unique reference number
+      description: Gets orchestration payment notifications with a given unique reference number.
+      operationId: getOrchestrationPaymentNotificationsByUniqueReferenceNumber
+      parameters:
+      - name: uniqueReferenceNumber
+        in: path
+        description: The `sender_end_to_end_id` of the orchestration payment notification in case of sender and `payment_id` in case of receiver.
+        required: true
+        schema:
+          type: string
+          format: string
+      responses:
+        '200':
+          description: Successfully fetched orchestration payment notifications.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationList'
+  /v4/orchestration/payment/notification/{uuid}:
+    get:
+      tags:
+      - Orchestration payments
+      summary: Get orchestration notification
+      description: Gets a given orchestration payment notification by UUID.
+      operationId: getOrchestrationPaymentNotificationByUUID
+      parameters:
+      - name: uuid
+        in: path
+        description: The UUID of the orchestration payment notification.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully fetched orchestration paymnet notification.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationResponseRos'
+  /v4/orchestration/payment/notification/{uuid}/ack:
+    put:
+      tags:
+      - Orchestration payments
+      summary: Acknowledge orchestration notification
+      description: Acknowledges an orchestration payment notification with a specified UUID.
+      operationId: acknowledgeOrchestrationPaymentNotificationByUUID
+      parameters:
+      - name: uuid
+        in: path
+        description: The UUID of the orchestration payment notification.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully updated orchestration payment notification status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationResponseRos'
+  /v4/orchestration/payment/notification/ack:
+    put:
+      tags:
+      - Orchestration payments
+      summary: Acknowledge orchestration notifications
+      description: Acknowledges multiple orchestration payment notifications using a list of UUIDs.
+      operationId: acknowledgeOrchestrationPaymentNotifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationUUIDList'
+        required: true
+      responses:
+        '200':
+          description: Successfully acknowledged orchestration payment notifications.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationAckResponse'
+  /v4/orchestration/payment/action:
+    post:
+      tags:
+      - Orchestration payments
+      summary: Post action to orchestration payment
+      description: Posts action into the Orchestration service.
+      operationId: sendOrchestrationPaymentAction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentActionRequest'
+        required: true
+      responses:
+        '201':
+          description: Successfully posted action.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentActionResponse'
+components:
+  schemas:
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    PaymentActionRequest:
+      type: object
+      required:
+      - unique_reference_number
+      - status
+      - notification_type
+      properties:
+        unique_reference_number:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: Set to the unique reference number associated with the payment.
+          example: '310000015'
+        status:
+          $ref: '#/components/schemas/ActivityStatus'
+        notification_type:
+          type: string
+          minLength: 1
+          maxLength: 128
+          pattern: ^[a-zA-Z0-9_:]*$
+          example: PARTNER_SUBSTATE
+          description: 'Activity context name.
+
+
+            Use with the `status` parameter to define the action.
+
+
+            Recommended values:
+
+
+            | Value | Notification type |
+
+            | --- | --- |
+
+            | CONFIRM_LOCK | Confirm the lock  |
+
+            | CONFIRM_SETTLE | Confirm settlement |
+
+            | CONFIRM_COMPLETE | Confirm completion |
+
+            | PARTNER_SUBSTATE | Notify on partner substate<br/><br/>Use with `output.sub_state` to provide additional information. |
+
+            '
+        output:
+          $ref: '#/components/schemas/ActivityOutput'
+        error:
+          type: array
+          description: 'Array of one or more activity error objects.
+
+
+            When `status` is `FAILURE` or `DECLINED`, use this to fail a payment or decline a request to lock a payment.
+
+
+            For all other `status` values, this property can be null.
+
+            '
+          items:
+            $ref: '#/components/schemas/ActivityError'
+          example: 'null'
+    ActivityOutput:
+      type: object
+      description: 'Use this object when `notification_type` is `PARTNER_SUBSTATE`.
+
+
+        For all other values of `notification_type`, this property can be null.
+
+        '
+      properties:
+        sub_state:
+          type: string
+          minLength: 1
+          maxLength: 128
+          example: AMENDED
+          description: 'Free-form string that describes a sub-state of the payment while it is in the `EXECUTED` state, for example, `FORWARDED` or `AWAITING_COLLECTION`.
+
+
+            Displays as a `label` value in the `labels` array.
+
+
+            Also displays as the `key` value in the receiving node''s `user_info.executed` array.
+
+            '
+        memo:
+          type: string
+          example: Last name must be corrected
+          description: 'Free-form details that describe the `sub_state` of the payment, for example, `with courier heading to payout location`.
+
+
+            Displays as the `value` value in the receiving node''s `user_info.executed` array.
+
+            '
+        info:
+          type: object
+          properties: {}
+          description: Provide one or more arbitrary key/value pairs.
+          example:
+            last_name: Gonzales
+    OrchestrationPayments:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrchestrationPaymentResponse'
+    PaymentCustomRateRequest:
+      type: object
+      required:
+      - base_currency
+      - counter_currency
+      - rate
+      - rate_type
+      properties:
+        rate:
+          type: number
+          description: Exchange rate for a base and counter currency.
+        base_currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          description: Base currency of the exchange rate.
+        counter_currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          description: Counter currency of the exchange rate.
+        rate_type:
+          type: string
+          description: 'Order type for the exchange rate.
+
+
+            Valid values are `sell` or `buy`.
+
+            '
+      description: Custom rate that the return payment quotes must use.
+    NotificationUUIDList:
+      type: object
+      properties:
+        uuids:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            format: uuid
+            example: 328b3e50-7983-46d5-94a0-ef004d78db1d
+          description: List of orchestration payment notification UUIDs.
+      description: JSON request object that represents a list of orchestration payment notification UUIDs to acknolwedge.
+    OrchestrationPaymentRequest:
+      type: object
+      required:
+      - sender_end_to_end_id
+      - sending_address
+      - receiving_address
+      - amount
+      - currency
+      - quote_type
+      - user_info
+      properties:
+        sender_end_to_end_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: 'Unique ID that the sender can specify.
+
+
+            Persisted on all instances that participate in the payment.
+
+            '
+        internal_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: '**[Sender only]**
+
+
+            Internal ID that the sender can optionally specify.
+
+
+            Only visible to the sender. Only the sending RippleNet instance stores this ID.
+
+            '
+        orchestration_template:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9_-]*$
+          description: 'Parameter for the orchestration template name.
+
+
+            If you don''t specify a template name, a default template will be picked.
+
+            '
+        sending_address:
+          type: string
+          minLength: 1
+          maxLength: 256
+          pattern: ^([\.a-zA-Z0-9_~-]+@)?(rn|dev|test|uat)([.][a-zA-Z0-9_~-]+)+$
+          description: 'RippleNet account name and address of the sender.
+
+
+            **Format**: `accountname@ripplenetaddress`
+
+
+            **Example**: `new_york@rn.us.ny.new_york`
+
+            '
+        receiving_address:
+          type: string
+          minLength: 1
+          maxLength: 256
+          pattern: ^([\.a-zA-Z0-9_~-]+@)?(rn|dev|test|uat)([.][a-zA-Z0-9_~-]+)+$
+          description: 'RippleNet account name and address of the receiver.
+
+
+            **Format**: `accountname@ripplenetaddress`
+
+
+            **Example**: `new_york@rn.us.ny.new_york`
+
+            '
+        amount:
+          type: string
+          minimum: 1
+          description: 'Amount to be sent or received, depending on the `quote_type`.
+
+
+            Use this table to determine what `amount` to assign.
+
+
+            **Example**: `"1"`
+
+
+            | Quote type | Amount |
+
+            | --- | --- |
+
+            | SENDER_AMOUNT | Amount to be sent by the payment originator |
+
+            | SENDER_INSTITUTION_AMOUNT | Set to `SENDER_INSTITUTION_AMOUNT` to calculate the quote based on the amount to be sent, plus any fees collected by the sending institution |
+
+            | RECEIVER_AMOUNT | Amount to be received by the payment beneficiary |
+
+            | RECEIVER_INSTITUTION_AMOUNT | Set to `RECEIVER_INSTITUTION_AMOUNT` to calculate the quote based on the amount to be received, minus any fees collected by the receiving institution |
+
+            '
+        currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          example: USD
+          description: 'Currency code of the amount to be sent or received, depending on the `quote_type`.
+
+
+            Use this table to determine what `currency` code to assign.
+
+
+            **Example**: `USD`
+
+
+            | Quote type | Currency code description |
+
+            | --- | --- |
+
+            | SENDER_AMOUNT | Specify the currency code for the sending currency, for example `USD` |
+
+            | SENDER_INSTITUTION_AMOUNT | Specify the currency code for the sending currency, for example `USD` |
+
+            | RECEIVER_AMOUNT | Specify the currency code for the receiving currency, for example `USD` |
+
+            | RECEIVER_INSTITUTION_AMOUNT | Specify the currency code for the receiving currency, for example `USD` |
+
+            '
+        quote_type:
+          type: string
+          example: SENDER_AMOUNT
+          description: 'Specifies how to calculate the quote.
+
+
+            **Example**: `SENDER_AMOUNT`
+
+            '
+          enum:
+          - SENDER_AMOUNT
+          - RECEIVER_AMOUNT
+          - SENDER_INSTITUTION_AMOUNT
+          - RECEIVER_INSTITUTION_AMOUNT
+          x-enumDescriptions:
+            SENDER_AMOUNT: Quote based on the amount the payment originator or originating institution wants to send
+            SENDER_INSTITUTION_AMOUNT: Quote based on the amount (to debit the originator) is `amount` plus any fees to be collected by the sending institution
+            RECEIVER_AMOUNT: Quote based on the amount the payment beneficiary or beneficiary institution should receive
+            RECEIVER_INSTITUTION_AMOUNT: The amount (to credit the beneficiary) is `amount` minus any fees to be collected by the receiving institution
+        sender_or_receiver_currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          description: 'Currency code of the sender or receiver based on `quote_type`.
+
+
+            If provided, you can use this to filter the options for quotes.
+
+
+            **Example**: `USD`
+
+            '
+          example: USD
+        custom_fee:
+          type: number
+          description: 'Custom fee for the sending account.
+
+
+            Setting this field overrides all fees configured on the sender''s RippleNet instance.
+
+            '
+        custom_rate:
+          $ref: '#/components/schemas/PaymentCustomRateRequest'
+        quote_route:
+          type: array
+          example:
+          - rn.us.ca.san_francisco
+          - rn.us.tx.austin
+          - rn.us.ny.new_york
+          description: 'Custom route that quote must follow.
+
+
+            Provide an array of RippleNet address strings that convey the route the quote must follow.
+
+
+            **Example**: `g.us.ca.san_francisco`
+
+            '
+          items:
+            type: string
+        payment_method:
+          type: string
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          minLength: 2
+          maxLength: 32
+          description: 'Use this field, when using ODL, to indicate the type of fees to apply.
+
+
+            When testing, set `"payment_method": "none"` to ensure funds remain at the destination exchange and are **_not_** paid out to a local rail.
+
+            '
+        enable_quote_per_payout_method:
+          type: boolean
+          example: true
+          description: Enable this flag to generate quotes using payout methods configured by the receiver.
+        digital_asset_origination:
+          type: boolean
+          example: false
+          description: 'When true, this flag tells RippleNet to provide a full quote as if the payment originates in the specified source fiat currency.
+
+
+            The quote for the source exchange excludes trading fees.
+
+
+            On execution, the source exchange trade is skipped, and XRP is withdrawn from the source exchange as the first step.
+
+            '
+        force_path_finding_and_liquidity_path_finding:
+          type: boolean
+          example: false
+          description: 'When true, this flag tells RippleNet to ignore cached value for path finding and liquidity path finding.
+
+
+            Force performing new path finding and liquidity path finding.
+
+            '
+          default: false
+        payout_method_category:
+          type: string
+          example: BOOK_TRANSFER
+          description: Category the payout method will be associated with.
+          enum:
+          - REAL_TIME_GROSS_SETTLEMENT_SYSTEM
+          - REAL_TIME_NET_SETTLEMENT_SYSTEM
+          - MASS_NET_PAYMENT_SYSTEM
+          - BOOK_TRANSFER
+          - CASH_PAYOUT
+          - WALLET_PAYMENT
+          - OTHER
+          x-enumDescriptions:
+            REAL_TIME_GROSS_SETTLEMENT_SYSTEM: Real-time gross settlement system
+            REAL_TIME_NET_SETTLEMENT_SYSTEM: Real-time net settlement system
+            MASS_NET_PAYMENT_SYSTEM: Mass net payment system
+            BOOK_TRANSFER: Book transfer
+            CASH_PAYOUT: Cash payout
+            WALLET_PAYMENT: Wallet payment
+            OTHER: Other
+        user_info:
+          type: object
+          properties: {}
+          description: Provide one or more arbitrary key/value pairs.
+        sender_segregated_account:
+          type: string
+          example: conct_php_receiver_coins_sender@receiver
+          description: 'RippleNet account name and address of the sender owned account at receiver to be used for failure conversion (in case of payment failure).
+
+
+            **Format**: `accountname@ripplenetaddress`
+
+
+            **Example**: `new_york@rn.us.ny.new_york`
+
+            '
+        quote_limit:
+          type: integer
+          description: Flag for truncating the total amount of quotes to a maximum amount after sorting and filters are applied.
+        quote_filter_types:
+          type: array
+          description: Filter on a type of quote.
+          items:
+            type: string
+            enum:
+            - LIQUIDITY_WARNINGS
+            - QUOTE_ERRORS
+            x-enumDescriptions:
+              LIQUIDITY_WARNINGS: Filter for liquidity warnings
+              QUOTE_ERRORS: Filter for quote errors
+      description: JSON request object that represents an orchestration payment.
+    OrchestrationPaymentAcceptRequest:
+      type: object
+      required:
+      - sender_end_to_end_id
+      - quote_id
+      - user_info
+      properties:
+        sender_end_to_end_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: 'Unique ID that the sender can specify.
+
+
+            Persisted on all instances that participate in the payment.
+
+            '
+        internal_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: Internal ID that the sender can optionally specify. Only visible to the sender. Only the sending RippleNet instance stores this ID.
+        quote_id:
+          type: string
+          format: uuid
+          example: 5492648d-2132-4e70-9ded-2fc86f22b321
+          description: ID of the quote to accept and continue as a payment.
+        orchestration_template:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9_-]*$
+          description: 'Parameter for the orchestration template name.
+
+
+            If you don''t provide a template, a default template will be picked.
+
+            '
+        user_info:
+          type: object
+          properties: {}
+          description: provide one or more arbitrary key/value pairs.
+      description: JSON request object that represents an orchestration payment accept request.
+    OrchestrationPaymentReversalRequest:
+      type: object
+      required:
+      - sender_end_to_end_id
+      - original_payment_id
+      - reversal_reason
+      properties:
+        sender_end_to_end_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: Unique ID that the sender can specify.
+        original_payment_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: Unique ID of the payment that should be reversed.
+        reversal_reason:
+          $ref: '#/components/schemas/PaymentReversalReasonRos'
+      description: Use this JSON request object to reverse a payment.
+    NotificationResponseRos:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: 5492648d-2132-4e70-9ded-2fc86f22b321
+          description: Unique Identifier of the orchestration payment notification.
+        notification_type:
+          type: string
+          example: PAYMENT_SUCCESS
+          description: Type of the orchestration payment notification.
+        notification_version:
+          type: string
+          example: 1
+          description: Version of the orchestration payment notification.
+        notification_status:
+          type: string
+          enum:
+          - NEW
+          - SENT
+          - ACK
+          description: Orchestration payment notification status.
+        notification_payload:
+          type: object
+          properties: {}
+          description: Orchestration payment notification payload.
+        created_at:
+          type: string
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+          description: Date and time at which the message was created, as an ISO-8601 timestamp in UTC.
+        modified_at:
+          type: string
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+          description: Date and time at which the message was modified, as an ISO-8601 timestamp in UTC.
+      description: JSON request object that represents an orchestration payment notification.
+    OrchestrationPaymentSubmitResponse:
+      type: object
+      properties:
+        sender_end_to_end_id:
+          type: string
+          example: '00310000015'
+          description: Sender end-to-end ID.
+      description: JSON response object that represents an orchestration payment query ID.
+    ActivityStatus:
+      type: string
+      description: Activity status
+      enum:
+      - SUCCESS
+      - FAILURE
+      - DECLINED
+      - REDO
+      - SUBSTATE
+      - NOTIFY
+      - PENDING
+      - SUBTASK
+      example: SUBSTATE
+      x-enumDescriptions:
+        SUCCESS: Set status to success
+        FAILURE: 'Set status to failure
+
+
+          Use with the `error` field to provide additional information.
+
+          '
+        DECLINED: 'Set status to declined
+
+
+          Use with the `error` field to provide additional information.
+
+          '
+        REDO: Set status to redo
+        SUBSTATE: Set status to substate
+        NOTIFY: Set status to notify
+        PENDING: Set status to pending
+        SUBTASK: Set status to subtask
+    NotificationAckResponse:
+      type: object
+      properties:
+        notification_ack_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationResponseRos'
+          description: List of responses of acknowledged orchestration payment notifications.
+        invalid_uuid_list:
+          type: array
+          items:
+            type: string
+            format: uuid
+            example: 328b3e50-7983-46d5-94a0-ef004d78db1d
+            description: Invalid notification UUIDs.
+      description: Orchestration payment notification acknoledge response.
+    PaymentReversalReasonRos:
+      type: object
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          example: RB001
+          description: The code indicating the reason for payment reversal.
+          enum:
+          - RB001
+          - RB002
+          - RB003
+          - RB004
+          - RB005
+          - RB008
+          - RB009
+          - RB010
+          - RB011
+          - RB012
+          - RB013
+          - RB017
+          - RB018
+          - RB023
+          - RB024
+          - RB026
+          - RB027
+          - RB028
+          - RB029
+          - RB030
+          - RB031
+          - RB032
+          - RB033
+          - RB034
+          - RB035
+          - RB036
+          - RB037
+          - AC01
+          - AC03
+          - AC04
+          - AC06
+          - AC08
+          - AC09
+          - AC11
+          - AC12
+          - AC13
+          - AC14
+          - AC15
+          - AG01
+          - AG02
+          - AG03
+          - AG05
+          - AG06
+          - AM02
+          - AM03
+          - AM04
+          - AM11
+          - AM13
+          - AM14
+          - AM15
+          - AM21
+          - AM22
+          - BE01
+          - BE04
+          - BE05
+          - BE06
+          - BE07
+          - BE08
+          - BE09
+          - BE10
+          - BE11
+          - BE12
+          - BE13
+          - BE14
+          - BE15
+          - BE16
+          - BE17
+          - BE18
+          - BE19
+          - BE20
+          - BE21
+          - BE22
+          - CERI
+          - CH11
+          - CH12
+          - CH13
+          - CH14
+          - CH21
+          - CNOR
+          - CUST
+          - DS24
+          - DU05
+          - DUPL
+          - ED06
+          - FF03
+          - FF04
+          - FF05
+          - FF06
+          - FF07
+          - FF08
+          - FF10
+          - MD06
+          - MD07
+          - MS02
+          - MS03
+          - NARR
+          - RC01
+          - RC02
+          - RC04
+          - RC05
+          - RC07
+          - RC08
+          - RC10
+          - RC12
+          - RF01
+          - RR01
+          - RR02
+          - RR03
+          - RR04
+          - RR05
+          - RR06
+          - RR07
+          - RR10
+          - SL03
+          x-enumDescriptions:
+            RB001: The account number structure is valid but the account number does not correspond to the individual identified in the payment. <br /><br />This error typically occurs because the Originator specified the Beneficiary's account number incorrectly while initiating the payment.<br/><br/><b>Error handling</b><br/>The Sending Member may introduce prompts in the user interface during payment initiation to ensure that the Originator validates the Beneficiary's account number.
+            RB002: The Sender has requested Receiver for return of the payment.<br /><br />This error typically occurs in business scenarios where the Originator contacts the Sending Member to indicate that they (the Originator) provided incorrect account information.<br/><br/><b>Error handling</b><br/>The Sending Member must contact the Receiving Member and obtain agreement that the payment should be returned. After obtaining agreement, the Receiving Member can initiate the return of the payment.
+            RB003: The funds for the payment have not been collected by the Beneficiary within the set period.<br/><br/><b>Error handling</b><br/>The Originator must inform the Beneficiary that they should collect the funds within the prescribed time frame. <br /><br />The Receiving Member may also contact the Beneficiary to inform them of pending or uncollected funds. <br />Further, the Receiving Member must ensure that the Sending Member includes the Beneficiary's contact information in the RippleNet Payment Object.
+            RB004: Beneficiary's account is frozen due to specific action taken by the Receiver or by legal action. <br /><br /> This error typically occurs when the Beneficiary's bank has frozen the account due to suspected misuse, or on the Beneficiary's request.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary for alternative account information or to agree on an alternative payment mechanism.
+            RB005: 'The Receiver has returned the payment due to one of the following reasons: <br /><br /><ul><li>The exact amount required has not been remitted. </li><li>Acceptance of the transaction results in an overpayment.</li></ul><br/><br/><b>Error handling</b><br/>In case of a technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not transfer the incorrect amount. <br /><br />The Beneficiary may contact the Originator and ask them to initiate a payment for the exact amount.'
+            RB008: Invalid account title or name prefix. <br /><br />This error typically occurs when the Beneficiary's title or name specified in the payment does not match the information associated with their account.<br/><br/><b>Error handling</b><br/>In case of a technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not provide the incorrect Beneficiary title or name. <br /><br />If the Beneficiary provided incorrect information, the Originator may contact the Beneficiary to obtain the correct information.
+            RB009: Beneficiary's account is dormant. <br /><br />This error typically occurs because the Beneficiary's Bank has marked the account as dormant due to a lack of activity or financial transactions on the account.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary for alternative account information or to agree upon a different payment mechanism.
+            RB010: The minimum amount required has not been remitted. <br /><br />This error typically occurs because the Originator has initiated payment for an amount that is lower than the intended amount that they previously agreed upon with the Beneficiary.<br/><br/><b>Error handling</b><br/>In case of technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not specify incorrect amounts.
+            RB011: The account is subject to litigation. <br /><br />This error typically occurs because the Beneficiary's Bank has frozen the account due to legal reasons, or under suspicion of misuse, or on the Beneficiary's request.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary for alternative account information or to agree upon a different payment mechanism.
+            RB012: The Originator is not known to the Recipient or Beneficiary.<br/><br/><b>Error handling</b><br/>In case of technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not initiate payments to unknown or unintended Beneficiary accounts.
+            RB013: The Receiver has not authorized this credit entry to the Beneficiary's account. <br /><br />This error typically occurs because the Beneficiary's Bank has blocked the account due to legal reasons.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary for alternative account information or to agree upon a different payment mechanism.
+            RB017: Government or National ID of the individual identified in the payment is not mapped to the account number. <br /><br />This error typically occurs when the payment cannot be booked to the Beneficiary's account because their Government or National ID is not linked with their account.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary to agree upon a different payment mechanism.
+            RB018: Customer insolvent or other reason.
+            RB023: Beneficiary account name does not match Beneficiary account number.<br/><br/><b>Error handling</b><br/>In case of technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not specify incorrect Beneficiary name.<br /><br /> If the account name was invalid, the Originator may contact the Beneficiary for correct information.
+            RB024: Account is not in currency quoted.<br/><br/><b>Error handling</b><br/>In case of technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not specify incorrect account currency information.<br /><br /> The Originator may request the Beneficiary to provide accurate information about their account currency.
+            RB026: Beneficiary account number closed.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary for alternative account information.
+            RB027: Beneficiary does not support or accept this message or payment type.<br/><br/><b>Error handling</b><br/>In case of technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not specify the wrong payment type.<br /><br />The Beneficiary may request the Originator to re-initiate the payment with a supported payment type.
+            RB028: Payment was not processed as Receiver is unavailable or offline. <br /><br />This error typically occurs when the RippleNet connection to and from the Receiving Member or Intermediary Bank is unavailable due to network issues.<br/><br/><b>Error handling</b><br/>The Sending Member may request the Originator to reissue the RippleNet payment at a later time.
+            RB029: Invalid payment type. The payment type used is not allowed or enabled for this Bank.<br/><br/><b>Error handling</b><br/>In case of technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not specify the wrong payment type.<br /><br />The Beneficiary may request the Originator to re-initiate the payment with a valid payment type.
+            RB030: Card is blocked, or lost, or hotlisted. <br /><br /> This error typically occurs if the Beneficiary Bank has blocked the card account due to reported theft or other legal issues.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary for alternative account details.
+            RB031: Card is expired.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary for alternative account details.
+            RB032: Invalid card number. <br /><br />This error typically occurs either because the Originator entered an invalid card number while initiating the payment, or because the Beneficiary provided an invalid card number to the Originator.<br/><br/><b>Error handling</b><br/>In case of a technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not supply an invalid or incomplete card number. <br /><br />If the Beneficiary provided an incorrect card number, the Originator may contact the Beneficiary for the correct number.
+            RB033: Transactions to the card are restricted. <br /><br /> This error typically occurs because the Beneficiary Bank has restricted financial transactions on the card due to legal reasons or reports of fraudulent usage.<br/><br/><b>Error handling</b><br/>The Originator may request the Beneficiary to provide alternative account information.
+            RB034: Beneficiary has exceeded the number of transactions allowed for a set time period. <br /><br /> This error typically occurs due to failed velocity or fraud checks conducted by the Receiving Member.
+            RB035: Beneficiary has exceeded the cumulative transaction amount allowed for a set time period. <br /><br /> This error typically occurs due to failed velocity or fraud checks conducted by the Receiving Member.<br/><br/><b>Error handling</b><br/>N/A
+            RB036: Originator has exceeded the number of transactions allowed for a set time period. <br /><br /> This error typically occurs due to failed velocity or fraud checks conducted by the Receiving Member.<br/><br/><b>Error handling</b><br/>N/A
+            RB037: Originator has exceeded the cumulative transaction amount allowed for a set time period. <br /><br /> This error typically occurs due to failed velocity or fraud checks conducted by the Receiving Member.<br/><br/><b>Error handling</b><br/>N/A
+            AC01: Account number is invalid or missing.
+            AC03: Creditor account number invalid or missing.<br/><br/><b>Error handling</b><br/>If the account number or IBAN is invalid, the Sending Member may repair the transaction by specifying a valid Creditor account number.<br /><br />If the account number is missing from the payment message, the Originator may reissue the payment with the Creditor account number or IBAN included.
+            AC04: Account number specified has been closed on the Receiver's books.<br />The Beneficiary may have closed their account since the last time the Originator made a payment transfer to this Beneficiary.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary for their new account number.
+            AC06: Account specified is blocked, prohibiting posting of transactions against it. <br />The Account Servicer may have frozen the account for legal reasons, or on the Beneficiary's request.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary for alternative account details.
+            AC08: Branch code is invalid or missing.<br/><br/><b>Error handling</b><br/>If the branch code is invalid, the Sending Member may repair the transaction by specifying the complete branch code.<br /><br />If the branch code is missing, the Originator may reissue the payment with the correct branch code included.
+            AC09: Account currency is invalid or missing.<br /> This error is likely caused by a technical or human error. This error may also occur if the Beneficiary provided incorrect information to the Originator.<br/><br/><b>Error handling</b><br/>In case of a technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not specify invalid account currency information. <br /><br />If the Beneficiary provided incorrect account information, the Originator may contact the Beneficiary for accurate information.
+            AC11: Creditor account currency is invalid or missing.<br/><br/><b>Error handling</b><br/>If the account currency information is invalid, the Sending Member may repair the transaction by specifying a valid Beneficiary account currency.<br /><br /> If the account currency information is missing, the Originator may reissue the payment with the Beneficiary account currency specified.
+            AC12: Account type missing or invalid. Generic usage if cannot specify between group and payment information levels.
+            AC13: Debtor account type missing or invalid.<br/><br/><b>Error handling</b><br/>If the account type information is invalid, the Sending Member may repair the transaction by specifying the correct Originator account type.<br /><br /> If the account type information is missing, the Originator may reissue the payment with the Originator account type specified.
+            AC14: Creditor account type missing or invalid.<br/><br/><b>Error handling</b><br/>If the account type information is invalid, the Sending Member may repair the transaction by specifying the correct Beneficiary account type.<br /><br /> If the account type information is missing, the Originator may reissue the payment with the Beneficiary account type specified.
+            AC15: The account details for the counterparty have changed.
+            AG01: Transaction forbidden on this type of account (formerly NoAgreement).<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary for details of an alternative account that can receive the transaction.
+            AG02: Bank Operation code specified in the message is not valid for receiver.<br/><br/><b>Error handling</b><br/>If the bank code information is invalid, the Sending Member may repair the transaction by specifying the correct code.<br /><br /> If the bank code information is missing, the Originator may reissue the payment with the bank code specified.
+            AG03: Transaction type not supported/authorized on this account.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary to agree on a different payment instrument.
+            AG05: Debtor agent country code is missing or invalid.<br/><br/><b>Error handling</b><br/>If the country code information is invalid, the Sending Member may repair the transaction by specifying the correct Sender Agent country code.<br /><br /> If the country code information is missing, the Originator may reissue the payment with the Sender Agent country code specified.
+            AG06: Creditor agent country code is missing or invalid.<br/><br/><b>Error handling</b><br/>If the country code information is invalid, the Sending Member may repair the transaction by specifying the correct Beneficiary Agent country code.<br /><br /> If the country code information is missing, the Originator may reissue the payment with the Beneficiary Agent country code specified.
+            AM02: Specific transaction/message amount is greater than allowed maximum.<br/><br/><b>Error handling</b><br/>The Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not transfer incorrect amounts.
+            AM03: Specified message amount is a non-processable currency outside of existing agreement.<br/><br/><b>Error handling</b><br/>The Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not initiate payments in unsupported currency.
+            AM04: Amount of funds available to cover specified message amount is insufficient. <br /><br />This error may occur due to the following reasons:<ul><li>The Originator's account does not have sufficient funds to debit the full amount of the payment.</li><li>There are insufficient funds in the Sending/Originating Bank's nostro settlement account at the Local Clearing/Receiver/Beneficiary bank to process the payment. </li></ul><br/><br/><b>Error handling</b><br/>If the Originator's account previously had insufficient funds, the Sending Member may reissue the payment after the Originator ensures that their account contains the funds required to process the payment.<br /><br />If the Sending/Originating Bank's nostro settlement account previously had insufficient funds, they can reissue the payment after ensuring that their settlement account contains sufficient funds to process the payment.
+            AM11: Transaction currency information is invalid or missing.
+            AM13: Transaction amount exceeds limits set by clearing system.<br/><br/><b>Error handling</b><br/>The Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not transfer incorrect amounts.
+            AM14: Transaction amount exceeds limits agreed between bank and client.<br/><br/><b>Error handling</b><br/>The Beneficiary may request the Originator to initiate a payment whose transaction amount is within the agreed limits. Further, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not transfer incorrect amounts.
+            AM15: Transaction amount below minimum set by clearing system.<br/><br/><b>Error handling</b><br/>The Beneficiary may request the Originator to initiate a payment whose transaction amount is within the agreed limits. Further, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not transfer incorrect amounts.
+            AM21: Transaction amount exceeds limits agreed between bank and client.
+            AM22: Unable to apply zero amount to designated account. For example, where the rules of a service allow the use of zero amount payments, however the back-office system is unable to apply the funds to the account. If the rules of a service prohibit the use of zero amount payments, then code AM01 is used to report the error condition.
+            BE01: Identification of end customer is not consistent with associated account number (formerly CreditorConsistency). <br />This error typically occurs because the Originator entered an incorrect Beneficiary account number while initiating the payment.<br/><br/><b>Error handling</b><br/>The Sending Member may introduce additional prompts in the user interface during payment initiation to ensure that the Originator verifies the Beneficiary's account number.
+            BE04: Specification of creditor's address, which is required for payment, is missing/not correct (formerly IncorrectCreditorAddress).<br/><br/><b>Error handling</b><br/>If the Beneficiary address is invalid, the Sending Member may repair the transaction by providing the correct Beneficiary address. <br /><br />If the Beneficiary address is missing, the Originator may reissue the payment with the Beneficiary address specified.
+            BE05: Party who initiated the message is not recognized by the end customer.
+            BE06: End customer specified is not known at associated Sort/National Bank Code or does no longer exist in the books.
+            BE07: Specification of debtor's address, which is required for payment, is missing/not correct.<br/><br/><b>Error handling</b><br/>If the Originator's address is invalid, the Sending Member may repair the transaction by providing the correct Originator address. <br /><br /> If the Originator's address is missing, the Originator may reissue the payment with their address specified.
+            BE08: Debtor name is missing.<br/><br/><b>Error handling</b><br/>If the Originator's name is invalid, the Sending Member may repair the transaction by providing the correct Originator name. <br /><br /> If the Originator's name is missing, the Originator may reissue the payment with their name specified.
+            BE09: Country code is missing or Invalid. Generic usage if cannot specifically identify debtor or creditor.
+            BE10: Debtor country code is missing or invalid.<br/><br/><b>Error handling</b><br/>If the Originator's country code is invalid, the Sending Member may repair the transaction by providing the correct Originator country code. <br /><br /> If the Originator's country code is missing, the Originator may reissue the payment with the country code specified.
+            BE11: Creditor country code is missing or invalid.<br/><br/><b>Error handling</b><br/>If the Beneficiary's country code is invalid, the Sending Member may repair the transaction by providing the correct Beneficiary country code. <br /><br /> If the Beneficiary's country code is missing, the Originator may reissue the payment with the Beneficiary country code specified.
+            BE12: Country code of residence is missing or Invalid. This generic error code should be used only if the relevant party is not clearly identifiable or specified.
+            BE13: Country code of debtor's residence is missing or Invalid.<br/><br/><b>Error handling</b><br/>If the country code for Originator's country of residence is invalid, the Sending Member may repair the transaction by providing the correct country code.<br /><br /> If the country code for Originator's country of residence is missing, the Originator may reissue the payment with the country code specified.
+            BE14: Country code of creditor's residence is missing or Invalid.<br/><br/><b>Error handling</b><br/>If the country code for Beneficiary's country of residence is invalid, the Sending Member may repair the transaction by providing the correct country code.<br /><br /> If the country code for Beneficiary's country of residence is missing, the Originator may reissue the payment with the Beneficiary country code specified.
+            BE15: Identification code missing or invalid. Generic usage if cannot specifically identify debtor or creditor.
+            BE16: Debtor or Ultimate Debtor identification code missing or invalid.<br/><br/><b>Error handling</b><br/>If the Originator's identification code is invalid, the Sending Member may repair the transaction by providing the correct identification code. <br /><br />If the Originator's identification code is missing, the Originator may reissue the payment with the identification code specified.
+            BE17: Creditor or Ultimate Creditor identification code missing or invalid.<br/><br/><b>Error handling</b><br/>If the Beneficiary's identification code is invalid, the Sending Member may repair the transaction by providing the correct identification code. <br /><br />If the Beneficiary's identification code is missing, the Originator may reissue the payment with the Beneficiary identification code specified.
+            BE18: Contact details missing or invalid.<br/><br/><b>Error handling</b><br/>If the contact details are invalid, the Sending Member may repair the transaction by providing the correct contact details.<br /><br /> If the contact details are missing, the Originator may reissue the payment with the contact details specified.
+            BE19: Charge bearer code for transaction type is invalid.<br/><br/><b>Error handling</b><br/>If the charge bearer code is invalid, the Sending Member may repair the transaction by providing the correct charge bearer code.<br /><br /> If the charge bearer code is missing, the Originator may reissue the payment with the charge bearer code specified.
+            BE20: Name length exceeds local rules for payment type.
+            BE21: Name missing or invalid. Generic usage if cannot specifically identify debtor or creditor.
+            BE22: Creditor name is missing.<br/><br/><b>Error handling</b><br/>If the Beneficiary's name is invalid, the Sending Member may repair the transaction by providing the correct Beneficiary name. <br /><br />If the Beneficiary's name is missing, the Originator may reissue the payment with the Beneficiary's name specified.
+            CERI: Credit transfer is not tagged as an Extended Remittance Information (ERI) transaction but contains ERI.
+            CH11: Value in Creditor Identifier is incorrect.
+            CH12: Creditor Identifier is ambiguous at Transaction Level.
+            CH13: Original Debtor Account is not to be used.
+            CH14: Original Debtor Agent is not to be used.
+            CH21: Mandatory element is missing.
+            CNOR: Creditor bank is not registered under this BIC in the CSM.
+            CUST: Cancellation requested by the Debtor.
+            DS24: Waiting time expired due to incomplete order.<br/><br/><b>Error handling</b><br/>The Originator may contact the Beneficiary and ask them to take the actions necessary to receive funds. <br /><br />If the payment is resubmitted, a new reference ID must be used.
+            DU05: Instruction ID is not unique. <br /><br />This error typically occurs when the Sending Member submits a transaction with an Instruction ID that matches a previous transaction's Instruction ID.<br/><br/><b>Error handling</b><br/>The Sending Member must resubmit the transaction with a unique Instruction ID. <br /><br />The following measures may also be considered:<ul><li>Sending and Receiving Members agree on the criteria to identify duplicate payments, and the window within which Intermediaries or Receiving Members will check for duplicate payments.</li><li>The Sending Member may implement checks to avoid submitting duplicate payments.</li><li>If a duplicate payment occurs, the Sending Member may resubmit the payment with new reference information within the duplication window. If the window expires, the Sending Member may initiate a new payment.</li></ul>
+            DUPL: Payment is a duplicate of another payment. <br /><br />This error typically occurs when the Sending Member submits a transaction with reference information that matches a previous transaction's reference information.<br/><br/><b>Error handling</b><br/>The Sending Member must resubmit the transaction with unique reference information. <br /><br />The following measures may also be considered:<ul><li>Sending and Receiving Members agree on the criteria to identify duplicate payments, and the window within which Intermediaries or Receiving Members will check for duplicate payments.</li><li>The Sending Member may implement checks to avoid submitting duplicate payments.</li><li>If a duplicate payment occurs, the Sending Member may resubmit the payment with new reference information within the duplication window. If the window expires, the Sending Member may initiate a new payment.</li></ul>
+            ED06: Interbank settlement system not available. <br /><br />This error typically occurs when the connecting infrastructure of the local clearing rail at the Receiving Member is unavailable to process or transmit any payment messages.<br/><br/><b>Error handling</b><br/>The Sending Member may recommend that the Originator reissue the RippleNet payment at a later time.<br /><br />The Originator may contact the Beneficiary to determine an alternative solution to make the payment.
+            FF03: Payment Type Information is missing or invalid. This generic error code should be used only if Service Level or Local Instrument code are not specified.<br/><br/><b>Error handling</b><br/>If the payment type information is invalid, the Sending Member may repair the transaction by providing the correct payment type information.<br /><br />If the payment type information is missing, the Originator may reissue the payment with the payment type information specified.
+            FF04: Service Level code is missing or invalid.<br/><br/><b>Error handling</b><br/>If the service level code is invalid, the Sending Member may repair the transaction by providing the correct code.<br /><br />If the service level code is missing, the Originator may reissue the payment with the code specified.
+            FF05: Local Instrument code is missing or invalid.<br/><br/><b>Error handling</b><br/>If the local instrument code is invalid, the Sending Member may repair the transaction by providing the correct code.<br /><br />If the local instrument code is missing, the Originator may reissue the payment with the code specified.
+            FF06: Category Purpose code is missing or invalid.<br/><br/><b>Error handling</b><br/>If the category purpose code is invalid, the Sending Member may repair the transaction by providing the correct code.<br /><br />If the category purpose code is missing, the Originator may reissue the payment with the code specified.
+            FF07: Purpose of payment is missing or invalid.<br/><br/><b>Error handling</b><br/>If the purpose of payment information is invalid, the Sending Member may repair the transaction by providing the correct information.<br /><br />If the purpose of payment information is missing, the Originator may reissue the payment with the purpose of payment specified.
+            FF08: End to End Id missing or invalid.<br/><br/><b>Error handling</b><br/>If the end-to-end ID is invalid, the Sending Member may repair the transaction by providing the correct ID. <br /><br /> If the end-to-end ID is missing, the Originator may reissue the payment with the ID specified.
+            FF10: File or transaction cannot be processed due to technical issues at the bank side.<br/><br/><b>Error handling</b><br/>The Sending Member may recommend that the Originator reissue the RippleNet payment at a later time.<br /><br />The Originator may contact the Beneficiary to determine an alternative solution to make the payment.
+            MD06: Return of funds requested by end customer.
+            MD07: End customer is deceased.
+            MS02: Reason has not been specified by end customer.
+            MS03: Reason has not been specified by agent.
+            NARR: Reason is provided as narrative information in the additional reason information.
+            RC01: Bank identifier code specified in the message has an incorrect format (formerly IncorrectFormatForRoutingCode).
+            RC02: Bank identifier is invalid or missing. Generic usage if cannot specify between debit or credit account.
+            RC04: Creditor bank identifier is invalid or missing.<br/><br/><b>Error handling</b><br/>If the Creditor Bank identifier is invalid, the Sending Member may repair the transaction by providing the correct identifier. <br /><br />If the Creditor Bank identifier is missing, the Originator may reissue the payment with the identifier specified.
+            RC05: BIC identifier is invalid or missing. This generic error code should be used only if the relevant party is not clearly identifiable or specified.<br/><br/><b>Error handling</b><br/>If the BIC is invalid, the Sending Member may repair the transaction by providing the correct identifier. <br /><br />If the BIC is missing, the Originator may reissue the payment with the BIC identifier specified.
+            RC07: Creditor BIC identifier is invalid or missing.<br/><br/><b>Error handling</b><br/>If the Beneficiary's BIC identifier is invalid, the Sending Member may repair the transaction by providing the correct BIC identifier.<br /><br /> If the Beneficiary's BIC identifier is missing, the Originator may reissue the payment with the BIC identifier specified.
+            RC08: ClearingSystemMember identifier is invalid or missing. Generic usage if cannot specify between debit or credit account.
+            RC10: Creditor ClearingSystemMember identifier is invalid or missing.<br/><br/><b>Error handling</b><br/>If the Beneficiary's ClearingSystemMember identifier is invalid, the Sending Member may repair the transaction by providing the correct identifier.<br /><br /> If the Beneficiary's ClearingSystemMember identifier is missing, the Originator may reissue the payment with the identifier specified.
+            RC12: Creditor Scheme Id is invalid or missing.
+            RF01: Transaction reference is not unique within the message.
+            RR01: Specification of the debtor's account or unique identification needed for reasons of regulatory requirements is insufficient or missing.
+            RR02: Specification of the debtor's name and/or address needed for regulatory requirements is insufficient or missing.
+            RR03: Specification of the creditor's name and/or address needed for regulatory requirements is insufficient or missing.<br/><br/><b>Error handling</b><br/>If the Beneficiary's name and/or address information is invalid, the Sending Member may repair the transaction by providing the correct information.<br /><br /> If the Beneficiary's name and/or address information is missing, the Originator may reissue the payment with the Beneficiary's information specified.
+            RR04: Regulatory Reason. This error typically occurs when there is a restriction due to Anti-Money Laundering (AML), embargo, or compliance reasons.<br/><br/><b>Error handling</b><br/>The Originator may contact the Sending Member to enquire about the reasons for the error and take remedial action as they see fit.
+            RR05: Regulatory or Central Bank Reporting information missing, incomplete or invalid.<br/><br/><b>Error handling</b><br/>In case of a technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not supply invalid or incomplete information. <br /><br />If the Beneficiary provided incorrect information, the Originator may contact the Beneficiary for accurate information.
+            RR06: Tax information missing, incomplete or invalid.
+            RR07: Remittance information structure does not comply with rules for payment type.
+            RR10: Character set supplied not valid for the country and payment type.<br/><br/><b>Error handling</b><br/>In case of a technical or human error, the Sending Member or the Originator must adapt their internal RippleNet payment initiation process to ensure they do not supply an invalid character set. <br /><br />If the Beneficiary provided incorrect information, the Originator may contact the Beneficiary for accurate information.
+            SL03: Due to a specific service offered by the clearing system.
+        description:
+          type: string
+          example: No account / Unable to locate account
+          description: User-defined string describing the reason for payment reversal.
+      description: A structured object detailing reasons for a payment reversal.
+    OrchestrationPaymentReturnRequest:
+      type: object
+      required:
+      - sender_end_to_end_id
+      - original_payment_id
+      properties:
+        sender_end_to_end_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: Unique ID that the sender can specify.
+        original_payment_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: Unique ID of the payment that should be returned.
+        return_reasons:
+          type: object
+          description: Provide one or more arbitrary key/value pairs.
+          properties: {}
+        return_amount_type:
+          type: string
+          default: TOTAL_RECEIVED
+          description: 'Amount type of the return payment.
+
+            '
+          enum:
+          - TOTAL_RECEIVED
+          - TOTAL_RECEIVED_MINUS_FEES
+          x-enumDescriptions:
+            TOTAL_RECEIVED: Indicates that the sender of the return payment will send the amount they received
+            TOTAL_RECEIVED_MINUS_FEES: Indicates that the sender of the return payment will send the amount they received minus the receiving fees
+        custom_fee:
+          type: number
+          description: 'Custom fee charged and collected by the sending account.
+
+
+            Setting this field overrides all applicable fees configured on the sender''s RippleNet instance.
+
+            '
+        custom_rate:
+          $ref: '#/components/schemas/PaymentCustomRateRequest'
+        force_path_finding_and_liquidity_path_finding:
+          type: boolean
+          example: false
+          description: 'When true, this flag tells RippleNet to ignore cached value for path finding and liquidity path finding.
+
+
+            Forces performing new path finding and liquidity path finding.
+
+            '
+          default: false
+        user_info:
+          type: object
+          properties: {}
+          description: Provide one or more arbitrary key/value pairs.
+      description: Use this JSON request object to return a payment.
+    OrchestrationPaymentResponse:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: 5492648d-2132-4e70-9ded-2fc86f22b321
+          description: Unique Identifier of the orchestration payment.
+        unique_reference_number:
+          type: string
+          example: '00310000015'
+          description: Unique reference number.
+        sender_end_to_end_id:
+          type: string
+          example: '00310000015'
+          description: Sender end-to-end ID.
+        payment_type:
+          type: string
+          description: The payment type for the payment.
+          enum:
+          - REGULAR
+          - RETURN
+          - REVERSAL
+        connector_role:
+          type: string
+          description: The connector role for payment.
+          enum:
+          - SENDING
+          - RECEIVING
+          - INTERMEDIARY
+        payment_id:
+          type: string
+          example: 26bf269b-1a2b-c3d4-872a-7f18d7dcf9f2
+          description: Payment ID for the transaction in RippleNet.
+        payment_status:
+          type: string
+          example: SUCCESS
+          description: Status of the payment.
+        previous_payment_status:
+          type: string
+          example: EXECUTED
+          description: Previous status of the payment.
+        orchestration_template:
+          type: string
+          example: default_template
+          description: Template name used for executing the orchestration payment.
+        orchestration_status:
+          type: string
+          example: RUNNING
+          description: Status of the orchestration payment.
+        current_activity:
+          type: string
+          example: get_quote_v1
+          description: Current activity which is being executed.
+        current_activity_status:
+          type: string
+          example: SUCCESS
+          description: Status of the current activity.
+        initial_context:
+          type: object
+          properties: {}
+          description: Initial context for the orchestration payment.
+        current_context:
+          type: object
+          properties: {}
+          description: Current context of the orchestration payment.
+        error_message:
+          type: object
+          properties: {}
+          description: Error message in case of any error.
+        activity_list:
+          type: object
+          properties: {}
+          description: Activity list of the activities executed so far.
+        created_at:
+          type: string
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+          description: Date and time at which the orchestration payment was created, as an ISO-8601 timestamp in UTC.
+        modified_at:
+          type: string
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+          description: Date and time at which the orchestration payment was modified, as an ISO-8601 timestamp in UTC.
+      description: JSON response object that represents an orchestration payment.
+    NotificationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/NotificationResponseRos'
+      description: List response of external notifications.
+    PaymentActionResponse:
+      type: object
+      properties:
+        unique_reference_number:
+          type: string
+          example: '00310000015'
+          description: Unique Reference Number.
+      description: JSON response object that represents a payment action query ID.
+    ActivityError:
+      type: object
+      description: Activity error object in JSON format.
+      properties:
+        type:
+          type: string
+          description: For recommended type values, see [Returns and failure codes](/products/payments-odl/api-docs/ripplenet/resources/error-codes/returns-and-error-codes/).
+        code:
+          type: string
+          description: For recommended failure codes, see [Returns and failure codes](/products/payments-odl/api-docs/ripplenet/resources/error-codes/returns-and-error-codes/#812-failure-type-codes).
+        reason:
+          type: string
+          description: The reason for the failure or lock decline.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

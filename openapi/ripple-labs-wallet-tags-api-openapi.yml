@@ -1,0 +1,528 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Wallet Tags API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Wallet Tags
+  description: Used to manage wallet tags
+paths:
+  /v2/vaults/{vaultId}/wallets/tags:
+    get:
+      summary: List all wallet tags in vault
+      description: List all tags from all wallets in the vault
+      operationId: VaultService_ListWalletTagsInVault
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/v2WalletTag'
+                  - type: object
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Wallet Tags
+  /v2/vaults/{vaultId}/wallets/{walletId}/tags:
+    get:
+      summary: List wallet tags for the wallet
+      description: List all wallet tags for the wallet
+      operationId: VaultService_ListWalletTags
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/v2WalletTag'
+                  - type: object
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: walletId
+        description: The wallet ID
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Wallet Tags
+    delete:
+      summary: Delete a wallet tag
+      description: Delete a wallet tag from a wallet
+      operationId: VaultService_DeleteWalletTag
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DeleteWalletTagResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: walletId
+        description: The wallet ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tag
+        description: The tag
+        in: query
+        required: true
+        schema:
+          type: string
+      tags:
+      - Wallet Tags
+    post:
+      summary: Add a new wallet tag
+      description: Add a new wallet tag to a wallet
+      operationId: VaultService_AddWalletTag
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/v2WalletTag'
+                  - type: object
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: vaultId
+        description: The vault ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: walletId
+        description: The wallet ID
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tag:
+                  type: string
+                  example: Issuing wallet
+                  description: The tag
+              required:
+              - tag
+        required: true
+      tags:
+      - Wallet Tags
+components:
+  schemas:
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2WalletTag:
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        tags:
+          type: array
+          example:
+          - Issuing wallet
+          items:
+            type: string
+          description: The tags belonging to the wallet
+      required:
+      - walletId
+      - vaultId
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2DeleteWalletTagResponse:
+      type: object
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

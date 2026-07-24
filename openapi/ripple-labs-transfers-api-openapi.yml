@@ -1,0 +1,620 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Transfers API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Transfers
+  description: '
+
+    Use these operations to manage your transfers.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransfers)                 | GET    | Gets a list of transfers. |
+
+    | [Get transfer estimate](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransferestimate)  | GET    | Get an estimate of the fee to make an "outbound" transfer from an exchange (connected to xRapid) to an another account outside of RippleNet (such as a bank account).  |
+
+    | [Get transfer by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransferbyid)         | GET    | Gets a transfer by ID. |
+
+    | [Execute transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/executetransfer)           | POST   | Transfers funds between accounts.  |
+
+    | [Complete transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/completetransfer)         | POST   | Updates the state of a transfer to `COMPLETED`. |
+
+    | [Add transfer labels](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/addtransferlabels)       | PUT    | Adds a list of labels to the transfer. To retrieve transfers by label, see [Get transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransfers) |
+
+    | [Delete transfer labels](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/deletetransferlabels) | DELETE | Deletes one or more existing labels from the transfer. |
+
+    '
+paths:
+  /transfers:
+    get:
+      tags:
+      - Transfers
+      summary: Get transfers
+      description: Gets a list of transfers.
+      operationId: getTransfers
+      parameters:
+      - name: page
+        in: query
+        description: 'The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>
+
+          Set it to `0` to get the first page of results.
+
+          '
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: Number of objects to return per page.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: with_labels
+        in: query
+        description: Returns transfers that contain any of the specified labels.<p>Example - `?with_labels=LABEL1,LABEL2`</p>
+        required: false
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: without_labels
+        in: query
+        description: Returns transfers that do not contain any of the specified labels.
+        required: false
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: include_labels
+        in: query
+        description: Returns labels added to each Transfer object. By default labels are not returned. <p>Example - `?with_labels=LABEL1&include_labels=true`</p>
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: state
+        in: query
+        description: Filter by transfer states.
+        required: false
+        schema:
+          type: string
+          enum:
+          - PREPARED
+          - EXECUTED
+          - COMPLETED
+          - FAILED
+          - PENDING
+      - name: internal_id
+        in: query
+        description: Optional parameter for filtering with internalId.
+        required: false
+        schema:
+          type: string
+      - name: sender_end_to_end_id
+        in: query
+        description: Optional parameter for filtering with sender end to end id.
+        required: false
+        schema:
+          type: string
+      - name: sort_field
+        in: query
+        description: Field used to sort the results.
+        required: false
+        schema:
+          type: string
+          enum:
+          - CREATED_AT
+          - MODIFIED_AT
+      - name: sort_direction
+        in: query
+        description: Sort direction.
+        required: false
+        schema:
+          type: string
+          enum:
+          - ASC
+          - DESC
+      - name: account
+        in: query
+        description: RippleNet account which is involved in transfer
+        required: false
+        schema:
+          type: string
+      - name: transfer_account_role
+        in: query
+        required: false
+        description: by default account parameter would search both sender and receiver of transfer and bring the results. This is to restrict the account search to sender or receiver of a transfer
+        schema:
+          type: string
+          enum:
+          - SENDING
+          - RECEIVING
+      responses:
+        '200':
+          description: Successfully returned transfers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transfers'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /transfers/estimate:
+    get:
+      tags:
+      - Transfers
+      summary: Get transfer estimate
+      description: Get an estimate of the fee to make an "outbound" transfer from an exchange (connected to xRapid) to an another account outside of RippleNet (such as a bank account). This operation is only available to xCurrent instances enabled as receivers of xRapid payments.
+      operationId: getTransferEstimate
+      security:
+      - Bearer: []
+      parameters:
+      - in: query
+        name: sender_address
+        description: RippleNet address of the xRapid account from which the transfer is funded
+        schema:
+          type: string
+          pattern: ^[^\s]+@[^\s]+$
+      - in: query
+        name: receiver_address
+        description: RippleNet address representing an account outside of RippleNet to which the transfer amount is sent.
+        schema:
+          type: string
+          pattern: ^[^\s]+@[^\s]+$
+      - in: query
+        name: amount
+        description: The amount to be transferred
+        schema:
+          type: number
+          minimum: 0
+      responses:
+        '200':
+          description: Successfully retrieved estimate of transfer sending fee
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+  /transfers/{transfer_id}:
+    get:
+      tags:
+      - Transfers
+      summary: Get transfer by ID
+      description: Gets a transfer by ID.
+      operationId: getTransferById
+      parameters:
+      - name: transfer_id
+        in: path
+        description: Unique identifier of the transfer you want to retrieve.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: include_labels
+        in: query
+        description: Returns labels added to each Transfer object. By default labels are not returned.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Successfully retrieved transfer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
+        '404':
+          description: Transfer not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /transfers/execute:
+    post:
+      tags:
+      - Transfers
+      summary: Execute transfer
+      description: Transfers funds between accounts. For example, use this request to fund a connector account by transferring funds from a transactional account to the connector account. You can also use this request to redeem funds to a transactional account by transferring funds from a connector account to the transactional account.
+      operationId: executeTransfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequest'
+        description: See Transfer Request Object.
+        required: true
+      responses:
+        '200':
+          description: Successfully executed transfer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /transfers/{transfer_id}/complete:
+    post:
+      tags:
+      - Transfers
+      summary: Complete transfer
+      description: Updates the state of a transfer to `COMPLETED`. Make this request once the transfer has been made on both the ledger and on internal systems.
+      operationId: completeTransfer
+      parameters:
+      - name: transfer_id
+        in: path
+        description: Unique identifier of the transfer you want to complete.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully completed transfer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
+        '404':
+          description: Transfer not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /transfers/{transfer_id}/labels:
+    put:
+      tags:
+      - Transfers
+      summary: Add transfer labels
+      description: Adds a list of labels to the transfer. To retrieve transfers by label, see [Get transfers][get-transfers].
+      operationId: addTransferLabels
+      parameters:
+      - name: transfer_id
+        in: path
+        description: Transfer ID for the label being added.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: label
+        in: query
+        description: Text of the label you want to add to the payment.
+        required: true
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Successfully added one or more labels to the transfer.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+    delete:
+      tags:
+      - Transfers
+      summary: Delete transfer labels
+      description: Deletes one or more existing labels from the transfer.
+      operationId: deleteTransferLabels
+      parameters:
+      - name: transfer_id
+        in: path
+        description: Transfer ID for the label being removed.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: label
+        in: query
+        description: Labels to be removed.
+        required: true
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Successfully deleted one or more labels of the transfer.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+components:
+  schemas:
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    TransferResponse:
+      type: object
+      required:
+      - amount
+      - owner_address
+      - receiver_address
+      - sender_address
+      - state
+      - transfer_id
+      - user_info
+      properties:
+        transfer_id:
+          type: string
+          format: uuid
+          example: 9eca588f-e89d-4629-82fa-da9c4646310f
+          description: Unique identifier of the transfer.
+        state:
+          type: string
+          example: EXECUTED
+          description: State of the transfer.<p>`QUOTED` and `PENDING` only apply when RippleNet is enabled to receive payments from xRapid. `QUOTED` represents an outbound transfer fee estimate. `PENDING` is the state of an outbound transfer executed by RippleNet (via xRapid) but not yet paid out by the digital exchange. If successfully paid out, the state becomes `COMPLETED`. If not successfully paid out by the digital exchange, the state becomes `FAILED`. </p>
+          enum:
+          - PREPARED
+          - EXECUTED
+          - COMPLETED
+          - CANCELLED
+          - FAILED
+          - QUOTED
+          - PENDING
+          - OTHER
+        owner_address:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: Owner RippleNet address, if different from the RippleNet address of the `sender_address` and `receiver_address`.
+        sender_address:
+          type: string
+          example: trans_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet account name and address, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        receiver_address:
+          type: string
+          example: conct_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet account name and address, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        amount:
+          type: number
+          example: 15
+          description: Amount transferred, expressed in the account's currency.
+        internal_id:
+          type: string
+          example: 9cf5aa4b-1e44-436a-ab7c-d399aec905da
+          description: Internal ID that the sender can optionally specify. Only visible to the sender. Only the sending RippleNet instance stores this ID.
+        end_to_end_id:
+          type: string
+          example: fd7559be-aa85-433f-a283-0cd58681cdf0
+          description: ID that the sender can optionally specify. Persisted on all RippleNet instances that participated in the transfer.
+        sending_fee:
+          type: number
+          description: Optional sending fee charged by a digital asset exchange for initiating an outbound transfer.
+        created_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T21:28:28.354Z'
+          description: The time when this transfer is created.
+        user_info:
+          type: array
+          description: Custom information set by a RippleNet address involved in the transfer.
+          items:
+            $ref: '#/components/schemas/TransferUserInfo'
+        labels:
+          type: array
+          example:
+          - label1
+          - label2
+          - label3
+          description: List of labels associated with this transfer
+          items:
+            type: string
+      description: JSON response object representing a transfer.
+    TransferRequest:
+      type: object
+      required:
+      - amount
+      - receiver_address
+      - sender_address
+      properties:
+        sender_address:
+          type: string
+          example: trans_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet account name and address, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        receiver_address:
+          type: string
+          example: conct_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet account name and address, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        amount:
+          type: number
+          minimum: 0
+          example: 15
+          description: Amount transferred, expressed in the account's currency.
+        owner_address:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: Owner RippleNet address, if different from the RippleNet address of the `sender_address` and `receiver_address`.
+        end_to_end_id:
+          type: string
+          maxLength: 128
+          example: b09dd632-660e-48c8-907f-a4f3a7d12c18
+          description: ID set by the sender that is persisted on all xCurrent instances that participated in the transfer.
+        internal_id:
+          type: string
+          maxLength: 128
+          example: 9ad3c119-1379-443b-9c0e-fa82c54ae78d
+          description: ID set by the sender that is persisted on the sending xCurrent instance only.
+        user_info:
+          type: object
+          description: Provide one or more arbitrary key/value pairs.
+          properties: {}
+      description: Use this JSON request body to execute a transfer.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    Transfers:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            description: Provides an array of transfer objects.
+            items:
+              $ref: '#/components/schemas/TransferResponse'
+      description: Provides a `content` array of transfer objects and a set of pagination information fields.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    TransferUserInfo:
+      type: object
+      description: Custom information about a transfer provided by a RippleNet address involved in the transfer.
+      required:
+      - json
+      - node_address
+      - state
+      properties:
+        node_address:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the xCurrent instance that set the user information.
+        state:
+          type: string
+          example: EXECUTED
+          description: State of the transfer set when the RippleNet address set the user information.
+          enum:
+          - PREPARED
+          - EXECUTED
+          - COMPLETED
+          - CANCELLED
+          - FAILED
+          - QUOTED
+        json:
+          type: object
+          description: One or more arbitrary key/value pairs.
+          properties: {}
+        created_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T21:28:28.357Z'
+          description: timestamp of when this user info was created
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

@@ -1,0 +1,554 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Request for payment API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Request for payment
+  description: '
+
+    Use these operations to interact with your payment requests.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get requests for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/getrequestsforpayment)         | GET   | Gets requests for payment that match the query parameters. |
+
+    | [Send request for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/sendrequestforpayment)         | POST  | Sends a new request for payment. |
+
+    | [Get request for payment by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/getrequestforpaymentbyid) | GET   | Gets a request for payment by request for payment ID. |
+
+    | [Accept request for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/acceptrequestforpayment)     | POST  | Accepts a request for payment. |
+
+    | [Fail request for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/failrequestforpayment)         | POST  | Fails a request for payment. |
+
+    '
+paths:
+  /request_for_payment:
+    get:
+      tags:
+      - Request for payment
+      summary: Get requests for payment
+      description: Gets requests for payment that match the query parameters.
+      operationId: getRequestsForPayment
+      parameters:
+      - name: end_to_end_id
+        in: query
+        description: Optional parameter to filter results matching this `endToEndId` value.
+        required: false
+        schema:
+          type: string
+      - name: state
+        in: query
+        description: State by which to filter results.
+        required: false
+        schema:
+          type: string
+          enum:
+          - REQUESTED
+          - ACCEPTED
+          - FAILED
+      - name: sender_address
+        in: query
+        description: Field to filter results matching this `senderAddress` value.
+        required: false
+        schema:
+          type: string
+      - name: receiver_address
+        in: query
+        description: Field to filter results matching this `receiverAddress` value.
+        required: false
+        schema:
+          type: string
+      - name: payment_id
+        in: query
+        description: Field to filter results matching this `paymentId` value.
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: before
+        in: query
+        description: Filters for requests for payment whose `range_field` column value is before this specified time stamp (not inclusive). You can also specify `after` to create a time range between `after` and `before`. If before is specified, `range_field` must also be specified
+        required: false
+        schema:
+          type: string
+      - name: after
+        in: query
+        description: Filters for requests for payment whose `range_field` column value is after this specified time stamp (not inclusive). You can also specify `before` to create a time range between `after` and `before`. If `after` is specified, `range_field` must also be specified.
+        required: false
+        schema:
+          type: string
+      - name: range_field
+        in: query
+        description: Designates the column name of the requests for payment database table that is used for filtering payments before/after/between time stamps. For example, if you specify `range_field`=`MODIFIED_AT`, you would specify a time stamp (in the 24 character ISO 8601 YYYY-MM-DDTHH:mm:ss.sssZ format used in request for payment objects) as the value for `before` and/or `after` to fetch request for payment before, after, or between the specified time range(s) (not inclusive). If `range_field` is specified, `before` and/or `after` must also be specified.
+        required: false
+        schema:
+          type: string
+          enum:
+          - CREATED_AT
+          - MODIFIED_AT
+      - name: sort_field
+        in: query
+        description: Field to use to sort results.
+        required: false
+        schema:
+          type: string
+          enum:
+          - CREATED_AT
+          - MODIFIED_AT
+      - name: sort_direction
+        in: query
+        description: Sorts result according to the specified direction.
+        required: false
+        schema:
+          type: string
+          enum:
+          - ASC
+          - DESC
+          default: DESC
+      - name: page
+        in: query
+        description: Zero-based index of the page number of results.
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: The number of payments per page.
+        required: false
+        schema:
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: Successfully retrieves requests for payment matching query parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetNodeRequestsForPayment'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - Request for payment
+      summary: Send request for payment
+      description: Sends a new request for payment.
+      operationId: sendRequestForPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RippleNetNodeRequestForPaymentRequest'
+        description: The request object to initiate a new request for payment.
+        required: true
+      responses:
+        '200':
+          description: Successfully sent a request for payment resulting in a request for payment object in the `REQUESTED` state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetNodeRequestForPayment'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /request_for_payment/{request_for_payment_id}:
+    get:
+      tags:
+      - Request for payment
+      summary: Get request for payment by ID
+      description: Gets a request for payment by request for payment ID.
+      operationId: getRequestForPaymentById
+      parameters:
+      - name: request_for_payment_id
+        in: path
+        description: Unique identifier of the request for payment to retrieve.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieves a request for payment by its ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetNodeRequestForPayment'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /request_for_payment/{request_for_payment_id}/accept:
+    post:
+      tags:
+      - Request for payment
+      summary: Accept request for payment
+      description: Accepts a request for payment.
+      operationId: acceptRequestForPayment
+      parameters:
+      - name: request_for_payment_id
+        in: path
+        description: Unique identifier of the request for payment to accept.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcceptRequestForPaymentRequest'
+        description: The request object to accept a request for payment.
+        required: true
+      responses:
+        '200':
+          description: Successfully accepts a request for payment resulting in a request for payment object in the `ACCEPTED` state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetNodeRequestForPayment'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /request_for_payment/{request_for_payment_id}/fail:
+    post:
+      tags:
+      - Request for payment
+      summary: Fail request for payment
+      description: Fails a request for payment.
+      operationId: failRequestForPayment
+      parameters:
+      - name: request_for_payment_id
+        in: path
+        description: Unique identifier of the request for payment to fail.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FailRequestForPaymentRequest'
+        description: The request object to fail a request for payment.
+        required: true
+      responses:
+        '200':
+          description: Successfully fails a request for payment resulting in a request for payment object in the `FAILED` state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetNodeRequestForPayment'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+components:
+  schemas:
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    RippleNetNodeRequestForPaymentRequest:
+      type: object
+      required:
+      - amount
+      - currency
+      - quote_type
+      - receiver_address
+      - sender_address
+      properties:
+        sender_address:
+          type: string
+          example: trans_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet address of the node that is receiving the request for payment, or the eventual sender of the payment.
+        receiver_address:
+          type: string
+          example: trans_gbp_lon@rn.eur.uk.london
+          description: RippleNet address of the node that is sending the request for payment, or the eventual receiver of the payment.
+        amount:
+          type: number
+          example: 100.01
+          description: Amount requested to be paid.
+        currency:
+          type: string
+          example: USD
+          description: Currency code for the `amount` value.
+        quote_type:
+          type: string
+          example: SENDER_AMOUNT
+          description: Indicates how the amount field should be treated for calculating quote values.
+          enum:
+          - SENDER_AMOUNT
+          - RECEIVER_AMOUNT
+          - SENDER_INSTITUTION_AMOUNT
+          - RECEIVER_INSTITUTION_AMOUNT
+        end_to_end_id:
+          type: string
+          description: ID that the eventual payment receiver can specify. Persisted on all rippleNet node instances (namely, the sender and receiver of the payment) that participate in the request for payment.
+        user_info:
+          type: object
+          description: User-provided data with arbitrary key/value pairs.
+          properties: {}
+      description: Use this JSON object to request a request for payment.
+    AcceptRequestForPaymentRequest:
+      type: object
+      required:
+      - payment_id
+      properties:
+        payment_id:
+          type: string
+          format: uuid
+          example: 1bf93760-ef69-4697-b2b4-47d9e1c42aa7
+          description: Unique identifier of payment associated with the request for payment.
+        user_info:
+          type: object
+          description: User-provided data with arbitrary key/value pairs.
+          properties: {}
+      description: Use this JSON object to accept a request for payment.
+    FailRequestForPaymentRequest:
+      type: object
+      properties:
+        user_info:
+          type: object
+          description: User-provided data with arbitrary key/value pairs.
+          properties: {}
+      description: Use this JSON object to fail a request for payment.
+    RippleNetNodeRequestForPaymentUserInfo:
+      type: object
+      required:
+      - node_address
+      properties:
+        node_address:
+          type: string
+          description: RippleNet address of the node that provided the user information.
+        requested:
+          type: array
+          description: User information optionally provided when sending the request for payment.
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        accepted:
+          type: array
+          description: User information optionally provided when accepting the request for payment.
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        failed:
+          type: array
+          description: User information optionally provided when failing the request payment.
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+      description: User information provided across the payment lifecycle.
+    RippleNetNodeRequestsForPayment:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/RippleNetNodeRequestForPayment'
+      description: 'Paged response for requests for payment includes:'
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    UserInfoEntry:
+      type: object
+      required:
+      - created_at
+      - json
+      properties:
+        json:
+          type: object
+          description: User information provided across the payment lifecycle stored as arbitrary JSON key/value pairs.
+          properties: {}
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time at which the user information was added to the payment, as an ISO-8601 timestamp in UTC.
+        subState:
+          type: string
+          example: EXECUTING
+          description: If provided, this parameter descibes payment state more granularly.
+      description: User information provided as arbitrary key/value pairs.
+    RippleNetNodeRequestForPayment:
+      type: object
+      required:
+      - amount
+      - created_at
+      - currency
+      - quote_type
+      - receiver_address
+      - request_for_payment_id
+      - request_for_payment_state
+      - sender_address
+      - user_info
+      properties:
+        request_for_payment_id:
+          type: string
+          format: uuid
+          example: 1bf93760-ef69-4697-b2b4-47d9e1c42aa7
+          description: Unique identifier of a request for payment.
+        request_for_payment_state:
+          type: string
+          example: REQUESTED
+          description: State of the request for payment.
+          enum:
+          - REQUESTED
+          - ACCEPTED
+          - FAILED
+        sender_address:
+          type: string
+          example: trans_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet address of the node that is receiving the request for payment, or the eventual sender of the payment.
+        receiver_address:
+          type: string
+          example: trans_gbp_lon@rn.eur.uk.london
+          description: RippleNet address of the node that is sending the request for payment, or the eventual receiver of the payment.
+        amount:
+          type: number
+          example: 100.01
+          description: Amount requested to be paid.
+        currency:
+          type: string
+          example: USD
+          description: Currency code for the `amount` value.
+        quote_type:
+          type: string
+          example: SENDER_AMOUNT
+          description: Indicates how the amount field should be treated for calculating quote values.
+          enum:
+          - SENDER_AMOUNT
+          - RECEIVER_AMOUNT
+          - SENDER_INSTITUTION_AMOUNT
+          - RECEIVER_INSTITUTION_AMOUNT
+        end_to_end_id:
+          type: string
+          description: ID that the eventual payment receiver can specify. Persisted on all rippleNet Node instances (namely, the sender and receiver of the payment) that participate in the request for payment.
+        user_info:
+          type: array
+          description: User-provided data with arbitrary key/value pairs.
+          items:
+            $ref: '#/components/schemas/RippleNetNodeRequestForPaymentUserInfo'
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time at which the request for payment was created, as an ISO-8601 timestamp in UTC.
+        payment_id:
+          type: string
+          format: uuid
+          example: 5492648d-2132-4e70-9ded-2fc86f22b321
+          description: Unique identifier of a payment associated to request for payment.
+      description: Use this JSON object represent a request for payment.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

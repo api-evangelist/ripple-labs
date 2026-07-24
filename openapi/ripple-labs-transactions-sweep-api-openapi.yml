@@ -1,0 +1,930 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Transactions - Sweep API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Transactions - Sweep
+paths:
+  /v2/transactions/sweep/{sweepId}:
+    get:
+      summary: List transactions for a sweep instance
+      description: List all transactions for a given sweep instance
+      operationId: TransactionsService_ListSweepInstanceTransactions
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListSweepInstanceTransactionsResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: sweepId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: correlationId
+        description: Correlation ID for this request, used to correlate multiple actions
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pageSize
+        description: The number of results to return per page (default 50, max 1000)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pageToken
+        description: The token to retrieve the next page of results
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.pageSize
+        description: Number of results per page (default 50, max 1000)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pagination.pageToken
+        description: Token for pagination from previous response
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.orderBy
+        description: Field to order results by
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.order
+        description: Sort order (ASC or DESC)
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - SORT_ORDER_ASC
+          - SORT_ORDER_DESC
+      tags:
+      - Transactions - Sweep
+  /v2/transactions/sweep/{sweepId}:list:
+    post:
+      summary: List transactions for a sweep instance
+      description: List all transactions for a given sweep instance
+      operationId: TransactionsService_ListSweepInstanceTransactions2
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListSweepInstanceTransactionsResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: sweepId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                correlationId:
+                  type: string
+                  example: ce4918bf-a199-4ce2-85a3-d0d296855384
+                  description: Correlation ID for this request, used to correlate multiple actions
+                pageSize:
+                  type: integer
+                  format: int32
+                  example: 1000
+                  description: The number of results to return per page (default 50, max 1000)
+                pageToken:
+                  type: string
+                  example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+                  description: The token to retrieve the next page of results
+                pagination:
+                  allOf:
+                  - $ref: '#/components/schemas/v2FilterRequest'
+                  - description: 'Pagination and sorting. Sortable fields: created_at, updated_at, amount, status. If set, overrides legacy page_size/page_token.'
+        required: true
+      tags:
+      - Transactions - Sweep
+components:
+  schemas:
+    transactionsv2Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The transaction ID
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        createdBy:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The ID of the user that created the transaction
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the transaction was created
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the transaction was updated
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/transactionsv2TransactionStatus'
+          - type: string
+            example: REQUESTED
+            description: The transaction status
+        action:
+          allOf:
+          - $ref: '#/components/schemas/transactionsv2TransactionAction'
+          - type: string
+            example: DEPOSIT
+            description: The transaction action
+        externalId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: External ID of this transaction, unique to the organization
+        correlationId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The correlation ID of the transaction, used to link related transactions
+        asset:
+          $ref: '#/components/schemas/commonv2Asset'
+        feeAsset:
+          $ref: '#/components/schemas/commonv2Asset'
+        blockchain:
+          $ref: '#/components/schemas/v2Blockchain'
+        destinationAddress:
+          type: string
+          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
+          description: The destination address
+        destination:
+          $ref: '#/components/schemas/transactionsv2Address'
+        originAddress:
+          type: string
+          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
+          description: The origin address
+        origin:
+          $ref: '#/components/schemas/transactionsv2Address'
+        qty:
+          type: string
+          example: '155.672'
+          description: The quantity of the asset to transfer
+        feeQtyLimit:
+          type: string
+          example: '155.672'
+          description: The maximum network fee to pay for this transaction in base asset units (eg ETH for Ethereum)
+        sequence:
+          type: string
+          format: uint64
+          example: '2'
+          description: The blockchain nonce/sequence to use
+        encodedTransaction:
+          type: string
+          example: ed408505d21dba00825208942352d20fc81225c8ecd8f6faa1b37f24fed450c98089736f6d657468696e67808080
+          description: The encoded transaction. Maximum size is 200KB.
+        signOnly:
+          type: boolean
+          example: 'true'
+          description: Whether to only sign the transaction, or also publish it to the blockchain
+        config:
+          $ref: '#/components/schemas/v2XRPTransactionConfig'
+        freezeInfo:
+          allOf:
+          - $ref: '#/components/schemas/v2FreezeInfo'
+          - type: object
+            description: Comprehensive freeze information including status, reason, and history
+        feeQty:
+          type: string
+          example: '155.672'
+          description: The actual network fee for this transaction in base asset units (eg ETH for Ethereum)
+        hash:
+          type: string
+          example: '0x30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671'
+          description: The transaction hash
+        signature:
+          type: string
+          example: 3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43
+          description: The transaction signature
+        transactionType:
+          type: string
+          example: Payment
+          description: The transaction type
+        reasons:
+          type: array
+          example:
+          - unfunded
+          items:
+            type: string
+          description: Deprecated. Use problems for structured transaction failure details.
+        canonicalSignature:
+          type: string
+          example: 3045022100C60DC1337D69261E7C7E92E4DAC78E0C317D444D4690BE2B86CC53B1989D1B0602206F39C1C5A3096D36C78D6DBAE0525FC619CA048C7FEC0E4DA157FB2EDFF235FE
+          description: The canonical transaction signature
+        signedTransaction:
+          type: string
+          example: 12000024002A8F37201B002A8F5561400000000098968068400000000000000A732103E0C61B861ADE7AC58D27D65ABCEF4C22FA874DD13D809E02A99609A8CA31892C74473045022100C60DC1337D69261E7C7E92E4DAC78E0C317D444D4690BE2B86CC53B1989D1B0602206F39C1C5A3096D36C78D6DBAE0525FC619CA048C7FEC0E4DA157FB2EDFF235FE8114EC8E7F9FF5C9B157D55890956376D15740FAE943831451FE87A95FA6CAC3EBEF33387DE8225F7D0352CB
+          description: The signed transaction (multi-sign is not supported). Maximum size is 200KB.
+        proposedAssetChanges:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2AssetChange'
+            - type: object
+          description: Proposed asset changes
+        confirmedAssetChanges:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2AssetChange'
+            - type: object
+          description: Confirmed asset changes
+        expiresAt:
+          type: string
+          format: date-time
+          example: '2026-03-16T16:22:22.420Z'
+          description: The time after which this transaction will be rejected if not confirmed
+          readOnly: true
+        problems:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2Problem'
+            - type: object
+          description: Structured transaction failure details.
+        signingPayloads:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2SigningPayload'
+            - type: object
+          description: Multiple signing payloads for UTXO-based transactions, one per input
+      required:
+      - id
+      - walletId
+      - vaultId
+      - createdBy
+      - createdAt
+      - updatedAt
+      - status
+      - action
+      - asset
+      - feeAsset
+      - blockchain
+      - originAddress
+      - origin
+      - qty
+      - signOnly
+      - freezeInfo
+    commonv2Asset:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5:0xbehbehfb:USDC
+          description: ID is unique across all blockchains and created by combining the blockchain ID, contract address, and symbol
+        standard:
+          allOf:
+          - $ref: '#/components/schemas/v2Standard'
+          - type: string
+            example: ERC20
+            description: The standard of the asset
+        symbol:
+          type: string
+          example: LINK
+          description: The currency symbol of the asset
+        name:
+          type: string
+          example: Chainlink
+          description: The human readable name of the asset
+        blockchain:
+          $ref: '#/components/schemas/v2Blockchain'
+        decimals:
+          type: integer
+          format: int32
+          example: 18
+          description: Count of decimal places for the asset
+        vetted:
+          type: boolean
+          example: true
+          description: Whether the asset is vetted on the regulated platform
+        enabled:
+          type: boolean
+          example: true
+          description: Whether the asset is currently enabled on the platform
+        contract:
+          type: string
+          example: '0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e'
+          description: The token contract address. This field will be empty if the asset is the native coin of the blockchain
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the asset was created
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the asset was last updated
+        organizationId:
+          type: string
+          description: Organization ID for custom assets
+        coingeckoId:
+          type: string
+          example: ethereum
+          description: CoinGecko identifier for price data (optional for testnet assets)
+        source:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetSource'
+          - type: string
+            example: ASSET_SOURCE_COINGECKO
+            description: Data source for this asset
+        sourceMetadata:
+          allOf:
+          - $ref: '#/components/schemas/protobufAny'
+          - type: object
+            description: JSON metadata about the source
+        lastSyncedAt:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:22:22.420Z'
+          description: When this asset was last synchronized
+        syncVersion:
+          type: integer
+          format: int32
+          example: 1
+          description: Version counter for sync updates
+        contractAddressChecksummed:
+          type: string
+          example: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+          description: Checksummed version of the contract address
+        iconUrl:
+          type: string
+          example: https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png
+          description: Public URL for the asset icon. Registry asset REST endpoints populate this when configured; other Asset responses may omit it.
+          readOnly: true
+      required:
+      - id
+      - standard
+      - symbol
+      - blockchain
+      - createdAt
+    transactionsv2Address:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Either addressID or walletID, or allowAddressID, or not set when the address does not exist within palisade e.g. a deposit from outside of Palisade
+        counterpartyId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The counterparty ID
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        type:
+          allOf:
+          - $ref: '#/components/schemas/transactionsv2AddressType'
+          - type: string
+            example: EXTERNAL
+            description: The address type
+        address:
+          type: string
+          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
+          description: The address
+      required:
+      - type
+      - address
+    v2XRPTransactionConfig:
+      type: object
+      properties:
+        sourceTag:
+          type: string
+          example: '123456'
+          description: The source tag for XRP transactions
+        destinationTag:
+          type: string
+          example: '123456'
+          description: The destination tag for XRP transactions
+    v2Standard:
+      type: string
+      enum:
+      - NATIVE
+      - ERC20
+      - ISSUED_CURRENCY
+      - ERC721
+      - SPL
+      - CUSTOM
+    transactionsv2AddressType:
+      type: string
+      enum:
+      - COUNTERPARTY
+      - WALLET
+      - EXTERNAL
+      - ALLOW_ADDRESS
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2ListSweepInstanceTransactionsResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        transactions:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/transactionsv2Transaction'
+            - type: object
+    v2FreezeType:
+      type: string
+      enum:
+      - FREEZE_TYPE_MANUAL
+      - FREEZE_TYPE_AUTO_RISK
+      - FREEZE_TYPE_AUTO_AMOUNT
+      - FREEZE_TYPE_COMPLIANCE
+      - FREEZE_TYPE_AUTO_WALLET_SETTING
+    v2FreezeHistoryEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Unique identifier for this history entry
+        action:
+          allOf:
+          - $ref: '#/components/schemas/v2FreezeAction'
+          - type: string
+            example: FREEZE_ACTION_FREEZE
+            description: The action taken (FREEZE or UNFREEZE)
+        reason:
+          type: string
+          example: Transaction frozen due to suspicious activity pattern
+          description: Reason for the freeze or unfreeze action
+        userId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: User who performed the action (empty for automatic actions)
+        organizationId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Organization of the user who performed the action (empty for automatic actions)
+        performedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: Timestamp when the action was performed
+        freezeType:
+          allOf:
+          - $ref: '#/components/schemas/v2FreezeType'
+          - type: string
+            example: FREEZE_TYPE_AUTO_RISK
+            description: Type of freeze (required for FREEZE actions, shows original type for UNFREEZE)
+        riskScore:
+          type: number
+          format: double
+          example: 85.5
+          description: Risk score that triggered auto-freeze (0-100)
+    v2FreezeInfo:
+      type: object
+      properties:
+        isFrozen:
+          type: boolean
+          example: false
+          description: Whether the transaction is currently frozen
+        history:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2FreezeHistoryEntry'
+            - type: object
+          description: History of all freeze/unfreeze actions. Latest entry contains current state details when frozen.
+    v2SigningPayload:
+      type: object
+      properties:
+        inputIndex:
+          type: integer
+          format: int64
+          example: 0
+          description: The index of the UTXO input this signing payload corresponds to
+        signingHash:
+          type: string
+          example: 30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671
+          description: The signing hash for this UTXO input
+        signature:
+          type: string
+          example: 3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43
+          description: The signature for this UTXO input
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID that owns this signing payload. If omitted, signers use the parent transaction wallet. Native multi-wallet transactions must set this on every signing payload.
+      required:
+      - inputIndex
+      - signingHash
+    v2AssetSource:
+      type: string
+      enum:
+      - ASSET_SOURCE_LEGACY
+      - ASSET_SOURCE_AUTO
+      - ASSET_SOURCE_COINGECKO
+      - ASSET_SOURCE_PALISADE
+      - ASSET_SOURCE_CUSTOMER
+    v2AssetChangePurpose:
+      type: string
+      enum:
+      - FEE
+      - TRANSFER
+    v2FilterResponse:
+      type: object
+      properties:
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
+    v2Blockchain:
+      type: string
+      enum:
+      - AVALANCHE
+      - ETHEREUM
+      - XRP_LEDGER
+      - POLYGON
+      - BNBCHAIN
+      - BASE
+      - HEDERA
+      - ARBITRUM
+      - ONE_MONEY
+      - SOLANA
+      - TRON
+      - BITCOIN
+    v2Problem:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        reason:
+          type: string
+        domain:
+          type: string
+        message:
+          type: string
+        retryability:
+          $ref: '#/components/schemas/v2Retryability'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    v2Retryability:
+      type: string
+      enum:
+      - RETRYABLE
+      - NOT_RETRYABLE
+    v2AssetChange:
+      type: object
+      properties:
+        purpose:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetChangePurpose'
+          - type: string
+            example: TRANSFER
+            description: Purpose of this asset change
+        asset:
+          allOf:
+          - $ref: '#/components/schemas/commonv2Asset'
+          - type: object
+            description: The asset that is part of this change
+        qty:
+          type: string
+          example: '155.672'
+          description: The quantity of the asset to transfer
+        source:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetChangeWallet'
+          - type: string
+            description: Source of this asset change
+        destination:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetChangeWallet'
+          - type: string
+            description: Destination of this asset change
+      required:
+      - purpose
+      - asset
+      - qty
+    v2FreezeAction:
+      type: string
+      enum:
+      - FREEZE_ACTION_FREEZE
+      - FREEZE_ACTION_UNFREEZE
+    transactionsv2TransactionAction:
+      type: string
+      enum:
+      - DEPOSIT
+      - WITHDRAWAL
+      - WEB3_RAW
+      - WEB3_SIGN
+      - PASSKEY_RAW
+      - PASSKEY_SIGN
+      - PALISADE_TRANSFER
+      - PALISADE_RAW
+      - PALISADE_MANAGED
+      - PALISADE_SIGN_PLAINTEXT
+      - PALISADE_SWEEP
+    v2SortOrder:
+      type: string
+      enum:
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+    v2AssetChangeWallet:
+      type: object
+      properties:
+        address:
+          type: string
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          description: The blockchain address of the wallet
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID that is part of this change, populated only if it belongs to the same organization that is party to the transaction
+        subAccountAddress:
+          type: string
+          example: CaVHtunHxQfGYVKJ4WzUe1217UTCrREh3hg2RW8cS2Gk
+          description: The Rosetta SubAccount address (e.g., SPL token account address for Solana, contract-specific state address for other chains). This represents the actual on-chain address where the asset resides, while 'address' contains the owner wallet address.
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID for the wallet that is part of this change, populated only if it belongs to the same organization that is party to the transaction
+      required:
+      - address
+    v2FilterRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 50
+          description: Number of results per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: Token for pagination from previous response
+        orderBy:
+          type: string
+          example: created_at
+          description: Field to order results by
+        order:
+          allOf:
+          - $ref: '#/components/schemas/v2SortOrder'
+          - description: Sort order (ASC or DESC)
+    transactionsv2TransactionStatus:
+      type: string
+      enum:
+      - REQUESTED
+      - POLICY_CHECK_PENDING
+      - POLICY_CHECK_PASSED
+      - APPROVAL_CHECK_PENDING
+      - APPROVAL_CHECK_PASSED
+      - COMPILATION_PENDING
+      - COMPILED
+      - SIGNATURE_PENDING
+      - SIGNED
+      - PUBLISH_PENDING
+      - PUBLISHED
+      - CONFIRMATION_PENDING
+      - CONFIRMED
+      - REJECTED
+      - FAILED
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

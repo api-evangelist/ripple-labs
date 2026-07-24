@@ -1,0 +1,284 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Quote expiration API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Quote expiration
+  description: '
+
+    Use these operations to manage quote expirations.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [List quote expiries](/products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/getquoteexpiries)     | GET        | Returns all configured quote expiries. |
+
+    | [Create quote expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/createquoteexpiry)    | POST       | Creates a quote expiration window, or time to live (ttl), in seconds. |
+
+    | [Get quote expiry](//products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/getquoteexpirybyid)      | GET        | Gets the configured quote expiration window, or time to live (ttl),  in seconds. |
+
+    | [Update quote expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/updatequoteexpiry)    | PUT        | Sets a quote expiration window, or time to live (ttl), in seconds. |
+
+
+    '
+paths:
+  /config/payments/quote_expiries:
+    get:
+      tags:
+      - Quote expiration
+      summary: List quote expiries
+      description: Returns all configured quote expiries.
+      operationId: getQuoteExpiries
+      parameters:
+      - name: page
+        in: query
+        description: Zero-based index of the page number of results.
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: Number of payments returned per page.
+        required: false
+        schema:
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteExpiries'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - Quote expiration
+      summary: Create quote expiry
+      description: Creates a quote expiration window, or time to live (ttl), in seconds.
+      operationId: createQuoteExpiry
+      requestBody:
+        $ref: '#/components/requestBodies/QuoteExpiry'
+      responses:
+        '200':
+          description: Successfully created the quote expiration window.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteExpiry'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+  /config/payments/quote_expiries/{quote_expiry_id}:
+    get:
+      tags:
+      - Quote expiration
+      summary: Get quote expiry
+      description: Gets the time to live (ttl) of a quote expiry in seconds.
+      operationId: getQuoteExpiryById
+      parameters:
+      - name: quote_expiry_id
+        in: path
+        description: The ID of the quote expiry you want returned.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Successfully returned a quote expiry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteExpiry'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+    put:
+      tags:
+      - Quote expiration
+      summary: Update quote expiry
+      description: Updates the time to live (ttl) of a quote expiry in seconds.
+      operationId: updateQuoteExpiry
+      parameters:
+      - name: quote_expiry_id
+        in: path
+        description: Provide the `quote_expiry_id` of the quote expiry you want to update.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/QuoteExpiry'
+      responses:
+        '200':
+          description: Successfully updated quote expiry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteExpiry'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RippleNetProblem'
+      security:
+      - Bearer: []
+components:
+  schemas:
+    QuoteExpiries:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/QuoteExpiry'
+      description: Provides a `content` array of quote expiry objects and a set of pagination information fields.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    QuoteExpiry:
+      type: object
+      properties:
+        quote_ttl:
+          type: number
+          example: 5900
+          description: Quote expiration window, or time to live (ttl), in seconds. To calculate the quote expiration date, xCurrent adds this value to the quote creation timestamp.
+        sending_partner:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the sender, in the format `ripplenetaddress`. For example, `rn.us.sf.san_francisco`.
+        receiving_partner:
+          type: string
+          example: rn.us.tx.austin
+          description: RippleNet address of the receiver, in the format `ripplenetaddress`. For example, `rn.us.ny.new_york`.
+        currency:
+          type: string
+          example: USD
+          description: currency of the exchange rate.
+        id:
+          type: integer
+          example: 2
+          description: id of quote expiry object
+      description: Use this JSON request object to update the quote time to live represented in seconds.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+  requestBodies:
+    QuoteExpiry:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/QuoteExpiry'
+      required: true
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io

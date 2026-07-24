@@ -1,0 +1,2387 @@
+openapi: 3.0.0
+info:
+  title: Palisade Addresses Webhooks API
+  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
+  version: '2.0'
+servers:
+- url: https://api.sandbox.palisade.co
+  description: Sandbox server (uses TESTNET data, private keys and accounts)
+- url: https://api.palisade.co
+  description: Palisade server (uses MAINNET data, private keys and accounts)
+security:
+- TokenAuth: []
+tags:
+- name: Webhooks
+  description: Used to manage webhooks
+paths:
+  /v2/webhooks:
+    get:
+      summary: List webhooks
+      description: List webhooks
+      operationId: WebhookService_ListWebhooks
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListWebhooksResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: pageSize
+        description: The number of results to return per page (default 50, max 100)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pageToken
+        description: The token to retrieve the next page of results
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.pageSize
+        description: Number of results per page (default 50, max 1000)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pagination.pageToken
+        description: Token for pagination from previous response
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.orderBy
+        description: Field to order results by
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.order
+        description: Sort order (ASC or DESC)
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - SORT_ORDER_ASC
+          - SORT_ORDER_DESC
+      - name: filter.id.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.id.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.id.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.name.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.name.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.name.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.name.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.name.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.name.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.name.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.name.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.description.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.description.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.description.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.description.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.description.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.description.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.description.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.description.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.endpoint.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.endpoint.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.endpoint.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.endpoint.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.endpoint.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.endpoint.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.endpoint.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.endpoint.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.createdAt.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.createdAt.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: filter.updatedAt.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.updatedAt.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: filter.lastSuccess.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastSuccess.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastSuccess.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastSuccess.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastSuccess.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastSuccess.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastSuccess.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastSuccess.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastSuccess.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.lastSuccess.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: filter.lastFailure.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastFailure.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastFailure.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastFailure.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastFailure.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastFailure.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastFailure.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastFailure.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.lastFailure.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.lastFailure.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: search
+        description: Case-insensitive search over webhook ID, name, description, and endpoint.
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Webhooks
+    post:
+      summary: Create webhooks
+      description: Create a new webhook
+      operationId: WebhookService_CreateWebhook
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2Webhook'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2CreateWebhookRequest'
+        required: true
+      tags:
+      - Webhooks
+  /v2/webhooks/{id}:
+    get:
+      summary: Get webhooks
+      description: Get a single webhook based on its ID
+      operationId: WebhookService_GetWebhook
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2Webhook'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: id
+        description: The webhook ID
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Webhooks
+    delete:
+      summary: Delete webhooks
+      description: Delete a single webhook based on its ID
+      operationId: WebhookService_DeleteWebhook
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DeleteWebhookResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: id
+        description: The webhook ID
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Webhooks
+  /v2/webhooks/{webhookId}/subscriptions:
+    get:
+      summary: List subscriptions
+      description: List subscriptions
+      operationId: WebhookService_ListSubscriptions
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListSubscriptionsResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: webhookId
+        description: The webhook ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        description: The number of results to return per page (default 50, max 100)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pageToken
+        description: The token to retrieve the next page of results
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.pageSize
+        description: Number of results per page (default 50, max 1000)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pagination.pageToken
+        description: Token for pagination from previous response
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.orderBy
+        description: Field to order results by
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagination.order
+        description: Sort order (ASC or DESC)
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - SORT_ORDER_ASC
+          - SORT_ORDER_DESC
+      - name: filter.id.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.id.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.id.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.id.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.webhookId.eq
+        description: Exact match
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.webhookId.notEq
+        description: Not equal to
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.webhookId.contains
+        description: Contains substring (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.webhookId.startsWith
+        description: Starts with prefix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.webhookId.endsWith
+        description: Ends with suffix (case-insensitive)
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.webhookId.in
+        description: Value is in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.webhookId.notIn
+        description: Value is not in the list
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.webhookId.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.domain
+        description: Filter by subscription domain
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - TRANSACTION
+          - WALLET
+          - APPROVAL
+      - name: filter.scope
+        description: Filter by subscription scope
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ORG
+      - name: filter.createdAt.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.createdAt.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.createdAt.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: filter.updatedAt.eq
+        description: Exact timestamp match
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.notEq
+        description: Not equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.before
+        description: Before this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.after
+        description: After this timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.gte
+        description: Greater than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.lte
+        description: Less than or equal to timestamp
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.between.start
+        description: Start of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.between.end
+        description: End of time range (inclusive)
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: filter.updatedAt.isNull
+        description: Check if field is null
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filter.updatedAt.relativeDays
+        description: Relative days from now (negative for past, positive for future)
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: search
+        description: Case-insensitive search over subscription ID and webhook ID.
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Webhooks
+    post:
+      summary: Create webhook subscriptions
+      description: Create one or more new webhook subscription
+      operationId: WebhookService_CreateSubscriptions
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/v2Subscription'
+                  - type: object
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: webhookId
+        description: The webhook ID
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              example:
+              - domain: TRANSACTION
+                scope: ORG
+              items:
+                allOf:
+                - $ref: '#/components/schemas/v2SubscriptionConfig'
+                - type: object
+              description: The subscription domains and scopes
+              required:
+              - subscriptions
+        required: true
+      tags:
+      - Webhooks
+  /v2/webhooks/{webhookId}/subscriptions/{subscriptionId}:
+    get:
+      summary: Get subscriptions
+      description: Get a single subscription based on its ID
+      operationId: WebhookService_GetSubscription
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2Subscription'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: webhookId
+        description: The webhook ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: subscriptionId
+        description: The subscription ID
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Webhooks
+    delete:
+      summary: Delete subscriptions
+      description: Delete a single subscription based on its ID
+      operationId: WebhookService_DeleteSubscription
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DeleteSubscriptionResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: webhookId
+        description: The webhook ID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: subscriptionId
+        description: The subscription ID
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Webhooks
+  /v2/webhooks/{webhookId}/subscriptions:list:
+    post:
+      summary: List subscriptions
+      description: List subscriptions
+      operationId: WebhookService_ListSubscriptions2
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListSubscriptionsResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: webhookId
+        description: The webhook ID
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pageSize:
+                  type: integer
+                  format: int32
+                  example: 100
+                  description: The number of results to return per page (default 50, max 100)
+                pageToken:
+                  type: string
+                  example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+                  description: The token to retrieve the next page of results
+                pagination:
+                  allOf:
+                  - $ref: '#/components/schemas/v2FilterRequest'
+                  - description: 'Pagination and sorting. Sortable fields: domain, scope, created_at, updated_at.'
+                filter:
+                  allOf:
+                  - $ref: '#/components/schemas/v2SubscriptionFilter'
+                  - description: Optional subscription filters. Each populated sub-filter is AND-ed.
+                search:
+                  type: string
+                  example: transaction
+                  description: Case-insensitive search over subscription ID and webhook ID.
+        required: true
+      tags:
+      - Webhooks
+  /v2/webhooks:list:
+    post:
+      summary: List webhooks
+      description: List webhooks
+      operationId: WebhookService_ListWebhooks2
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListWebhooksResponse'
+        '400':
+          description: Returned when the request is malformed or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: 'validation error: - name: value length must be at least 1 characters [string.min_len].'
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '401':
+          description: Returned when the request was unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authorization requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '403':
+          description: Returned when the request was forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The access token provided does not meet the authentication requirements.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        '404':
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+              examples:
+                response:
+                  value:
+                    code: 123
+                    message: The resource does not exist.
+                    details:
+                    - '@type': type.googleapis.com/google.rpc.ErrorInfo
+                      reason: PAL000.000
+                      domain: app.development.palisade.co/api
+                      metadata: {}
+                    - '@type': type.googleapis.com/google.rpc.RequestInfo
+                      requestId: c817569e-b765-4e6e-a3af-bdb1d07e7517
+                      servingData: ''
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2ListWebhooksRequest'
+        required: true
+      tags:
+      - Webhooks
+components:
+  schemas:
+    v2Subscription:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The webhook subscription ID
+        webhookId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The webhook ID
+        createdBy:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The ID of the user who created this webhook
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the webhook was created
+        updatedBy:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The ID of the user who updated this webhook
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the webhook was updated
+        config:
+          allOf:
+          - $ref: '#/components/schemas/v2SubscriptionConfig'
+          - type: object
+            example:
+              domain: TRANSACTION
+              scope: ORG
+            description: The configuration for the webhook subscription
+      required:
+      - id
+      - webhookId
+      - createdBy
+      - createdAt
+      - updatedBy
+      - updatedAt
+      - config
+    v2ListSubscriptionsResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        subscriptions:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2Subscription'
+            - type: object
+    v2SubscriptionFilter:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by subscription ID
+        webhookId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by webhook ID. For ListSubscriptions, the top-level webhook_id still scopes the request; if both are supplied, both predicates are AND-ed.
+        domain:
+          allOf:
+          - $ref: '#/components/schemas/v2SubscriptionDomain'
+          - description: Filter by subscription domain
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/v2SubscriptionScope'
+          - description: Filter by subscription scope
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by creation timestamp
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-update timestamp
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2DeleteWebhookResponse:
+      type: object
+    v2ListWebhooksResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        webhooks:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2Webhook'
+            - type: object
+    TimestampFilterTimestampRange:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          example: '2024-08-01T00:00:00Z'
+          description: Start of time range (inclusive)
+        end:
+          type: string
+          format: date-time
+          example: '2024-08-31T23:59:59Z'
+          description: End of time range (inclusive)
+    v2TimestampFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Exact timestamp match
+        notEq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Not equal to timestamp
+        before:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Before this timestamp
+        after:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: After this timestamp
+        gte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Greater than or equal to timestamp
+        lte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Less than or equal to timestamp
+        between:
+          allOf:
+          - $ref: '#/components/schemas/TimestampFilterTimestampRange'
+          - description: Between two timestamps (inclusive)
+        isNull:
+          type: boolean
+          description: Check if field is null
+        relativeDays:
+          type: integer
+          format: int32
+          example: -7
+          description: Relative days from now (negative for past, positive for future)
+    v2WebhookFilter:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by webhook ID
+        name:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by webhook name
+        description:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by webhook description
+        endpoint:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by webhook endpoint
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by creation timestamp
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-update timestamp
+        lastSuccess:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-success timestamp
+        lastFailure:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-failure timestamp
+    v2CreateWebhookRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Palisade Transactions
+          description: The webhook name.
+        description:
+          type: string
+          example: A webhook used to monitor transactions
+          description: The webhook description.
+        endpoint:
+          type: string
+          example: https://palisade.co/webhook
+          description: The webhook endpoint to send data to
+      required:
+      - name
+      - endpoint
+    v2FilterResponse:
+      type: object
+      properties:
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+    v2Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The webhook ID.
+        createdBy:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The ID of the user who created this webhook
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the webhook was created
+        updatedBy:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The ID of the user who updated this webhook
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the webhook was updated
+        name:
+          type: string
+          example: Palisade Transactions
+          description: The webhook name
+        description:
+          type: string
+          example: A webhook used to monitor transactions
+          description: The webhook description
+        endpoint:
+          type: string
+          example: https://palisade.co/webhook
+          description: The webhook endpoint to send data to
+        subscriptionCount:
+          type: integer
+          format: int32
+          example: 5
+          description: The number of subscriptions associated with the webhook
+        publicKey:
+          type: string
+          example: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEpHiEkdd/ba5dU4sNCgsWrMOE6fLakHywl0OgF5aVfxkiqNh22oybRAREev7jvnwH4jqitHx79KGi6CMwiJjmaw==
+          description: The public key used to verify the webhook signature
+        lastSuccess:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The timestamp of the last successful webhook delivery
+        lastFailure:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The timestamp of the last failed webhook delivery
+        successCount:
+          type: integer
+          format: int32
+          example: 42
+          description: The number of successful webhook deliveries in the last hour
+        failureCount:
+          type: integer
+          format: int32
+          example: 3
+          description: The number of failed webhook deliveries in the last hour
+      required:
+      - id
+      - createdBy
+      - createdAt
+      - updatedBy
+      - updatedAt
+      - name
+      - endpoint
+      - subscriptionCount
+      - publicKey
+      - successCount
+      - failureCount
+    v2SubscriptionConfig:
+      type: object
+      properties:
+        domain:
+          allOf:
+          - $ref: '#/components/schemas/v2SubscriptionDomain'
+          - type: string
+            example: TRANSACTION
+            description: The domain to subscribe to
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/v2SubscriptionScope'
+          - type: string
+            example: ORG
+            description: The scope to subscribe to
+      required:
+      - domain
+      - scope
+    v2SortOrder:
+      type: string
+      enum:
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+    v2SubscriptionDomain:
+      type: string
+      enum:
+      - TRANSACTION
+      - WALLET
+      - APPROVAL
+    v2DeleteSubscriptionResponse:
+      type: object
+    v2FilterRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 50
+          description: Number of results per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: Token for pagination from previous response
+        orderBy:
+          type: string
+          example: created_at
+          description: Field to order results by
+        order:
+          allOf:
+          - $ref: '#/components/schemas/v2SortOrder'
+          - description: Sort order (ASC or DESC)
+    v2SubscriptionScope:
+      type: string
+      enum:
+      - ORG
+    v2ListWebhooksRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 100
+          description: The number of results to return per page (default 50, max 100)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/v2FilterRequest'
+          - description: 'Pagination and sorting. Sortable fields: name, endpoint, created_at, updated_at, last_success, last_failure.'
+        filter:
+          allOf:
+          - $ref: '#/components/schemas/v2WebhookFilter'
+          - description: Optional webhook filters. Each populated sub-filter is AND-ed.
+        search:
+          type: string
+          example: transactions
+          description: Case-insensitive search over webhook ID, name, description, and endpoint.
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+externalDocs:
+  description: Click here for the API docs
+  url: https://palisade.readme.io
