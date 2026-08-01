@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: https://registry.npmjs.org/xrpl, https://pypi.org/pypi/xrpl-py/json
+note: >-
+  First-party XRP Ledger client libraries stewarded by Ripple / the XRP Ledger Foundation
+  (XRPLF). The Ripple Payments, RLUSD Mint, and Palisade product APIs are enterprise/onboarded
+  REST APIs and do not ship dedicated public SDK packages; these XRPL libraries are the
+  published client libraries for the open-source XRP Ledger Ripple stewards.
+packages:
+- language: javascript
+  registry: npm
+  name: xrpl
+  url: https://www.npmjs.com/package/xrpl
+  install: npm install xrpl
+  repository: https://github.com/XRPLF/xrpl.js
+  description: A TypeScript/JavaScript API for interacting with the XRP Ledger in Node.js and the browser
+  official: true
+- language: python
+  registry: pypi
+  name: xrpl-py
+  url: https://pypi.org/project/xrpl-py/
+  install: pip install xrpl-py
+  repository: https://github.com/XRPLF/xrpl-py
+  description: A complete Python library for interacting with the XRP Ledger
+  official: true

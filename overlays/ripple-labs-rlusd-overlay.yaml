@@ -1,0 +1,15 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Ripple Mint API (RLUSD Stablecoin)
+  version: 1.0.0
+extends: openapi/ripple-labs-rlusd-openapi-original.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: ripple-labs
+    x-apievangelist-enriched: '2026-07-21'
+    x-apievangelist-artifacts:
+    - authentication/ripple-labs-authentication.yml
+    - errors/ripple-labs-problem-types.yml
+    - conventions/ripple-labs-conventions.yml
+    - sandbox/ripple-labs-sandbox.yml

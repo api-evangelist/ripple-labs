@@ -1,0 +1,708 @@
+openapi: 3.0.3
+info:
+  title: Ripple Mint API
+  version: 1.0.0
+  description: |
+    API operations for programmatic integration with Ripple Mint.
+    Covers transaction queries for issuance, redemption, and bridge activity,
+    as well as public market cap endpoints for RLUSD supply data.
+servers:
+  - url: https://api.ripple.com
+security:
+  - oauth2: []
+tags:
+  - name: Authentication
+    x-displayName: Authentication
+    description: >
+      Use this API operation to manage your authentication tokens.
+
+
+      | Operation | Method | Description |
+
+      | --------- | ------ | ----------- |
+
+      | [Obtain an access token](#operation/getAccessToken) | POST | Request an
+      access token for authentication with the API. |
+  - name: Transactions
+    x-displayName: Transactions
+    description: >
+      Use these API operations to obtain details about transactions.
+
+
+      | Operation | Method | Description |
+
+      | --------- | ------ | ----------- |
+
+      | [List transactions](#operation/listTransactions) | GET | Get a paginated
+      list of transactions, optionally filtered by type and status. |
+
+      | [Get a transaction](#operation/getTransaction) | GET | Get a specific
+      transaction by ID. |
+
+      | [Approve a pending redemption](#operation/updateTransactionDestination)
+      | PUT | Approve a transaction held in `PENDING` status and direct it to
+      fiat or a bridge. |
+  - name: Market Cap
+    x-displayName: Market Cap
+    description: >
+      Use these API operations to obtain details about market-capitalization
+      supply for a stablecoin currency.
+
+
+      | Operation | Method | Description |
+
+      | --------- | ------ | ----------- |
+
+      | [Get total supply](#operation/getMarketCapTotal) | GET | Get the total
+      amount of currency supply, with a per-chain breakdown. |
+
+      | [Get total supply amount](#operation/getMarketCapTotalAmount) | GET |
+      Get the total supply as a plain decimal string. |
+
+      | [Get circulating supply](#operation/getMarketCapCirculating) | GET | Get
+      the circulating amount of currency supply, with a per-chain breakdown. |
+
+      | [Get circulating supply
+      amount](#operation/getMarketCapCirculatingAmount) | GET | Get the
+      circulating supply as a plain decimal string. |
+
+
+      **Note:** These Market Cap operations do not require authentication.
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.ripple.com/v2/oauth/token
+          scopes:
+            rlusd_customers:read: Read transaction data
+            rlusd_customers:write: Approve pending redemptions
+  schemas:
+    TransactionEndpoint:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          enum:
+            - FIAT
+            - CRYPTO
+          description: Endpoint type
+        walletId:
+          type: string
+          nullable: true
+          description: >-
+            Wallet identifier (e.g. `RIP0000001`). Present when type is
+            `CRYPTO`.
+        address:
+          type: string
+          nullable: true
+          description: >
+            The customer's on-chain address on this leg. Present when type is
+            `CRYPTO`
+
+            and the on-chain leg has been initiated. EVM addresses include the
+            `0x` prefix.
+        chain:
+          type: string
+          nullable: true
+          description: >-
+            Blockchain network name (e.g. XRPL, ETH). Present when type is
+            `CRYPTO`.
+        transactionHash:
+          type: string
+          nullable: true
+          description: >
+            On-chain transaction hash for this leg. Present when type is
+            `CRYPTO` and the on-chain leg has settled.
+
+            EVM chains (e.g. ETH) return the hash with the `0x` prefix; XRPL
+            hashes are
+
+            uppercase hex without a prefix.
+        counterpartyAddress:
+          type: string
+          nullable: true
+          description: >
+            The Ripple-side internal account address that participated in this
+            on-chain leg
+
+            (the counterparty to your wallet). Present when type is `CRYPTO` and
+            the on-chain leg
+
+            has been initiated. EVM addresses include the `0x` prefix.
+    Transaction:
+      type: object
+      required:
+        - id
+        - status
+        - amount
+        - token
+        - source
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique transaction identifier
+        type:
+          type: string
+          enum:
+            - ISSUANCE
+            - REDEMPTION
+            - BRIDGE
+          nullable: true
+          description: >
+            Transaction type. Null while the transaction is `PENDING` (flexible
+            redemption)
+
+            and a destination has not yet been chosen.
+        status:
+          type: string
+          enum:
+            - PROCESSING
+            - PENDING
+            - COMPLETED
+            - FAILED
+            - CANCELED
+          description: >
+            Current transaction status. `COMPLETED`, `FAILED`, and `CANCELED`
+            are terminal.
+
+            `CANCELED` currently applies to `ISSUANCE` transactions canceled
+            before settlement.
+
+            `PENDING` applies to flexible-redemption transactions awaiting
+            approval via
+
+            [Approve a pending
+            redemption](#operation/updateTransactionDestination); `type` and
+
+            `destination` are null until approved.
+        amount:
+          type: string
+          description: Transaction amount as a decimal string (e.g. "10000.00")
+        token:
+          type: string
+          enum:
+            - RLUSD
+          description: Always RLUSD
+        source:
+          $ref: '#/components/schemas/TransactionEndpoint'
+        destination:
+          nullable: true
+          description: >
+            Destination endpoint. Null while the transaction is `PENDING`
+            (flexible redemption)
+
+            and a destination has not yet been chosen.
+          allOf:
+            - $ref: '#/components/schemas/TransactionEndpoint'
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was last updated
+    TransactionListResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        totalElements:
+          type: integer
+          description: Total number of matching transactions
+        totalPages:
+          type: integer
+          description: Total number of pages
+        size:
+          type: integer
+          description: Page size
+        number:
+          type: integer
+          description: Current page number (0-indexed)
+    UpdateTransactionDestination:
+      type: object
+      required:
+        - type
+      description: >
+        Approval payload for a `PENDING` (flexible redemption) transaction.
+        `FIAT` directs the
+
+        redemption to your default bank account (creates a `REDEMPTION`);
+        `CRYPTO` bridges the funds
+
+        to one of your wallets (creates a `BRIDGE`) and requires `walletId`.
+      properties:
+        type:
+          type: string
+          enum:
+            - FIAT
+            - CRYPTO
+          description: >
+            Destination type. `FIAT` creates a `REDEMPTION` settled to your
+            default bank account;
+
+            `CRYPTO` creates a `BRIDGE` transfer to one of your wallets.
+        walletId:
+          type: string
+          description: >
+            Target wallet identifier (e.g. `RIP0000001`). Required when `type`
+            is `CRYPTO`;
+
+            must be omitted when `type` is `FIAT`.
+    MarketCapBalance:
+      type: object
+      required:
+        - amount
+      description: Balance for a single currency or chain.
+      properties:
+        amount:
+          type: string
+          description: Balance as a decimal string (e.g. "1000000000.00")
+        ledgerIndex:
+          type: integer
+          nullable: true
+          description: >-
+            Ledger index at which this balance was last observed. Absent when
+            not applicable.
+    MarketCapSupply:
+      type: object
+      required:
+        - balance
+        - chainBalances
+      description: Aggregate supply figure with a per-chain breakdown.
+      properties:
+        balance:
+          $ref: '#/components/schemas/MarketCapBalance'
+          description: Aggregate balance across all chains.
+        chainBalances:
+          type: object
+          description: >-
+            Per-chain balance breakdown. Keys are blockchain network names (e.g.
+            `XRPL`, `ETH`).
+          additionalProperties:
+            $ref: '#/components/schemas/MarketCapBalance'
+    ProblemDetail:
+      type: object
+      description: >
+        Error response following RFC 9457 (Problem Details for HTTP APIs), the
+        successor to RFC 7807.
+      properties:
+        type:
+          type: string
+          format: uri
+          description: URI reference identifying the problem type
+        title:
+          type: string
+          description: Short, human-readable summary of the problem
+        status:
+          type: integer
+          description: HTTP status code
+        code:
+          type: string
+          description: Machine-readable error code
+          enum:
+            - TRANSACTION_NOT_FOUND
+            - TRANSACTION_INVALID_STATUS_TRANSITION
+            - TRANSACTION_DESTINATION_TYPE_IMMUTABLE
+            - INVALID_REQUEST_BODY
+            - UNKNOWN_EXCEPTION
+  responses:
+    Unauthorized:
+      description: Missing or expired access token
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    Forbidden:
+      description: Insufficient scope for the requested operation
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    NotFound:
+      description: Resource does not exist
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    BadRequest:
+      description: Invalid request parameters or body
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    Conflict:
+      description: >
+        The request conflicts with the current state of the transaction — e.g.
+        approving a
+
+        transaction that was never `PENDING`, or supplying a different
+        destination than one
+
+        already chosen.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    InternalServerError:
+      description: Unexpected server error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+  parameters:
+    currencyCode:
+      name: currencyCode
+      in: path
+      required: true
+      description: Currency code (e.g. `RLUSD`)
+      schema:
+        type: string
+        example: RLUSD
+paths:
+  /v2/oauth/token:
+    post:
+      summary: Obtain an access token
+      description: >
+        OAuth 2.0 Client Credentials grant. Returns a Bearer token valid for 1
+        hour.
+
+        Credentials may be passed in the request body or via HTTP Basic Auth
+        header.
+      operationId: getAccessToken
+      security: []
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - grant_type
+                - audience
+              properties:
+                grant_type:
+                  type: string
+                  enum:
+                    - client_credentials
+                client_id:
+                  type: string
+                  description: Your API client ID (or use Basic Auth header instead)
+                client_secret:
+                  type: string
+                  description: Your API client secret (or use Basic Auth header instead)
+                audience:
+                  type: string
+                  description: >-
+                    Audience URN for your tenant (e.g.
+                    urn:ripplexcurrent-prod:<your_tenant_id>)
+      responses:
+        '200':
+          description: Access token issued successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: JWT to include in all API requests
+                  token_type:
+                    type: string
+                    enum:
+                      - Bearer
+                  expires_in:
+                    type: integer
+                    description: Token validity in seconds (3600 = 1 hour)
+              example:
+                access_token: <jwt_token>
+                token_type: Bearer
+                expires_in: 3600
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/stablecoin/transactions:
+    get:
+      summary: List transactions
+      description: >-
+        Returns a paginated list of transactions, optionally filtered by type
+        and status.
+      operationId: listTransactions
+      tags:
+        - Transactions
+      security:
+        - oauth2:
+            - rlusd_customers:read
+      parameters:
+        - name: transactionTypes
+          in: query
+          description: Filter by transaction type. Repeatable.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - ISSUANCE
+                - REDEMPTION
+                - BRIDGE
+          style: form
+          explode: true
+        - name: statuses
+          in: query
+          description: Filter by status. Repeatable.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - PROCESSING
+                - PENDING
+                - COMPLETED
+                - FAILED
+                - CANCELED
+          style: form
+          explode: true
+        - name: page
+          in: query
+          description: Page number, 0-indexed (default 0)
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Page size (default 20)
+          schema:
+            type: integer
+            default: 20
+        - name: sort
+          in: query
+          description: |
+            Sort field and direction (default: updatedAt,desc).
+            Supported fields: updatedAt, createdAt, type, status, amount.
+          schema:
+            type: string
+            default: updatedAt,desc
+      responses:
+        '200':
+          description: Paginated list of transactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v1/stablecoin/transactions/{id}:
+    get:
+      summary: Get a transaction
+      description: Returns a single transaction by ID.
+      operationId: getTransaction
+      tags:
+        - Transactions
+      security:
+        - oauth2:
+            - rlusd_customers:read
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Transaction UUID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v1/stablecoin/transactions/{id}/destination:
+    put:
+      summary: Approve a pending redemption
+      description: >
+        Approves a transaction held in `PENDING` status (flexible redemption)
+        and directs it.
+
+        Set `type` to `FIAT` to settle to your default bank account (creates a
+        `REDEMPTION`), or
+
+        to `CRYPTO` with a `walletId` to bridge to one of your wallets (creates
+        a `BRIDGE`).
+
+
+        Re-submitting the same destination after the transaction has moved to
+        `PROCESSING` is
+
+        idempotent and returns `200`. Submitting a *different* destination, or
+        approving a
+
+        transaction that was never `PENDING`, returns `409`.
+      operationId: updateTransactionDestination
+      tags:
+        - Transactions
+      security:
+        - oauth2:
+            - rlusd_customers:write
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Transaction UUID
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTransactionDestination'
+      responses:
+        '200':
+          description: >-
+            Updated transaction, transitioned to `PROCESSING` with
+            `type`/`destination` populated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v1/stablecoin/market-cap/{currencyCode}/total:
+    get:
+      summary: Get total supply
+      description: >
+        Returns the total RLUSD supply (all issued tokens, regardless of
+        circulating status)
+
+        with a per-chain breakdown. No authentication required.
+      operationId: getMarketCapTotal
+      security: []
+      tags:
+        - Market Cap
+      parameters:
+        - $ref: '#/components/parameters/currencyCode'
+      responses:
+        '200':
+          description: Total supply
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketCapSupply'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v1/stablecoin/market-cap/{currencyCode}/total/amount:
+    get:
+      summary: Get total supply amount
+      description: >
+        Returns the total RLUSD supply as a plain decimal string (e.g.
+        `"1000000000.00"`).
+
+        Useful for lightweight integrations that only need the aggregate figure.
+
+        No authentication required.
+      operationId: getMarketCapTotalAmount
+      security: []
+      tags:
+        - Market Cap
+      parameters:
+        - $ref: '#/components/parameters/currencyCode'
+      responses:
+        '200':
+          description: Total supply amount as plain text
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: '1000000000.00'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v1/stablecoin/market-cap/{currencyCode}/circulating:
+    get:
+      summary: Get circulating supply
+      description: |
+        Returns the circulating RLUSD supply with a per-chain breakdown.
+        Returns `404` if the circulating supply API is not enabled.
+        No authentication required.
+      operationId: getMarketCapCirculating
+      security: []
+      tags:
+        - Market Cap
+      parameters:
+        - $ref: '#/components/parameters/currencyCode'
+      responses:
+        '200':
+          description: Circulating supply
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketCapSupply'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v1/stablecoin/market-cap/{currencyCode}/circulating/amount:
+    get:
+      summary: Get circulating supply amount
+      description: |
+        Returns the circulating RLUSD supply as a plain decimal string.
+        Returns `404` if the circulating supply API is not enabled.
+        No authentication required.
+      operationId: getMarketCapCirculatingAmount
+      security: []
+      tags:
+        - Market Cap
+      parameters:
+        - $ref: '#/components/parameters/currencyCode'
+      responses:
+        '200':
+          description: Circulating supply amount as plain text
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: '950000000.00'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'

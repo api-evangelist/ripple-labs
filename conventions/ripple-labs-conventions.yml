@@ -1,0 +1,42 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.ripple.com/products/stablecoin/api
+scope: Ripple Mint (RLUSD) API — the product with the most fully documented cross-cutting semantics
+authentication:
+  style: OAuth2 client-credentials (JWT bearer)
+  token_endpoint: https://api.ripple.com/v2/oauth/token
+  token_ttl_seconds: 3600
+  refresh: no refresh token issued; request a new token before expiry
+  audience_urn: urn:ripplexcurrent-prod:<tenant_id>  (use -uat suffix for the UAT sandbox)
+  see: authentication/ripple-labs-authentication.yml
+idempotency:
+  supported: true
+  style: natural / resource-state idempotency (no Idempotency-Key header)
+  detail: >-
+    Approving a redemption via PUT /v1/stablecoin/transactions/{id}/destination is idempotent
+    when the SAME destination type is re-submitted — it returns 200 OK. Submitting a DIFFERENT
+    destination after one is chosen returns 409 TRANSACTION_DESTINATION_TYPE_IMMUTABLE. Webhook
+    delivery is at-least-once, so consumers must deduplicate by transaction `id` + `updatedAt`.
+  see: errors/ripple-labs-problem-types.yml
+pagination:
+  style: query-parameter filtering on the list-transactions endpoint (statuses filter, etc.)
+  note: The list endpoint accepts filter query params; cursor/offset paging is not documented.
+versioning:
+  scheme: path + product-version (e.g. /v1/stablecoin, /v2/oauth; RippleNet /v4; Payments Direct v2025.11 / v2026.04)
+  changelog: changelog/ripple-labs-changelog.yml
+  see: lifecycle/ripple-labs-lifecycle.yml
+error_envelope:
+  format: rfc9457
+  media_type: application/problem+json
+  extra_field: code
+  see: errors/ripple-labs-problem-types.yml
+webhooks:
+  event: STABLECOIN_TRANSACTION
+  delivery: at-least-once, exponential backoff retry (1m, 2m, 4m ...)
+  ordering: not guaranteed; use `updatedAt` to determine latest state
+  signature_headers: [ripple-signature, ripple-signature-timestamp]
+  see: asyncapi/ripple-labs-stablecoin-webhooks.yml
+environments:
+  production: {host: https://api.ripple.com, audience_suffix: -prod}
+  uat_sandbox: {host: https://api.test.ripple.com, audience_suffix: -uat}
+  see: sandbox/ripple-labs-sandbox.yml

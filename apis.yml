@@ -1,26 +1,1033 @@
 aid: ripple-labs
 name: Ripple Labs
-description: 'Ripple Labs is a company surfaced as a portfolio company of gv and added to the API Evangelist
-  network as a stub for enrichment. Sector: consumer. This profile is a lead awaiting the enrichment pipeline.'
+description: 'Ripple (legally Ripple Labs Inc.) is a blockchain and crypto-enabled financial
+  infrastructure company whose developer surface spans Ripple Payments (RippleNet Server API,
+  On-Demand Liquidity, Payments Direct, Report Service, and Smart Liquidation), the RLUSD
+  stablecoin "Ripple Mint" API, and Palisade Wallet-as-a-Service for institutional digital-asset
+  custody. Its APIs let banks, fintechs, and enterprises move money cross-border, mint and
+  redeem the RLUSD stablecoin, run treasury and reporting, and custody digital assets. Ripple
+  also stewards the open-source XRP Ledger (documented at xrpl.org) with first-party client
+  libraries xrpl.js and xrpl-py. Product documentation lives at docs.ripple.com; the legacy
+  ripplelabs.com domain redirects to ripple.com.'
 url: https://raw.githubusercontent.com/api-evangelist/ripple-labs/refs/heads/main/apis.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 24
+  pass: local-v1
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - gv
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://ripple.com/favicon.ico
 tags:
 - Company
-- Consumer
-apis: []
+- Financial Services
+- Payments
+- Cross-Border Payments
+- Blockchain
+- Cryptocurrency
+- Stablecoin
+- Digital Assets
+- Custody
+- Wallet
+- Fintech
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: ripple-labs:ripple-labs-addresses-api
+  name: Ripple Labs Addresses API
+  description: Used to manage addresses
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Addresses
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-addresses-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-api-credentials-api
+  name: Ripple Labs API Credentials API
+  description: Used to manage credentials
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - API Credentials
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-api-credentials-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-auditing-api
+  name: Ripple Labs Auditing API
+  description: >-
+    Use these operations to audit your accounts.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get audits](/products/payments-odl/api-docs/ripplenet/reference/openapi/auditing/getaudits) | GET   |
+    Gets an audit trail of user actions and configuration changes (to accounts, fees, and rates) on a
+    RippleNet instance. |
+
+    | [Get event trail for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/auditing/geteventtrailforpayment)  |
+    GET   | Gets an audit trail of a payment's state changes on a local RippleNet instance. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Auditing
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-auditing-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-authentication-api
+  name: Ripple Labs Authentication API
+  description: >-
+    Use this API operation to manage your authentication tokens.
+
+
+    | Operation | Method | Description |
+
+    | --------- | ------ | ----------- |
+
+    | [Obtain an access token](#operation/getAccessToken) | POST | Request an access token for authentication
+    with the API. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-balances-and-statements-api
+  name: Ripple Labs Balances and statements API
+  description: >-
+    Use these operations to view balances and statements for a ledger.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get balances](/products/payments-odl/api-docs/ripplenet/reference/openapi/balances-and-statements/getbalances)  |
+    GET   | Get balances for local and remote accounts owned by a RippleNet address. |
+
+    | [Get ledger balances](/products/payments-odl/api-docs/ripplenet/reference/openapi/balances-and-statements/getledgerbalances)  |
+    GET   | Get balances for ledger owned by a RippleNet address. |
+
+    | [Get statement](/products/payments-odl/api-docs/ripplenet/reference/openapi/balances-and-statements/getstatement)  |
+    GET   | Gets a statement for an account that lists payments and transfers that impacted the account's
+    balance during a specified date-time range. |
+
+    | [Get statement by external account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/balances-and-statements/getstatementbyexternalaccountid)   |
+    GET   | Gets a statement for an account that lists payments and transfers that impacted the account's
+    balance during a specified date-time range. |
+
+    | [Get ledger account statement](/products/payments-odl/api-docs/ripplenet/reference/openapi/balances-and-statements/getledgeraccountstatement)  |
+    GET   | Get statement for a specified Ledger Account |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Balances and statements
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-balances-and-statements-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-balances-api
+  name: Ripple Labs Balances API
+  description: Used to view balances
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Balances
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-balances-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-beneficiary-confirmation-api
+  name: Ripple Labs Beneficiary confirmation API
+  description: >-
+    Use these operations to perform beneficiary confirmations.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get account lookup by status](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/getaccountlookupbystatus)  |
+    GET    | Get Account Lookup entities by status and other filters. |
+
+    | [Initiate account lookup](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/initiateaccountlookup)
+    | POST   | Creates an Account Lookup request to validate a beneficiary's account details before sending
+    a payment. |
+
+    | [Complete account lookup](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/completeaccountlookup)
+    | POST   | Posts an Account Lookup response to validate a beneficiary's account details before payment.
+    |
+
+    | [Get account lookup by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/getaccountlookupbyid)
+    | GET    | Gets an Account Lookup entity for its `account_lookup_id` value. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Beneficiary confirmation
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-beneficiary-confirmation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-counterparties-api
+  name: Ripple Labs Counterparties API
+  description: Used to manage counterparties
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Counterparties
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-counterparties-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-diagnostics-api
+  name: Ripple Labs Diagnostics API
+  description: >-
+    Use these operations to view RippleNet Server health.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Check health](/products/payments-odl/api-docs/ripplenet/reference/openapi/diagnostics/checkhealth)       |
+    GET | Gets the health status of the xCurrent server. |
+
+    | [Check heartbeat](/products/payments-odl/api-docs/ripplenet/reference/openapi/diagnostics/checkheartbeat)
+    | GET | Gets the health status of the xCurrent server's peers.  |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Diagnostics
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-diagnostics-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-exchange-transfers-api
+  name: Ripple Labs Exchange transfers API
+  description: >-
+    Use these operations to manage exchange transfers.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get exchange transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/getexchangetransfers)  |
+    GET   | List all exchange transfers. |
+
+    | [Execute exchange transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/executeexchangetransfer)
+    | POST  | Execute an exchange transfer to move funds from one of your accounts in one currency, to
+    another one of your accounts in another currency.   |
+
+    | [Get exchange transfer quote ](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/getexchangetransferquote)  |
+    POST  | Requests a quote for an exchange transfer. |
+
+    | [Complete exchange transfer ](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/completeexchangetransfer)
+    | POST  | Updates the status of an exchange transfer to `COMPLETED`. Make this request once the exchange
+    transfer has been made on both the ledger and on internal systems. |
+
+    | [Get exchange transfer by ID ](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/getexchangetransferbyid)  |
+    GET   | Gets an exchange transfer by ID. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Exchange transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-exchange-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-fees-api
+  name: Ripple Labs Fees API
+  description: >-
+    Use these operations to configure fees.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get fees](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/getfees)           |
+    GET       | List all fees. |
+
+    | [Create fee](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/createfee)       |
+    POST      | Creates a fee.   |
+
+    | [Get fee by ID ](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/getfeebyid)  |
+    GET       | Gets a fee by ID. |
+
+    | [Update fee ](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/updatefee)      |
+    PUT       | Updates an existing fee. |
+
+    | [Delete fee ](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/deletefee)      |
+    DELETE    | Deletes a fee. Once deleted, a fee cannot be accessed. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Fees
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-fees-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-liquidations-api
+  name: Ripple Labs Liquidations API
+  description: >-
+    Use these operations to retrieve liquidations from the Smart Liquidation service.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get liquidations](#operation/getLiquidations)   | GET       | List all liquidations by date range.    |
+
+    | [Get liquidation by Liquidation Id](#operation/getLiquidationById)  | GET       | Gets a liquidation
+    by `Id`. |
+
+    | [Get liquidation by RippleNet Payment Id](#operation/getLiquidationsByRipplenetPaymentId) | GET
+    | Gets a liquidation by `ripplenet_payment_id`. |
+
+
+    **Note:** To configure liquidation, contact your RippleNet liaison.
+
+
+    ### Authentication with Smart Liquidation Service
+
+
+    All API operations require a bearer access token for your target environment.<br>Learn how to [request
+    the access token](/products/payments-odl/api-docs/ripplenet/best-practices/authentication/#request-the-access-token).
+
+
+    ### Domain prefixes with Smart Liquidation Service
+
+
+    | **Environment** | **Domain Prefix** | **Request URL** |
+
+    | --- | --- | --- |
+
+    | **Test** | `liquidation-test.pub.prod` | `https://liquidation-test.pub.prod.ripplenet.com` |
+
+    | **Production** | `liquidation.pub.prod` | `https://liquidation.pub.prod.ripplenet.com` |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Liquidations
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-liquidations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-market-cap-api
+  name: Ripple Labs Market Cap API
+  description: >-
+    Use these API operations to obtain details about market-capitalization supply for a stablecoin currency.
+
+
+    | Operation | Method | Description |
+
+    | --------- | ------ | ----------- |
+
+    | [Get total supply](#operation/getMarketCapTotal) | GET | Get the total amount of currency supply,
+    with a per-chain breakdown. |
+
+    | [Get total supply amount](#operation/getMarketCapTotalAmount) | GET | Get the total supply as a
+    plain decimal string. |
+
+    | [Get circulating supply](#operation/getMarketCapCirculating) | GET | Get the circulating amount
+    of currency supply, with a per-chain breakdown. |
+
+    | [Get circulating supply amount](#operation/getMarketCapCirculatingAmount) | GET | Get the circulating
+    supply as a plain decimal string. |
+
+
+    **Note:** These Market Cap operations do not require authentication.
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Market Cap
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-market-cap-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-non-orchestration-payments-api
+  name: Ripple Labs Non-orchestration payments API
+  description: ''
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Non-orchestration payments
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-non-orchestration-payments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-orchestration-payments-api
+  name: Ripple Labs Orchestration payments API
+  description: ''
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Orchestration payments
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-orchestration-payments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-payment-expiration-api
+  name: Ripple Labs Payment expiration API
+  description: >-
+    Use these operations to manage payment expirations.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get payment expiry by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/getpaymentexpirybyid)  |
+    GET    | Gets the time to live (ttl) of a payment expiry in seconds. |
+
+    | [Update payment expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/updatepaymentexpiry)
+    | PUT    | Updates the time to live (ttl) of a payment expiry in seconds. |
+
+    | [Delete payment expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/deletepaymentexpiry)  |
+    DELETE | Deletes a payment expiry. |
+
+    | [Get payment expiries](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/getpaymentexpiries)        |
+    GET    | Returns all configured payment expiries. |
+
+    | [Create payment expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/createpaymentexpiry)
+    | POST   | Creates a payment expiration window, or time to live (ttl), in seconds. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Payment expiration
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-payment-expiration-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-payout-method-api
+  name: Ripple Labs Payout method API
+  description: >-
+    Payout Method operations let receivers create and manage payout methods. Senders can generate quotes
+    based on these receiver payout methods.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Create payout method](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/createpayoutmethod)        |
+    POST      | Creates a payout method. For example, `LOCAL_RAILS`. |
+
+    | [Get payout methods](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/getpayoutmethods)            |
+    GET       | Returns a list of payout methods created by a receiving partner. |
+
+    | [Get payout method by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/getpayoutmethodbyid)    |
+    GET       | Returns a payout method by its ID. |
+
+    | [Update payout method](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/updatepayoutmethod)        |
+    PUT       | Updates a payout method. |
+
+    | [Delete payout method](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/deletepayoutmethod)        |
+    DELETE    | Deletes a payout method. |
+
+    | [Get all categories](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/getallcategories)  |
+    GET       | Returns all the payout method categories. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Payout method
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-payout-method-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-platform-accounts-api
+  name: Ripple Labs Platform accounts API
+  description: >-
+    Use these operations to configure your RippleNet platform accounts.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Create platform](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/createplatform)                                         |
+    POST      | Creates a RippleNet platform that represents a financial entity that holds accounts in
+    the real world. For example, a Bank, Exchange, or Wallet provider.  |
+
+    | [Get all platforms](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getallplatforms)                                          |
+    GET       | Returns a list of all active RippleNet platforms. |
+
+    | [Get platform by platform ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformbyplatformid)                             |
+    GET       | Get a RippleNet platform by its platform ID. |
+
+    | [Update platform](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/updateplatform)                                         |
+    PUT       | Updates a RippleNet platform. |
+
+    | [Delete platform by platform ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/deleteplatformbyplatformid)                  |
+    DELETE    | Deletes a RippleNet platform by its platform ID. |
+
+    | [Create platform account](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/createplatformaccount)                          |
+    POST      | Creates a RippleNet platform account, which represents a real-world account owned by a
+    financial entity. |
+
+    | [Get platform accounts](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccounts)                              |
+    GET       | Returns a paged list of all active RippleNet platform accounts. |
+
+    | [Get platform account by platform account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccountbyplatformaccountid)       |
+    GET       | Gets a RippleNet platform account by its platform account ID. |
+
+    | [Update platform account](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/updateplatformaccount)                          |
+    PUT       | Updates a RippleNet platform account. |
+
+    | [Delete platform account by platform account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/deleteplatformaccountbyplatformaccountid)
+    | DELETE    | Deletes a RippleNet platform account by its platform account ID. |
+
+    | [Get platform accounts balances](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccountsbalances)             |
+    GET       | Get balances for local Platform Accounts |
+
+    | [Get platform account statement](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccountstatement)             |
+    GET       | Get statement for a specified Platform Account |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Platform accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-platform-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-policies-api
+  name: Ripple Labs Policies API
+  description: Used to manage connections policies
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-policies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-pool-accounts-api
+  name: Ripple Labs Pool accounts API
+  description: >-
+    Use these operations to configure your RippleNet pool accounts.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get all pool accounts](/products/payments-odl/api-docs/ripplenet/reference/openapi/pool-accounts/getallpoolaccounts)                               |
+    GET    | Returns a list of all pool accounts on a RippleNet node. |
+
+    | [Get pool account by pool account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/pool-accounts/getpoolaccountbypoolaccountid)               |
+    GET    | Get a pool account by its pool account ID. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Pool accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-pool-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-quote-expiration-api
+  name: Ripple Labs Quote expiration API
+  description: >-
+    Use these operations to manage quote expirations.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [List quote expiries](/products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/getquoteexpiries)     |
+    GET        | Returns all configured quote expiries. |
+
+    | [Create quote expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/createquoteexpiry)    |
+    POST       | Creates a quote expiration window, or time to live (ttl), in seconds. |
+
+    | [Get quote expiry](//products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/getquoteexpirybyid)      |
+    GET        | Gets the configured quote expiration window, or time to live (ttl),  in seconds. |
+
+    | [Update quote expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/updatequoteexpiry)    |
+    PUT        | Sets a quote expiration window, or time to live (ttl), in seconds. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Quote expiration
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-quote-expiration-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-quotes-api
+  name: Ripple Labs Quotes API
+  description: >-
+    Use these operations to manage your quotes.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Accept quote](/products/payments-odl/api-docs/ripplenet/reference/openapi/quotes/acceptquote)                            |
+    POST | Accepts a quote ID to start the payment process. |
+
+    | [Get quotes](/products/payments-odl/api-docs/ripplenet/reference/openapi/quotes/getquotes)                                |
+    GET  | Gets a list of quotes. |
+
+    | [Get quote by quote ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/quotes/getquotebyquoteid)                   |
+    GET  | Gets a quote by ID. |
+
+    | [Create quote collection](/products/payments-odl/api-docs/ripplenet/reference/openapi/quotes/createquotecollection)       |
+    POST | Creates a collection of quotes for a proposed payment. |
+
+    | [Get quote collection by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/quotes/getquotecollectionbyid)   |
+    GET  | Gets a quote collection that was created for a proposed payment. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Quotes
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-quotes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-rates-api
+  name: Ripple Labs Rates API
+  description: >-
+    Use these operations to manage your rates.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get rates](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/getrates)         |
+    GET    | Gets a list of configured exchange rates. |
+
+    | [Create rate](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/createrate)     |
+    POST   | Creates an exchange rate for a specified currency pair. |
+
+    | [Get rate by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/getratebyid)
+    | GET    | Gets a configured exchange rate by ID. |
+
+    | [Update rate](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/updaterate)     |
+    PUT    | Updates an existing exchange rate. |
+
+    | [Delete rate](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/deleterate)     |
+    DELETE | Deletes an exchange rate. Once deleted, an exchange rate cannot be accessed. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Rates
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-rates-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-reports-api
+  name: Ripple Labs Reports API
+  description: >-
+    The Report Service API provides `PAYMENT_OPS`, `RECON`, and `FAILURE_CONVERSION_SSA` reports in either
+    CSV or JSON format.
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-request-for-payment-api
+  name: Ripple Labs Request for payment API
+  description: >-
+    Use these operations to interact with your payment requests.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get requests for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/getrequestsforpayment)         |
+    GET   | Gets requests for payment that match the query parameters. |
+
+    | [Send request for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/sendrequestforpayment)         |
+    POST  | Sends a new request for payment. |
+
+    | [Get request for payment by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/getrequestforpaymentbyid)
+    | GET   | Gets a request for payment by request for payment ID. |
+
+    | [Accept request for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/acceptrequestforpayment)     |
+    POST  | Accepts a request for payment. |
+
+    | [Fail request for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/failrequestforpayment)         |
+    POST  | Fails a request for payment. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Request for payment
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-request-for-payment-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-sweep-configurations-api
+  name: Ripple Labs Sweep Configurations API
+  description: Used to manage sweep configurations
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Sweep Configurations
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-sweep-configurations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-tags-api
+  name: Ripple Labs Tags API
+  description: Used to manage organization tags
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-tags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-transactions-api
+  name: Ripple Labs Transactions API
+  description: Used to manage transactions
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-transactions-sweep-api
+  name: Ripple Labs Transactions - Sweep API
+  description: The Transactions - Sweep API from Ripple Labs — 2 operation(s) for transactions - sweep.
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Transactions - Sweep
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-transactions-sweep-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-transactions-xrp-api
+  name: Ripple Labs Transactions - XRP API
+  description: Used to manage XRP specific transactions
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Transactions - XRP
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-transactions-xrp-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-transfers-api
+  name: Ripple Labs Transfers API
+  description: >-
+    Use these operations to manage your transfers.
+
+
+    | Operation | Method | Description |
+
+    | -- | -- | -- |
+
+    | [Get transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransfers)                 |
+    GET    | Gets a list of transfers. |
+
+    | [Get transfer estimate](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransferestimate)  |
+    GET    | Get an estimate of the fee to make an "outbound" transfer from an exchange (connected to
+    xRapid) to an another account outside of RippleNet (such as a bank account).  |
+
+    | [Get transfer by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransferbyid)         |
+    GET    | Gets a transfer by ID. |
+
+    | [Execute transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/executetransfer)           |
+    POST   | Transfers funds between accounts.  |
+
+    | [Complete transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/completetransfer)         |
+    POST   | Updates the state of a transfer to `COMPLETED`. |
+
+    | [Add transfer labels](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/addtransferlabels)       |
+    PUT    | Adds a list of labels to the transfer. To retrieve transfers by label, see [Get transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransfers)
+    |
+
+    | [Delete transfer labels](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/deletetransferlabels)
+    | DELETE | Deletes one or more existing labels from the transfer. |
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-vault-tags-api
+  name: Ripple Labs Vault Tags API
+  description: Used to manage vault tags
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Vault Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-vault-tags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-vaults-api
+  name: Ripple Labs Vaults API
+  description: Used to manage vaults
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Vaults
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-vaults-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-wallet-tags-api
+  name: Ripple Labs Wallet Tags API
+  description: Used to manage wallet tags
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Wallet Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-wallet-tags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-wallets-api
+  name: Ripple Labs Wallets API
+  description: Used to manage wallets
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Wallets
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-wallets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
+- aid: ripple-labs:ripple-labs-webhooks-api
+  name: Ripple Labs Webhooks API
+  description: Used to manage webhooks
+  humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
+  baseURL: https://api.ripple.com
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/ripple-labs-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ripple.com/products/stablecoin
+  - type: Authentication
+    url: https://docs.ripple.com/products/stablecoin/api/authentication
 common:
+- type: TrustCenter
+  url: security/ripple-labs-trust-center.yml
+- type: DomainSecurity
+  url: security/ripple-labs-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/ripple-labs-agentic-access.yml
+- type: OAuthScopes
+  url: scopes/ripple-labs-scopes.yml
+- type: Authentication
+  url: authentication/ripple-labs-authentication.yml
 - type: Website
-  url: http://ripplelabs.com
+  url: https://ripple.com
+- type: DeveloperPortal
+  url: https://docs.ripple.com
+- type: Documentation
+  url: https://docs.ripple.com
+- type: APIReference
+  url: https://docs.ripple.com/products/stablecoin/api/reference/rlusd-openapi
+- type: GettingStarted
+  url: https://docs.ripple.com/products/stablecoin/api/get-started
+- type: Blog
+  url: https://ripple.com/insights/
+- type: GitHubOrganization
+  url: https://github.com/ripple
+- type: Support
+  url: https://ripple.com/contact/
+- type: TermsOfService
+  url: https://ripple.com/legal/terms-of-use/
+- type: PrivacyPolicy
+  url: https://ripple.com/legal/privacy-policy/
+- type: Compliance
+  url: https://ripple.com/security/
+- type: Conformance
+  url: conformance/ripple-labs-conformance.yml
+- type: Packages
+  url: packages/ripple-labs-packages.yml
+- type: SDKs
+  url: packages/ripple-labs-packages.yml
+- type: WellKnown
+  url: well-known/ripple-labs-well-known.yml
+- type: MCPServer
+  url: mcp/ripple-labs-mcp.yml
+- type: LLMsTxt
+  url: llms/ripple-labs-llms.txt
+- type: ErrorCatalog
+  url: errors/ripple-labs-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/ripple-labs-lifecycle.yml
+- type: Deprecation
+  url: https://docs.ripple.com/products/stablecoin/api/change-history
+- type: Sandbox
+  url: sandbox/ripple-labs-sandbox.yml
+- type: Conventions
+  url: conventions/ripple-labs-conventions.yml
+- type: Idempotency
+  url: conventions/ripple-labs-conventions.yml
+- type: ChangeLog
+  url: changelog/ripple-labs-changelog.yml
+- type: DataModel
+  url: data-model/ripple-labs-data-model.yml
+- type: Webhooks
+  url: asyncapi/ripple-labs-stablecoin-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  name: RLUSD Mint API overlay
+  url: overlays/ripple-labs-rlusd-overlay.yaml
+- type: Overlay
+  name: RippleNet Server API overlay
+  url: overlays/ripple-labs-ripplenet-overlay.yaml
+- type: Overlay
+  name: Report Service API overlay
+  url: overlays/ripple-labs-report-service-overlay.yaml
+- type: Overlay
+  name: Smart Liquidation API overlay
+  url: overlays/ripple-labs-smart-liquidation-overlay.yaml
+- type: Overlay
+  name: Palisade Wallet API overlay
+  url: overlays/ripple-labs-palisade-wallet-overlay.yaml

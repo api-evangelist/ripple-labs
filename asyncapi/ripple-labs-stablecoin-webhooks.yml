@@ -1,0 +1,35 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.ripple.com/products/stablecoin/api/webhooks
+spec_type: Webhooks
+note: >-
+  Ripple documents webhooks for the RLUSD Mint API but does not publish an AsyncAPI document;
+  this captures the webhook event surface. Endpoint registration is handled by Ripple during
+  onboarding (contact your Ripple liaison), not self-service.
+transport:
+  delivery: HTTPS POST to a registered callback URL (must present a valid public certificate; HTTP not supported)
+  expected_response: HTTP 200 (any other code treated as failure)
+security:
+  signature_headers:
+  - {name: ripple-signature, description: encrypted signature value}
+  - {name: ripple-signature-timestamp, description: timestamp when the notification was created}
+  verification: >-
+    Concatenate ripple-signature-timestamp + "." + raw body, decrypt ripple-signature with the
+    Ripple-provided public key, and compare. Validate the timestamp to detect replays.
+  ip_allowlist:
+    individual_ips: [18.132.100.8, 18.132.163.113, 18.132.66.187, 18.168.24.178, 18.132.26.105, 35.179.241.253, 35.177.153.4, 3.9.195.17, 35.179.4.83]
+    cidr: 185.224.66.0/23
+    note: Same set applies to production and UAT; may change over time.
+delivery_guarantees:
+  ordering: not guaranteed; use updatedAt to determine latest state
+  at_least_once: true (deduplicate by transaction id + updatedAt)
+  retry_policy:
+  - {attempt: 1, delay: 1 minute}
+  - {attempt: 2, delay: 2 minutes}
+  - {attempt: 3, delay: 4 minutes}
+  note: exponential backoff
+events:
+- name: STABLECOIN_TRANSACTION
+  description: Delivered for every transaction state change (PENDING/PROCESSING/COMPLETED/CANCELED/FAILED).
+  payload_fields: [eventData.status, eventData.source, eventData.destination]
+  deprecated_fields: [eventData.sourceHash, eventData.destinationHash]

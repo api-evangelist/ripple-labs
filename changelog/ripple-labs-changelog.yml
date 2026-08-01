@@ -1,0 +1,28 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.ripple.com/products/stablecoin/api/change-history
+scope: Ripple Mint (RLUSD) API
+scheme: product minor versions (v1.x)
+current_version: v1.4
+entries:
+- version: v1.4
+  breaking: true
+  highlights:
+  - New UAT (sandbox) environment at https://api.test.ripple.com exposing the same transaction
+    and webhook contract as production.
+  - Adds UAT-only operation POST /v1/stablecoin/transactions to generate sample transactions.
+  - "BREAKING: approve-redemption request body field renamed destination -> type (PUT
+    /v1/stablecoin/transactions/{id}/destination now sends { \"type\": \"FIAT\" })."
+- version: v1.3
+  breaking: false
+  highlights:
+  - New CANCELED terminal transaction status (applies to ISSUANCE transactions canceled before settlement).
+  - The list-transactions statuses filter now accepts CANCELED.
+  - A STABLECOIN_TRANSACTION webhook is delivered with eventData.status = "CANCELED".
+- version: v1.2
+  breaking: false
+  highlights:
+  - Added counterpartyAddress to source and destination for on-chain reconciliation.
+  - Webhook eventData now embeds source and destination objects (each with hash and counterpartyAddress).
+  - "Deprecated: top-level eventData.sourceHash / eventData.destinationHash (still delivered for
+    backward compatibility; to be removed in a future version)."

@@ -1,0 +1,1808 @@
+openapi: 3.0.3
+info:
+  title: Report Service API
+  description: >
+    The Report Service API provides an efficient and secure way to download
+    On-Demand Liquidity (ODL) payment transactions on the RippleNet network.
+
+
+    ## Report types
+
+      Three report types are available in either CSV or JSON format when performing a [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation:
+
+      | Report type | Description |
+      | :--- | :--- |
+      | `PAYMENT_OPS` | This is a *Basic payment report* suitable for high-level payment investigation and reporting. |
+      | `RECON` | This is a *Reconciliation report* suitable for reconciliation and detailed state-by-state investigation. |
+      | `FAILURE_CONVERSION_SSA` | This is a *Failure conversion & SSA report* suitable for failed payments investigation. |
+
+    **Note**: These On-Demand Liquidity (ODL) statement reports do not include
+    data on fiat payments in RippleNet.
+
+
+    ### Basic payment report
+
+
+    The Basic payment report (`PAYMENT_OPS`) provides basic payment data, but
+    not the transaction data within payments.
+
+
+    View the [Payment operations reports data
+    fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/paymentopsreporttransaction).
+
+
+    ### Reconciliation report
+
+
+    The Reconciliation report (`RECON`) includes all basic payment data, and
+    also includes trade and liquidation data that may be associated with a
+    payment.
+
+
+    A single payment with multiple transactions appears in multiple lines, one
+    line per transaction. Each line includes data that has occurred during the
+    transaction, and all subordinate transactions share the same Payment ID.
+
+
+    View the [Reconciliation reports data
+    fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/reconciliationreporttransaction).
+
+
+    ### Failure conversion & SSA report
+
+
+    The Failure conversion & SSA report (`FAILURE_CONVERSION_SSA`) includes
+    failed payments data.
+      
+    View the [Failure conversion & SSA report data
+    fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/failureconversionssatransaction).
+      
+    ### Report availability
+
+
+    Reports are available in pre-generated formats for the previous two months
+    and the current month-to-date.
+
+
+    The month-to-date report is generated daily at 00:00 AM (UTC) and is
+    generally available one minute later, at 00:01 AM.
+
+
+    #### Example: Report availability
+
+
+    On October 16th, you can get:
+      * Full month reports for August and September.
+      * A month-to-date report from October 1st to October 16th.
+
+    | Month | Example | Description |
+
+    | --- | --- | --- |
+
+    | Current | October 1, 2022 to<br/>October 16, 2022 at 00:00 AM | Includes
+    ODL payment data from the first day of the current month up to 00:00 AM
+    (UTC) of the current day. |
+
+    | Previous  | September<br/>(If the current month is October) | Includes all
+    ODL payment data for the month preceding the current month. |
+
+    | Month Before Last| August<br/>(If the current month is October) | Includes
+    all ODL payment data from the month preceding the last month.  |
+
+
+
+    ### API operations
+
+
+    Use these operations to view a list of reports, or download a specific
+    report.
+
+      | API operation | Description |
+      | --- | --- |
+      | [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) | View a list of available reports. |
+      | [Create a report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/postreport) | Create a report. |
+      | [Get a report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport) | View a specific report. |
+      | [Delete a report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/deletereport) | Delete a specific report. |
+      | [Download a report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreportdownload) | Download an individual report in JSON or CSV format. |
+
+    ## Authentication
+
+
+    To use any API operation you need a valid access token. You must include a
+    valid access token in the `Authorization` header of each request.
+
+
+    For more information about getting an access token, see
+    [Authentication](/products/payments-odl/api-docs/ripplenet/best-practices/authentication/#request-the-access-token).
+
+
+    ### Environments
+
+
+    You can use the Report Service API with the test and production environments
+    by using different base URLs.
+
+
+    <table style="table;table-layout: fixed; width: 100%">
+
+    <colgroup><col style="width: 15%"><col style="width: 45%"><col style="width:
+    45%"></colgroup>
+
+    <thead>
+      <tr>
+        <th>Environment</th>
+        <th>Base URL</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Test</td>
+        <td><code>reporting-test.rnc.ripplenet.com</code></td>
+        <td>Test environment with simulated partners and simulated currency.</td>
+      </tr>
+      <tr>
+        <td>Production</td>
+        <td><code>reporting.rnc.ripplenet.com</code></td>
+        <td>Production environment with actual partners and actual currency.</td>
+      </tr>
+    </tbody>
+
+    </table>
+servers:
+  - url: https://reporting-test.rnc.ripplenet.com
+    description: >-
+      Test environment<br/>Learn about <a
+      href="https://docs.ripple.com/ripplenet/implementation/baseurls/#base-url-by-api-environment"
+      class="api-console-href">API environments</a>
+  - url: https://reporting.rnc.ripplenet.com
+    description: Production environment
+security:
+  - Bearer: []
+tags:
+  - name: Reports
+    description: >-
+      The Report Service API provides `PAYMENT_OPS`, `RECON`, and
+      `FAILURE_CONVERSION_SSA` reports in either CSV or JSON format.
+  - name: Report data fields
+    description: View the data fields for the different report types.
+paths:
+  /v1/reports:
+    get:
+      tags:
+        - Reports
+      summary: List reports
+      description: >
+        Returns an array of reports available for download. Each array element
+        represents an available report, and contains the `reportId`,
+        `reportType`, and `reportFormat` fields associated with that report.
+
+
+        To get the download link for a specific report, store the `reportId` for
+        the report you want, and use it with the [Get a
+        report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport)
+        operation.
+      operationId: getReports
+      parameters:
+        - name: created-by
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/CreatedByEnum'
+      responses:
+        '200':
+          description: Returns an array of report metadata for the calling tenant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportsMetadataResponse'
+        '400':
+          description: Bad Report Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Reports
+      summary: Create report
+      description: >
+        Request the generation of a custom report based on the specified
+        parameters.
+
+
+        **Report duration**
+
+
+        Reports can contain up to 90 days of transactions from the previous 9
+        months.
+
+
+        * Minimum report duration is 1 day.
+
+        * Maximum report duration is 90 days.
+
+
+        #### Report retention
+
+
+        Reports are retained for 6 months after the `endDate` specified in your
+        request.  After this period, the report is purged and will no longer be
+        accessible.
+      operationId: postReport
+      requestBody:
+        description: Parameters defining the requested report
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportRequest'
+        required: false
+      responses:
+        '200':
+          description: Returns the JSON record for the posted report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportRecord'
+        '400':
+          description: Bad Report Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-codegen-request-body-name: body
+  /v1/reports/{report-id}:
+    get:
+      tags:
+        - Reports
+      summary: Get a report
+      description: >
+        Here, you apply the `report-id` from the [List
+        reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports)
+        operation as the path parameter to get a `downloadlink` containing the
+        report.
+
+
+        Download the report at the link in the `downloadLink` field in the
+        response.
+      operationId: getReport
+      parameters:
+        - name: report-id
+          in: path
+          description: Unique identifier for a report.
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+      responses:
+        '200':
+          description: >-
+            Returns the JSON record of the report specified in the path
+            parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportDownloadRecordLink'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - Reports
+      summary: Delete reports
+      description: Delete a specific report with the `report-id` path parameter.
+      operationId: deleteReport
+      parameters:
+        - name: report-id
+          in: path
+          description: Unique ID for a report
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: The resource was successfully deleted.
+        '404':
+          description: Reports not found
+          content: {}
+        '500':
+          description: Error while attempting to delete resource
+          content: {}
+  /v1/reports/download/{report-id}:
+    get:
+      tags:
+        - Reports
+      summary: Download a report
+      description: >
+        Download a transaction report. Download the report by applying the
+        `report-id` from the [List
+        reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports)
+        operation as a path parameter.
+
+
+        **Note**: Depending on the `reportId` you specified, the returned report
+        is either a Payment operations report or a Reconciliation report.
+      operationId: getReportDownload
+      parameters:
+        - name: report-id
+          in: path
+          description: >-
+            Unique identifier for a report. Get this `report-id` from the [List
+            reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports)
+            operation.
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+      responses:
+        '200':
+          description: >-
+            Returns the JSON record of the report specified in the path
+            parameter
+          content:
+            application/json:
+              schema:
+                description: >
+                  Report data fields vary depending on the selected report.
+
+
+                  | Report type | Data fields |
+
+                  | --- | --- |
+
+                  | `PAYMENT_OPS` | [Payment report data
+                  fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/paymentopsreporttransaction)
+                  |
+
+                  | `RECON` | [Reconciliation report data
+                  fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/reconciliationreporttransaction)
+                  |
+
+                  | `FAILURE_CONVERSION_SSA` | [Failure conversion & SSA report
+                  data
+                  fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/failureconversionssatransaction)
+                  |
+                oneOf:
+                  - $ref: '#/components/schemas/PaymentOpsReportTransaction'
+                  - $ref: '#/components/schemas/ReconciliationReportTransaction'
+                  - $ref: '#/components/schemas/FailureConversionSsaTransaction'
+              examples:
+                PaymentOpsReportResponse:
+                  $ref: '#/components/examples/PaymentOpsReportResponse'
+                ReconReportResponse:
+                  $ref: '#/components/examples/ReconReportResponse'
+                FailureConversionSsaReportResponse:
+                  $ref: '#/components/examples/FailureConversionSsaReportResponse'
+        '204':
+          description: The contents of the report are empty
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ReportDownloadRecordLink:
+      required:
+        - endDate
+        - reportFormat
+        - reportId
+        - startDate
+        - reportStatus
+        - reportType
+      type: object
+      additionalProperties: false
+      properties:
+        reportId:
+          type: string
+          description: Unique identifier for a report.
+          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          format: uuid
+        reportName:
+          $ref: '#/components/schemas/report_name'
+        reportType:
+          $ref: '#/components/schemas/ReportTypeEnum'
+        reportFormat:
+          $ref: '#/components/schemas/ReportFormatEnum'
+        reportStatus:
+          $ref: '#/components/schemas/ReportStatusEnum'
+        startDate:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            start date (inclusive) for a requested report.
+          format: date-time
+          example: '2018-04-06T19:33:35Z'
+        endDate:
+          type: string
+          description: >
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            end date (inclusive) for a requested report.
+
+
+            **Note**:  Must be after `startDate`, but no more than 90 days
+            after.
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+        createdOn:
+          $ref: '#/components/schemas/report_created_on'
+        downloadLink:
+          type: string
+          minLength: 1
+          maxLength: 2048
+          description: >
+            Link where you can download the report in the available format. This
+            field is available when the report `status` is `READY`.
+          format: uri
+          example: >-
+            https://reporting-test.rnc.ripplenet.com/v1/reports/download/497f6eca-6276-4993-bfeb-53cbbbba6f08
+        reportCreatedBy:
+          $ref: '#/components/schemas/ReportCreatedBy'
+    ReportRecord:
+      required:
+        - endDate
+        - reportFormat
+        - reportId
+        - startDate
+        - reportStatus
+        - reportType
+      type: object
+      additionalProperties: false
+      properties:
+        reportId:
+          type: string
+          description: Unique identifier for a report.
+          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          format: uuid
+        reportName:
+          $ref: '#/components/schemas/report_name'
+        reportType:
+          $ref: '#/components/schemas/ReportTypeEnum'
+        reportFormat:
+          $ref: '#/components/schemas/ReportFormatEnum'
+        reportStatus:
+          $ref: '#/components/schemas/ReportStatusEnum'
+        startDate:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            start date (inclusive) of the report.
+          format: date-time
+          example: '2018-04-06T19:33:35Z'
+        endDate:
+          type: string
+          description: >
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            end date (inclusive) of the report.
+
+
+            **Note**: Must be after `startDate`, but no more than 90 days after.
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+        createdOn:
+          $ref: '#/components/schemas/report_created_on'
+    ReportMetadata:
+      required:
+        - endDate
+        - reportFormat
+        - reportId
+        - startDate
+        - reportStatus
+        - reportType
+      type: object
+      additionalProperties: false
+      properties:
+        reportId:
+          type: string
+          description: Unique identifier for a report.
+          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          format: uuid
+        reportName:
+          $ref: '#/components/schemas/report_name'
+        reportType:
+          $ref: '#/components/schemas/ReportTypeEnum'
+        reportFormat:
+          $ref: '#/components/schemas/ReportFormatEnum'
+        reportStatus:
+          $ref: '#/components/schemas/ReportStatusEnum'
+        startDate:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            start date (inclusive) of the report.
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+        endDate:
+          type: string
+          description: >
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            end date (inclusive) of the report.
+
+
+            **Note**: Must be after `startDate`, but no more than 90 days after.
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+        createdOn:
+          $ref: '#/components/schemas/report_created_on'
+        reportCreatedBy:
+          $ref: '#/components/schemas/ReportCreatedBy'
+    ReportsResponse:
+      required:
+        - reports
+      type: object
+      additionalProperties: false
+      properties:
+        reports:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ReportRecord'
+    ReportsMetadataResponse:
+      required:
+        - reports
+      type: object
+      additionalProperties: false
+      properties:
+        reports:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ReportMetadata'
+    ReportRequest:
+      required:
+        - reportName
+        - reportType
+        - reportFormat
+        - startDate
+        - endDate
+      type: object
+      additionalProperties: false
+      properties:
+        reportName:
+          $ref: '#/components/schemas/report_name'
+        startDate:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            start date (inclusive) for requested report.
+          format: date-time
+          example: '2018-04-06T19:33:35Z'
+        endDate:
+          type: string
+          description: >
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            end date (inclusive) for a requested report.
+
+
+            **Note**: Must be after `startDate`, but no more than 90 days after.
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+        reportType:
+          $ref: '#/components/schemas/ReportTypeEnum'
+        reportFormat:
+          $ref: '#/components/schemas/ReportFormatEnum'
+    InternalReportUpdateRequest:
+      required:
+        - startDate
+        - endDate
+      type: object
+      additionalProperties: false
+      properties:
+        startDate:
+          type: string
+          description: Start date for requested reports.
+          format: date-time
+          example: '2018-04-06T19:33:35Z'
+        endDate:
+          type: string
+          description: End date for requested reports.
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+    ErrorResponse:
+      required:
+        - type
+        - errorCode
+        - title
+        - time
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          format: uri
+          example: >-
+            https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1
+        errorCode:
+          type: string
+          example: RPT_1
+        title:
+          type: string
+          minLength: 1
+          maxLength: 128
+          example: BAD_REQUEST
+        detail:
+          type: string
+          minLength: 1
+          maxLength: 2048
+          example: Required field missing
+        time:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            error timestamp.
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+    report_name:
+      type: string
+      minLength: 1
+      maxLength: 256
+      description: User defined name of the report.
+      example: My custom report
+    report_created_on:
+      type: string
+      description: Report creation time
+      format: date-time
+      example: '2018-04-06T20:33:35Z'
+    end_to_end_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >-
+        The unique ID that the sender specifies. It persists on all RippleNet
+        instances that participate in the payment.
+    ripplenet_payment_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: The unique payment identifier.
+      example: 70eccd4f-abcd-1234-a655-3aeddff19e4a
+    fx_spot_rate:
+      type: number
+      description: >
+        **[Sender only]**
+
+
+        The foreign exchange spot rate sourced from Refinitiv, CurrencyLayer, or
+        another third-party source.
+      example: 58.70956379
+    received_amount:
+      type: number
+      description: The payment amount received by the beneficiary.
+      example: 39.45
+    received_currency:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >-
+        The [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html)
+        currency code of the `received_amount`.
+      example: PHP
+    sent_amount:
+      type: number
+      description: The payment amount sent.
+      example: 40
+    sent_currency:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >-
+        The [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html)
+        currency code of the of `sent_amount`.
+      example: USD
+    destination_exchange:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: |
+        **[Receiver only]**
+
+        The destination exchange for the payment.
+      example: independentreserve
+    source_exchange:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: |
+        **[Sender only]**
+
+        The source exchange where the sender originates the payment.
+      example: bitstamp
+    receiver_address:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >-
+        RippleNet account name and address of the receiver, in the format
+        `accountname@ripplenetaddress`.
+      example: new_york@rn.us.ny.new_york
+    receiver_customer:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: Name of the receiving institution.
+      example: sf
+    sender_address:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >-
+        RippleNet account name and address of the sender, in the format
+        `accountname@ripplenetaddress`.
+      example: new_york@rn.us.ny.new_york
+    sender_customer:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: The name of the sending institution.
+      example: examplecorp_sf
+    payment_method:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >
+        **[Sender only]**
+
+
+        Method for completing the payment. This is a freeform text field that
+        accepts custom strings for payment methods, for example:
+
+          - CSM_ID_IDR
+          - MSISDN_ID_IDR
+          - CASHPICKUP_ID_IDR
+          - CARD_CN_CNY
+
+          Or you can use RippleNet payment method values:
+
+          - REAL_TIME_GROSS_SETTLEMENT_SYSTEM
+          - REAL_TIME_NET_SETTLEMENT_SYSTEM
+          - MASS_NET_PAYMENT_SYSTEM
+          - BOOK_TRANSFER
+          - CASH_PAYOUT
+          - WALLET_PAYMENT
+          - OTHER
+      example: CSM_TH_THB
+    payment_state:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: The state of a payment at the moment it is queried.
+      example: COMPLETED
+    internal_payment_state:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: |
+        **[Ripple internal]**
+
+        Ripple uses this information for troubleshooting purposes.
+      example: DONE
+    remitter_name:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >
+        Complete name of the person originating the payment.
+
+
+        **Note**: Values are only viewable by the customer requesting the
+        report.
+    remitter_account:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >
+        Account number at the sending institution for the payment remitter.
+
+
+        **Note**: Values are only viewable by the customer requesting the
+        report.
+    beneficiary_name:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >
+        Complete name of the person receiving the payment.
+
+
+        **Note**: Values are only viewable by the customer requesting the
+        report.
+    beneficiary_account:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >
+        Account number at the receiving institution for the payment beneficiary.
+
+
+        **Note**: Values are only viewable by the customer requesting the
+        report.
+    transaction_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: Unique identifier of the balance change between two accounts.
+      example: a557eb2d-abcd-1234-a9a0-fdb5b52aaa02
+    transaction_state:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: |
+        The transaction state of the overall payment when it's queried.
+      x-enumDescriptions:
+        COMPLETED: Transaction is complete.
+        EXECUTED: Transaction has executed.
+        FAILED: Transaction has failed.
+      example: COMPLETE
+    transaction_type:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: |
+        The type of transaction.
+      x-enumDescriptions:
+        CRYPTO_TRANSFER: Transfer of digital assets.
+        FIAT_TRANSFER: Transfers of fiat.
+        TRADE: Trade transfers.
+      example: TRADE
+    venue_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >-
+        The unique identifier associated with a transaction involving an
+        exchange account. Sometimes it's called "exchange id" or "order id".
+      example: 8eef087a-abcd-1234-922d-e802b1126ea0
+    source_result_amount:
+      type: number
+      description: Fiat amount before deduction of source exchange fee.
+    source_result_adjusted_amount:
+      type: number
+      description: Fiat amount after deduction of source exchange fee.
+    source_result_proceeds:
+      type: number
+      description: >-
+        XRP amount after exchange of the `source_result_adjusted_amount` at the
+        `source_exchange`.
+    source_result_adjusted_proceeds:
+      type: number
+      description: >-
+        XRP amount after deduction of the conversion fees from
+        `source_result_proceeds`.
+    withdrawal_result_amount:
+      type: number
+      description: >
+        **[Sender only]**
+
+
+        Final amount of XRP at `source_exchange` wallet to be withdrawn after
+        `withdrawal_result_fee_amount` fees and
+        `withdrawal_result_incentive_value` incentives have been applied.
+
+
+        **Note**: This value can be higher or lower than
+        `source_result_proceeds` depending on whether the incentives were
+        positive or negative.
+      example: 39.846668
+    withdrawal_result_fee_amount:
+      type: number
+      description: >
+        **[Sender only]**
+
+
+        Withdrawal fee charged by the `source_exchange`. This is substracted
+        from the total `withdrawal_result_amount`.
+    withdrawal_result_incentive_value:
+      type: number
+      description: >
+        **[Sender only]**
+
+
+        The incentive value in XRP applied to `source_result_proceeds` to arrive
+        at the `withdrawal_result_amount` value.
+    withdrawal_result_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >
+        **[Sender only]**
+
+
+        Unique identifier for the withdrawal transaction at the
+        `source_exchange`.
+      example: 2b325317-abcd-1234-9aa2-0d5eb2c3c0e1
+    deposit_result_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: |
+        **[Receiver only]**
+
+        Unique identifier for the deposit at the `destination_exchange`.
+      example: 18700e69-1234-abcd-5678-cb17d5ccdbca
+    deposit_result_amount:
+      type: number
+      description: >
+        **[Receiver only]**
+
+
+        The total amount of XRP deposited into the destination wallet. Must
+        equal `withdrawal_result_amount`, minus negligible ledger fees.
+    deposit_result_fee_amount:
+      type: number
+      description: |
+        **[Receiver only]**
+
+        Deposit fee charged in XRP by the `destination_exchange`.
+    balance_change_currency:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >-
+        The [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html)
+        currency code associated with the transaction account.
+      example: usd
+    balance_change:
+      type: number
+      description: The change in account balance caused by the corresponding transaction.
+    balance_result:
+      type: number
+      description: Account balance after the transaction.
+    destination_result_amount:
+      type: number
+      description: >
+        **[Receiver only]**
+
+
+        The final XRP amount at destination wallet to be liquidated into
+        received fiat currency.
+    destination_result_adjusted_amount:
+      type: number
+      description: >
+        **[Receiver only]**
+
+
+        The final XRP amount at destination wallet to be liquidated including
+        fees.
+    destination_result_incentive_value:
+      type: number
+      description: >
+        The incentive value (XRP) to be added into the total
+        `destination_result_amount`.
+    destination_result_proceeds:
+      type: number
+      description: |
+        **[Receiver only]**
+
+        Amount of fiat currency received for payout without fee.
+    destination_result_adjusted_proceeds:
+      type: number
+      description: Amount of fiat currency received for payout including fees.
+    execution_result_type:
+      type: string
+      description: The type of failure conversion transaction.
+      minLength: 1
+      maxLength: 128
+    fx_rate:
+      type: number
+      description: >-
+        The foreign exchange rate associated with the failure conversion
+        transaction.
+    intermediary_delta:
+      type: number
+    transfer_currency:
+      type: string
+      description: The three-letter code of the currency associated with this transfer.
+      minLength: 1
+      maxLength: 128
+    liquidation_status:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: Reserved for future use.
+    liquidation_trade_request_status:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: Reserved for future use.
+    payment_batch_id:
+      type: string
+      minLength: 1
+      maxLength: 36
+      description: >
+        Unique identifier for a batch of payments.
+
+
+        **Note**: This field is only populated for payments that are part of a
+        batch.
+    ssa_remote_transfer_id:
+      type: string
+      description: >-
+        The unique identifier of the SSA transfer from the SSA funding account
+        to the SSA account.
+      minLength: 1
+      maxLength: 128
+    ssa_transfer_amount:
+      type: number
+      description: The SSA transfer amount.
+    ssa_balance_change:
+      type: number
+      description: The change in SSA balance caused by the corresponding transaction.
+    ssa_balance_result:
+      type: number
+      description: The SSA account balance after the transaction is complete.
+    ssa_account:
+      type: string
+      description: >-
+        The SSA account name and address of the sender in
+        `accountname@ripplenetaddress` format.
+      minLength: 1
+      maxLength: 128
+    ssa_transfer_state:
+      type: string
+      description: The state of the SSA transfer.
+      minLength: 1
+      maxLength: 128
+    ssa_transfer_currency:
+      type: string
+      description: The three-letter code of the currency associated with this SSA transfer.
+      minLength: 1
+      maxLength: 128
+    withdrawal_result_details_transaction_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: XRP transaction hash if there is on-ledger movement.
+      example: 5b0a25b79595123d80dd27c0808fb554
+    destination_result_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: >-
+        Unique identifier for the destination trade at the
+        `destination_exchange`.
+      example: 2c3367d2-ab12-3456-78c9-d9edbf6bcbc5
+    PaymentOpsReportTransactionBase:
+      title: Payment operations base
+      x-implements:
+        - ReportTransaction
+      type: object
+      additionalProperties: false
+      description: >-
+        These are the data fields for the `PAYMENT_OPS` report you download from
+        the [Get a
+        report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport)
+        operation. Use this report for high-level payment investigation and
+        reporting.
+      properties:
+        end_to_end_id:
+          $ref: '#/components/schemas/end_to_end_id'
+        ripplenet_payment_id:
+          $ref: '#/components/schemas/ripplenet_payment_id'
+        quote_ts:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            timestamp of the quote.
+          format: date-time
+        created_at:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            timestamp when the transaction was created.
+          format: date-time
+          example: '2022-10-02T20:57:13.606Z'
+        executed_at:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            timestamp when the payment was settled.
+          format: date-time
+          example: '2022-10-02T20:57:20.62Z'
+        sender_address:
+          $ref: '#/components/schemas/sender_address'
+        sender_customer:
+          $ref: '#/components/schemas/sender_customer'
+        sent_amount:
+          $ref: '#/components/schemas/sent_amount'
+        sent_currency:
+          $ref: '#/components/schemas/sent_currency'
+        receiver_address:
+          $ref: '#/components/schemas/receiver_address'
+        receiver_customer:
+          $ref: '#/components/schemas/receiver_customer'
+        received_amount:
+          $ref: '#/components/schemas/received_amount'
+        received_currency:
+          $ref: '#/components/schemas/received_currency'
+        payment_method:
+          $ref: '#/components/schemas/payment_method'
+        payment_state:
+          $ref: '#/components/schemas/payment_state'
+        remitter_name:
+          $ref: '#/components/schemas/remitter_name'
+        remitter_account:
+          $ref: '#/components/schemas/remitter_account'
+        beneficiary_name:
+          $ref: '#/components/schemas/beneficiary_name'
+        beneficiary_account:
+          $ref: '#/components/schemas/beneficiary_account'
+        payment_batch_id:
+          $ref: '#/components/schemas/payment_batch_id'
+    PaymentOpsReportTransaction:
+      title: Payment operations
+      type: object
+      additionalProperties: false
+      x-parent: PaymentOpsReportTransactionBase
+      properties:
+        end_to_end_id:
+          $ref: '#/components/schemas/end_to_end_id'
+        ripplenet_payment_id:
+          $ref: '#/components/schemas/ripplenet_payment_id'
+        quote_ts:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            timestamp of the quote.
+          format: date-time
+        created_at:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            timestamp when the transaction was created.
+          format: date-time
+          example: '2022-10-02T20:57:13.606Z'
+        executed_at:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            timestamp when the payment was settled.
+          format: date-time
+          example: '2022-10-02T20:57:20.62Z'
+        sender_address:
+          $ref: '#/components/schemas/sender_address'
+        sender_customer:
+          $ref: '#/components/schemas/sender_customer'
+        sent_amount:
+          $ref: '#/components/schemas/sent_amount'
+        sent_currency:
+          $ref: '#/components/schemas/sent_currency'
+        withdrawal_result_amount:
+          $ref: '#/components/schemas/withdrawal_result_amount'
+        receiver_address:
+          $ref: '#/components/schemas/receiver_address'
+        receiver_customer:
+          $ref: '#/components/schemas/receiver_customer'
+        received_amount:
+          $ref: '#/components/schemas/received_amount'
+        received_currency:
+          $ref: '#/components/schemas/received_currency'
+        fx_spot_rate:
+          $ref: '#/components/schemas/fx_spot_rate'
+        source_exchange:
+          $ref: '#/components/schemas/source_exchange'
+        destination_exchange:
+          $ref: '#/components/schemas/destination_exchange'
+        payment_method:
+          $ref: '#/components/schemas/payment_method'
+        payment_state:
+          $ref: '#/components/schemas/payment_state'
+        remitter_name:
+          $ref: '#/components/schemas/remitter_name'
+        remitter_account:
+          $ref: '#/components/schemas/remitter_account'
+        beneficiary_name:
+          $ref: '#/components/schemas/beneficiary_name'
+        beneficiary_account:
+          $ref: '#/components/schemas/beneficiary_account'
+        payment_batch_id:
+          $ref: '#/components/schemas/payment_batch_id'
+      x-jackson-property-order:
+        props:
+          - end_to_end_id
+          - ripplenet_payment_id
+          - quote_ts
+          - created_at
+          - executed_at
+          - sender_address
+          - sender_customer
+          - sent_amount
+          - sent_currency
+          - withdrawal_result_amount
+          - receiver_address
+          - receiver_customer
+          - received_amount
+          - received_currency
+          - fx_spot_rate
+          - source_exchange
+          - destination_exchange
+          - payment_method
+          - payment_state
+          - remitter_name
+          - remitter_account
+          - beneficiary_name
+          - beneficiary_account
+          - payment_batch_id
+      description: >-
+        These are the data fields for the `PAYMENT_OPS` report you download from
+        the [Get a
+        report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport)
+        operation. Use this report for high-level payment investigation and
+        reporting.
+      x-tags:
+        - Report data fields
+    ReconciliationReportTransaction:
+      title: Reconciliation
+      x-implements:
+        - ReportTransaction
+      type: object
+      additionalProperties: false
+      properties:
+        end_to_end_id:
+          $ref: '#/components/schemas/end_to_end_id'
+        ripplenet_payment_id:
+          $ref: '#/components/schemas/ripplenet_payment_id'
+        payment_state:
+          $ref: '#/components/schemas/payment_state'
+        internal_payment_state:
+          $ref: '#/components/schemas/internal_payment_state'
+        quote_ts:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            timestamp of the quote.
+          format: date-time
+          example: '2022-10-02T20:57:13.593Z'
+        executed_at:
+          type: string
+          description: >-
+            The
+            [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+            timestamp when the payment was settled.
+          format: date-time
+          example: '2022-10-02T20:57:20.62Z'
+        sender_address:
+          $ref: '#/components/schemas/sender_address'
+        sender_customer:
+          $ref: '#/components/schemas/sender_customer'
+        sent_amount:
+          $ref: '#/components/schemas/sent_amount'
+        sent_currency:
+          $ref: '#/components/schemas/sent_currency'
+        receiver_address:
+          $ref: '#/components/schemas/receiver_address'
+        receiver_customer:
+          $ref: '#/components/schemas/receiver_customer'
+        received_amount:
+          $ref: '#/components/schemas/received_amount'
+        received_currency:
+          $ref: '#/components/schemas/received_currency'
+        fx_spot_rate:
+          $ref: '#/components/schemas/fx_spot_rate'
+        source_exchange:
+          $ref: '#/components/schemas/source_exchange'
+        destination_exchange:
+          $ref: '#/components/schemas/destination_exchange'
+        payment_method:
+          $ref: '#/components/schemas/payment_method'
+        transaction_id:
+          $ref: '#/components/schemas/transaction_id'
+        transaction_type:
+          $ref: '#/components/schemas/transaction_type'
+        transaction_state:
+          $ref: '#/components/schemas/transaction_state'
+        venue_id:
+          $ref: '#/components/schemas/venue_id'
+        source_result_amount:
+          $ref: '#/components/schemas/source_result_amount'
+        source_result_adjusted_amount:
+          $ref: '#/components/schemas/source_result_adjusted_amount'
+        source_result_proceeds:
+          $ref: '#/components/schemas/source_result_proceeds'
+        source_result_adjusted_proceeds:
+          $ref: '#/components/schemas/source_result_adjusted_proceeds'
+        withdrawal_result_id:
+          $ref: '#/components/schemas/withdrawal_result_id'
+        withdrawal_result_details_transaction_id:
+          $ref: '#/components/schemas/withdrawal_result_details_transaction_id'
+        withdrawal_result_amount:
+          $ref: '#/components/schemas/withdrawal_result_amount'
+        withdrawal_result_fee_amount:
+          $ref: '#/components/schemas/withdrawal_result_fee_amount'
+        withdrawal_result_incentive_value:
+          $ref: '#/components/schemas/withdrawal_result_incentive_value'
+        deposit_result_id:
+          $ref: '#/components/schemas/deposit_result_id'
+        deposit_result_amount:
+          $ref: '#/components/schemas/deposit_result_amount'
+        deposit_result_fee_amount:
+          $ref: '#/components/schemas/deposit_result_fee_amount'
+        balance_change_currency:
+          $ref: '#/components/schemas/balance_change_currency'
+        balance_change:
+          $ref: '#/components/schemas/balance_change'
+        balance_result:
+          $ref: '#/components/schemas/balance_result'
+        destination_result_id:
+          $ref: '#/components/schemas/destination_result_id'
+        destination_result_amount:
+          $ref: '#/components/schemas/destination_result_amount'
+        destination_result_adjusted_amount:
+          $ref: '#/components/schemas/destination_result_adjusted_amount'
+        destination_result_incentive_value:
+          $ref: '#/components/schemas/destination_result_incentive_value'
+        destination_result_proceeds:
+          $ref: '#/components/schemas/destination_result_proceeds'
+        destination_result_adjusted_proceeds:
+          $ref: '#/components/schemas/destination_result_adjusted_proceeds'
+        liquidation_status:
+          $ref: '#/components/schemas/liquidation_status'
+        liquidation_trade_request_status:
+          $ref: '#/components/schemas/liquidation_trade_request_status'
+        payment_batch_id:
+          $ref: '#/components/schemas/payment_batch_id'
+      description: >-
+        These are the data fields for the `RECON` report you download from the
+        [Get a
+        report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport)
+        operation. Use this for reconciliation and detailed state-by-state
+        investigation.
+      x-tags:
+        - Report data fields
+    FailureConversionSsaTransaction:
+      title: Failure conversion & SSA
+      x-implements:
+        - ReportTransaction
+      type: object
+      description: >-
+        These are the data fields for the `FAILURE_CONVERSION_SSA` report you
+        download from the [Get a
+        report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport)
+        operation. Use this information to investigate failed payments.
+      additionalProperties: false
+      properties:
+        end_to_end_id:
+          $ref: '#/components/schemas/end_to_end_id'
+        ripplenet_payment_id:
+          $ref: '#/components/schemas/ripplenet_payment_id'
+        execution_result_type:
+          $ref: '#/components/schemas/execution_result_type'
+        execution_timestamp:
+          type: string
+          description: The timestamp for when the failure conversion transaction happened.
+          format: date-time
+        fx_rate:
+          $ref: '#/components/schemas/fx_rate'
+        intermediary_delta:
+          $ref: '#/components/schemas/intermediary_delta'
+        payment_state:
+          $ref: '#/components/schemas/payment_state'
+        sent_amount:
+          $ref: '#/components/schemas/sent_amount'
+        sent_currency:
+          $ref: '#/components/schemas/sent_currency'
+        received_amount:
+          $ref: '#/components/schemas/received_amount'
+        received_currency:
+          $ref: '#/components/schemas/received_currency'
+        transfer_currency:
+          $ref: '#/components/schemas/transfer_currency'
+        venue_id:
+          $ref: '#/components/schemas/venue_id'
+        ssa_account:
+          $ref: '#/components/schemas/ssa_account'
+        sender_customer:
+          $ref: '#/components/schemas/sender_customer'
+        ssa_remote_transfer_id:
+          $ref: '#/components/schemas/ssa_remote_transfer_id'
+        ssa_transfer_amount:
+          $ref: '#/components/schemas/ssa_transfer_amount'
+        ssa_balance_change:
+          $ref: '#/components/schemas/ssa_balance_change'
+        ssa_balance_result:
+          $ref: '#/components/schemas/ssa_balance_result'
+        ssa_transfer_currency:
+          $ref: '#/components/schemas/ssa_transfer_currency'
+        ssa_transfer_state:
+          $ref: '#/components/schemas/ssa_transfer_state'
+      x-tags:
+        - Report data fields
+    ErrorCodeEnum:
+      type: string
+      enum:
+        - Bad Request. The request has syntax error or is incorrectly formed
+        - >-
+          Unprocessable Request. The semantic validation of the request values
+          failed
+        - Resource is not found on the server
+        - Request Authentication Failed
+        - Forbidden Request
+        - Generic Client Error
+        - Generic Server Error
+        - >-
+          There are too many requests and are above the rate limits defined for
+          the API
+      x-enum-varnames:
+        - RPT_1
+        - RPT_2
+        - RPT_3
+        - RPT_4
+        - RPT_5
+        - RPT_6
+        - RPT_7
+        - RPT_8
+      x-enumDescriptions:
+        RPT_1: Bad Request. The request has syntax error or is incorrectly formed
+        RPT_2: >-
+          Unprocessable Request. The semantic validation of the request values
+          failed
+        RPT_3: Resource is not found on the server
+        RPT_4: Request Authentication Failed
+        RPT_5: Forbidden Request
+        RPT_6: Generic Client Error
+        RPT_7: Generic Server Error
+        RPT_8: >-
+          There are too many requests and are above the rate limits defined for
+          the API
+      example: RPT_1
+    ReportTypeEnum:
+      type: string
+      description: |
+        The report type of the downloadable report.
+      enum:
+        - PAYMENT_OPS
+        - RECON
+        - FAILURE_CONVERSION_SSA
+      x-enumDescriptions:
+        PAYMENT_OPS: >-
+          Basic payment report suitable for high-level payment investigation and
+          reporting.</br>View [Payment report data
+          fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/paymentopsreporttransaction).
+        RECON: >-
+          Reconciliation report suitable for reconciliation and detailed
+          state-by-state investigation.</br>View [Reconciliation report data
+          fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/reconciliationreporttransaction).
+        FAILURE_CONVERSION_SSA: >-
+          Failure conversion & SSA report suitable for failed payments
+          investigation.</br>View [Failure conversion & SSA report data
+          fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/failureconversionssatransaction).
+    ReportFormatEnum:
+      type: string
+      description: |
+        The report format of the downloadable report.
+      enum:
+        - CSV
+        - JSON
+      x-enumDescriptions:
+        CSV: >-
+          A CSV file is a text file that uses a comma to delimit values. Each
+          line of text corresponds to a unique record.
+        JSON: >-
+          JSON (Javascript Object Notation) is a file format that uses
+          human-readable text to store and transmit data objects consisting of
+          attribute-value pairs and arrays.
+    ReportStatusEnum:
+      type: string
+      description: |
+        The status of the report.
+      enum:
+        - PENDING
+        - READY
+        - FAILED
+        - EMPTY
+      x-enumDescriptions:
+        PENDING: Report isn't ready for download.
+        READY: Report is ready for download.
+        FAILED: Unable generate the report.
+        EMPTY: Report has no transactions for the date range.
+      example: READY
+    ReportEndpointEnum:
+      type: string
+      enum:
+        - EXTERNAL
+        - INTERNAL
+      x-enumDescriptions:
+        EXTERNAL: External endpoint
+        INTERNAL: Internal endpoint
+      example: INTERNAL
+    CreatedByEnum:
+      type: string
+      description: >
+        Query for report types based on the entity that initiated report
+        creation.
+
+
+        | Value      | Description                                        |
+
+        |------------|----------------------------------------------------|
+
+        | SCHEDULER  | Get automated system-generated reports. |
+
+        | USER       | Customized reports generated by users through the UI. |
+
+        | API        | Customized reports generated using the API. |
+      enum:
+        - USER
+        - SCHEDULER
+        - API
+      example: USER
+    ReportCreatedBy:
+      type: string
+      minLength: 1
+      maxLength: 128
+      example: Norma Jean
+      description: >
+        Identifies the entity that initiated the report creation.
+
+
+        | Value       | Description                                        |
+
+        |-------------|----------------------------------------------------|
+
+        | SCHEDULER   | Automated system-generated report initiated by the
+        scheduler. |
+
+        | API         | User-generated report initiated through the API. |
+
+        | [full name] | Full name of the user who initiated the creation of the
+        report through the UI. |
+
+        | null        | Legacy support for older reports. |
+    DeleteReportsResponse:
+      type: string
+      minLength: 1
+      maxLength: 128
+    UpdateCronJobsInfo:
+      required:
+        - cronExpression
+        - jobGroup
+      type: object
+      additionalProperties: false
+      properties:
+        jobGroup:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 128
+        jobStatus:
+          $ref: '#/components/schemas/JobStatus'
+        cronExpression:
+          type: string
+          minLength: 1
+          maxLength: 128
+    SchedulerJobInfo:
+      required:
+        - cronExpression
+        - cronJob
+        - description
+        - jobClassName
+        - jobGroup
+        - jobName
+        - jobStatus
+        - repeatTime
+        - tenantId
+      type: object
+      additionalProperties: false
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        jobGroup:
+          type: string
+          minLength: 1
+          maxLength: 128
+        jobName:
+          type: string
+          minLength: 1
+          maxLength: 128
+        jobStatus:
+          $ref: '#/components/schemas/JobStatus'
+        tenantId:
+          type: string
+          minLength: 1
+          maxLength: 128
+        jobClassName:
+          type: string
+          minLength: 1
+          maxLength: 128
+        cronExpression:
+          type: string
+          minLength: 1
+          maxLength: 128
+        description:
+          type: string
+          minLength: 1
+          maxLength: 128
+        repeatTime:
+          type: integer
+          format: int64
+        cronJob:
+          type: boolean
+        priority:
+          type: integer
+    SchedulerJobInfoList:
+      required:
+        - jobs
+      type: object
+      additionalProperties: false
+      properties:
+        jobs:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/SchedulerJobInfo'
+    JobStatus:
+      type: string
+      minLength: 1
+      maxLength: 128
+      enum:
+        - PAUSED
+        - RESUMED
+        - SCHEDULED
+        - SCHEDULED_STARTED
+        - EDITED_SCHEDULED
+  examples:
+    PaymentOpsReportResponse:
+      value:
+        end_to_end_id: string
+        ripplenet_payment_id: 70eccd4f-abcd-1234-a655-3aeddff19e4a
+        quote_ts: '2019-08-24T14:15:22Z'
+        created_at: '2022-10-02T20:57:13.606Z'
+        executed_at: '2022-10-02T20:57:20.62Z'
+        sender_address: new_york@rn.us.ny.new_york
+        sender_customer: examplecorp_sf
+        sent_amount: 40
+        sent_currency: USD
+        withdrawal_result_amount: 39.846668
+        receiver_address: new_york@rn.us.ny.new_york
+        receiver_customer: sf
+        received_amount: 39.45
+        received_currency: PHP
+        fx_spot_rate: 58.70956379
+        source_exchange: bitstamp
+        destination_exchange: independentreserve
+        payment_method: CSM_TH_THB
+        payment_state: COMPLETED
+        remitter_name: string
+        remitter_account: string
+        beneficiary_name: string
+        beneficiary_account: string
+        payment_batch_id: 497f6eca-1234-5678-bfeb-53cbbbba6f08
+    ReconReportResponse:
+      value:
+        end_to_end_id: string
+        ripplenet_payment_id: 70eccd4f-abcd-1234-a655-3aeddff19e4a
+        payment_state: COMPLETED
+        internal_payment_state: DONE
+        quote_ts: '2022-10-02T20:57:13.593Z'
+        executed_at: '2022-10-02T20:57:20.62Z'
+        sender_address: new_york@rn.us.ny.new_york
+        sender_customer: examplecorp_sf
+        sent_amount: 40
+        sent_currency: USD
+        receiver_address: new_york@rn.us.ny.new_york
+        receiver_customer: sf
+        received_amount: 39.45
+        received_currency: PHP
+        fx_spot_rate: 58.70956379
+        source_exchange: bitstamp
+        destination_exchange: independentreserve
+        payment_method: CSM_TH_THB
+        transaction_id: a557eb2d-abcd-1234-a9a0-fdb5b52aaa02
+        transaction_type: TRADE
+        transaction_state: COMPLETE
+        venue_id: 8eef087a-abcd-1234-922d-e802b1126ea0
+        source_result_amount: 0
+        source_result_adjusted_amount: 0
+        source_result_proceeds: 0
+        source_result_adjusted_proceeds: 0
+        withdrawal_result_id: 2b325317-abcd-1234-9aa2-0d5eb2c3c0e1
+        withdrawal_result_details_transaction_id: 5b0a25b79595123d80dd27c0808fb554
+        withdrawal_result_amount: 39.846668
+        withdrawal_result_fee_amount: 0
+        withdrawal_result_incentive_value: 0
+        deposit_result_id: 18700e69-1234-abcd-5678-cb17d5ccdbca
+        deposit_result_amount: 0
+        deposit_result_fee_amount: 0
+        balance_change_currency: usd
+        balance_change: 0
+        balance_result: 0
+        destination_result_id: 2c3367d2-ab12-3456-78c9-d9edbf6bcbc5
+        destination_result_amount: 0
+        destination_result_adjusted_amount: 0
+        destination_result_incentive_value: 0
+        destination_result_proceeds: 0
+        destination_result_adjusted_proceeds: 0
+        liquidation_status: string
+        payment_batch_id: 497f6eca-1234-5678-bfeb-53cbbbba6f08
+    FailureConversionSsaReportResponse:
+      value:
+        end_to_end_id: 0f1cf226-7586-4324-b4c0-520e602e6acd
+        ripplenet_payment_id: 70eccd4f-abcd-1234-a655-3aeddff19e4a
+        execution_result_type: CRYPTO_TRANSFER
+        execution_timestamp: '2019-08-24T14:15:22Z'
+        fiat_adjusted_value: 0
+        fx_rate: 0
+        intermediary_delta: -1.205453
+        payment_state: COMPLETED
+        sent_amount: 40
+        sent_currency: USD
+        received_amount: 39.45
+        received_currency: PHP
+        transfer_currency: XRP
+        venue_id: 8eef087a-abcd-1234-922d-e802b1126ea0
+        ssa_account: customer@test.jane-doe-env
+        sender_customer: examplecorp_sf
+        ssa_remote_transfer_id: d9b9063a-35e1-4c7d-8a0a-f4b1d93ac03e
+        ssa_transfer_amount: 0
+        ssa_balance_change: 0
+        ssa_balance_result: 0
+        ssa_transfer_currency: XRP
+        ssa_transfer_state: PREPARED
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

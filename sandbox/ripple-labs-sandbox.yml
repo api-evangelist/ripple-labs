@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.ripple.com/products/stablecoin/api/uat
+environments:
+- name: UAT (sandbox) — Ripple Mint / RLUSD
+  host: https://api.test.ripple.com
+  token_endpoint: https://api.test.ripple.com/v2/oauth/token
+  audience_urn: urn:ripplexcurrent-uat:<tenant_id>
+  auth: OAuth2 client-credentials with scopes rlusd_customers:read, rlusd_customers:write
+  same_as_production:
+  - Same paths and contract (/v1/stablecoin/transactions, /{id}, /{id}/destination)
+  - Same Transaction object shape
+  - Same STABLECOIN_TRANSACTION webhooks with at-least-once delivery and retry
+  differences:
+  - Different host (api.test.ripple.com vs api.ripple.com)
+  - UAT-only POST /v1/stablecoin/transactions to generate sample transactions (does not exist in production)
+  - Sample transactions in PROCESSING auto-advance to COMPLETED after ~2 seconds
+  - Testnet network identifiers (XRPL_TESTNET, ETH_SEPOLIA, BASE_SEPOLIA, *_SEPOLIA / *_TESTNET)
+  - transactionHash / address / counterpartyAddress are mock artifacts, not real on-chain data
+  - No CANCELED or FAILED simulation (mock lifecycle only drives PROCESSING -> COMPLETED)
+  - Tenant-scoped, isolated data
+- name: Palisade Wallet-as-a-Service sandbox
+  host: https://api.sandbox.palisade.co
+  source: openapi/ripple-labs-palisade-wallet-openapi-original.yml
+  note: The Palisade API declares a sandbox server (api.sandbox.palisade.co) alongside production (api.palisade.co).
+- name: RippleNet test hosts
+  hosts:
+  - https://reporting-test.rnc.ripplenet.com   # Report Service API test
+  - https://liquidation-test.pub.prod.ripplenet.com  # Smart Liquidation API test
+  note: RippleNet Report Service and Smart Liquidation specs declare dedicated test servers.
+note: No fabricated test values; all values above are published verbatim in Ripple's UAT docs and the OpenAPI servers[].

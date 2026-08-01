@@ -1,0 +1,50 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.ripple.com/products/stablecoin/api/error-handling
+derived_from: openapi/ripple-labs-rlusd-openapi-original.yml
+format: rfc9457
+envelope:
+  media_type: application/problem+json
+  fields: [type, title, status, code]
+  note: >-
+    The Ripple Mint (RLUSD) API returns RFC 9457 Problem Details with an additional `code`
+    field for programmatic identification. The `type` schema is `ProblemDetail`.
+http_status_codes:
+- {status: 400, description: Invalid request parameters or body}
+- {status: 401, description: Missing or expired access token}
+- {status: 403, description: Insufficient scope for the requested operation}
+- {status: 404, description: Resource does not exist}
+- {status: 409, description: Invalid state transition}
+- {status: 500, description: Server error; contact support if persistent}
+error_codes:
+- code: TRANSACTION_NOT_FOUND
+  status: 404
+  title: Transaction ID not found
+- code: TRANSACTION_INVALID_STATUS_TRANSITION
+  status: 409
+  title: Cannot update a transaction that is not in PENDING status
+  remediation: Only PENDING transactions can be approved; re-fetch state before updating.
+- code: TRANSACTION_DESTINATION_TYPE_IMMUTABLE
+  status: 409
+  title: A destination has already been chosen for this pending redemption
+  remediation: >-
+    Submitting the same destination again is idempotent and returns 200 OK; only a different
+    destination produces this error.
+- code: INVALID_REQUEST_BODY
+  status: 400
+  title: Malformed or invalid request body
+  remediation: e.g. walletId provided when type is FIAT, or missing walletId when type is CRYPTO.
+- code: UNKNOWN_EXCEPTION
+  status: 500
+  title: Unexpected server error
+problems:
+- source_operation: openapi/ripple-labs-rlusd-openapi-original.yml#getAccessToken
+  statuses: [400, 401]
+- source_operation: openapi/ripple-labs-rlusd-openapi-original.yml#listTransactions
+  statuses: [400, 401, 403, 500]
+- source_operation: openapi/ripple-labs-rlusd-openapi-original.yml#getTransaction
+  statuses: [401, 403, 404, 500]
+- source_operation: openapi/ripple-labs-rlusd-openapi-original.yml#updateTransactionDestination
+  statuses: [400, 401, 403, 404, 409, 500]
+- source_operation: openapi/ripple-labs-rlusd-openapi-original.yml#getMarketCapTotal
+  statuses: [404, 500]

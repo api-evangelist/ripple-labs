@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/ripple-labs-rlusd-openapi-original.yml
+skills:
+- file: ripple-labs-list-stablecoin-transactions.md
+  name: List and inspect RLUSD stablecoin transactions
+  api: openapi/ripple-labs-rlusd-openapi-original.yml
+  operations: [getAccessToken, listTransactions, getTransaction]
+- file: ripple-labs-approve-flexible-redemption.md
+  name: Approve a flexible RLUSD redemption
+  api: openapi/ripple-labs-rlusd-openapi-original.yml
+  operations: [getAccessToken, getTransaction, updateTransactionDestination]

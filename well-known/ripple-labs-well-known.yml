@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: searched
+hosts:
+- host: https://docs.ripple.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: ripple-labs-oauth-authorization-server.json
+    note: RFC 8414 metadata for the Redocly-powered documentation MCP server (docs.ripple.com/mcp)
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://xrpl.org
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: RFC 8414 metadata for the xrpl.org documentation MCP server (same Redocly platform)
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://ripple.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404

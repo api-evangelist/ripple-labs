@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/ripple-labs-rlusd-openapi-original.yml
+scope: Ripple Mint (RLUSD) API core entities
+entities:
+- name: Transaction
+  id_field: id
+  fields: [id, type, status, amount, token, source, destination, createdAt, updatedAt]
+  status_values: [PENDING, PROCESSING, COMPLETED, CANCELED, FAILED]
+  type_values: [ISSUANCE, REDEMPTION, "..."]
+  relationships:
+  - {kind: has_one, target: TransactionEndpoint, via: source}
+  - {kind: has_one, target: TransactionEndpoint, via: destination}
+- name: TransactionEndpoint
+  fields: [type, walletId, address, chain, transactionHash, counterpartyAddress]
+  relationships:
+  - {kind: belongs_to, target: Transaction, via: source/destination}
+  note: >-
+    type is FIAT or CRYPTO; walletId is required for CRYPTO endpoints and rejected for FIAT
+    (INVALID_REQUEST_BODY otherwise). counterpartyAddress is the Ripple-side internal account.
+- name: MarketCap
+  derived_from: [MarketCapBalance, MarketCapSupply]
+  note: Read-only market-capitalization aggregates per currencyCode (total, circulating, amounts).

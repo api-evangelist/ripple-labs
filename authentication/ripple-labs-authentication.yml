@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/ripple-labs-palisade-wallet-openapi-original.yml, openapi/ripple-labs-report-service-openapi-original.yml,
+  openapi/ripple-labs-ripplenet-openapi-original.yml, openapi/ripple-labs-rlusd-openapi-original.yml,
+  openapi/ripple-labs-smart-liquidation-openapi-original.yml
+summary:
+  types:
+  - apiKey
+  - http
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: TokenAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/ripple-labs-palisade-wallet-openapi-original.yml
+  - openapi/ripple-labs-ripplenet-openapi-original.yml
+  - openapi/ripple-labs-smart-liquidation-openapi-original.yml
+- name: Bearer
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/ripple-labs-report-service-openapi-original.yml
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.ripple.com/v2/oauth/token
+    scopes: 2
+  sources:
+  - openapi/ripple-labs-rlusd-openapi-original.yml

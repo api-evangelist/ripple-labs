@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.ripple.com/products/stablecoin/api/change-history
+versioning:
+  scheme: path + product minor version
+  examples: [/v1/stablecoin, /v2/oauth, RippleNet /v4, Payments Direct v2025.11 & v2026.04]
+  changelog: changelog/ripple-labs-changelog.yml
+deprecation:
+  policy: >-
+    Ripple deprecates fields with backward compatibility — deprecated fields continue to be
+    delivered and are removed only in a future version. Documented per-version in the change history.
+  examples:
+  - field: eventData.sourceHash / eventData.destinationHash (RLUSD webhooks)
+    status: deprecated
+    since: v1.2
+    replacement: eventData.source / eventData.destination embedded objects
+  docs: https://docs.ripple.com/products/stablecoin/api/change-history
+status_page: null
+sla: null
+note: >-
+  No public status page (status.ripple.com does not resolve) and no public SLA/pricing page were
+  found; Ripple product APIs are enterprise/onboarded. Deprecation is documented via the change history.

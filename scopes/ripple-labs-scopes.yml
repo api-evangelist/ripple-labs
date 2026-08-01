@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/ripple-labs-rlusd-openapi-original.yml
+schemes:
+- name: oauth2
+  source: openapi/ripple-labs-rlusd-openapi-original.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.ripple.com/v2/oauth/token
+scopes:
+- scope: rlusd_customers:read
+  description: Read transaction data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/ripple-labs-rlusd-openapi-original.yml
+- scope: rlusd_customers:write
+  description: Approve pending redemptions
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/ripple-labs-rlusd-openapi-original.yml
