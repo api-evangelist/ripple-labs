@@ -1,0 +1,519 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Vaults API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vaults",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List vaults",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/vaults",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return per page (default 50, max 1000)"
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "The token to retrieve the next page of results"
+              },
+              {
+                "name": "correlationId",
+                "value": "",
+                "type": "query",
+                "description": "Correlation ID for tracking various actions on the vault"
+              },
+              {
+                "name": "pagination.pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (default 50, max 1000)"
+              },
+              {
+                "name": "pagination.pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Token for pagination from previous response"
+              },
+              {
+                "name": "pagination.orderBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "pagination.order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (ASC or DESC)"
+              },
+              {
+                "name": "filter.id.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.id.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.id.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.id.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.id.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.id.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.id.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.id.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.name.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.name.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.name.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.name.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.name.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.name.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.name.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.name.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.description.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.description.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.description.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.description.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.description.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.description.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.description.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.description.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.externalId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.externalId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.externalId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.externalId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.externalId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.externalId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.externalId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.externalId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.correlationId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.correlationId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.correlationId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.correlationId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.correlationId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.correlationId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.correlationId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.correlationId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.createdAt.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact timestamp match"
+              },
+              {
+                "name": "filter.createdAt.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.before",
+                "value": "",
+                "type": "query",
+                "description": "Before this timestamp"
+              },
+              {
+                "name": "filter.createdAt.after",
+                "value": "",
+                "type": "query",
+                "description": "After this timestamp"
+              },
+              {
+                "name": "filter.createdAt.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.between.start",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (inclusive)"
+              },
+              {
+                "name": "filter.createdAt.between.end",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (inclusive)"
+              },
+              {
+                "name": "filter.createdAt.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.createdAt.relativeDays",
+                "value": "",
+                "type": "query",
+                "description": "Relative days from now (negative for past, positive for future)"
+              },
+              {
+                "name": "filter.updatedAt.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact timestamp match"
+              },
+              {
+                "name": "filter.updatedAt.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.before",
+                "value": "",
+                "type": "query",
+                "description": "Before this timestamp"
+              },
+              {
+                "name": "filter.updatedAt.after",
+                "value": "",
+                "type": "query",
+                "description": "After this timestamp"
+              },
+              {
+                "name": "filter.updatedAt.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.between.start",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (inclusive)"
+              },
+              {
+                "name": "filter.updatedAt.between.end",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (inclusive)"
+              },
+              {
+                "name": "filter.updatedAt.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.updatedAt.relativeDays",
+                "value": "",
+                "type": "query",
+                "description": "Relative days from now (negative for past, positive for future)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Case-insensitive search over vault ID, name, description, external ID, and correlation ID."
+              }
+            ]
+          },
+          "docs": "List all vaults within the organization"
+        },
+        {
+          "info": {
+            "name": "Create a vault",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new vault"
+        },
+        {
+          "info": {
+            "name": "Get a vault",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              }
+            ]
+          },
+          "docs": "Get a vault by ID"
+        },
+        {
+          "info": {
+            "name": "Update a vault",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a vault's name and description by ID"
+        },
+        {
+          "info": {
+            "name": "List vaults",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults:list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List all vaults within the organization"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

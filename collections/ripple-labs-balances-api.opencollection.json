@@ -1,0 +1,148 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Balances API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Balances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Organization Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/balances",
+            "params": [
+              {
+                "name": "currencyCode",
+                "value": "",
+                "type": "query",
+                "description": "The currency code to be used for the fiat value. When omitted, 'USD' will be used."
+              }
+            ]
+          },
+          "docs": "Get the balance of an organization"
+        },
+        {
+          "info": {
+            "name": "Get Vault Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/balances",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID that the connection is associated with"
+              },
+              {
+                "name": "currencyCode",
+                "value": "",
+                "type": "query",
+                "description": "The currency code to be used for the fiat value. When omitted, 'USD' will be used."
+              }
+            ]
+          },
+          "docs": "Get the balances of a vault"
+        },
+        {
+          "info": {
+            "name": "Get Wallet Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/balances",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "currencyCode",
+                "value": "",
+                "type": "query",
+                "description": "The currency code to be used for the fiat value. When omitted, 'USD' will be used."
+              },
+              {
+                "name": "filter.source.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact asset source match\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+              },
+              {
+                "name": "filter.source.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Exclude this asset source\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+              },
+              {
+                "name": "filter.source.in",
+                "value": "",
+                "type": "query",
+                "description": "Asset source is in this list\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+              },
+              {
+                "name": "filter.source.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Asset source is not in this list\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+              }
+            ]
+          },
+          "docs": "Get the balances of a wallet"
+        },
+        {
+          "info": {
+            "name": "Sync Wallet Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/balances/sync",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ]
+          },
+          "docs": "Trigger a refresh of the balances for a wallet. Note: This only syncs balances for assets already known to the system. It will not discover new tokens that were received but not yet tracked."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

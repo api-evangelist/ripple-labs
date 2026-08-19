@@ -1,0 +1,795 @@
+{
+  "item": [
+    {
+      "id": "5eaa213c-1257-417c-b222-59354ef9f6ea",
+      "name": "Quotes",
+      "description": {
+        "content": "\nUse these operations to manage your quotes.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Accept quote](/products/payments-odl/api-docs/ripplenet/reference/openapi/quotes/acceptquote)                            | POST | Accepts a quote ID to start the payment process. |\n| [Get quotes](/products/payments-odl/api-docs/ripplenet/reference/openapi/quotes/getquotes)                                | GET  | Gets a list of quotes. |\n| [Get quote by quote ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/quotes/getquotebyquoteid)                   | GET  | Gets a quote by ID. |\n| [Create quote collection](/products/payments-odl/api-docs/ripplenet/reference/openapi/quotes/createquotecollection)       | POST | Creates a collection of quotes for a proposed payment. |\n| [Get quote collection by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/quotes/getquotecollectionbyid)   | GET  | Gets a quote collection that was created for a proposed payment. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8f42a9e1-84be-44cc-9755-6ad45eb63a8c",
+          "name": "Accept quote",
+          "request": {
+            "name": "Accept quote",
+            "description": {
+              "content": "Accepts a quote ID to start the payment process.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                "accept"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quote_id\": \"<uuid>\",\n  \"sender_end_to_end_id\": \"<string>\",\n  \"internal_id\": \"<string>\",\n  \"user_info\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "61fe0f0c-c4dd-46b2-b29c-93d165a4a2cc",
+              "name": "Successfully accepted quote resulting in a payment object in `ACCEPTED` state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote_id\": \"9bb53b3b-a774-43e2-9a1b-f18fbc3640f7\",\n  \"sender_end_to_end_id\": \"<string>\",\n  \"internal_id\": \"<string>\",\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accepted_at\": \"2019-10-01T18:25:47.347Z\",\n  \"contract\": {\n    \"created_at\": \"2019-10-01T18:18:13.665Z\",\n    \"expires_at\": \"2019-10-01T18:55:22.824Z\",\n    \"quote\": {\n      \"amount\": \"1\",\n      \"created_at\": \"2020-01-29T20:59:44.925Z\",\n      \"currency_code\": \"USD\",\n      \"currency_code_filter\": \"EUR\",\n      \"expires_at\": \"2020-01-29T21:29:44.925Z\",\n      \"liquidity_warning\": \"string\",\n      \"price_guarantee\": \"FIRM\",\n      \"quote_elements\": [\n        {\n          \"quote_element_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"quote_element_order\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"quote_element_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiver_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiving_amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiving_fee\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sender_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sending_amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sending_fee\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sending_currency_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiving_currency_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fx_rate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"transfer_currency_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"quote_element_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"quote_element_order\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"quote_element_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiver_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiving_amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiving_fee\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sender_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sending_amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sending_fee\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sending_currency_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiving_currency_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fx_rate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"transfer_currency_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"quote_id\": \"2a547e56-4aac-4375-86a8-8b3e7014801d\",\n      \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n      \"service_type\": \"string\",\n      \"type\": \"SENDER_AMOUNT\",\n      \"payment_method\": \"LOCAL_RAILS\",\n      \"payment_method_fields\": \"{\\\"category_id\\\":\\\"bank\\\",\\\"required_originator_fields\\\":[{\\\"field_name\\\":\\\"sender_address\\\",\\\"field_label\\\":\\\"Sender address\\\"}]}\",\n      \"payout_method_info\": {\n        \"payout_method_name\": \"Cash Payout\",\n        \"payout_method_category\": \"BOOK_TRANSFER\",\n        \"description\": \"local rails\",\n        \"estimated_time_to_credit\": \"3 days\"\n      }\n    },\n    \"sender_end_to_end_id\": \"st\",\n    \"fee_info\": {\n      \"nodes\": {\n        \"key_0\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"total_fees\": [\n        {\n          \"total_fee\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fee_currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"total_fee\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fee_currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    }\n  },\n  \"contract_hash\": \"ccb23bd87f13cc13b9d616a9723f76e112aeac8628b2082e0f8bf3b8c670b103\",\n  \"crypto_transaction_id\": \"4e05da26-7872-4a1f-b9b7-db7604757c37\",\n  \"execution_condition\": \"PrefixSha256Condition{subtypes=[ED25519-SHA-256], type=PREFIX-SHA-256, fingerprint=sfGGHCrkyaMsLQNB62w_4zarlPChHKm47JkXVQbs1z0, cost=132360}\",\n  \"execution_results\": [\n    {\n      \"execution_result_id\": \"06f6d4e2-3523-4d17-92fd-53192a06207f\",\n      \"execution_result_order\": 1,\n      \"execution_result_type\": \"TRANSFER\",\n      \"execution_timestamp\": \"2019-10-01T18:24:29.867Z\",\n      \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n      \"receiving_amount\": 498,\n      \"receiving_fee\": 0,\n      \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n      \"sending_amount\": 498,\n      \"sending_fee\": 2,\n      \"sending_currency_code\": \"USD\",\n      \"receiving_currency_code\": \"GBP\",\n      \"fx_rate\": {\n        \"base_currency_code\": \"USD\",\n        \"counter_currency_code\": \"GBP\",\n        \"rate\": 3.25,\n        \"type\": \"buy\"\n      },\n      \"transfer_currency_code\": \"string\",\n      \"intermediary_delta\": 0.2,\n      \"incentive_type\": \"firm\",\n      \"incentive_value\": 0.2,\n      \"transaction_hash\": \"string\",\n      \"venue_id\": \"nz7RpAujYgnQtjEM\",\n      \"fiat_adjusted_value\": 0.02,\n      \"odl_payment_id\": \"string\"\n    },\n    {\n      \"execution_result_id\": \"06f6d4e2-3523-4d17-92fd-53192a06207f\",\n      \"execution_result_order\": 1,\n      \"execution_result_type\": \"TRANSFER\",\n      \"execution_timestamp\": \"2019-10-01T18:24:29.867Z\",\n      \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n      \"receiving_amount\": 498,\n      \"receiving_fee\": 0,\n      \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n      \"sending_amount\": 498,\n      \"sending_fee\": 2,\n      \"sending_currency_code\": \"USD\",\n      \"receiving_currency_code\": \"GBP\",\n      \"fx_rate\": {\n        \"base_currency_code\": \"USD\",\n        \"counter_currency_code\": \"GBP\",\n        \"rate\": 3.25,\n        \"type\": \"buy\"\n      },\n      \"transfer_currency_code\": \"string\",\n      \"intermediary_delta\": 0.2,\n      \"incentive_type\": \"firm\",\n      \"incentive_value\": 0.2,\n      \"transaction_hash\": \"string\",\n      \"venue_id\": \"nz7RpAujYgnQtjEM\",\n      \"fiat_adjusted_value\": 0.02,\n      \"odl_payment_id\": \"string\"\n    }\n  ],\n  \"internal_info\": {\n    \"connector_role\": \"RECEIVING\",\n    \"internal_id\": \"string\",\n    \"labels\": [\n      {\n        \"label\": \"string\"\n      },\n      {\n        \"label\": \"string\"\n      }\n    ]\n  },\n  \"modified_at\": \"2019-10-01T18:25:47.347Z\",\n  \"payment_id\": \"d485f100-2af7-4e48-9ab1-3c7e28775691\",\n  \"payment_state\": \"COMPLETED\",\n  \"payment_type\": \"REGULAR\",\n  \"returned_by_payment_with_id\": \"a8e34766-1c73-ea28-a30a-efdbbf4b9785\",\n  \"returns_payment_with_id\": \"eaa29ebf-1333-aa88-5648-4e1d809a73f3\",\n  \"user_info\": [\n    {\n      \"accepted\": [\n        {\n          \"created_at\": \"1962-11-25T05:06:44.538Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1962-12-31T21:42:11.918Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"completed\": [\n        {\n          \"created_at\": \"1989-07-22T00:58:12.543Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"2022-03-26T21:07:29.722Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"executed\": [\n        {\n          \"created_at\": \"2012-04-30T06:46:15.151Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1965-07-30T19:25:01.869Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"failed\": [\n        {\n          \"created_at\": \"1954-11-07T12:26:53.830Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1948-07-29T19:20:27.268Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"forwarded\": [\n        {\n          \"created_at\": \"2013-12-23T00:39:32.638Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1986-01-22T07:45:16.588Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"lock_declined\": [\n        {\n          \"created_at\": \"2005-06-13T20:21:04.086Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1962-04-25T05:09:55.542Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"locked\": [\n        {\n          \"created_at\": \"1971-02-25T10:29:40.504Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"2015-03-11T13:30:00.822Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"node_address\": \"rn.us.ca.san_francisco\",\n      \"retry_accept\": [\n        {\n          \"created_at\": \"2013-10-14T05:05:22.512Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"2020-03-10T19:17:28.496Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"retry_settlement\": [\n        {\n          \"created_at\": \"1957-08-07T20:49:01.451Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1978-11-09T19:52:39.602Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"returned\": [\n        {\n          \"created_at\": \"2005-07-14T02:26:03.780Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1987-03-13T10:53:44.528Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"settlement\": [\n        {\n          \"created_at\": \"2008-05-07T02:17:02.175Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1997-05-29T20:36:48.987Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"settlement_declined\": [\n        {\n          \"created_at\": \"1950-05-03T02:32:20.802Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1964-07-03T20:21:51.376Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ]\n    },\n    {\n      \"accepted\": [\n        {\n          \"created_at\": \"1998-01-19T23:15:51.465Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1964-11-09T00:21:20.146Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"completed\": [\n        {\n          \"created_at\": \"1993-03-02T04:09:17.069Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1978-11-19T19:08:08.149Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"executed\": [\n        {\n          \"created_at\": \"1957-06-20T04:14:57.092Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1970-08-15T18:44:27.666Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"failed\": [\n        {\n          \"created_at\": \"1982-06-06T21:53:39.704Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"2018-12-04T17:54:53.634Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"forwarded\": [\n        {\n          \"created_at\": \"1971-09-10T07:37:00.796Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1976-09-23T19:00:16.697Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"lock_declined\": [\n        {\n          \"created_at\": \"2000-08-04T15:19:31.733Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1969-03-26T11:28:45.616Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"locked\": [\n        {\n          \"created_at\": \"2005-03-29T03:52:54.360Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1980-11-29T11:24:45.933Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"node_address\": \"rn.us.ca.san_francisco\",\n      \"retry_accept\": [\n        {\n          \"created_at\": \"1965-01-21T21:40:04.809Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1964-03-04T15:31:41.893Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"retry_settlement\": [\n        {\n          \"created_at\": \"1967-11-15T21:18:25.012Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1977-05-22T19:39:21.309Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"returned\": [\n        {\n          \"created_at\": \"1979-02-25T13:21:03.491Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1969-08-01T13:54:18.188Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"settlement\": [\n        {\n          \"created_at\": \"2002-03-30T13:06:15.569Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"2015-04-23T11:54:49.508Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"settlement_declined\": [\n        {\n          \"created_at\": \"1992-10-07T05:35:29.536Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1952-03-13T17:04:56.486Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ]\n    }\n  ],\n  \"validator\": \"rn.us.ca.san_francisco\",\n  \"ripplenet_info\": [\n    {\n      \"node_address\": \"rn.us.ny.new_york\",\n      \"settlement_declined\": [\n        {\n          \"info\": \"L001\",\n          \"created_at\": \"2018-04-06T20:33:35Z\"\n        },\n        {\n          \"info\": \"L001\",\n          \"created_at\": \"2018-04-06T20:33:35Z\"\n        }\n      ]\n    },\n    {\n      \"node_address\": \"rn.us.ny.new_york\",\n      \"settlement_declined\": [\n        {\n          \"info\": \"L001\",\n          \"created_at\": \"2018-04-06T20:33:35Z\"\n        },\n        {\n          \"info\": \"L001\",\n          \"created_at\": \"2018-04-06T20:33:35Z\"\n        }\n      ]\n    }\n  ],\n  \"liquidation_execution_results\": [\n    {\n      \"execution_result_id\": \"06f6d4e2-3523-4d17-92fd-53192a06207f\",\n      \"execution_result_order\": 1,\n      \"execution_result_type\": \"TRANSFER\",\n      \"execution_timestamp\": \"2019-10-01T18:24:29.867Z\",\n      \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n      \"receiving_amount\": 498,\n      \"receiving_fee\": 0,\n      \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n      \"sending_amount\": 498,\n      \"sending_fee\": 2,\n      \"sending_currency_code\": \"USD\",\n      \"receiving_currency_code\": \"GBP\",\n      \"fx_rate\": {\n        \"base_currency_code\": \"USD\",\n        \"counter_currency_code\": \"GBP\",\n        \"rate\": 3.25,\n        \"type\": \"buy\"\n      },\n      \"transfer_currency_code\": \"string\",\n      \"intermediary_delta\": 0.2,\n      \"incentive_type\": \"firm\",\n      \"incentive_value\": 0.2,\n      \"transaction_hash\": \"string\",\n      \"venue_id\": \"nz7RpAujYgnQtjEM\",\n      \"fiat_adjusted_value\": 0.02,\n      \"odl_payment_id\": \"string\"\n    },\n    {\n      \"execution_result_id\": \"06f6d4e2-3523-4d17-92fd-53192a06207f\",\n      \"execution_result_order\": 1,\n      \"execution_result_type\": \"TRANSFER\",\n      \"execution_timestamp\": \"2019-10-01T18:24:29.867Z\",\n      \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n      \"receiving_amount\": 498,\n      \"receiving_fee\": 0,\n      \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n      \"sending_amount\": 498,\n      \"sending_fee\": 2,\n      \"sending_currency_code\": \"USD\",\n      \"receiving_currency_code\": \"GBP\",\n      \"fx_rate\": {\n        \"base_currency_code\": \"USD\",\n        \"counter_currency_code\": \"GBP\",\n        \"rate\": 3.25,\n        \"type\": \"buy\"\n      },\n      \"transfer_currency_code\": \"string\",\n      \"intermediary_delta\": 0.2,\n      \"incentive_type\": \"firm\",\n      \"incentive_value\": 0.2,\n      \"transaction_hash\": \"string\",\n      \"venue_id\": \"nz7RpAujYgnQtjEM\",\n      \"fiat_adjusted_value\": 0.02,\n      \"odl_payment_id\": \"string\"\n    }\n  ],\n  \"liquidation_details\": {\n    \"id\": \"60d506af-f7dd-ef2c-66db-2e1493cf6005\",\n    \"status\": \"string\",\n    \"failure_reason\": \"string\",\n    \"failure_count\": 1602\n  },\n  \"push_forward_execution_results\": [\n    {\n      \"execution_result_id\": \"06f6d4e2-3523-4d17-92fd-53192a06207f\",\n      \"execution_result_order\": 1,\n      \"execution_result_type\": \"TRANSFER\",\n      \"execution_timestamp\": \"2019-10-01T18:24:29.867Z\",\n      \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n      \"receiving_amount\": 498,\n      \"receiving_fee\": 0,\n      \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n      \"sending_amount\": 498,\n      \"sending_fee\": 2,\n      \"sending_currency_code\": \"USD\",\n      \"receiving_currency_code\": \"GBP\",\n      \"fx_rate\": {\n        \"base_currency_code\": \"USD\",\n        \"counter_currency_code\": \"GBP\",\n        \"rate\": 3.25,\n        \"type\": \"buy\"\n      },\n      \"transfer_currency_code\": \"string\",\n      \"intermediary_delta\": 0.2,\n      \"incentive_type\": \"firm\",\n      \"incentive_value\": 0.2,\n      \"transaction_hash\": \"string\",\n      \"venue_id\": \"nz7RpAujYgnQtjEM\",\n      \"fiat_adjusted_value\": 0.02,\n      \"odl_payment_id\": \"string\"\n    },\n    {\n      \"execution_result_id\": \"06f6d4e2-3523-4d17-92fd-53192a06207f\",\n      \"execution_result_order\": 1,\n      \"execution_result_type\": \"TRANSFER\",\n      \"execution_timestamp\": \"2019-10-01T18:24:29.867Z\",\n      \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n      \"receiving_amount\": 498,\n      \"receiving_fee\": 0,\n      \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n      \"sending_amount\": 498,\n      \"sending_fee\": 2,\n      \"sending_currency_code\": \"USD\",\n      \"receiving_currency_code\": \"GBP\",\n      \"fx_rate\": {\n        \"base_currency_code\": \"USD\",\n        \"counter_currency_code\": \"GBP\",\n        \"rate\": 3.25,\n        \"type\": \"buy\"\n      },\n      \"transfer_currency_code\": \"string\",\n      \"intermediary_delta\": 0.2,\n      \"incentive_type\": \"firm\",\n      \"incentive_value\": 0.2,\n      \"transaction_hash\": \"string\",\n      \"venue_id\": \"nz7RpAujYgnQtjEM\",\n      \"fiat_adjusted_value\": 0.02,\n      \"odl_payment_id\": \"string\"\n    }\n  ],\n  \"locked_at\": \"2019-10-01T18:25:47.347Z\",\n  \"executed_at\": \"2019-10-01T18:25:47.347Z\",\n  \"completed_at\": \"2019-10-01T18:25:47.347Z\",\n  \"returned_at\": \"2019-10-01T18:25:47.347Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c9b3f9e-bf46-4b18-83d9-09d3b34f20a6",
+              "name": "Quote expiry has passed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote_id\": \"9bb53b3b-a774-43e2-9a1b-f18fbc3640f7\",\n  \"sender_end_to_end_id\": \"<string>\",\n  \"internal_id\": \"<string>\",\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Precondition Failed",
+              "code": 412,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55d63b2e-f1a9-4b70-991d-bd02732fc2f4",
+          "name": "Get quotes",
+          "request": {
+            "name": "Get quotes",
+            "description": {
+              "content": "Gets a list of quotes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "20",
+                  "description": "Number of objects to return per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "9416563e-961c-41cb-a70d-e41048b2ec9d",
+              "name": "Successfully returned array of quotes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"amount\": \"1\",\n    \"created_at\": \"2020-01-29T20:59:44.925Z\",\n    \"currency_code\": \"USD\",\n    \"currency_code_filter\": \"EUR\",\n    \"expires_at\": \"2020-01-29T21:29:44.925Z\",\n    \"liquidity_warning\": \"string\",\n    \"price_guarantee\": \"FIRM\",\n    \"quote_elements\": [\n      {\n        \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n        \"quote_element_order\": \"1\",\n        \"quote_element_type\": \"EXCHANGE\",\n        \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n        \"receiving_amount\": 355,\n        \"receiving_fee\": 0,\n        \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n        \"sending_amount\": 1,\n        \"sending_fee\": 0,\n        \"sending_currency_code\": \"USD\",\n        \"receiving_currency_code\": \"GBP\",\n        \"fx_rate\": {\n          \"base_currency_code\": \"USD\",\n          \"counter_currency_code\": \"GBP\",\n          \"rate\": 3.25,\n          \"type\": \"buy\"\n        },\n        \"transfer_currency_code\": \"string\"\n      },\n      {\n        \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n        \"quote_element_order\": \"1\",\n        \"quote_element_type\": \"EXCHANGE\",\n        \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n        \"receiving_amount\": 355,\n        \"receiving_fee\": 0,\n        \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n        \"sending_amount\": 1,\n        \"sending_fee\": 0,\n        \"sending_currency_code\": \"USD\",\n        \"receiving_currency_code\": \"GBP\",\n        \"fx_rate\": {\n          \"base_currency_code\": \"USD\",\n          \"counter_currency_code\": \"GBP\",\n          \"rate\": 3.25,\n          \"type\": \"buy\"\n        },\n        \"transfer_currency_code\": \"string\"\n      }\n    ],\n    \"quote_id\": \"2a547e56-4aac-4375-86a8-8b3e7014801d\",\n    \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n    \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n    \"service_type\": \"string\",\n    \"type\": \"SENDER_AMOUNT\",\n    \"payment_method\": \"LOCAL_RAILS\",\n    \"payment_method_fields\": \"{\\\"category_id\\\":\\\"bank\\\",\\\"required_originator_fields\\\":[{\\\"field_name\\\":\\\"sender_address\\\",\\\"field_label\\\":\\\"Sender address\\\"}]}\",\n    \"payout_method_info\": {\n      \"payout_method_name\": \"Cash Payout\",\n      \"payout_method_category\": \"BOOK_TRANSFER\",\n      \"description\": \"local rails\",\n      \"estimated_time_to_credit\": \"3 days\"\n    }\n  },\n  {\n    \"amount\": \"1\",\n    \"created_at\": \"2020-01-29T20:59:44.925Z\",\n    \"currency_code\": \"USD\",\n    \"currency_code_filter\": \"EUR\",\n    \"expires_at\": \"2020-01-29T21:29:44.925Z\",\n    \"liquidity_warning\": \"string\",\n    \"price_guarantee\": \"FIRM\",\n    \"quote_elements\": [\n      {\n        \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n        \"quote_element_order\": \"1\",\n        \"quote_element_type\": \"EXCHANGE\",\n        \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n        \"receiving_amount\": 355,\n        \"receiving_fee\": 0,\n        \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n        \"sending_amount\": 1,\n        \"sending_fee\": 0,\n        \"sending_currency_code\": \"USD\",\n        \"receiving_currency_code\": \"GBP\",\n        \"fx_rate\": {\n          \"base_currency_code\": \"USD\",\n          \"counter_currency_code\": \"GBP\",\n          \"rate\": 3.25,\n          \"type\": \"buy\"\n        },\n        \"transfer_currency_code\": \"string\"\n      },\n      {\n        \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n        \"quote_element_order\": \"1\",\n        \"quote_element_type\": \"EXCHANGE\",\n        \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n        \"receiving_amount\": 355,\n        \"receiving_fee\": 0,\n        \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n        \"sending_amount\": 1,\n        \"sending_fee\": 0,\n        \"sending_currency_code\": \"USD\",\n        \"receiving_currency_code\": \"GBP\",\n        \"fx_rate\": {\n          \"base_currency_code\": \"USD\",\n          \"counter_currency_code\": \"GBP\",\n          \"rate\": 3.25,\n          \"type\": \"buy\"\n        },\n        \"transfer_currency_code\": \"string\"\n      }\n    ],\n    \"quote_id\": \"2a547e56-4aac-4375-86a8-8b3e7014801d\",\n    \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n    \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n    \"service_type\": \"string\",\n    \"type\": \"SENDER_AMOUNT\",\n    \"payment_method\": \"LOCAL_RAILS\",\n    \"payment_method_fields\": \"{\\\"category_id\\\":\\\"bank\\\",\\\"required_originator_fields\\\":[{\\\"field_name\\\":\\\"sender_address\\\",\\\"field_label\\\":\\\"Sender address\\\"}]}\",\n    \"payout_method_info\": {\n      \"payout_method_name\": \"Cash Payout\",\n      \"payout_method_category\": \"BOOK_TRANSFER\",\n      \"description\": \"local rails\",\n      \"estimated_time_to_credit\": \"3 days\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "029ee4ec-5f82-414c-a316-7fed2367892e",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26d27cf4-6f95-430a-abf0-1ae7fa727ff7",
+          "name": "Get quote by quote ID",
+          "request": {
+            "name": "Get quote by quote ID",
+            "description": {
+              "content": "Gets a quote by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes",
+                ":quote_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "quote_id",
+                  "description": "(Required) Unique identifier of the quote you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "61d136b6-f6ef-4731-adb3-2d4c5f3a147a",
+              "name": "Successfully retrieved quote.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quote_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "quote_id",
+                      "description": "(Required) Unique identifier of the quote you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": \"1\",\n  \"created_at\": \"2020-01-29T20:59:44.925Z\",\n  \"currency_code\": \"USD\",\n  \"currency_code_filter\": \"EUR\",\n  \"expires_at\": \"2020-01-29T21:29:44.925Z\",\n  \"liquidity_warning\": \"string\",\n  \"price_guarantee\": \"FIRM\",\n  \"quote_elements\": [\n    {\n      \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n      \"quote_element_order\": \"1\",\n      \"quote_element_type\": \"EXCHANGE\",\n      \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"receiving_amount\": 355,\n      \"receiving_fee\": 0,\n      \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n      \"sending_amount\": 1,\n      \"sending_fee\": 0,\n      \"sending_currency_code\": \"USD\",\n      \"receiving_currency_code\": \"GBP\",\n      \"fx_rate\": {\n        \"base_currency_code\": \"USD\",\n        \"counter_currency_code\": \"GBP\",\n        \"rate\": 3.25,\n        \"type\": \"buy\"\n      },\n      \"transfer_currency_code\": \"string\"\n    },\n    {\n      \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n      \"quote_element_order\": \"1\",\n      \"quote_element_type\": \"EXCHANGE\",\n      \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"receiving_amount\": 355,\n      \"receiving_fee\": 0,\n      \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n      \"sending_amount\": 1,\n      \"sending_fee\": 0,\n      \"sending_currency_code\": \"USD\",\n      \"receiving_currency_code\": \"GBP\",\n      \"fx_rate\": {\n        \"base_currency_code\": \"USD\",\n        \"counter_currency_code\": \"GBP\",\n        \"rate\": 3.25,\n        \"type\": \"buy\"\n      },\n      \"transfer_currency_code\": \"string\"\n    }\n  ],\n  \"quote_id\": \"2a547e56-4aac-4375-86a8-8b3e7014801d\",\n  \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n  \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n  \"service_type\": \"string\",\n  \"type\": \"SENDER_AMOUNT\",\n  \"payment_method\": \"LOCAL_RAILS\",\n  \"payment_method_fields\": \"{\\\"category_id\\\":\\\"bank\\\",\\\"required_originator_fields\\\":[{\\\"field_name\\\":\\\"sender_address\\\",\\\"field_label\\\":\\\"Sender address\\\"}]}\",\n  \"payout_method_info\": {\n    \"payout_method_name\": \"Cash Payout\",\n    \"payout_method_category\": \"BOOK_TRANSFER\",\n    \"description\": \"local rails\",\n    \"estimated_time_to_credit\": \"3 days\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30d4a3ea-982f-4721-bb11-a1cee2f022cb",
+              "name": "Bad request. Quote ID is either invalid or not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":quote_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "quote_id",
+                      "description": "(Required) Unique identifier of the quote you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc81ae39-c8c5-4665-9666-b5957230a224",
+          "name": "Create quote collection",
+          "request": {
+            "name": "Create quote collection",
+            "description": {
+              "content": "Creates a collection of quotes for a proposed payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quote_collections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"quote_type\": \"<string>\",\n  \"receiving_address\": \"<string>\",\n  \"sending_address\": \"<string>\",\n  \"sender_or_receiver_currency\": \"<string>\",\n  \"custom_fee\": \"<number>\",\n  \"custom_rate\": {\n    \"base_currency\": \"<string>\",\n    \"counter_currency\": \"<string>\",\n    \"rate\": \"<number>\",\n    \"rate_type\": \"<string>\"\n  },\n  \"quote_route\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payment_method\": \"<string>\",\n  \"enable_quote_per_payout_method\": \"<boolean>\",\n  \"digital_asset_origination\": \"<boolean>\",\n  \"force_path_finding_and_liquidity_path_finding\": false,\n  \"payout_method_category\": \"<string>\",\n  \"sender_segregated_account\": \"<string>\",\n  \"quote_limit\": \"<integer>\",\n  \"quote_filter_types\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a3c6fcfa-7cd3-429e-9a81-ab1c5099a37e",
+              "name": "Successfully returned quote collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quote_collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"1\",\n  \"currency\": \"USD\",\n  \"quote_type\": \"SENDER_AMOUNT\",\n  \"receiving_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n  \"sending_address\": \"sf@rn.us.ca.san_francisco\",\n  \"sender_or_receiver_currency\": \"USD\",\n  \"custom_fee\": \"<number>\",\n  \"custom_rate\": {\n    \"base_currency\": \"<string>\",\n    \"counter_currency\": \"<string>\",\n    \"rate\": \"<number>\",\n    \"rate_type\": \"<string>\"\n  },\n  \"quote_route\": [\n    \"rn.us.ca.san_francisco\",\n    \"rn.us.tx.austin\",\n    \"rn.us.ny.new_york\"\n  ],\n  \"payment_method\": \"<string>\",\n  \"enable_quote_per_payout_method\": true,\n  \"digital_asset_origination\": false,\n  \"force_path_finding_and_liquidity_path_finding\": false,\n  \"payout_method_category\": \"BOOK_TRANSFER\",\n  \"sender_segregated_account\": \"conct_php_receiver_coins_sender@receiver\",\n  \"quote_limit\": \"<integer>\",\n  \"quote_filter_types\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quote_collection_id\": \"4711728c-cd35-49ec-96a5-72732b4333ec\",\n  \"quotes\": [\n    {\n      \"amount\": \"1\",\n      \"created_at\": \"2020-01-29T20:59:44.925Z\",\n      \"currency_code\": \"USD\",\n      \"currency_code_filter\": \"EUR\",\n      \"expires_at\": \"2020-01-29T21:29:44.925Z\",\n      \"liquidity_warning\": \"string\",\n      \"price_guarantee\": \"FIRM\",\n      \"quote_elements\": [\n        {\n          \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n          \"quote_element_order\": \"1\",\n          \"quote_element_type\": \"EXCHANGE\",\n          \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n          \"receiving_amount\": 355,\n          \"receiving_fee\": 0,\n          \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n          \"sending_amount\": 1,\n          \"sending_fee\": 0,\n          \"sending_currency_code\": \"USD\",\n          \"receiving_currency_code\": \"GBP\",\n          \"fx_rate\": {\n            \"base_currency_code\": \"USD\",\n            \"counter_currency_code\": \"GBP\",\n            \"rate\": 3.25,\n            \"type\": \"buy\"\n          },\n          \"transfer_currency_code\": \"string\"\n        },\n        {\n          \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n          \"quote_element_order\": \"1\",\n          \"quote_element_type\": \"EXCHANGE\",\n          \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n          \"receiving_amount\": 355,\n          \"receiving_fee\": 0,\n          \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n          \"sending_amount\": 1,\n          \"sending_fee\": 0,\n          \"sending_currency_code\": \"USD\",\n          \"receiving_currency_code\": \"GBP\",\n          \"fx_rate\": {\n            \"base_currency_code\": \"USD\",\n            \"counter_currency_code\": \"GBP\",\n            \"rate\": 3.25,\n            \"type\": \"buy\"\n          },\n          \"transfer_currency_code\": \"string\"\n        }\n      ],\n      \"quote_id\": \"2a547e56-4aac-4375-86a8-8b3e7014801d\",\n      \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n      \"service_type\": \"string\",\n      \"type\": \"SENDER_AMOUNT\",\n      \"payment_method\": \"LOCAL_RAILS\",\n      \"payment_method_fields\": \"{\\\"category_id\\\":\\\"bank\\\",\\\"required_originator_fields\\\":[{\\\"field_name\\\":\\\"sender_address\\\",\\\"field_label\\\":\\\"Sender address\\\"}]}\",\n      \"payout_method_info\": {\n        \"payout_method_name\": \"Cash Payout\",\n        \"payout_method_category\": \"BOOK_TRANSFER\",\n        \"description\": \"local rails\",\n        \"estimated_time_to_credit\": \"3 days\"\n      }\n    },\n    {\n      \"amount\": \"1\",\n      \"created_at\": \"2020-01-29T20:59:44.925Z\",\n      \"currency_code\": \"USD\",\n      \"currency_code_filter\": \"EUR\",\n      \"expires_at\": \"2020-01-29T21:29:44.925Z\",\n      \"liquidity_warning\": \"string\",\n      \"price_guarantee\": \"FIRM\",\n      \"quote_elements\": [\n        {\n          \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n          \"quote_element_order\": \"1\",\n          \"quote_element_type\": \"EXCHANGE\",\n          \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n          \"receiving_amount\": 355,\n          \"receiving_fee\": 0,\n          \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n          \"sending_amount\": 1,\n          \"sending_fee\": 0,\n          \"sending_currency_code\": \"USD\",\n          \"receiving_currency_code\": \"GBP\",\n          \"fx_rate\": {\n            \"base_currency_code\": \"USD\",\n            \"counter_currency_code\": \"GBP\",\n            \"rate\": 3.25,\n            \"type\": \"buy\"\n          },\n          \"transfer_currency_code\": \"string\"\n        },\n        {\n          \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n          \"quote_element_order\": \"1\",\n          \"quote_element_type\": \"EXCHANGE\",\n          \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n          \"receiving_amount\": 355,\n          \"receiving_fee\": 0,\n          \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n          \"sending_amount\": 1,\n          \"sending_fee\": 0,\n          \"sending_currency_code\": \"USD\",\n          \"receiving_currency_code\": \"GBP\",\n          \"fx_rate\": {\n            \"base_currency_code\": \"USD\",\n            \"counter_currency_code\": \"GBP\",\n            \"rate\": 3.25,\n            \"type\": \"buy\"\n          },\n          \"transfer_currency_code\": \"string\"\n        }\n      ],\n      \"quote_id\": \"2a547e56-4aac-4375-86a8-8b3e7014801d\",\n      \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n      \"service_type\": \"string\",\n      \"type\": \"SENDER_AMOUNT\",\n      \"payment_method\": \"LOCAL_RAILS\",\n      \"payment_method_fields\": \"{\\\"category_id\\\":\\\"bank\\\",\\\"required_originator_fields\\\":[{\\\"field_name\\\":\\\"sender_address\\\",\\\"field_label\\\":\\\"Sender address\\\"}]}\",\n      \"payout_method_info\": {\n        \"payout_method_name\": \"Cash Payout\",\n        \"payout_method_category\": \"BOOK_TRANSFER\",\n        \"description\": \"local rails\",\n        \"estimated_time_to_credit\": \"3 days\"\n      }\n    }\n  ],\n  \"quote_errors\": [\n    {\n      \"failed_path\": [\n        {\n          \"source\": \"string\",\n          \"destination\": \"string\",\n          \"source_currency\": \"string\",\n          \"destination_currency\": \"string\",\n          \"account_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\",\n          \"peer_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\"\n        },\n        {\n          \"source\": \"string\",\n          \"destination\": \"string\",\n          \"source_currency\": \"string\",\n          \"destination_currency\": \"string\",\n          \"account_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\",\n          \"peer_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\"\n        }\n      ],\n      \"error_message\": \"string\",\n      \"error_origin\": \"string\"\n    },\n    {\n      \"failed_path\": [\n        {\n          \"source\": \"string\",\n          \"destination\": \"string\",\n          \"source_currency\": \"string\",\n          \"destination_currency\": \"string\",\n          \"account_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\",\n          \"peer_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\"\n        },\n        {\n          \"source\": \"string\",\n          \"destination\": \"string\",\n          \"source_currency\": \"string\",\n          \"destination_currency\": \"string\",\n          \"account_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\",\n          \"peer_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\"\n        }\n      ],\n      \"error_message\": \"string\",\n      \"error_origin\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d99cb07-ae57-48f9-993a-6f4c977324fd",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quote_collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"1\",\n  \"currency\": \"USD\",\n  \"quote_type\": \"SENDER_AMOUNT\",\n  \"receiving_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n  \"sending_address\": \"sf@rn.us.ca.san_francisco\",\n  \"sender_or_receiver_currency\": \"USD\",\n  \"custom_fee\": \"<number>\",\n  \"custom_rate\": {\n    \"base_currency\": \"<string>\",\n    \"counter_currency\": \"<string>\",\n    \"rate\": \"<number>\",\n    \"rate_type\": \"<string>\"\n  },\n  \"quote_route\": [\n    \"rn.us.ca.san_francisco\",\n    \"rn.us.tx.austin\",\n    \"rn.us.ny.new_york\"\n  ],\n  \"payment_method\": \"<string>\",\n  \"enable_quote_per_payout_method\": true,\n  \"digital_asset_origination\": false,\n  \"force_path_finding_and_liquidity_path_finding\": false,\n  \"payout_method_category\": \"BOOK_TRANSFER\",\n  \"sender_segregated_account\": \"conct_php_receiver_coins_sender@receiver\",\n  \"quote_limit\": \"<integer>\",\n  \"quote_filter_types\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63df1e9f-1767-4831-be70-36d88358218a",
+          "name": "Get quote collection by ID",
+          "request": {
+            "name": "Get quote collection by ID",
+            "description": {
+              "content": "Gets a quote collection that was created for a proposed payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quote_collections",
+                ":quote_collection_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "quote_collection_id",
+                  "description": "(Required) The ID of the quote collection you want returned."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "ff7d3f3f-7dd1-4aab-9a6a-34e2b4f9c825",
+              "name": "Successfully returned a quote collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quote_collections",
+                    ":quote_collection_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "quote_collection_id",
+                      "description": "(Required) The ID of the quote collection you want returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quote_collection_id\": \"4711728c-cd35-49ec-96a5-72732b4333ec\",\n  \"quotes\": [\n    {\n      \"amount\": \"1\",\n      \"created_at\": \"2020-01-29T20:59:44.925Z\",\n      \"currency_code\": \"USD\",\n      \"currency_code_filter\": \"EUR\",\n      \"expires_at\": \"2020-01-29T21:29:44.925Z\",\n      \"liquidity_warning\": \"string\",\n      \"price_guarantee\": \"FIRM\",\n      \"quote_elements\": [\n        {\n          \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n          \"quote_element_order\": \"1\",\n          \"quote_element_type\": \"EXCHANGE\",\n          \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n          \"receiving_amount\": 355,\n          \"receiving_fee\": 0,\n          \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n          \"sending_amount\": 1,\n          \"sending_fee\": 0,\n          \"sending_currency_code\": \"USD\",\n          \"receiving_currency_code\": \"GBP\",\n          \"fx_rate\": {\n            \"base_currency_code\": \"USD\",\n            \"counter_currency_code\": \"GBP\",\n            \"rate\": 3.25,\n            \"type\": \"buy\"\n          },\n          \"transfer_currency_code\": \"string\"\n        },\n        {\n          \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n          \"quote_element_order\": \"1\",\n          \"quote_element_type\": \"EXCHANGE\",\n          \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n          \"receiving_amount\": 355,\n          \"receiving_fee\": 0,\n          \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n          \"sending_amount\": 1,\n          \"sending_fee\": 0,\n          \"sending_currency_code\": \"USD\",\n          \"receiving_currency_code\": \"GBP\",\n          \"fx_rate\": {\n            \"base_currency_code\": \"USD\",\n            \"counter_currency_code\": \"GBP\",\n            \"rate\": 3.25,\n            \"type\": \"buy\"\n          },\n          \"transfer_currency_code\": \"string\"\n        }\n      ],\n      \"quote_id\": \"2a547e56-4aac-4375-86a8-8b3e7014801d\",\n      \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n      \"service_type\": \"string\",\n      \"type\": \"SENDER_AMOUNT\",\n      \"payment_method\": \"LOCAL_RAILS\",\n      \"payment_method_fields\": \"{\\\"category_id\\\":\\\"bank\\\",\\\"required_originator_fields\\\":[{\\\"field_name\\\":\\\"sender_address\\\",\\\"field_label\\\":\\\"Sender address\\\"}]}\",\n      \"payout_method_info\": {\n        \"payout_method_name\": \"Cash Payout\",\n        \"payout_method_category\": \"BOOK_TRANSFER\",\n        \"description\": \"local rails\",\n        \"estimated_time_to_credit\": \"3 days\"\n      }\n    },\n    {\n      \"amount\": \"1\",\n      \"created_at\": \"2020-01-29T20:59:44.925Z\",\n      \"currency_code\": \"USD\",\n      \"currency_code_filter\": \"EUR\",\n      \"expires_at\": \"2020-01-29T21:29:44.925Z\",\n      \"liquidity_warning\": \"string\",\n      \"price_guarantee\": \"FIRM\",\n      \"quote_elements\": [\n        {\n          \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n          \"quote_element_order\": \"1\",\n          \"quote_element_type\": \"EXCHANGE\",\n          \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n          \"receiving_amount\": 355,\n          \"receiving_fee\": 0,\n          \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n          \"sending_amount\": 1,\n          \"sending_fee\": 0,\n          \"sending_currency_code\": \"USD\",\n          \"receiving_currency_code\": \"GBP\",\n          \"fx_rate\": {\n            \"base_currency_code\": \"USD\",\n            \"counter_currency_code\": \"GBP\",\n            \"rate\": 3.25,\n            \"type\": \"buy\"\n          },\n          \"transfer_currency_code\": \"string\"\n        },\n        {\n          \"quote_element_id\": \"259189e7-cb14-42e7-99ef-375f3285e356\",\n          \"quote_element_order\": \"1\",\n          \"quote_element_type\": \"EXCHANGE\",\n          \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n          \"receiving_amount\": 355,\n          \"receiving_fee\": 0,\n          \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n          \"sending_amount\": 1,\n          \"sending_fee\": 0,\n          \"sending_currency_code\": \"USD\",\n          \"receiving_currency_code\": \"GBP\",\n          \"fx_rate\": {\n            \"base_currency_code\": \"USD\",\n            \"counter_currency_code\": \"GBP\",\n            \"rate\": 3.25,\n            \"type\": \"buy\"\n          },\n          \"transfer_currency_code\": \"string\"\n        }\n      ],\n      \"quote_id\": \"2a547e56-4aac-4375-86a8-8b3e7014801d\",\n      \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n      \"service_type\": \"string\",\n      \"type\": \"SENDER_AMOUNT\",\n      \"payment_method\": \"LOCAL_RAILS\",\n      \"payment_method_fields\": \"{\\\"category_id\\\":\\\"bank\\\",\\\"required_originator_fields\\\":[{\\\"field_name\\\":\\\"sender_address\\\",\\\"field_label\\\":\\\"Sender address\\\"}]}\",\n      \"payout_method_info\": {\n        \"payout_method_name\": \"Cash Payout\",\n        \"payout_method_category\": \"BOOK_TRANSFER\",\n        \"description\": \"local rails\",\n        \"estimated_time_to_credit\": \"3 days\"\n      }\n    }\n  ],\n  \"quote_errors\": [\n    {\n      \"failed_path\": [\n        {\n          \"source\": \"string\",\n          \"destination\": \"string\",\n          \"source_currency\": \"string\",\n          \"destination_currency\": \"string\",\n          \"account_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\",\n          \"peer_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\"\n        },\n        {\n          \"source\": \"string\",\n          \"destination\": \"string\",\n          \"source_currency\": \"string\",\n          \"destination_currency\": \"string\",\n          \"account_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\",\n          \"peer_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\"\n        }\n      ],\n      \"error_message\": \"string\",\n      \"error_origin\": \"string\"\n    },\n    {\n      \"failed_path\": [\n        {\n          \"source\": \"string\",\n          \"destination\": \"string\",\n          \"source_currency\": \"string\",\n          \"destination_currency\": \"string\",\n          \"account_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\",\n          \"peer_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\"\n        },\n        {\n          \"source\": \"string\",\n          \"destination\": \"string\",\n          \"source_currency\": \"string\",\n          \"destination_currency\": \"string\",\n          \"account_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\",\n          \"peer_liquidity_relationship_id\": \"480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6\"\n        }\n      ],\n      \"error_message\": \"string\",\n      \"error_origin\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5afd3a88-c789-4cbd-8087-a35d103c2100",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quote_collections",
+                    ":quote_collection_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "quote_collection_id",
+                      "description": "(Required) The ID of the quote collection you want returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3a05679b-3de3-4a17-bcac-781cb2139807",
+    "name": "Palisade Addresses Quotes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

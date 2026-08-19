@@ -1,0 +1,923 @@
+{
+  "item": [
+    {
+      "id": "f85ea3c1-88a2-4ea5-a7a2-a0b5c5163c2c",
+      "name": "Payout method",
+      "description": {
+        "content": "\nPayout Method operations let receivers create and manage payout methods. Senders can generate quotes based on these receiver payout methods.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Create payout method](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/createpayoutmethod)        | POST      | Creates a payout method. For example, `LOCAL_RAILS`. |\n| [Get payout methods](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/getpayoutmethods)            | GET       | Returns a list of payout methods created by a receiving partner. |\n| [Get payout method by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/getpayoutmethodbyid)    | GET       | Returns a payout method by its ID. |\n| [Update payout method](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/updatepayoutmethod)        | PUT       | Updates a payout method. |\n| [Delete payout method](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/deletepayoutmethod)        | DELETE    | Deletes a payout method. |\n| [Get all categories](/products/payments-odl/api-docs/ripplenet/reference/openapi/payout-method/getallcategories)  | GET       | Returns all the payout method categories. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "73a2c34f-5155-4ac3-88f9-cc2b745f2054",
+          "name": "Create payout method",
+          "request": {
+            "name": "Create payout method",
+            "description": {
+              "content": "Creates a payout method (for example, `LOCAL_RAILS`). <p>The Payout Method API lets receivers create and manage payout methods. Senders can generate quotes based on these receiver payout methods by enabling the flag <code>enable_quote_per_payout_method</code> in the body of the [Create quote collection] request. </p><p><b>Caution&#58;</b> The existing quote parameter is named <code>payment_method</code> while elsewhere it is <code>payout_method</code>.</p><p><b>Note&#58;</b> On-Demand Liquidity (ODL) receivers should set <code>payment_method</code> to the <code>outlet_id</code> or the string <code>none</code> (not an empty value) to keep funds at the destination exchange when paying out to a local rail.</p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payout_methods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payout_method\": \"<string>\",\n  \"description\": \"<string>\",\n  \"is_default\": \"<boolean>\",\n  \"payout_method_category\": \"<string>\",\n  \"estimated_time_to_credit\": {\n    \"time_value\": \"<long>\",\n    \"time_unit\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "06119ff4-5898-47b2-9679-a0e639a9c054",
+              "name": "Successfully created payout method.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payout_method_id\": \"a6dbe002-ca7f-4ec7-89e4-f44a1971a0c0\",\n  \"payout_method\": \"LOCAL_RAILS\",\n  \"description\": \"local rails\",\n  \"is_default\": false,\n  \"payout_method_category\": \"BOOK_TRANSFER\",\n  \"estimated_time_to_credit\": {\n    \"time_value\": 5,\n    \"time_unit\": \"MINUTES\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8343ed74-2c7c-42fd-9471-7e63a03d5731",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "78a25c7f-8709-48fd-9b33-09abaf724ae4",
+          "name": "Get payout methods",
+          "request": {
+            "name": "Get payout methods",
+            "description": {
+              "content": "Returns a list of payout methods created by a receiving partner.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payout_methods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of payments to return per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "d66babab-4dc3-4f4a-8815-df70e1c5e389",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": false,\n  \"last\": true,\n  \"number\": 6642,\n  \"numberOfElements\": 8368,\n  \"size\": 2409,\n  \"totalElements\": 5472,\n  \"totalPages\": 7692,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": false,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"payout_method_id\": \"a6dbe002-ca7f-4ec7-89e4-f44a1971a0c0\",\n      \"payout_method\": \"LOCAL_RAILS\",\n      \"description\": \"local rails\",\n      \"is_default\": false,\n      \"payout_method_category\": \"BOOK_TRANSFER\",\n      \"estimated_time_to_credit\": {\n        \"time_value\": 5,\n        \"time_unit\": \"SECONDS\"\n      }\n    },\n    {\n      \"payout_method_id\": \"a6dbe002-ca7f-4ec7-89e4-f44a1971a0c0\",\n      \"payout_method\": \"LOCAL_RAILS\",\n      \"description\": \"local rails\",\n      \"is_default\": false,\n      \"payout_method_category\": \"BOOK_TRANSFER\",\n      \"estimated_time_to_credit\": {\n        \"time_value\": 5,\n        \"time_unit\": \"MINUTES\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a47266f-76ae-4607-b423-eb6caf580698",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "adf6b367-9a0e-407a-bc62-82c12a22827b",
+          "name": "Get payout method by ID",
+          "request": {
+            "name": "Get payout method by ID",
+            "description": {
+              "content": "Returns a payout method by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payout_methods",
+                ":payout_method_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "payout_method_id",
+                  "description": "(Required) ID of the payout method you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "b90cd278-b2eb-4b86-9c66-2c123355575d",
+              "name": "Successfully returned Payout method",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods",
+                    ":payout_method_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payout_method_id",
+                      "description": "(Required) ID of the payout method you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payout_method_id\": \"a6dbe002-ca7f-4ec7-89e4-f44a1971a0c0\",\n  \"payout_method\": \"LOCAL_RAILS\",\n  \"description\": \"local rails\",\n  \"is_default\": false,\n  \"payout_method_category\": \"BOOK_TRANSFER\",\n  \"estimated_time_to_credit\": {\n    \"time_value\": 5,\n    \"time_unit\": \"MINUTES\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9161762-887a-475f-9fca-db51bbed1a2f",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods",
+                    ":payout_method_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payout_method_id",
+                      "description": "(Required) ID of the payout method you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88a977fd-8711-4ba8-b576-e45440e645f4",
+          "name": "Update payout method",
+          "request": {
+            "name": "Update payout method",
+            "description": {
+              "content": "Updates a payout method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payout_methods",
+                ":payout_method_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "payout_method_id",
+                  "description": "(Required) ID of the payout method you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payout_method\": \"<string>\",\n  \"description\": \"<string>\",\n  \"is_default\": \"<boolean>\",\n  \"payout_method_category\": \"<string>\",\n  \"estimated_time_to_credit\": {\n    \"time_value\": \"<long>\",\n    \"time_unit\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9911571f-0fd8-4c37-ab79-289fa5a12cd2",
+              "name": "Successfully saved Payout method",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods",
+                    ":payout_method_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payout_method_id",
+                      "description": "(Required) ID of the payout method you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payout_method_id\": \"a6dbe002-ca7f-4ec7-89e4-f44a1971a0c0\",\n  \"payout_method\": \"LOCAL_RAILS\",\n  \"description\": \"local rails\",\n  \"is_default\": false,\n  \"payout_method_category\": \"BOOK_TRANSFER\",\n  \"estimated_time_to_credit\": {\n    \"time_value\": 5,\n    \"time_unit\": \"MINUTES\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec03b385-8580-48a2-9307-d25463a997ae",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods",
+                    ":payout_method_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payout_method_id",
+                      "description": "(Required) ID of the payout method you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d171248b-2ae3-4d64-9189-49c0624531ca",
+          "name": "Delete payout method",
+          "request": {
+            "name": "Delete payout method",
+            "description": {
+              "content": "Deletes a payout method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payout_methods",
+                ":payout_method_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "payout_method_id",
+                  "description": "(Required) ID of the payout method you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "2f59f7b9-e5f2-4066-b798-08f233cd9b68",
+              "name": "Successfully deleted payout method.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods",
+                    ":payout_method_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payout_method_id",
+                      "description": "(Required) ID of the payout method you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "26e66217-1959-46b3-a5a7-c1c5906cc972",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods",
+                    ":payout_method_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payout_method_id",
+                      "description": "(Required) ID of the payout method you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aed642df-313f-4086-9347-6d8ceeb68f65",
+          "name": "Get all categories",
+          "request": {
+            "name": "Get all categories",
+            "description": {
+              "content": "Returns all the payout method categories.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payout_methods",
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "603d7f1e-642a-4895-8b8d-9270e5bf49da",
+              "name": "Successfully returned Payout method Categories",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"string\",\n  \"string\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b67f595c-f0b5-4532-99e6-7f7d3684a86d",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payout_methods",
+                    "categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d88aa4f7-9c74-4615-83aa-28e2107cc93d",
+    "name": "Palisade Addresses Payout method API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Diagnostics API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Diagnostics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/health"
+          },
+          "docs": "Gets the health status of the xCurrent server."
+        },
+        {
+          "info": {
+            "name": "Check heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/heartbeat"
+          },
+          "docs": "Gets the health status of the xCurrent server's peers. This request requires authorization. The timeout for this operation is 5 seconds."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

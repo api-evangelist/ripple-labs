@@ -1,0 +1,448 @@
+{
+  "item": [
+    {
+      "id": "6e83124f-21ff-454a-b7d1-f51d56f10379",
+      "name": "Auditing",
+      "description": {
+        "content": "\nUse these operations to audit your accounts.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get audits](/products/payments-odl/api-docs/ripplenet/reference/openapi/auditing/getaudits) | GET   | Gets an audit trail of user actions and configuration changes (to accounts, fees, and rates) on a RippleNet instance. |\n| [Get event trail for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/auditing/geteventtrailforpayment)  | GET   | Gets an audit trail of a payment's state changes on a local RippleNet instance. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5d0c0f9c-987d-4d9f-813c-4a1d8878a2d1",
+          "name": "Get audits",
+          "request": {
+            "name": "Get audits",
+            "description": {
+              "content": "Gets an audit trail of user actions and configuration changes (to accounts, fees, and rates) on a RippleNet instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "audit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of payments to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "Filters for audit events where the `range_field` value is before this specified time stamp (not inclusive). You can also specify `after` to create a time range between `after` and `before`. If before is specified, `range_field` must also be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "Filters for audit events where the `range_field` value is after this specified time stamp (not inclusive). You can also specify `before` to create a time range between `after` and `before`. If `after` is specified, `range_field` must also be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "range_field",
+                  "value": "<string>",
+                  "description": "Filters payments before/after/between created and modified timestamps (`CREATED_AT`, `MODIFIED_AT`). For example, if you specify `range_field`=`CREATED_AT`, you would specify a timestamp (in the 24-character ISO 8601 YYYY-MM-DDTHH:mm:ss.sssZ format used in payment objects) as the value for `before` and/or `after` to fetch audit events before, after, or between the specified time range(s) (not inclusive). If `range_field` is specified, `before` and/or `after` must also be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "actor",
+                  "value": "<string>",
+                  "description": "Filters for audit events based upon actor."
+                },
+                {
+                  "disabled": false,
+                  "key": "action",
+                  "value": "<string>",
+                  "description": "Filters for audit events based upon action."
+                },
+                {
+                  "disabled": false,
+                  "key": "level",
+                  "value": "<string>",
+                  "description": "Filters for audit events based upon audit level."
+                },
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "Filters for audit events based upon audit domain."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "e3c29be5-64e2-49b8-a5c3-06dc88399853",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "action",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "level",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": false,\n  \"last\": true,\n  \"number\": 457,\n  \"numberOfElements\": 1328,\n  \"size\": 3507,\n  \"totalElements\": 6720,\n  \"totalPages\": 7466,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": false,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"actor\": \"super_user_client\",\n      \"action\": \"KEY_UPDATE\",\n      \"eventId\": \"3d5d0831-762c-4e0c-980c-635b38fd9caf\",\n      \"message\": \"Added public key class PublicKeyRecord {\\n    publicKey: MCowBQYDK2VwAyEAb8Q2YzrbTIwrUn7u5Q6hJimp7jBFHx500MfDM4XVNJ0=\\n    keyIntent: SIGNING_PUBLIC_KEY\\n    keyType: ED_25519\\n    keyVersion: 1\\n    expiryDateTime: 2089-09-23T17:27:50.331Z\\n} for RippleNet address rn.us.ny.new_york\",\n      \"metadata\": \"{\\\"ip\\\":\\\"0:0:0:0:0:0:0:1\\\",\\\"uri\\\":\\\"/internal/key_service/addresses/rn.us.ny.new_york/keys\\\"}\",\n      \"domain\": \"CONFIG_MANAGEMENT\",\n      \"level\": \"INFO\",\n      \"timeStamp\": \"2019-09-30T22:55:41.365000Z\"\n    },\n    {\n      \"actor\": \"super_user_client\",\n      \"action\": \"KEY_UPDATE\",\n      \"eventId\": \"3d5d0831-762c-4e0c-980c-635b38fd9caf\",\n      \"message\": \"Added public key class PublicKeyRecord {\\n    publicKey: MCowBQYDK2VwAyEAb8Q2YzrbTIwrUn7u5Q6hJimp7jBFHx500MfDM4XVNJ0=\\n    keyIntent: SIGNING_PUBLIC_KEY\\n    keyType: ED_25519\\n    keyVersion: 1\\n    expiryDateTime: 2089-09-23T17:27:50.331Z\\n} for RippleNet address rn.us.ny.new_york\",\n      \"metadata\": \"{\\\"ip\\\":\\\"0:0:0:0:0:0:0:1\\\",\\\"uri\\\":\\\"/internal/key_service/addresses/rn.us.ny.new_york/keys\\\"}\",\n      \"domain\": \"CONFIG_MANAGEMENT\",\n      \"level\": \"INFO\",\n      \"timeStamp\": \"2019-09-30T22:55:41.365000Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7003d46e-8400-4a03-8d85-cafecd5f411e",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "action",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "level",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9d2128c-75b7-4811-80e1-09e69cf7a5d1",
+          "name": "Get event trail for payment",
+          "request": {
+            "name": "Get event trail for payment",
+            "description": {
+              "content": "Gets an audit trail of a payment's state changes on a local RippleNet instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "audit",
+                "payment",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of a payment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "43c54999-f043-4dc6-bae8-bf662b56c806",
+              "name": "Payment state change event trail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit",
+                    "payment",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of a payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"featureName\": \"payment\",\n    \"eventDetail\": \"Updated Payment to state PREPARED\",\n    \"entityId\": \"d485f100-2af7-4e48-9ab1-3c7e28775691\",\n    \"messageAction\": \"STATE_CHANGE\",\n    \"createdAt\": \"2019-10-01T18:24:28.040000Z\",\n    \"messageSender\": \"default\",\n    \"messageType\": \"SETTLEMENT_PREPARE\"\n  },\n  {\n    \"featureName\": \"payment\",\n    \"eventDetail\": \"Updated Payment to state PREPARED\",\n    \"entityId\": \"d485f100-2af7-4e48-9ab1-3c7e28775691\",\n    \"messageAction\": \"STATE_CHANGE\",\n    \"createdAt\": \"2019-10-01T18:24:28.040000Z\",\n    \"messageSender\": \"default\",\n    \"messageType\": \"SETTLEMENT_PREPARE\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb7a280a-ba90-42b2-ba73-7d485ea5f825",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit",
+                    "payment",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of a payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c27d763a-b0d0-4de5-b53c-dc70dfe92fdb",
+    "name": "Palisade Addresses Auditing API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

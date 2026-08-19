@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Market Cap API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Market Cap",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get total supply",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v1/stablecoin/market-cap/:currencyCode/total",
+            "params": [
+              {
+                "name": "currencyCode",
+                "value": "",
+                "type": "path",
+                "description": "Currency code (e.g. `RLUSD`)"
+              }
+            ]
+          },
+          "docs": "Returns the total RLUSD supply (all issued tokens, regardless of circulating status)\nwith a per-chain breakdown. No authentication required.\n"
+        },
+        {
+          "info": {
+            "name": "Get total supply amount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v1/stablecoin/market-cap/:currencyCode/total/amount",
+            "params": [
+              {
+                "name": "currencyCode",
+                "value": "",
+                "type": "path",
+                "description": "Currency code (e.g. `RLUSD`)"
+              }
+            ]
+          },
+          "docs": "Returns the total RLUSD supply as a plain decimal string (e.g. `\"1000000000.00\"`).\nUseful for lightweight integrations that only need the aggregate figure.\nNo authentication required.\n"
+        },
+        {
+          "info": {
+            "name": "Get circulating supply",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v1/stablecoin/market-cap/:currencyCode/circulating",
+            "params": [
+              {
+                "name": "currencyCode",
+                "value": "",
+                "type": "path",
+                "description": "Currency code (e.g. `RLUSD`)"
+              }
+            ]
+          },
+          "docs": "Returns the circulating RLUSD supply with a per-chain breakdown.\nReturns `404` if the circulating supply API is not enabled.\nNo authentication required.\n"
+        },
+        {
+          "info": {
+            "name": "Get circulating supply amount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v1/stablecoin/market-cap/:currencyCode/circulating/amount",
+            "params": [
+              {
+                "name": "currencyCode",
+                "value": "",
+                "type": "path",
+                "description": "Currency code (e.g. `RLUSD`)"
+              }
+            ]
+          },
+          "docs": "Returns the circulating RLUSD supply as a plain decimal string.\nReturns `404` if the circulating supply API is not enabled.\nNo authentication required.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

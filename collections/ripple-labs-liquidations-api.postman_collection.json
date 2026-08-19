@@ -1,0 +1,1020 @@
+{
+  "item": [
+    {
+      "id": "a1cb32b1-4311-47c5-9f82-5a57d7a0fdc9",
+      "name": "Liquidations",
+      "description": {
+        "content": "Use these operations to retrieve liquidations from the Smart Liquidation service.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get liquidations](#operation/getLiquidations)   | GET       | List all liquidations by date range.    |\n| [Get liquidation by Liquidation Id](#operation/getLiquidationById)  | GET       | Gets a liquidation by `Id`. |\n| [Get liquidation by RippleNet Payment Id](#operation/getLiquidationsByRipplenetPaymentId) | GET | Gets a liquidation by `ripplenet_payment_id`. |\n\n**Note:** To configure liquidation, contact your RippleNet liaison.\n\n### Authentication with Smart Liquidation Service\n\nAll API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](/products/payments-odl/api-docs/ripplenet/best-practices/authentication/#request-the-access-token).\n\n### Domain prefixes with Smart Liquidation Service\n\n| **Environment** | **Domain Prefix** | **Request URL** |\n| --- | --- | --- |\n| **Test** | `liquidation-test.pub.prod` | `https://liquidation-test.pub.prod.ripplenet.com` |\n| **Production** | `liquidation.pub.prod` | `https://liquidation.pub.prod.ripplenet.com` |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c77b22b5-af65-452f-911f-7bfc613cda66",
+          "name": "Get liquidations",
+          "request": {
+            "name": "Get liquidations",
+            "description": {
+              "content": "List all liquidations by date range",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "liquidations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<dateTime>",
+                  "description": "Start date (inclusive) of first activity. Specified in ISO-8601 format, for example `2018-08-06T23:13:55.997Z`"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<dateTime>",
+                  "description": "End date (exclusive) of last activity. Specified in ISO-8601 format, for example `2018-08-06T23:13:55.997Z`"
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_id",
+                  "value": "<uuid>",
+                  "description": "RippleNet payment ID(s)"
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_id",
+                  "value": "<uuid>",
+                  "description": "RippleNet payment ID(s)"
+                },
+                {
+                  "disabled": false,
+                  "key": "reference_id",
+                  "value": "<string>",
+                  "description": "Unique reference ID(s)"
+                },
+                {
+                  "disabled": false,
+                  "key": "reference_id",
+                  "value": "<string>",
+                  "description": "Unique reference ID(s)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Liquidation status"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "Number of liquidations to return per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "668e4317-c51b-4273-a023-41bdb8e0f351",
+              "name": "Returns a paginated list of liquidations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "payment_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "payment_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": false,\n  \"last\": false,\n  \"number\": 8243,\n  \"numberOfElements\": 4789,\n  \"results\": [\n    {\n      \"account_id\": \"string\",\n      \"created_at\": \"2018-04-06T20:33:35Z\",\n      \"destination_amount\": 10000,\n      \"destination_currency\": \"usd\",\n      \"destination_venue\": \"bitso\",\n      \"id\": \"422b457a-9698-a2a9-e561-0a8488853d41\",\n      \"liquidation_source\": \"operator\",\n      \"modified_at\": \"2018-04-06T20:33:35Z\",\n      \"status\": \"PARTIALLY_COMPLETED\",\n      \"unique_reference_id\": \"string\",\n      \"ripplenet_payment_id\": \"12cb0143-85ad-2ca2-8deb-beda67d38518\",\n      \"ripplenet_payment_created_at\": \"1991-07-19T07:06:19.325Z\",\n      \"ripplenet_sender_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"ripplenet_receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"estimate_type\": \"indicative\",\n      \"expires_at\": \"2018-04-06T20:33:35Z\"\n    },\n    {\n      \"account_id\": \"string\",\n      \"created_at\": \"2018-04-06T20:33:35Z\",\n      \"destination_amount\": 10000,\n      \"destination_currency\": \"usd\",\n      \"destination_venue\": \"bitso\",\n      \"id\": \"a8d238aa-6099-7574-0d4a-f8e6154a86de\",\n      \"liquidation_source\": \"operator\",\n      \"modified_at\": \"2018-04-06T20:33:35Z\",\n      \"status\": \"CREATED\",\n      \"unique_reference_id\": \"string\",\n      \"ripplenet_payment_id\": \"14ea0a73-1d3c-ec7f-2dd7-ea2025525bf8\",\n      \"ripplenet_payment_created_at\": \"1991-03-09T18:09:11.096Z\",\n      \"ripplenet_sender_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"ripplenet_receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"estimate_type\": \"indicative\",\n      \"expires_at\": \"2018-04-06T20:33:35Z\"\n    }\n  ],\n  \"size\": 238,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"totalElements\": 2858,\n  \"totalPages\": 8873\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b30d2f3f-b943-485d-b702-3ea84bacfc04",
+              "name": "Bad liquidation request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "payment_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "payment_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"BAD_REQUEST\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"JSON parse error: problem: Cannot build LiquidationRequest, some of required attributes are not set [destinationVenue]\",\n  \"correlationId\": \"b99decdd-0fe2-4f4c-bb6a-f7b6d60aee1c\",\n  \"timestamp\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa549e86-f5ee-4cff-ad69-38e1674d6c8f",
+              "name": "Authorization has expired for user to get liquidations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "payment_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "payment_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"AUTH_PROBLEM\",\n  \"title\": \"Unauthorized\",\n  \"status\": 401,\n  \"detail\": \"An error occurred while attempting to decode the Jwt: Expired JWT\",\n  \"correlationId\": \"b99decdd-0fe2-4f4c-bb6a-f7b6d60aee1c\",\n  \"timestamp\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39e03b34-6c05-43d8-8a32-2eb09e4f25df",
+              "name": "User is not authorized to get all liquidations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "payment_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "payment_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"AUTH_PROBLEM\",\n  \"title\": \"Forbidden\",\n  \"status\": 403,\n  \"detail\": \"Could not verify the provided CSRF token because no token was found to compare.\",\n  \"correlationId\": \"b99decdd-0fe2-4f4c-bb6a-f7b6d60aee1c\",\n  \"timestamp\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "335ae512-3068-47c2-864b-0e80f2fa2e09",
+          "name": "Get liquidation by Id",
+          "request": {
+            "name": "Get liquidation by Id",
+            "description": {
+              "content": "Get a specific liquidation by its unique `Id` value",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "liquidations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the liquidation. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5d2530df-d997-4c00-a500-ad6251a9b73b",
+              "name": "Returns a liquidation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the liquidation. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_id\": \"string\",\n  \"created_at\": \"2018-04-06T20:33:35Z\",\n  \"destination_amount\": 10000,\n  \"destination_currency\": \"usd\",\n  \"destination_venue\": \"bitso\",\n  \"execution_summary\": {\n    \"total_xrp\": 9960.905393188841,\n    \"total_fiat\": 4620.855259108209,\n    \"total_slippage\": 7518.4358425669725,\n    \"total_trades\": 8096,\n    \"total_sender_fees\": 2605.2617750833083,\n    \"total_receiver_fees\": 9505.2530972922,\n    \"fx_rate\": 3064.5774834433923,\n    \"incentive_type\": \"string\"\n  },\n  \"id\": \"51b19bd5-3898-a9a9-3eab-b68054a838b0\",\n  \"liquidation_source\": \"operator\",\n  \"modified_at\": \"2018-04-06T20:33:35Z\",\n  \"status\": \"COMPLETED\",\n  \"trade_requests\": [\n    {\n      \"account_id\": \"string\",\n      \"bridge_currency_code\": \"string\",\n      \"created_at\": \"2018-04-06T20:33:35Z\",\n      \"destination_amount\": 9797.70801373991,\n      \"destination_currency\": \"string\",\n      \"destination_venue\": \"string\",\n      \"expires_at\": \"2018-04-06T20:33:35Z\",\n      \"id\": \"c26ee67f-e745-5970-4742-bf5cd00ec1df\",\n      \"liquidation_id\": \"string\",\n      \"modified_at\": \"2018-04-06T20:33:35Z\",\n      \"sequence_number\": 5876,\n      \"status\": \"QUOTED\",\n      \"trade_executions\": [\n        {\n          \"trade_request_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"venue\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"venue_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"proceeds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_proceeds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"start_date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"end_date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"incentive_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"incentive_value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"is_pushed_forward\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_trade_difference\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"executed_slippage_bps\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"trade_request_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"venue\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"venue_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"proceeds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_proceeds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"start_date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"end_date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"incentive_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"incentive_value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"is_pushed_forward\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_trade_difference\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"executed_slippage_bps\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"odl_payment_id\": \"string\",\n      \"xrp_deposit_amount\": 1260.6394203163773,\n      \"error_message\": \"string\",\n      \"estimated_trade_displacement_bps\": 4068\n    },\n    {\n      \"account_id\": \"string\",\n      \"bridge_currency_code\": \"string\",\n      \"created_at\": \"2018-04-06T20:33:35Z\",\n      \"destination_amount\": 3028.1660644169883,\n      \"destination_currency\": \"string\",\n      \"destination_venue\": \"string\",\n      \"expires_at\": \"2018-04-06T20:33:35Z\",\n      \"id\": \"39622dda-4013-713b-d5ec-880ae8f1676f\",\n      \"liquidation_id\": \"string\",\n      \"modified_at\": \"2018-04-06T20:33:35Z\",\n      \"sequence_number\": 208,\n      \"status\": \"PARTIALLY_COMPLETED\",\n      \"trade_executions\": [\n        {\n          \"trade_request_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"venue\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"venue_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"proceeds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_proceeds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"start_date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"end_date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"incentive_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"incentive_value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"is_pushed_forward\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_trade_difference\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"executed_slippage_bps\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"trade_request_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"venue\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"venue_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"proceeds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_proceeds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"start_date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"end_date\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"incentive_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"incentive_value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"is_pushed_forward\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"adjusted_trade_difference\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"executed_slippage_bps\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"odl_payment_id\": \"string\",\n      \"xrp_deposit_amount\": 5219.222409127523,\n      \"error_message\": \"string\",\n      \"estimated_trade_displacement_bps\": 4476\n    }\n  ],\n  \"unique_reference_id\": \"string\",\n  \"ripplenet_payment_id\": \"824638f4-a492-b518-58a9-0c19003e2913\",\n  \"ripplenet_payment_created_at\": \"1971-09-07T05:30:34.301Z\",\n  \"ripplenet_sender_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n  \"ripplenet_receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n  \"estimate_type\": \"firm\",\n  \"expires_at\": \"2018-04-06T20:33:35Z\",\n  \"execution_strategy\": {\n    \"maxAmountPerTrade\": 6463.819842318652,\n    \"minimumTradeInterval\": 691\n  },\n  \"trading_summary\": {\n    \"total_fiat_executed\": 1863.7328796775876,\n    \"total_fiat_in_flight\": 6750.284910694028,\n    \"total_fiat_non_deliverable\": 5197.861539074067,\n    \"total_fiat_remaining_deliverable\": 8535.729950135235\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2ba4217-772b-4ea7-ac75-63910f17d1bc",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the liquidation. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"BAD_REQUEST\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"JSON parse error: problem: Cannot build LiquidationRequest, some of required attributes are not set [destinationVenue]\",\n  \"correlationId\": \"b99decdd-0fe2-4f4c-bb6a-f7b6d60aee1c\",\n  \"timestamp\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7328f68-acbd-45e2-a9d5-d95175998828",
+              "name": "Authorization has expired for user to get liquidations by ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the liquidation. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"AUTH_PROBLEM\",\n  \"title\": \"Unauthorized\",\n  \"status\": 401,\n  \"detail\": \"An error occurred while attempting to decode the Jwt: Expired JWT\",\n  \"correlationId\": \"b99decdd-0fe2-4f4c-bb6a-f7b6d60aee1c\",\n  \"timestamp\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67efab1e-9697-4c18-b7b7-b5dfe6a43f10",
+              "name": "User is not authorized to get liquidation by ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the liquidation. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"AUTH_PROBLEM\",\n  \"title\": \"Forbidden\",\n  \"status\": 403,\n  \"detail\": \"Could not verify the provided CSRF token because no token was found to compare.\",\n  \"correlationId\": \"b99decdd-0fe2-4f4c-bb6a-f7b6d60aee1c\",\n  \"timestamp\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3112780e-c906-4fe4-aad1-802671f6dfad",
+              "name": "Liquidation not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the liquidation. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"NOT_FOUND\",\n  \"title\": \"Liquidation not found\",\n  \"status\": 404,\n  \"detail\": \"Liquidation 'c2812c43-0874-42e6-b1b1-27e07b2bb1e5' not found\",\n  \"liquidationId\": \"c2812c43-0874-42e6-b1b1-27e07b2bb1e5\",\n  \"correlationId\": \"b99decdd-0fe2-4f4c-bb6a-f7b6d60aee1c\",\n  \"timestamp\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fdcff049-5f66-4dce-b687-69e67a438b94",
+          "name": "Get liquidations by payment Id",
+          "request": {
+            "name": "Get liquidations by payment Id",
+            "description": {
+              "content": "Get a list of liquidations associated with a `ripplenet_payment_id`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "liquidations",
+                "ripplenet-payment-id",
+                ":ripplenet_payment_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "ripplenet_payment_id",
+                  "description": "(Required) Unique identifier for a RippleNet payment. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ae8ed1e9-b5b7-41d5-beb9-9daedbade2b8",
+              "name": "Returns a list of liquidations associated with the given ripplenet_payment_id",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations",
+                    "ripplenet-payment-id",
+                    ":ripplenet_payment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "ripplenet_payment_id",
+                      "description": "(Required) Unique identifier for a RippleNet payment. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"account_id\": \"string\",\n    \"created_at\": \"2018-04-06T20:33:35Z\",\n    \"destination_amount\": 10000,\n    \"destination_currency\": \"usd\",\n    \"destination_venue\": \"bitso\",\n    \"execution_summary\": {\n      \"total_xrp\": 5969.718198108577,\n      \"total_fiat\": 3986.556183501535,\n      \"total_slippage\": 9560.458345037006,\n      \"total_trades\": 4778,\n      \"total_sender_fees\": 3474.197810398654,\n      \"total_receiver_fees\": 3759.36663538854,\n      \"fx_rate\": 3336.4090100174217,\n      \"incentive_type\": \"string\"\n    },\n    \"id\": \"1434b94c-226c-4b49-4449-238d1816004b\",\n    \"liquidation_source\": \"operator\",\n    \"modified_at\": \"2018-04-06T20:33:35Z\",\n    \"status\": \"FAILED\",\n    \"trade_requests\": [\n      {\n        \"account_id\": \"string\",\n        \"bridge_currency_code\": \"string\",\n        \"created_at\": \"2018-04-06T20:33:35Z\",\n        \"destination_amount\": 9953.642373931409,\n        \"destination_currency\": \"string\",\n        \"destination_venue\": \"string\",\n        \"expires_at\": \"2018-04-06T20:33:35Z\",\n        \"id\": \"5c571fd6-77de-5852-e099-30f5150863b7\",\n        \"liquidation_id\": \"string\",\n        \"modified_at\": \"2018-04-06T20:33:35Z\",\n        \"sequence_number\": 3442,\n        \"status\": \"COMPLETED\",\n        \"trade_executions\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"odl_payment_id\": \"string\",\n        \"xrp_deposit_amount\": 2701.1488629507007,\n        \"error_message\": \"string\",\n        \"estimated_trade_displacement_bps\": 9255\n      },\n      {\n        \"account_id\": \"string\",\n        \"bridge_currency_code\": \"string\",\n        \"created_at\": \"2018-04-06T20:33:35Z\",\n        \"destination_amount\": 2531.9215997568936,\n        \"destination_currency\": \"string\",\n        \"destination_venue\": \"string\",\n        \"expires_at\": \"2018-04-06T20:33:35Z\",\n        \"id\": \"b0d1d94d-681a-3be8-89d0-667a06d82c01\",\n        \"liquidation_id\": \"string\",\n        \"modified_at\": \"2018-04-06T20:33:35Z\",\n        \"sequence_number\": 1791,\n        \"status\": \"QUEUED\",\n        \"trade_executions\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"odl_payment_id\": \"string\",\n        \"xrp_deposit_amount\": 5639.957278398468,\n        \"error_message\": \"string\",\n        \"estimated_trade_displacement_bps\": 3354\n      }\n    ],\n    \"unique_reference_id\": \"string\",\n    \"ripplenet_payment_id\": \"1811176f-7062-135b-f5dd-944751319a32\",\n    \"ripplenet_payment_created_at\": \"1972-01-09T20:58:29.137Z\",\n    \"ripplenet_sender_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n    \"ripplenet_receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n    \"estimate_type\": \"firm\",\n    \"expires_at\": \"2018-04-06T20:33:35Z\",\n    \"execution_strategy\": {\n      \"maxAmountPerTrade\": 2659.2785347254367,\n      \"minimumTradeInterval\": 2229\n    },\n    \"trading_summary\": {\n      \"total_fiat_executed\": 2346.828681912081,\n      \"total_fiat_in_flight\": 1987.434500869012,\n      \"total_fiat_non_deliverable\": 3494.688708217155,\n      \"total_fiat_remaining_deliverable\": 4474.243055853329\n    }\n  },\n  {\n    \"account_id\": \"string\",\n    \"created_at\": \"2018-04-06T20:33:35Z\",\n    \"destination_amount\": 10000,\n    \"destination_currency\": \"usd\",\n    \"destination_venue\": \"bitso\",\n    \"execution_summary\": {\n      \"total_xrp\": 6908.446523644703,\n      \"total_fiat\": 6188.261106296843,\n      \"total_slippage\": 4796.543695045332,\n      \"total_trades\": 2700,\n      \"total_sender_fees\": 4269.876923352281,\n      \"total_receiver_fees\": 1259.6813954171093,\n      \"fx_rate\": 8397.358623626073,\n      \"incentive_type\": \"string\"\n    },\n    \"id\": \"fa3c378b-d8f3-f64c-5ba2-bc82dcac6302\",\n    \"liquidation_source\": \"operator\",\n    \"modified_at\": \"2018-04-06T20:33:35Z\",\n    \"status\": \"PARTIALLY_COMPLETED\",\n    \"trade_requests\": [\n      {\n        \"account_id\": \"string\",\n        \"bridge_currency_code\": \"string\",\n        \"created_at\": \"2018-04-06T20:33:35Z\",\n        \"destination_amount\": 1211.8914522426182,\n        \"destination_currency\": \"string\",\n        \"destination_venue\": \"string\",\n        \"expires_at\": \"2018-04-06T20:33:35Z\",\n        \"id\": \"8986d59a-27a1-2e8e-d337-8c12f30f330f\",\n        \"liquidation_id\": \"string\",\n        \"modified_at\": \"2018-04-06T20:33:35Z\",\n        \"sequence_number\": 9531,\n        \"status\": \"STARTED\",\n        \"trade_executions\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"odl_payment_id\": \"string\",\n        \"xrp_deposit_amount\": 9409.954816960899,\n        \"error_message\": \"string\",\n        \"estimated_trade_displacement_bps\": 7980\n      },\n      {\n        \"account_id\": \"string\",\n        \"bridge_currency_code\": \"string\",\n        \"created_at\": \"2018-04-06T20:33:35Z\",\n        \"destination_amount\": 1294.106699418326,\n        \"destination_currency\": \"string\",\n        \"destination_venue\": \"string\",\n        \"expires_at\": \"2018-04-06T20:33:35Z\",\n        \"id\": \"caf15fac-be9d-134c-7d1a-460884b90d97\",\n        \"liquidation_id\": \"string\",\n        \"modified_at\": \"2018-04-06T20:33:35Z\",\n        \"sequence_number\": 7369,\n        \"status\": \"QUEUED\",\n        \"trade_executions\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"odl_payment_id\": \"string\",\n        \"xrp_deposit_amount\": 6613.357632872418,\n        \"error_message\": \"string\",\n        \"estimated_trade_displacement_bps\": 9859\n      }\n    ],\n    \"unique_reference_id\": \"string\",\n    \"ripplenet_payment_id\": \"5fdb24f5-7eb0-ef12-e038-e6ef09e8d28d\",\n    \"ripplenet_payment_created_at\": \"1978-04-16T08:10:29.180Z\",\n    \"ripplenet_sender_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n    \"ripplenet_receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n    \"estimate_type\": \"indicative\",\n    \"expires_at\": \"2018-04-06T20:33:35Z\",\n    \"execution_strategy\": {\n      \"maxAmountPerTrade\": 485.2032222055269,\n      \"minimumTradeInterval\": 457\n    },\n    \"trading_summary\": {\n      \"total_fiat_executed\": 196.30892689206482,\n      \"total_fiat_in_flight\": 1197.8052949623186,\n      \"total_fiat_non_deliverable\": 7305.245143546725,\n      \"total_fiat_remaining_deliverable\": 3476.3930832288793\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c91911e-3baa-40a4-93a7-4ba2cb84d667",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations",
+                    "ripplenet-payment-id",
+                    ":ripplenet_payment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "ripplenet_payment_id",
+                      "description": "(Required) Unique identifier for a RippleNet payment. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"BAD_REQUEST\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"JSON parse error: problem: Cannot build LiquidationRequest, some of required attributes are not set [destinationVenue]\",\n  \"correlationId\": \"b99decdd-0fe2-4f4c-bb6a-f7b6d60aee1c\",\n  \"timestamp\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a3719cf-68ff-429b-9658-0723e3cd656d",
+              "name": "Authorization has expired for user to get liquidations by Ripplenet Payment ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations",
+                    "ripplenet-payment-id",
+                    ":ripplenet_payment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "ripplenet_payment_id",
+                      "description": "(Required) Unique identifier for a RippleNet payment. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"AUTH_PROBLEM\",\n  \"title\": \"Unauthorized\",\n  \"status\": 401,\n  \"detail\": \"An error occurred while attempting to decode the Jwt: Expired JWT\",\n  \"correlationId\": \"b99decdd-0fe2-4f4c-bb6a-f7b6d60aee1c\",\n  \"timestamp\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2034a4ac-90be-495d-9844-5a4fbd8c4af1",
+              "name": "User is not authorized to get liquidations by Ripplenet Payment ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidations",
+                    "ripplenet-payment-id",
+                    ":ripplenet_payment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "ripplenet_payment_id",
+                      "description": "(Required) Unique identifier for a RippleNet payment. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"AUTH_PROBLEM\",\n  \"title\": \"Forbidden\",\n  \"status\": 403,\n  \"detail\": \"Could not verify the provided CSRF token because no token was found to compare.\",\n  \"correlationId\": \"b99decdd-0fe2-4f4c-bb6a-f7b6d60aee1c\",\n  \"timestamp\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0a08ea20-a7ac-4811-aea2-4d2d66fa9357",
+    "name": "Palisade Addresses Liquidations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

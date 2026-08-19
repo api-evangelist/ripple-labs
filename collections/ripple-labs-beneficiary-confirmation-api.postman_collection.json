@@ -1,0 +1,1125 @@
+{
+  "item": [
+    {
+      "id": "b984ec11-4f9f-498c-a2b8-061049339577",
+      "name": "Beneficiary confirmation",
+      "description": {
+        "content": "\nUse these operations to perform beneficiary confirmations.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get account lookup by status](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/getaccountlookupbystatus)  | GET    | Get Account Lookup entities by status and other filters. |\n| [Initiate account lookup](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/initiateaccountlookup) | POST   | Creates an Account Lookup request to validate a beneficiary's account details before sending a payment. |\n| [Complete account lookup](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/completeaccountlookup) | POST   | Posts an Account Lookup response to validate a beneficiary's account details before payment. |\n| [Get account lookup by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/beneficiary-confirmation/getaccountlookupbyid) | GET    | Gets an Account Lookup entity for its `account_lookup_id` value. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "023d00fa-2271-4a52-8b22-84edd5f053e8",
+          "name": "Get account lookup by status",
+          "request": {
+            "name": "Get account lookup by status",
+            "description": {
+              "content": "Get Account Lookup entities by status and other filters. Status defaults to `REQUESTED`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account_lookups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of objects to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "account_lookup_status",
+                  "value": "REQUESTED",
+                  "description": "Account Lookup status"
+                },
+                {
+                  "disabled": false,
+                  "key": "start-date",
+                  "value": "<string>",
+                  "description": "The lower bound of the date-time range you want to return account lookup for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "end-date",
+                  "value": "<string>",
+                  "description": "The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC For example, `2018-08-06T23:15:13.218Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_field",
+                  "value": "LAST_MODIFIED_DATE",
+                  "description": "Attribute for how to sort the results"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_direction",
+                  "value": "ASC",
+                  "description": "Direction of sorted results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "a4ba8ee9-d002-48bc-9081-eb9215752b8c",
+              "name": "Successfully returned response for Account Lookup",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "account_lookup_status",
+                      "value": "REQUESTED"
+                    },
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "LAST_MODIFIED_DATE"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "ASC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": true,\n  \"last\": false,\n  \"number\": 8584,\n  \"numberOfElements\": 2909,\n  \"size\": 5,\n  \"totalElements\": 841,\n  \"totalPages\": 3478,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": false,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"account_lookup_id\": \"01f373af-5ad2-00f7-01dd-e8a82ed2851c\",\n      \"account_lookup_status\": \"REQUESTED\",\n      \"first_name\": \"string\",\n      \"middle_name\": \"string\",\n      \"last_name\": \"string\",\n      \"org_name\": \"string\",\n      \"country_code\": \"string\",\n      \"account_currency\": \"string\",\n      \"account_id\": \"string\",\n      \"account_id_type\": \"UPIC\",\n      \"result_code\": \"string\",\n      \"result_status\": \"FAIL\",\n      \"result_description\": \"string\",\n      \"redacted_first_name\": \"string\",\n      \"redacted_middle_name\": \"string\",\n      \"redacted_last_name\": \"string\",\n      \"redacted_org_name\": \"string\",\n      \"redacted_country_code\": \"string\",\n      \"redacted_account_id\": \"string\",\n      \"redacted_account_id_type\": \"AIIN\",\n      \"redacted_account_currency\": \"string\",\n      \"clearing_system_code\": \"string\",\n      \"branch_code\": \"string\"\n    },\n    {\n      \"account_lookup_id\": \"88654601-bb8a-35e9-d1b8-fc1bab614b72\",\n      \"account_lookup_status\": \"FAILED\",\n      \"first_name\": \"string\",\n      \"middle_name\": \"string\",\n      \"last_name\": \"string\",\n      \"org_name\": \"string\",\n      \"country_code\": \"string\",\n      \"account_currency\": \"string\",\n      \"account_id\": \"string\",\n      \"account_id_type\": \"CUID\",\n      \"result_code\": \"string\",\n      \"result_status\": \"PASS\",\n      \"result_description\": \"string\",\n      \"redacted_first_name\": \"string\",\n      \"redacted_middle_name\": \"string\",\n      \"redacted_last_name\": \"string\",\n      \"redacted_org_name\": \"string\",\n      \"redacted_country_code\": \"string\",\n      \"redacted_account_id\": \"string\",\n      \"redacted_account_id_type\": \"AIIN\",\n      \"redacted_account_currency\": \"string\",\n      \"clearing_system_code\": \"string\",\n      \"branch_code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66317a20-28bb-4eb8-9245-34d07c47a1a5",
+              "name": "Bad request problem",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "account_lookup_status",
+                      "value": "REQUESTED"
+                    },
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "LAST_MODIFIED_DATE"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "ASC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c81a1d5-509c-4e55-9a72-f62b65b52f4a",
+              "name": "Account Lookup Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "account_lookup_status",
+                      "value": "REQUESTED"
+                    },
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "LAST_MODIFIED_DATE"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "ASC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55958399-c8d3-4bf9-9b00-2f6fcedaa321",
+              "name": "Server Error - No valid network path to receiver. Account Lookup is not supported by a participant in the network path.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "account_lookup_status",
+                      "value": "REQUESTED"
+                    },
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "LAST_MODIFIED_DATE"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "ASC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "822efae7-994f-450e-85ac-e2a8153484cb",
+          "name": "Initiate account lookup",
+          "request": {
+            "name": "Initiate account lookup",
+            "description": {
+              "content": "Creates an Account Lookup request to validate a beneficiary's account details before sending a payment. Account lookups are not part of the payment flow and can be made at any time in the payment process.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account_lookups",
+                "request"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destination_address\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"account_id_type\": \"<string>\",\n  \"account_currency\": \"<string>\",\n  \"clearing_system_code\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"middle_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"org_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "89ff31d6-400c-4745-8e83-0ad9e67c4d31",
+              "name": "Successfully returned Account Lookup response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destination_address\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"account_id_type\": \"<string>\",\n  \"account_currency\": \"<string>\",\n  \"clearing_system_code\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"middle_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"org_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_lookup_id\": \"9fea539c-f9df-e38c-403c-dadeafb020d7\",\n  \"account_lookup_status\": \"EXPIRED\",\n  \"first_name\": \"string\",\n  \"middle_name\": \"string\",\n  \"last_name\": \"string\",\n  \"org_name\": \"string\",\n  \"country_code\": \"string\",\n  \"account_currency\": \"string\",\n  \"account_id\": \"string\",\n  \"account_id_type\": \"DMST\",\n  \"result_code\": \"string\",\n  \"result_status\": \"FAIL\",\n  \"result_description\": \"string\",\n  \"redacted_first_name\": \"string\",\n  \"redacted_middle_name\": \"string\",\n  \"redacted_last_name\": \"string\",\n  \"redacted_org_name\": \"string\",\n  \"redacted_country_code\": \"string\",\n  \"redacted_account_id\": \"string\",\n  \"redacted_account_id_type\": \"UPIC\",\n  \"redacted_account_currency\": \"string\",\n  \"clearing_system_code\": \"string\",\n  \"branch_code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d037cda-4ef8-4b86-b500-7cea069e63cf",
+              "name": "Bad Request Problem.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destination_address\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"account_id_type\": \"<string>\",\n  \"account_currency\": \"<string>\",\n  \"clearing_system_code\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"middle_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"org_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b899fbf9-a3f9-4bdd-8f78-9291af020b05",
+              "name": "Server Error - No valid network path to receiver. Account Lookup is not supported by a participant in the network path.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destination_address\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"account_id_type\": \"<string>\",\n  \"account_currency\": \"<string>\",\n  \"clearing_system_code\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"middle_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"org_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10672f2f-47a7-448e-941d-49ff1a5e8126",
+          "name": "Complete account lookup",
+          "request": {
+            "name": "Complete account lookup",
+            "description": {
+              "content": "Posts an Account Lookup response to validate a beneficiary's account details before payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account_lookups",
+                "response"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_lookup_id\": \"<uuid>\",\n  \"result_code\": \"<string>\",\n  \"result_status\": \"<string>\",\n  \"result_description\": \"<string>\",\n  \"redacted_first_name\": \"<string>\",\n  \"redacted_middle_name\": \"<string>\",\n  \"redacted_last_name\": \"<string>\",\n  \"redacted_org_name\": \"<string>\",\n  \"redacted_country_code\": \"<string>\",\n  \"redacted_account_id\": \"<string>\",\n  \"redacted_account_id_type\": \"<string>\",\n  \"redacted_clearing_system_code\": \"<string>\",\n  \"redacted_branch_code\": \"<string>\",\n  \"redacted_account_currency\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d45132f7-e612-452c-a9ed-20aaffc0293c",
+              "name": "Successfully returns acknowledgement for Account Lookup response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    "response"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_lookup_id\": \"<uuid>\",\n  \"result_code\": \"<string>\",\n  \"result_status\": \"<string>\",\n  \"result_description\": \"<string>\",\n  \"redacted_first_name\": \"<string>\",\n  \"redacted_middle_name\": \"<string>\",\n  \"redacted_last_name\": \"<string>\",\n  \"redacted_org_name\": \"<string>\",\n  \"redacted_country_code\": \"<string>\",\n  \"redacted_account_id\": \"<string>\",\n  \"redacted_account_id_type\": \"<string>\",\n  \"redacted_clearing_system_code\": \"<string>\",\n  \"redacted_branch_code\": \"<string>\",\n  \"redacted_account_currency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_lookup_id\": \"9fea539c-f9df-e38c-403c-dadeafb020d7\",\n  \"account_lookup_status\": \"EXPIRED\",\n  \"first_name\": \"string\",\n  \"middle_name\": \"string\",\n  \"last_name\": \"string\",\n  \"org_name\": \"string\",\n  \"country_code\": \"string\",\n  \"account_currency\": \"string\",\n  \"account_id\": \"string\",\n  \"account_id_type\": \"DMST\",\n  \"result_code\": \"string\",\n  \"result_status\": \"FAIL\",\n  \"result_description\": \"string\",\n  \"redacted_first_name\": \"string\",\n  \"redacted_middle_name\": \"string\",\n  \"redacted_last_name\": \"string\",\n  \"redacted_org_name\": \"string\",\n  \"redacted_country_code\": \"string\",\n  \"redacted_account_id\": \"string\",\n  \"redacted_account_id_type\": \"UPIC\",\n  \"redacted_account_currency\": \"string\",\n  \"clearing_system_code\": \"string\",\n  \"branch_code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b815ad5-9032-4efc-970b-d9b8c4598b85",
+              "name": "Bad request problem",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    "response"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_lookup_id\": \"<uuid>\",\n  \"result_code\": \"<string>\",\n  \"result_status\": \"<string>\",\n  \"result_description\": \"<string>\",\n  \"redacted_first_name\": \"<string>\",\n  \"redacted_middle_name\": \"<string>\",\n  \"redacted_last_name\": \"<string>\",\n  \"redacted_org_name\": \"<string>\",\n  \"redacted_country_code\": \"<string>\",\n  \"redacted_account_id\": \"<string>\",\n  \"redacted_account_id_type\": \"<string>\",\n  \"redacted_clearing_system_code\": \"<string>\",\n  \"redacted_branch_code\": \"<string>\",\n  \"redacted_account_currency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35909b90-ce3e-45f4-b806-8794107ff5a8",
+              "name": "Account Lookup Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    "response"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_lookup_id\": \"<uuid>\",\n  \"result_code\": \"<string>\",\n  \"result_status\": \"<string>\",\n  \"result_description\": \"<string>\",\n  \"redacted_first_name\": \"<string>\",\n  \"redacted_middle_name\": \"<string>\",\n  \"redacted_last_name\": \"<string>\",\n  \"redacted_org_name\": \"<string>\",\n  \"redacted_country_code\": \"<string>\",\n  \"redacted_account_id\": \"<string>\",\n  \"redacted_account_id_type\": \"<string>\",\n  \"redacted_clearing_system_code\": \"<string>\",\n  \"redacted_branch_code\": \"<string>\",\n  \"redacted_account_currency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "124933bf-c9eb-45ec-8918-171efceee6c8",
+              "name": "Server Error - No valid network path to receiver. Account Lookup is not supported by a participant in the network path.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    "response"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_lookup_id\": \"<uuid>\",\n  \"result_code\": \"<string>\",\n  \"result_status\": \"<string>\",\n  \"result_description\": \"<string>\",\n  \"redacted_first_name\": \"<string>\",\n  \"redacted_middle_name\": \"<string>\",\n  \"redacted_last_name\": \"<string>\",\n  \"redacted_org_name\": \"<string>\",\n  \"redacted_country_code\": \"<string>\",\n  \"redacted_account_id\": \"<string>\",\n  \"redacted_account_id_type\": \"<string>\",\n  \"redacted_clearing_system_code\": \"<string>\",\n  \"redacted_branch_code\": \"<string>\",\n  \"redacted_account_currency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38af018b-1028-42f4-b3d0-ce993727ab98",
+          "name": "Get account lookup by ID",
+          "request": {
+            "name": "Get account lookup by ID",
+            "description": {
+              "content": "Gets an Account Lookup entity for its `account_lookup_id` value.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account_lookups",
+                ":account_lookup_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "account_lookup_id",
+                  "description": "(Required) AccountLookupId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "68f4e8db-0f7d-4b58-a5db-ac36c91b6536",
+              "name": "Successfully returned Account Lookup response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    ":account_lookup_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_lookup_id",
+                      "description": "(Required) AccountLookupId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_lookup_id\": \"9fea539c-f9df-e38c-403c-dadeafb020d7\",\n  \"account_lookup_status\": \"EXPIRED\",\n  \"first_name\": \"string\",\n  \"middle_name\": \"string\",\n  \"last_name\": \"string\",\n  \"org_name\": \"string\",\n  \"country_code\": \"string\",\n  \"account_currency\": \"string\",\n  \"account_id\": \"string\",\n  \"account_id_type\": \"DMST\",\n  \"result_code\": \"string\",\n  \"result_status\": \"FAIL\",\n  \"result_description\": \"string\",\n  \"redacted_first_name\": \"string\",\n  \"redacted_middle_name\": \"string\",\n  \"redacted_last_name\": \"string\",\n  \"redacted_org_name\": \"string\",\n  \"redacted_country_code\": \"string\",\n  \"redacted_account_id\": \"string\",\n  \"redacted_account_id_type\": \"UPIC\",\n  \"redacted_account_currency\": \"string\",\n  \"clearing_system_code\": \"string\",\n  \"branch_code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45b6e82e-e1ac-4fc1-a04d-aaacd4055a3f",
+              "name": "Bad request problem",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    ":account_lookup_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_lookup_id",
+                      "description": "(Required) AccountLookupId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a2d04a7-54bc-4bfb-9fce-50cae70049dc",
+              "name": "Account Lookup Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    ":account_lookup_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_lookup_id",
+                      "description": "(Required) AccountLookupId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3eab00db-6b02-42c6-8c52-3380c9b8edac",
+              "name": "Server Error - No valid network path to receiver. Account Lookup is not supported by a participant in the network path.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account_lookups",
+                    ":account_lookup_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_lookup_id",
+                      "description": "(Required) AccountLookupId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2ffe9aaa-6eb1-4df5-8805-38e25736337c",
+    "name": "Palisade Addresses Beneficiary confirmation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

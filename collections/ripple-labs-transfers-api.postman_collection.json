@@ -1,0 +1,1300 @@
+{
+  "item": [
+    {
+      "id": "c290f878-8ab0-4fa4-99d8-83a6909b339f",
+      "name": "Transfers",
+      "description": {
+        "content": "\nUse these operations to manage your transfers.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransfers)                 | GET    | Gets a list of transfers. |\n| [Get transfer estimate](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransferestimate)  | GET    | Get an estimate of the fee to make an \"outbound\" transfer from an exchange (connected to xRapid) to an another account outside of RippleNet (such as a bank account).  |\n| [Get transfer by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransferbyid)         | GET    | Gets a transfer by ID. |\n| [Execute transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/executetransfer)           | POST   | Transfers funds between accounts.  |\n| [Complete transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/completetransfer)         | POST   | Updates the state of a transfer to `COMPLETED`. |\n| [Add transfer labels](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/addtransferlabels)       | PUT    | Adds a list of labels to the transfer. To retrieve transfers by label, see [Get transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransfers) |\n| [Delete transfer labels](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/deletetransferlabels) | DELETE | Deletes one or more existing labels from the transfer. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "56a3e3b2-8580-4e62-94e1-6a5319b7ad49",
+          "name": "Get transfers",
+          "request": {
+            "name": "Get transfers",
+            "description": {
+              "content": "Gets a list of transfers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transfers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "20",
+                  "description": "Number of objects to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "with_labels",
+                  "value": "<string>,<string>",
+                  "description": "Returns transfers that contain any of the specified labels.<p>Example - `?with_labels=LABEL1,LABEL2`</p>"
+                },
+                {
+                  "disabled": false,
+                  "key": "without_labels",
+                  "value": "<string>,<string>",
+                  "description": "Returns transfers that do not contain any of the specified labels."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_labels",
+                  "value": "false",
+                  "description": "Returns labels added to each Transfer object. By default labels are not returned. <p>Example - `?with_labels=LABEL1&include_labels=true`</p>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Filter by transfer states."
+                },
+                {
+                  "disabled": false,
+                  "key": "internal_id",
+                  "value": "<string>",
+                  "description": "Optional parameter for filtering with internalId."
+                },
+                {
+                  "disabled": false,
+                  "key": "sender_end_to_end_id",
+                  "value": "<string>",
+                  "description": "Optional parameter for filtering with sender end to end id."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_field",
+                  "value": "<string>",
+                  "description": "Field used to sort the results."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_direction",
+                  "value": "<string>",
+                  "description": "Sort direction."
+                },
+                {
+                  "disabled": false,
+                  "key": "account",
+                  "value": "<string>",
+                  "description": "RippleNet account which is involved in transfer"
+                },
+                {
+                  "disabled": false,
+                  "key": "transfer_account_role",
+                  "value": "<string>",
+                  "description": "by default account parameter would search both sender and receiver of transfer and bring the results. This is to restrict the account search to sender or receiver of a transfer"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "a199c768-b53e-49bd-95b7-4433cb65b915",
+              "name": "Successfully returned transfers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "with_labels",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "without_labels",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_labels",
+                      "value": "false"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "internal_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sender_end_to_end_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transfer_account_role",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": false,\n  \"last\": false,\n  \"number\": 1277,\n  \"numberOfElements\": 4455,\n  \"size\": 3829,\n  \"totalElements\": 3038,\n  \"totalPages\": 9521,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": false,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"amount\": 15,\n      \"owner_address\": \"rn.us.ca.san_francisco\",\n      \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n      \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n      \"state\": \"EXECUTED\",\n      \"transfer_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n      \"user_info\": [\n        {\n          \"json\": {},\n          \"node_address\": \"rn.us.ca.san_francisco\",\n          \"state\": \"EXECUTED\",\n          \"created_at\": \"2019-10-01T21:28:28.357Z\"\n        },\n        {\n          \"json\": {},\n          \"node_address\": \"rn.us.ca.san_francisco\",\n          \"state\": \"EXECUTED\",\n          \"created_at\": \"2019-10-01T21:28:28.357Z\"\n        }\n      ],\n      \"internal_id\": \"9cf5aa4b-1e44-436a-ab7c-d399aec905da\",\n      \"end_to_end_id\": \"fd7559be-aa85-433f-a283-0cd58681cdf0\",\n      \"sending_fee\": 2951.7752520602703,\n      \"created_at\": \"2019-10-01T21:28:28.354Z\",\n      \"labels\": [\n        \"label1\",\n        \"label2\",\n        \"label3\"\n      ]\n    },\n    {\n      \"amount\": 15,\n      \"owner_address\": \"rn.us.ca.san_francisco\",\n      \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n      \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n      \"state\": \"EXECUTED\",\n      \"transfer_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n      \"user_info\": [\n        {\n          \"json\": {},\n          \"node_address\": \"rn.us.ca.san_francisco\",\n          \"state\": \"EXECUTED\",\n          \"created_at\": \"2019-10-01T21:28:28.357Z\"\n        },\n        {\n          \"json\": {},\n          \"node_address\": \"rn.us.ca.san_francisco\",\n          \"state\": \"EXECUTED\",\n          \"created_at\": \"2019-10-01T21:28:28.357Z\"\n        }\n      ],\n      \"internal_id\": \"9cf5aa4b-1e44-436a-ab7c-d399aec905da\",\n      \"end_to_end_id\": \"fd7559be-aa85-433f-a283-0cd58681cdf0\",\n      \"sending_fee\": 3269.4185557955134,\n      \"created_at\": \"2019-10-01T21:28:28.354Z\",\n      \"labels\": [\n        \"label1\",\n        \"label2\",\n        \"label3\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "620b15cb-d33f-478a-8969-3d7d9db7dc5e",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "with_labels",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "without_labels",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include_labels",
+                      "value": "false"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "internal_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sender_end_to_end_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transfer_account_role",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61b4b51a-d43f-459a-9a8b-13a7c19182a5",
+          "name": "Get transfer estimate",
+          "request": {
+            "name": "Get transfer estimate",
+            "description": {
+              "content": "Get an estimate of the fee to make an \"outbound\" transfer from an exchange (connected to xRapid) to an another account outside of RippleNet (such as a bank account). This operation is only available to xCurrent instances enabled as receivers of xRapid payments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transfers",
+                "estimate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sender_address",
+                  "value": "<string>",
+                  "description": "RippleNet address of the xRapid account from which the transfer is funded"
+                },
+                {
+                  "disabled": false,
+                  "key": "receiver_address",
+                  "value": "<string>",
+                  "description": "RippleNet address representing an account outside of RippleNet to which the transfer amount is sent."
+                },
+                {
+                  "disabled": false,
+                  "key": "amount",
+                  "value": "<number>",
+                  "description": "The amount to be transferred"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "bb4aeb02-e24a-4eef-80b9-d4fa76aa6b12",
+              "name": "Successfully retrieved estimate of transfer sending fee",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    "estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sender_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "receiver_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": 15,\n  \"owner_address\": \"rn.us.ca.san_francisco\",\n  \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"state\": \"EXECUTED\",\n  \"transfer_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n  \"user_info\": [\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ca.san_francisco\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2019-10-01T21:28:28.357Z\"\n    },\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ca.san_francisco\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2019-10-01T21:28:28.357Z\"\n    }\n  ],\n  \"internal_id\": \"9cf5aa4b-1e44-436a-ab7c-d399aec905da\",\n  \"end_to_end_id\": \"fd7559be-aa85-433f-a283-0cd58681cdf0\",\n  \"sending_fee\": 9750.344116551478,\n  \"created_at\": \"2019-10-01T21:28:28.354Z\",\n  \"labels\": [\n    \"label1\",\n    \"label2\",\n    \"label3\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "458fed3f-e90f-41e5-bb13-44f85213f653",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    "estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sender_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "receiver_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "amount",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c96dd431-401c-477c-af50-0a7ceacdd994",
+          "name": "Get transfer by ID",
+          "request": {
+            "name": "Get transfer by ID",
+            "description": {
+              "content": "Gets a transfer by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transfers",
+                ":transfer_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_labels",
+                  "value": "false",
+                  "description": "Returns labels added to each Transfer object. By default labels are not returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "transfer_id",
+                  "description": "(Required) Unique identifier of the transfer you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "b8d339a7-b38a-4310-b5dc-505379cd2c1e",
+              "name": "Successfully retrieved transfer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":transfer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_labels",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transfer_id",
+                      "description": "(Required) Unique identifier of the transfer you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": 15,\n  \"owner_address\": \"rn.us.ca.san_francisco\",\n  \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"state\": \"EXECUTED\",\n  \"transfer_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n  \"user_info\": [\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ca.san_francisco\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2019-10-01T21:28:28.357Z\"\n    },\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ca.san_francisco\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2019-10-01T21:28:28.357Z\"\n    }\n  ],\n  \"internal_id\": \"9cf5aa4b-1e44-436a-ab7c-d399aec905da\",\n  \"end_to_end_id\": \"fd7559be-aa85-433f-a283-0cd58681cdf0\",\n  \"sending_fee\": 9750.344116551478,\n  \"created_at\": \"2019-10-01T21:28:28.354Z\",\n  \"labels\": [\n    \"label1\",\n    \"label2\",\n    \"label3\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0b261e2-6768-4c28-a1b4-087198b8133a",
+              "name": "Transfer not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":transfer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_labels",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transfer_id",
+                      "description": "(Required) Unique identifier of the transfer you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9613f055-caa9-4d4a-bd86-5ddbab5db260",
+          "name": "Execute transfer",
+          "request": {
+            "name": "Execute transfer",
+            "description": {
+              "content": "Transfers funds between accounts. For example, use this request to fund a connector account by transferring funds from a transactional account to the connector account. You can also use this request to redeem funds to a transactional account by transferring funds from a connector account to the transactional account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transfers",
+                "execute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"receiver_address\": \"<string>\",\n  \"sender_address\": \"<string>\",\n  \"owner_address\": \"<string>\",\n  \"end_to_end_id\": \"<string>\",\n  \"internal_id\": \"<string>\",\n  \"user_info\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99b92bdd-aee4-497e-a222-cd8de9c4bc6b",
+              "name": "Successfully executed transfer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 15,\n  \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"owner_address\": \"rn.us.ca.san_francisco\",\n  \"end_to_end_id\": \"b09dd632-660e-48c8-907f-a4f3a7d12c18\",\n  \"internal_id\": \"9ad3c119-1379-443b-9c0e-fa82c54ae78d\",\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": 15,\n  \"owner_address\": \"rn.us.ca.san_francisco\",\n  \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"state\": \"EXECUTED\",\n  \"transfer_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n  \"user_info\": [\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ca.san_francisco\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2019-10-01T21:28:28.357Z\"\n    },\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ca.san_francisco\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2019-10-01T21:28:28.357Z\"\n    }\n  ],\n  \"internal_id\": \"9cf5aa4b-1e44-436a-ab7c-d399aec905da\",\n  \"end_to_end_id\": \"fd7559be-aa85-433f-a283-0cd58681cdf0\",\n  \"sending_fee\": 9750.344116551478,\n  \"created_at\": \"2019-10-01T21:28:28.354Z\",\n  \"labels\": [\n    \"label1\",\n    \"label2\",\n    \"label3\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fe9c773-b51b-40f5-84e3-0592fba3858d",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 15,\n  \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"owner_address\": \"rn.us.ca.san_francisco\",\n  \"end_to_end_id\": \"b09dd632-660e-48c8-907f-a4f3a7d12c18\",\n  \"internal_id\": \"9ad3c119-1379-443b-9c0e-fa82c54ae78d\",\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9db079e1-8c15-48ff-a696-3cb00264aca4",
+          "name": "Complete transfer",
+          "request": {
+            "name": "Complete transfer",
+            "description": {
+              "content": "Updates the state of a transfer to `COMPLETED`. Make this request once the transfer has been made on both the ledger and on internal systems.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transfers",
+                ":transfer_id",
+                "complete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "transfer_id",
+                  "description": "(Required) Unique identifier of the transfer you want to complete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST"
+          },
+          "response": [
+            {
+              "id": "4de549a7-835f-436b-8f0a-0b3269d090e7",
+              "name": "Successfully completed transfer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":transfer_id",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transfer_id",
+                      "description": "(Required) Unique identifier of the transfer you want to complete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": 15,\n  \"owner_address\": \"rn.us.ca.san_francisco\",\n  \"receiver_address\": \"conct_usd_sf@rn.us.ca.san_francisco\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"state\": \"EXECUTED\",\n  \"transfer_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n  \"user_info\": [\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ca.san_francisco\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2019-10-01T21:28:28.357Z\"\n    },\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ca.san_francisco\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2019-10-01T21:28:28.357Z\"\n    }\n  ],\n  \"internal_id\": \"9cf5aa4b-1e44-436a-ab7c-d399aec905da\",\n  \"end_to_end_id\": \"fd7559be-aa85-433f-a283-0cd58681cdf0\",\n  \"sending_fee\": 9750.344116551478,\n  \"created_at\": \"2019-10-01T21:28:28.354Z\",\n  \"labels\": [\n    \"label1\",\n    \"label2\",\n    \"label3\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7911478-0ee8-43fb-a125-cbb8fa885dbf",
+              "name": "Transfer not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":transfer_id",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transfer_id",
+                      "description": "(Required) Unique identifier of the transfer you want to complete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d03c7e7-f2a0-476e-b416-06f4d460c24a",
+          "name": "Add transfer labels",
+          "request": {
+            "name": "Add transfer labels",
+            "description": {
+              "content": "Adds a list of labels to the transfer. To retrieve transfers by label, see [Get transfers][get-transfers].",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transfers",
+                ":transfer_id",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "label",
+                  "value": "<string>,<string>",
+                  "description": "(Required) Text of the label you want to add to the payment."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "transfer_id",
+                  "description": "(Required) Transfer ID for the label being added."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT"
+          },
+          "response": [
+            {
+              "id": "46aff74e-343b-406f-8c23-a5c358214fd0",
+              "name": "Successfully added one or more labels to the transfer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":transfer_id",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "label",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transfer_id",
+                      "description": "(Required) Transfer ID for the label being added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4c34e53a-d447-4a0d-ac31-f4fec326f62b",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":transfer_id",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "label",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transfer_id",
+                      "description": "(Required) Transfer ID for the label being added."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd5324aa-87df-4441-96ef-9771685d24d7",
+          "name": "Delete transfer labels",
+          "request": {
+            "name": "Delete transfer labels",
+            "description": {
+              "content": "Deletes one or more existing labels from the transfer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transfers",
+                ":transfer_id",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "label",
+                  "value": "<string>,<string>",
+                  "description": "(Required) Labels to be removed."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "transfer_id",
+                  "description": "(Required) Transfer ID for the label being removed."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "93469aed-66a0-4100-9ce1-96f9e03e773e",
+              "name": "Successfully deleted one or more labels of the transfer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":transfer_id",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "label",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transfer_id",
+                      "description": "(Required) Transfer ID for the label being removed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "827ebfb4-f86d-40b2-a329-81d5b44a47d7",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":transfer_id",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "label",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transfer_id",
+                      "description": "(Required) Transfer ID for the label being removed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8eeb5e77-0804-48e1-beb1-e99ba954ff6b",
+    "name": "Palisade Addresses Transfers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

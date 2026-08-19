@@ -1,0 +1,287 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Transactions - XRP API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions - XRP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new XRP Account Set transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/xrp/account-set",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new XRP Account Set transaction"
+        },
+        {
+          "info": {
+            "name": "Create a new XRP AMM Create transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/xrp/amm-create",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new XRP AMM Create transaction"
+        },
+        {
+          "info": {
+            "name": "Create a new XRP AMM Deposit transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/xrp/amm-deposit",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new XRP AMM Deposit transaction"
+        },
+        {
+          "info": {
+            "name": "Create a new XRP AMM Withdraw transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/xrp/amm-withdraw",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new XRP AMM Withdraw transaction"
+        },
+        {
+          "info": {
+            "name": "Create a new XRP Clawback transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/xrp/clawback",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new XRP Clawback transaction to recover issued tokens"
+        },
+        {
+          "info": {
+            "name": "Create a new XRP Offer Cancel transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/xrp/offer-cancel",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new XRP Offer Cancel transaction"
+        },
+        {
+          "info": {
+            "name": "Create a new XRP Offer Create transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/xrp/offer-create",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new XRP Offer Create transaction"
+        },
+        {
+          "info": {
+            "name": "Create a new XRP SignerList Set transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/xrp/signer-list-set",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new XRP SignerList Set transaction"
+        },
+        {
+          "info": {
+            "name": "Create a new XRP Trust Set transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/xrp/trust-set",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new XRP Trust Set transaction"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

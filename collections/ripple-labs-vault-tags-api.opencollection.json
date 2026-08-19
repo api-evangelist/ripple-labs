@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Vault Tags API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vault Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all vault tags for the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/tags"
+          },
+          "docs": "List all vault tags for the organization"
+        },
+        {
+          "info": {
+            "name": "List tags for the vault",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/tags",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              }
+            ]
+          },
+          "docs": "List all tags for the vault"
+        },
+        {
+          "info": {
+            "name": "Add a new vault tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/tags",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new vault tag to a vault"
+        },
+        {
+          "info": {
+            "name": "Delete a vault tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/tags",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "The tag"
+              }
+            ]
+          },
+          "docs": "Delete a vault tag from a vault"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

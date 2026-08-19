@@ -1,0 +1,1198 @@
+{
+  "item": [
+    {
+      "id": "2802aa9c-68cf-4a4d-98ce-60d8eb18c6e2",
+      "name": "Reports",
+      "description": {
+        "content": "The Report Service API provides `PAYMENT_OPS`, `RECON`, and `FAILURE_CONVERSION_SSA` reports in either CSV or JSON format.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01d5256b-ab90-42ef-811f-262e9be3d8a8",
+          "name": "List reports",
+          "request": {
+            "name": "List reports",
+            "description": {
+              "content": "Returns an array of reports available for download. Each array element represents an available report, and contains the `reportId`, `reportType`, and `reportFormat` fields associated with that report.\n\nTo get the download link for a specific report, store the `reportId` for the report you want, and use it with the [Get a report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport) operation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "created-by",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "94d595fb-5fbd-48d4-ae51-1c700a774fd1",
+              "name": "Returns an array of report metadata for the calling tenant",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created-by",
+                      "value": "USER"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reports\": [\n    {\n      \"endDate\": \"2018-04-06T20:33:35Z\",\n      \"reportFormat\": \"CSV\",\n      \"reportId\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n      \"startDate\": \"2018-04-06T20:33:35Z\",\n      \"reportStatus\": \"READY\",\n      \"reportType\": \"PAYMENT_OPS\",\n      \"reportName\": \"My custom report\",\n      \"createdOn\": \"2018-04-06T20:33:35Z\",\n      \"reportCreatedBy\": \"Norma Jean\"\n    },\n    {\n      \"endDate\": \"2018-04-06T20:33:35Z\",\n      \"reportFormat\": \"JSON\",\n      \"reportId\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n      \"startDate\": \"2018-04-06T20:33:35Z\",\n      \"reportStatus\": \"READY\",\n      \"reportType\": \"RECON\",\n      \"reportName\": \"My custom report\",\n      \"createdOn\": \"2018-04-06T20:33:35Z\",\n      \"reportCreatedBy\": \"Norma Jean\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "841fafee-fe40-4c47-9717-91de1d1d9aa8",
+              "name": "Bad Report Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created-by",
+                      "value": "USER"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1\",\n  \"errorCode\": \"RPT_1\",\n  \"title\": \"BAD_REQUEST\",\n  \"time\": \"2018-04-06T20:33:35Z\",\n  \"detail\": \"Required field missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0882d5d-845a-4562-b87b-c36ce312f259",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created-by",
+                      "value": "USER"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1\",\n  \"errorCode\": \"RPT_1\",\n  \"title\": \"BAD_REQUEST\",\n  \"time\": \"2018-04-06T20:33:35Z\",\n  \"detail\": \"Required field missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d35d5ebf-66c4-4685-824a-07099b8bb708",
+          "name": "Create report",
+          "request": {
+            "name": "Create report",
+            "description": {
+              "content": "Request the generation of a custom report based on the specified parameters.\n\n**Report duration**\n\nReports can contain up to 90 days of transactions from the previous 9 months.\n\n* Minimum report duration is 1 day.\n* Maximum report duration is 90 days.\n\n#### Report retention\n\nReports are retained for 6 months after the `endDate` specified in your request.  After this period, the report is purged and will no longer be accessible.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reportName\": \"<string>\",\n  \"reportType\": \"<string>\",\n  \"reportFormat\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2f4260db-cb71-4b84-8312-95e6a3a175ed",
+              "name": "Returns the JSON record for the posted report",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reportName\": \"My custom report\",\n  \"reportType\": \"<string>\",\n  \"reportFormat\": \"<string>\",\n  \"startDate\": \"2018-04-06T19:33:35Z\",\n  \"endDate\": \"2018-04-06T20:33:35Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"endDate\": \"2018-04-06T20:33:35Z\",\n  \"reportFormat\": \"<string>\",\n  \"reportId\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n  \"startDate\": \"2018-04-06T19:33:35Z\",\n  \"reportStatus\": \"READY\",\n  \"reportType\": \"<string>\",\n  \"reportName\": \"My custom report\",\n  \"createdOn\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17c9f011-27fa-484b-af8b-e22cda7e639f",
+              "name": "Bad Report Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reportName\": \"My custom report\",\n  \"reportType\": \"<string>\",\n  \"reportFormat\": \"<string>\",\n  \"startDate\": \"2018-04-06T19:33:35Z\",\n  \"endDate\": \"2018-04-06T20:33:35Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1\",\n  \"errorCode\": \"RPT_1\",\n  \"title\": \"BAD_REQUEST\",\n  \"time\": \"2018-04-06T20:33:35Z\",\n  \"detail\": \"Required field missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "980285b0-9a1e-4113-9619-68ae4b5d7807",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reportName\": \"My custom report\",\n  \"reportType\": \"<string>\",\n  \"reportFormat\": \"<string>\",\n  \"startDate\": \"2018-04-06T19:33:35Z\",\n  \"endDate\": \"2018-04-06T20:33:35Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1\",\n  \"errorCode\": \"RPT_1\",\n  \"title\": \"BAD_REQUEST\",\n  \"time\": \"2018-04-06T20:33:35Z\",\n  \"detail\": \"Required field missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "86a48b5b-1862-4d96-b875-b9ff6a87dac9",
+          "name": "Get a report",
+          "request": {
+            "name": "Get a report",
+            "description": {
+              "content": "Here, you apply the `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation as the path parameter to get a `downloadlink` containing the report.\n\nDownload the report at the link in the `downloadLink` field in the response.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "reports",
+                ":report-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "report-id",
+                  "description": "(Required) Unique identifier for a report."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1af8bd8f-9ee9-4bba-bd90-47a8f5c09993",
+              "name": "Returns the JSON record of the report specified in the path parameter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique identifier for a report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"endDate\": \"2018-04-06T20:33:35Z\",\n  \"reportFormat\": \"<string>\",\n  \"reportId\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n  \"startDate\": \"2018-04-06T19:33:35Z\",\n  \"reportStatus\": \"READY\",\n  \"reportType\": \"<string>\",\n  \"reportName\": \"My custom report\",\n  \"createdOn\": \"2018-04-06T20:33:35Z\",\n  \"downloadLink\": \"https://reporting-test.rnc.ripplenet.com/v1/reports/download/497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n  \"reportCreatedBy\": \"Norma Jean\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01ad7395-8053-4ec4-bb67-834403b5bc6d",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique identifier for a report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1\",\n  \"errorCode\": \"RPT_1\",\n  \"title\": \"BAD_REQUEST\",\n  \"time\": \"2018-04-06T20:33:35Z\",\n  \"detail\": \"Required field missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d876c5b-06d4-4e2f-871b-1bebddb11a85",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique identifier for a report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1\",\n  \"errorCode\": \"RPT_1\",\n  \"title\": \"BAD_REQUEST\",\n  \"time\": \"2018-04-06T20:33:35Z\",\n  \"detail\": \"Required field missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dbd276d6-2377-4cdc-8f02-6704d6a74250",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique identifier for a report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1\",\n  \"errorCode\": \"RPT_1\",\n  \"title\": \"BAD_REQUEST\",\n  \"time\": \"2018-04-06T20:33:35Z\",\n  \"detail\": \"Required field missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a72fb8e-029c-4139-a5ee-1076a730b1a0",
+          "name": "Delete reports",
+          "request": {
+            "name": "Delete reports",
+            "description": {
+              "content": "Delete a specific report with the `report-id` path parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "reports",
+                ":report-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "report-id",
+                  "description": "(Required) Unique ID for a report"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d1cc9322-4e31-47bb-a64b-1986005f7881",
+              "name": "The resource was successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique ID for a report"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6ee07503-d606-4c16-a980-1233e0f8972d",
+              "name": "Reports not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique ID for a report"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "04ebd329-efa2-48a8-8f50-610cc750861e",
+              "name": "Error while attempting to delete resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique ID for a report"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dfb8ceff-1ee1-4db4-bbd7-5634bec3422c",
+          "name": "Download a report",
+          "request": {
+            "name": "Download a report",
+            "description": {
+              "content": "Download a transaction report. Download the report by applying the `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation as a path parameter.\n\n**Note**: Depending on the `reportId` you specified, the returned report is either a Payment operations report or a Reconciliation report.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "reports",
+                "download",
+                ":report-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "report-id",
+                  "description": "(Required) Unique identifier for a report. Get this `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33c87d04-f501-4d66-8f78-667482b81b6a",
+              "name": "Returns the JSON record of the report specified in the path parameter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    "download",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique identifier for a report. Get this `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"end_to_end_id\": \"string\",\n  \"ripplenet_payment_id\": \"70eccd4f-abcd-1234-a655-3aeddff19e4a\",\n  \"quote_ts\": \"2019-08-24T14:15:22Z\",\n  \"created_at\": \"2022-10-02T20:57:13.606Z\",\n  \"executed_at\": \"2022-10-02T20:57:20.62Z\",\n  \"sender_address\": \"new_york@rn.us.ny.new_york\",\n  \"sender_customer\": \"examplecorp_sf\",\n  \"sent_amount\": 40,\n  \"sent_currency\": \"USD\",\n  \"withdrawal_result_amount\": 39.846668,\n  \"receiver_address\": \"new_york@rn.us.ny.new_york\",\n  \"receiver_customer\": \"sf\",\n  \"received_amount\": 39.45,\n  \"received_currency\": \"PHP\",\n  \"fx_spot_rate\": 58.70956379,\n  \"source_exchange\": \"bitstamp\",\n  \"destination_exchange\": \"independentreserve\",\n  \"payment_method\": \"CSM_TH_THB\",\n  \"payment_state\": \"COMPLETED\",\n  \"remitter_name\": \"string\",\n  \"remitter_account\": \"string\",\n  \"beneficiary_name\": \"string\",\n  \"beneficiary_account\": \"string\",\n  \"payment_batch_id\": \"497f6eca-1234-5678-bfeb-53cbbbba6f08\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cad33f64-d300-473e-b3f6-c2be1da1c1f2",
+              "name": "The contents of the report are empty",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    "download",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique identifier for a report. Get this `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "03d0759c-b002-44d4-8b89-e7fbd95f41ea",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    "download",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique identifier for a report. Get this `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1\",\n  \"errorCode\": \"RPT_1\",\n  \"title\": \"BAD_REQUEST\",\n  \"time\": \"2018-04-06T20:33:35Z\",\n  \"detail\": \"Required field missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c08bf81c-bbf6-4baa-af2c-5a531eac8aa6",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    "download",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique identifier for a report. Get this `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1\",\n  \"errorCode\": \"RPT_1\",\n  \"title\": \"BAD_REQUEST\",\n  \"time\": \"2018-04-06T20:33:35Z\",\n  \"detail\": \"Required field missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65c7b982-9435-4161-b950-ee5ecb3e7cc3",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reports",
+                    "download",
+                    ":report-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "report-id",
+                      "description": "(Required) Unique identifier for a report. Get this `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1\",\n  \"errorCode\": \"RPT_1\",\n  \"title\": \"BAD_REQUEST\",\n  \"time\": \"2018-04-06T20:33:35Z\",\n  \"detail\": \"Required field missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9823e3c4-690e-469f-acfe-73c742546c32",
+    "name": "Palisade Addresses Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

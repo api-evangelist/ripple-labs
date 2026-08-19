@@ -1,0 +1,522 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Non-orchestration payments API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Non-orchestration payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/payments",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of payments to return per page."
+              },
+              {
+                "name": "sending_host",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering `with sendingHost` value."
+              },
+              {
+                "name": "receiving_host",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with `receivingHost` value."
+              },
+              {
+                "name": "sending_account",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with `sendingAccount` value."
+              },
+              {
+                "name": "receiving_account",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with `receivingAccount` value."
+              },
+              {
+                "name": "sending_currency",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with `sendingCurrency` value."
+              },
+              {
+                "name": "receiving_currency",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with `receivingCurrency` value."
+              },
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with `paymentId` value. This parameter is deprecated. Please use `payment_ids` instead"
+              },
+              {
+                "name": "payment_type",
+                "value": "",
+                "type": "query",
+                "description": "Filters for payments based on the type of payment. Valid types are `REGULAR`, `RETURN`."
+              },
+              {
+                "name": "internal_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with internalId."
+              },
+              {
+                "name": "sender_end_to_end_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with senderEndToEndId."
+              },
+              {
+                "name": "connector_role",
+                "value": "",
+                "type": "query",
+                "description": "Filters for payments based on the role of the responding connector. Valid roles are `SENDING`, `INTERMEDIARY`, `RECEIVING`, and `INTERNAL`. The `INTERNAL` role is meant for payments between RippleNet Cloud and RippleNet where the sender and receiver accounts are on the same RippleNet instance. Use role with state to find payments waiting on action from you as the sending or receiving (or internal) connector."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Deprecated, should use states parameter. Returns payments in the specified state. The following options are valid: `ACCEPTED`, `COMPLETED`, `EXECUTED`, `FAILED`, `LOCKED`, `LOCK_DECLINED`, `PREPARED`, `RETURNED`, and `SETTLEMENT_DECLINED`"
+              },
+              {
+                "name": "states",
+                "value": "",
+                "type": "query",
+                "description": "Returns payments in the specified states. The following options are valid: `ACCEPTED`, `COMPLETED`, `EXECUTED`, `FAILED`, `LOCKED`, `LOCK_DECLINED`, `PREPARED`, `RETURNED`, and `SETTLEMENT_DECLINED`"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Filters for payments where the payments `range_field` column value is before this specified time stamp (not inclusive). You can also specify `after` to create a time range between `after` and `before`. If before is specified, `range_field` must also be specified."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Filters for payments where the payments `range_field` column value is after this specified time stamp (not inclusive). You can also specify `before` to create a time range between `after` and `before`. If `after` is specified, `range_field` must also be specified."
+              },
+              {
+                "name": "range_field",
+                "value": "",
+                "type": "query",
+                "description": "Designates the column name of the payments database table that is used for filtering payments before/after/between time stamps. The following options are valid: `CREATED_AT`, `MODIFIED_AT`, `ACCEPTED_AT`, `LOCKED_AT`, `EXECUTED_AT`, `COMPLETED_AT`, `RETURNED_AT` and `EXPIRES_AT`. For example, if you specify `range_field`=`MODIFIED_AT`, you would specify a time stamp (in the 24 character ISO 8601 YYYY-MM-DDTHH:mm:ss.sssZ format used in payment objects) as the value for `before` and/or `after` to fetch payments before, after, or between the specified time range(s) (not inclusive). If `range_field` is specified, `before` and/or `after` must also be specified."
+              },
+              {
+                "name": "amount_range_field",
+                "value": "",
+                "type": "query",
+                "description": "Designates the column name of the payments database table that is used for filtering payments greater/less/between amounts. For example, if you specify `amount_range_field=SENDING_AMOUNT`, you would specify an amount as the value for `greater` and/or `less` to fetch payments greater, less, or between the specified amounts (inclusive). If `amount_range_field` is specified, `minAmount` and/or `maxAmount` must also be specified."
+              },
+              {
+                "name": "min_amount",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with min sending/receiving amount."
+              },
+              {
+                "name": "max_amount",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with max sending/receiving amount."
+              },
+              {
+                "name": "with_labels",
+                "value": "",
+                "type": "query",
+                "description": "Returns payments with the specified labels. <p>If you apply `with_labels` with <i>multiple</i> labels, the response returns payments with at least one of the specified labels.</p> <p>For example, the query, </p> <p><b>?with_labels=string1,string2</b></p> <p>returns payments with either &quot;string1&quot; OR &quot;string2&quot;.</p>"
+              },
+              {
+                "name": "without_labels",
+                "value": "",
+                "type": "query",
+                "description": "Returns payments that do <i>not</i> have any of the specified labels. <p>If you apply `without_labels` with <i>multiple</i> labels, the response returns payments that do not have any of the specified labels.</p> <p>For example, the query,</p> <p><b>?without_labels=string3,string4</b></p> <p>returns payments that are not labeled with either &quot;string3&quot; OR &quot;string4&quot;.</p> <p>If you apply both `with_labels` <i>and</i> `without_labels` parameters, the response returns payments that have at least one of the specified `with_labels` strings but omits payments that also have any of the the `without_labels` strings. </p> <p>For example, the query, </p> <p><b>?with_labels=string1&without_labels=string3</b></p> <p>returns payments with &quot;string1&quot; but not payments with &quot;string3&quot;.</p>"
+              },
+              {
+                "name": "sort_field",
+                "value": "",
+                "type": "query",
+                "description": "Sorts results according to the specified field. Valid options are `PAYMENT_ID`, `EXPIRES_AT`, `MODIFIED_AT` and `CREATED_AT`."
+              },
+              {
+                "name": "sort_direction",
+                "value": "",
+                "type": "query",
+                "description": "Sorts result according to the specified direction. Valid options are `ASC`, `DESC`."
+              },
+              {
+                "name": "load_additional_details",
+                "value": "",
+                "type": "query",
+                "description": "This parameter can be used to exclude additional info being returned for each payment object. Additional info which will be excluded if the flag set to false include user_info, ripplenet_info, execution_results and internal_info.labels"
+              },
+              {
+                "name": "payment_ids",
+                "value": "",
+                "type": "query",
+                "description": "List of paymentIds to search for"
+              }
+            ]
+          },
+          "docs": "Retrieves all payments in an instance of xCurrent that meet the criteria defined by the query parameters. You can use the query parameters to filter payments. The default parameters are `sort_field : MODIFIED_AT` , `sort_direction : DESC` , `page : 0` , `size : 10`"
+        },
+        {
+          "info": {
+            "name": "Get payment by payment ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Gets a payment by ID."
+        },
+        {
+          "info": {
+            "name": "Lock payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/lock",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment to lock."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Locks a payment. The beneficiary and all intermediary institutions agree to proceed with the payment by making successful Lock Payment requests. When the payment is still in a _partially_ `LOCKED` state, the beneficiary and all intermediary institutions who have _not_ locked, can [reject lock payment](#operation/rejectLockPayment) or [fail payment](#operation/failPayment).\n\nOnce fully `LOCKED`, the originating institution can either [fail payment](#operation/failPayment) or [Settle payment](#ope"
+        },
+        {
+          "info": {
+            "name": "Reject lock payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/reject",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of a payment to reject a lock request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rejects a payment from being locked.\n\nThis temporarily stops the payment and keeps it in a recoverable state so that [user_info](/products/payments-odl/api-docs/ripplenet/resources/srpo/user-info) can be corrected. If the payment is incorrect for reasons outside of the `user_info` object, use [Fail payment](#operation/failPayment).\n\nAfter a payment has been created by an [Accept quote](#operation/acceptQuote) request, the beneficiary or an intermediary can choose to reject the payment, rather th"
+        },
+        {
+          "info": {
+            "name": "Retry accept payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/retry_accept",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment to return to `ACCEPTED` state."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a rejected payment from the `LOCK_DECLINED` state to the `ACCEPTED` state. The payment sender must include repaired [user_info](/products/payments-odl/api-docs/ripplenet/resources/srpo/user-info) in the request body."
+        },
+        {
+          "info": {
+            "name": "Fail payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/fail",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment to fail."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fails a payment. Fail payment is a deliberate action that permanently stops the payment and puts it into a non-recoverable state.\n\nAn institution _rejects_ a payment to solicit changes to [user_info](/products/payments-odl/api-docs/ripplenet/resources/srpo/user-info); it _fails_ a payment to stop it altogether. After a payment has been created by an [Accept quote](#operation/acceptQuote) request, you can fail the payment if it is your institution's turn to take an action on the payment.\n\nThe ori"
+        },
+        {
+          "info": {
+            "name": "Settle payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/settle",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment to settle."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a payment in the <code>LOCKED</code> state. Payment senders can also <b>retry settling a payment</b> in the <code>SETTLEMENT_DECLINED</code> state, after the error is corrected (and before the payment expires).<p>Settle payment sends a _prepare payment transfer_ message, which travels to all participants in the payment. This sets the payment state to `PREPARED`, which means that funds have been transferred to the hold account on that xCurrent ledger.</p> <p>The beneficiary institution t"
+        },
+        {
+          "info": {
+            "name": "Finalize payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/finalize",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of a payment for which to set a sub-state."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks a payment with finalized sub-states that reflect what is happening to the payment while it is in the <code>EXECUTED</code> state. The receiving institution can make this request multiple times to provide a log of each subsequent sub-state until it is ready to make the [Complete payment](#operation/completePayment) request."
+        },
+        {
+          "info": {
+            "name": "Add payment sub state",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/sub_state",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of a payment for which to set a sub-state."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a sub-state to a payment that reflects what is happening to the payment while it is in the `EXECUTED` state. All nodes on the payment chain can make this request multiple times to provide a log of each subsequent sub-state until the receiver is ready to make the [Complete payment](#operation/completePayment) request.<p>This operation is especially useful for completing cash payouts&#8212;sending institutions can add clarifying user information to a payment after it has been executed (and mo"
+        },
+        {
+          "info": {
+            "name": "Complete payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/complete",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment to place in the `COMPLETED` state."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks a payment as complete by placing it in the `COMPLETED` state. Typically, the receiving institution makes this request when it has delivered payment funds to the final beneficiary on its internal systems outside of xCurrent."
+        },
+        {
+          "info": {
+            "name": "Add payment labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/labels",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment you want to label."
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Text of the label you want to add to the payment."
+              }
+            ]
+          },
+          "docs": "Adds a list of labels to the payment. To retrieve payments by label, see [Get payments](#operation/getPayments)."
+        },
+        {
+          "info": {
+            "name": "Delete payment labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/labels",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment from which to delete a label."
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Text of the label you want to delete from the payment."
+              }
+            ]
+          },
+          "docs": "Deletes an existing label from a payment. The label you provide is deleted from the `labels` array in the Payment object."
+        },
+        {
+          "info": {
+            "name": "Get payment node status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/payments/:payment_id/node-status",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment for which to get states on each node participating in the payment."
+              }
+            ]
+          },
+          "docs": "Senders can query for the RippleNet instances (in a given payment chain) that have payments in the <code>LOCKED</code> state. This information is only stored on the sender's RippleNet instance."
+        },
+        {
+          "info": {
+            "name": "Get filtered payment by payment ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/payments/filtered/:payment_id",
+            "params": [
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the filtered payment you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns a sanitized payment with sensitive content filtered from the `user_info` object. <p>Filtering `user_info` is customizable in `rnn.properties`. Content that is denylisted by default&#58;</p> <p>```/Cdtr, /CdtrAcct, /Dbtr, /DbtrAcct, /InitgPty, /InstForCdtrAgt, /Purp, /RgltryRptg, /RltdRmtInf, /RmtInf, /UltmtCdtr, /UltmtDbtr, /outbound_instructions/beneficiary_info```</p>"
+        },
+        {
+          "info": {
+            "name": "Create quote to return payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/quote_collections/return",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a collection of quotes that can be used to return a payment.\n\nThe receiver can make this request while the payment is in states `EXECUTED`, `COMPLETED`, or `FAILED`. When the returned payment is successfully moved to the `COMPLETED` state, the original payment is moved to the `RETURNED` state.\n\n**Note**: Currently, when making a Return Payment to a RippleNet Cloud account on a RippleNet ledger, the RippleNet user must lock and complete the payment. This means that the RippleNet user take"
+        },
+        {
+          "info": {
+            "name": "Create quote to reverse payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/quote_collections/reversal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a quote collection containing at most one quote that can be used to reverse a payment.\n\nThe receiver can make this request while the payment is in states `EXECUTED`, `COMPLETED`, or `FAILED`. When the returned payment is successfully moved to the `COMPLETED` state, the original payment is moved to the `RETURNED` state.\n\n**Note**: Currently, when making a Reversal Payment to a RippleNet Cloud account on a RippleNet ledger, the RippleNet user must lock and complete the payment. This means "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Request for payment API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Request for payment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get requests for payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/request_for_payment",
+            "params": [
+              {
+                "name": "end_to_end_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter to filter results matching this `endToEndId` value."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "State by which to filter results."
+              },
+              {
+                "name": "sender_address",
+                "value": "",
+                "type": "query",
+                "description": "Field to filter results matching this `senderAddress` value."
+              },
+              {
+                "name": "receiver_address",
+                "value": "",
+                "type": "query",
+                "description": "Field to filter results matching this `receiverAddress` value."
+              },
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "query",
+                "description": "Field to filter results matching this `paymentId` value."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Filters for requests for payment whose `range_field` column value is before this specified time stamp (not inclusive). You can also specify `after` to create a time range between `after` and `before`. If before is specified, `range_field` must also be specified"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Filters for requests for payment whose `range_field` column value is after this specified time stamp (not inclusive). You can also specify `before` to create a time range between `after` and `before`. If `after` is specified, `range_field` must also be specified."
+              },
+              {
+                "name": "range_field",
+                "value": "",
+                "type": "query",
+                "description": "Designates the column name of the requests for payment database table that is used for filtering payments before/after/between time stamps. For example, if you specify `range_field`=`MODIFIED_AT`, you would specify a time stamp (in the 24 character ISO 8601 YYYY-MM-DDTHH:mm:ss.sssZ format used in request for payment objects) as the value for `before` and/or `after` to fetch request for payment before, after, or between the specified time range(s) (not inclusive). If `range_field` is specified, `before` and/or `after` must also be specified."
+              },
+              {
+                "name": "sort_field",
+                "value": "",
+                "type": "query",
+                "description": "Field to use to sort results."
+              },
+              {
+                "name": "sort_direction",
+                "value": "",
+                "type": "query",
+                "description": "Sorts result according to the specified direction."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based index of the page number of results."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of payments per page."
+              }
+            ]
+          },
+          "docs": "Gets requests for payment that match the query parameters."
+        },
+        {
+          "info": {
+            "name": "Send request for payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/request_for_payment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a new request for payment."
+        },
+        {
+          "info": {
+            "name": "Get request for payment by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/request_for_payment/:request_for_payment_id",
+            "params": [
+              {
+                "name": "request_for_payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the request for payment to retrieve."
+              }
+            ]
+          },
+          "docs": "Gets a request for payment by request for payment ID."
+        },
+        {
+          "info": {
+            "name": "Accept request for payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/request_for_payment/:request_for_payment_id/accept",
+            "params": [
+              {
+                "name": "request_for_payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the request for payment to accept."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts a request for payment."
+        },
+        {
+          "info": {
+            "name": "Fail request for payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/request_for_payment/:request_for_payment_id/fail",
+            "params": [
+              {
+                "name": "request_for_payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the request for payment to fail."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fails a request for payment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,251 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Transfers API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/transfers",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects to return per page."
+              },
+              {
+                "name": "with_labels",
+                "value": "",
+                "type": "query",
+                "description": "Returns transfers that contain any of the specified labels.<p>Example - `?with_labels=LABEL1,LABEL2`</p>"
+              },
+              {
+                "name": "without_labels",
+                "value": "",
+                "type": "query",
+                "description": "Returns transfers that do not contain any of the specified labels."
+              },
+              {
+                "name": "include_labels",
+                "value": "",
+                "type": "query",
+                "description": "Returns labels added to each Transfer object. By default labels are not returned. <p>Example - `?with_labels=LABEL1&include_labels=true`</p>"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transfer states."
+              },
+              {
+                "name": "internal_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with internalId."
+              },
+              {
+                "name": "sender_end_to_end_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter for filtering with sender end to end id."
+              },
+              {
+                "name": "sort_field",
+                "value": "",
+                "type": "query",
+                "description": "Field used to sort the results."
+              },
+              {
+                "name": "sort_direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction."
+              },
+              {
+                "name": "account",
+                "value": "",
+                "type": "query",
+                "description": "RippleNet account which is involved in transfer"
+              },
+              {
+                "name": "transfer_account_role",
+                "value": "",
+                "type": "query",
+                "description": "by default account parameter would search both sender and receiver of transfer and bring the results. This is to restrict the account search to sender or receiver of a transfer"
+              }
+            ]
+          },
+          "docs": "Gets a list of transfers."
+        },
+        {
+          "info": {
+            "name": "Get transfer estimate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/transfers/estimate",
+            "params": [
+              {
+                "name": "sender_address",
+                "value": "",
+                "type": "query",
+                "description": "RippleNet address of the xRapid account from which the transfer is funded"
+              },
+              {
+                "name": "receiver_address",
+                "value": "",
+                "type": "query",
+                "description": "RippleNet address representing an account outside of RippleNet to which the transfer amount is sent."
+              },
+              {
+                "name": "amount",
+                "value": "",
+                "type": "query",
+                "description": "The amount to be transferred"
+              }
+            ]
+          },
+          "docs": "Get an estimate of the fee to make an \"outbound\" transfer from an exchange (connected to xRapid) to an another account outside of RippleNet (such as a bank account). This operation is only available to xCurrent instances enabled as receivers of xRapid payments."
+        },
+        {
+          "info": {
+            "name": "Get transfer by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/transfers/:transfer_id",
+            "params": [
+              {
+                "name": "transfer_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the transfer you want to retrieve."
+              },
+              {
+                "name": "include_labels",
+                "value": "",
+                "type": "query",
+                "description": "Returns labels added to each Transfer object. By default labels are not returned."
+              }
+            ]
+          },
+          "docs": "Gets a transfer by ID."
+        },
+        {
+          "info": {
+            "name": "Execute transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/transfers/execute",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfers funds between accounts. For example, use this request to fund a connector account by transferring funds from a transactional account to the connector account. You can also use this request to redeem funds to a transactional account by transferring funds from a connector account to the transactional account."
+        },
+        {
+          "info": {
+            "name": "Complete transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/transfers/:transfer_id/complete",
+            "params": [
+              {
+                "name": "transfer_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the transfer you want to complete."
+              }
+            ]
+          },
+          "docs": "Updates the state of a transfer to `COMPLETED`. Make this request once the transfer has been made on both the ledger and on internal systems."
+        },
+        {
+          "info": {
+            "name": "Add transfer labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/transfers/:transfer_id/labels",
+            "params": [
+              {
+                "name": "transfer_id",
+                "value": "",
+                "type": "path",
+                "description": "Transfer ID for the label being added."
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Text of the label you want to add to the payment."
+              }
+            ]
+          },
+          "docs": "Adds a list of labels to the transfer. To retrieve transfers by label, see [Get transfers][get-transfers]."
+        },
+        {
+          "info": {
+            "name": "Delete transfer labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.palisade.co/transfers/:transfer_id/labels",
+            "params": [
+              {
+                "name": "transfer_id",
+                "value": "",
+                "type": "path",
+                "description": "Transfer ID for the label being removed."
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Labels to be removed."
+              }
+            ]
+          },
+          "docs": "Deletes one or more existing labels from the transfer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

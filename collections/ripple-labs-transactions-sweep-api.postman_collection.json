@@ -1,0 +1,1021 @@
+{
+  "item": [
+    {
+      "id": "32b07bea-864b-41c7-b18d-72bb1208e2fb",
+      "name": "Transactions - Sweep",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "944fc80e-b349-4cf0-86e8-d32e4be6f7b4",
+          "name": "List transactions for a sweep instance",
+          "request": {
+            "name": "List transactions for a sweep instance",
+            "description": {
+              "content": "List all transactions for a given sweep instance",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "transactions",
+                "sweep",
+                ":sweepId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "correlationId",
+                  "value": "<string>",
+                  "description": "Correlation ID for this request, used to correlate multiple actions"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "The number of results to return per page (default 50, max 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>",
+                  "description": "The token to retrieve the next page of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "pagination.pageSize",
+                  "value": "<integer>",
+                  "description": "Number of results per page (default 50, max 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pagination.pageToken",
+                  "value": "<string>",
+                  "description": "Token for pagination from previous response"
+                },
+                {
+                  "disabled": false,
+                  "key": "pagination.orderBy",
+                  "value": "<string>",
+                  "description": "Field to order results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "pagination.order",
+                  "value": "<string>",
+                  "description": "Sort order (ASC or DESC)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sweepId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7ed879d5-ac88-44de-925d-be81c46e4539",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    ":sweepId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "correlationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sweepId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"filter\": {\n    \"total\": 100,\n    \"previousPageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"nextPageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\"\n  },\n  \"transactions\": [\n    {\n      \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n      \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n      \"status\": \"REQUESTED\",\n      \"action\": \"DEPOSIT\",\n      \"asset\": {\n        \"id\": \"5:0xbehbehfb:USDC\",\n        \"standard\": \"ERC20\",\n        \"symbol\": \"LINK\",\n        \"blockchain\": \"XRP_LEDGER\",\n        \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n        \"name\": \"Chainlink\",\n        \"decimals\": 18,\n        \"vetted\": true,\n        \"enabled\": true,\n        \"contract\": \"0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e\",\n        \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n        \"organizationId\": \"string\",\n        \"coingeckoId\": \"ethereum\",\n        \"source\": \"ASSET_SOURCE_COINGECKO\",\n        \"sourceMetadata\": {\n          \"@type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lastSyncedAt\": \"2024-08-08T10:22:22.420Z\",\n        \"syncVersion\": 1,\n        \"contractAddressChecksummed\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"iconUrl\": \"https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png\"\n      },\n      \"feeAsset\": {\n        \"id\": \"5:0xbehbehfb:USDC\",\n        \"standard\": \"ERC20\",\n        \"symbol\": \"LINK\",\n        \"blockchain\": \"TRON\",\n        \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n        \"name\": \"Chainlink\",\n        \"decimals\": 18,\n        \"vetted\": true,\n        \"enabled\": true,\n        \"contract\": \"0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e\",\n        \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n        \"organizationId\": \"string\",\n        \"coingeckoId\": \"ethereum\",\n        \"source\": \"ASSET_SOURCE_COINGECKO\",\n        \"sourceMetadata\": {\n          \"@type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lastSyncedAt\": \"2024-08-08T10:22:22.420Z\",\n        \"syncVersion\": 1,\n        \"contractAddressChecksummed\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"iconUrl\": \"https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png\"\n      },\n      \"blockchain\": \"TRON\",\n      \"originAddress\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n      \"origin\": {\n        \"type\": \"EXTERNAL\",\n        \"address\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n        \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"counterpartyId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n      },\n      \"qty\": \"155.672\",\n      \"signOnly\": false,\n      \"freezeInfo\": {\n        \"isFrozen\": false,\n        \"history\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"attributes\": {\n        \"key_0\": \"string\"\n      },\n      \"externalId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"correlationId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"destinationAddress\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n      \"destination\": {\n        \"type\": \"EXTERNAL\",\n        \"address\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n        \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"counterpartyId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n      },\n      \"feeQtyLimit\": \"155.672\",\n      \"sequence\": \"2\",\n      \"encodedTransaction\": \"ed408505d21dba00825208942352d20fc81225c8ecd8f6faa1b37f24fed450c98089736f6d657468696e67808080\",\n      \"config\": {\n        \"sourceTag\": \"123456\",\n        \"destinationTag\": \"123456\"\n      },\n      \"feeQty\": \"155.672\",\n      \"hash\": \"0x30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n      \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n      \"transactionType\": \"Payment\",\n      \"reasons\": [\n        \"unfunded\"\n      ],\n      \"canonicalSignature\": \"3045022100C60DC1337D69261E7C7E92E4DAC78E0C317D444D4690BE2B86CC53B1989D1B0602206F39C1C5A3096D36C78D6DBAE0525FC619CA048C7FEC0E4DA157FB2EDFF235FE\",\n      \"signedTransaction\": \"12000024002A8F37201B002A8F5561400000000098968068400000000000000A732103E0C61B861ADE7AC58D27D65ABCEF4C22FA874DD13D809E02A99609A8CA31892C74473045022100C60DC1337D69261E7C7E92E4DAC78E0C317D444D4690BE2B86CC53B1989D1B0602206F39C1C5A3096D36C78D6DBAE0525FC619CA048C7FEC0E4DA157FB2EDFF235FE8114EC8E7F9FF5C9B157D55890956376D15740FAE943831451FE87A95FA6CAC3EBEF33387DE8225F7D0352CB\",\n      \"proposedAssetChanges\": [\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"confirmedAssetChanges\": [\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"expiresAt\": \"2026-03-16T16:22:22.420Z\",\n      \"problems\": [\n        {\n          \"code\": 8329,\n          \"reason\": \"string\",\n          \"domain\": \"string\",\n          \"message\": \"string\",\n          \"retryability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"metadata\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"code\": 9064,\n          \"reason\": \"string\",\n          \"domain\": \"string\",\n          \"message\": \"string\",\n          \"retryability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"metadata\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"signingPayloads\": [\n        {\n          \"inputIndex\": 0,\n          \"signingHash\": \"30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n          \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n          \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n        },\n        {\n          \"inputIndex\": 0,\n          \"signingHash\": \"30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n          \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n          \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n        }\n      ]\n    },\n    {\n      \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n      \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n      \"status\": \"REQUESTED\",\n      \"action\": \"DEPOSIT\",\n      \"asset\": {\n        \"id\": \"5:0xbehbehfb:USDC\",\n        \"standard\": \"ERC20\",\n        \"symbol\": \"LINK\",\n        \"blockchain\": \"TRON\",\n        \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n        \"name\": \"Chainlink\",\n        \"decimals\": 18,\n        \"vetted\": true,\n        \"enabled\": true,\n        \"contract\": \"0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e\",\n        \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n        \"organizationId\": \"string\",\n        \"coingeckoId\": \"ethereum\",\n        \"source\": \"ASSET_SOURCE_COINGECKO\",\n        \"sourceMetadata\": {\n          \"@type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_3\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lastSyncedAt\": \"2024-08-08T10:22:22.420Z\",\n        \"syncVersion\": 1,\n        \"contractAddressChecksummed\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"iconUrl\": \"https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png\"\n      },\n      \"feeAsset\": {\n        \"id\": \"5:0xbehbehfb:USDC\",\n        \"standard\": \"ERC20\",\n        \"symbol\": \"LINK\",\n        \"blockchain\": \"ARBITRUM\",\n        \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n        \"name\": \"Chainlink\",\n        \"decimals\": 18,\n        \"vetted\": true,\n        \"enabled\": true,\n        \"contract\": \"0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e\",\n        \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n        \"organizationId\": \"string\",\n        \"coingeckoId\": \"ethereum\",\n        \"source\": \"ASSET_SOURCE_COINGECKO\",\n        \"sourceMetadata\": {\n          \"@type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_3\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lastSyncedAt\": \"2024-08-08T10:22:22.420Z\",\n        \"syncVersion\": 1,\n        \"contractAddressChecksummed\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"iconUrl\": \"https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png\"\n      },\n      \"blockchain\": \"ONE_MONEY\",\n      \"originAddress\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n      \"origin\": {\n        \"type\": \"EXTERNAL\",\n        \"address\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n        \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"counterpartyId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n      },\n      \"qty\": \"155.672\",\n      \"signOnly\": false,\n      \"freezeInfo\": {\n        \"isFrozen\": false,\n        \"history\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"attributes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"externalId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"correlationId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"destinationAddress\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n      \"destination\": {\n        \"type\": \"EXTERNAL\",\n        \"address\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n        \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"counterpartyId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n      },\n      \"feeQtyLimit\": \"155.672\",\n      \"sequence\": \"2\",\n      \"encodedTransaction\": \"ed408505d21dba00825208942352d20fc81225c8ecd8f6faa1b37f24fed450c98089736f6d657468696e67808080\",\n      \"config\": {\n        \"sourceTag\": \"123456\",\n        \"destinationTag\": \"123456\"\n      },\n      \"feeQty\": \"155.672\",\n      \"hash\": \"0x30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n      \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n      \"transactionType\": \"Payment\",\n      \"reasons\": [\n        \"unfunded\"\n      ],\n      \"canonicalSignature\": \"3045022100C60DC1337D69261E7C7E92E4DAC78E0C317D444D4690BE2B86CC53B1989D1B0602206F39C1C5A3096D36C78D6DBAE0525FC619CA048C7FEC0E4DA157FB2EDFF235FE\",\n      \"signedTransaction\": \"12000024002A8F37201B002A8F5561400000000098968068400000000000000A732103E0C61B861ADE7AC58D27D65ABCEF4C22FA874DD13D809E02A99609A8CA31892C74473045022100C60DC1337D69261E7C7E92E4DAC78E0C317D444D4690BE2B86CC53B1989D1B0602206F39C1C5A3096D36C78D6DBAE0525FC619CA048C7FEC0E4DA157FB2EDFF235FE8114EC8E7F9FF5C9B157D55890956376D15740FAE943831451FE87A95FA6CAC3EBEF33387DE8225F7D0352CB\",\n      \"proposedAssetChanges\": [\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"confirmedAssetChanges\": [\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"expiresAt\": \"2026-03-16T16:22:22.420Z\",\n      \"problems\": [\n        {\n          \"code\": 5792,\n          \"reason\": \"string\",\n          \"domain\": \"string\",\n          \"message\": \"string\",\n          \"retryability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"metadata\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"code\": 9503,\n          \"reason\": \"string\",\n          \"domain\": \"string\",\n          \"message\": \"string\",\n          \"retryability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"metadata\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"signingPayloads\": [\n        {\n          \"inputIndex\": 0,\n          \"signingHash\": \"30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n          \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n          \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n        },\n        {\n          \"inputIndex\": 0,\n          \"signingHash\": \"30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n          \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n          \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42a01a15-fb50-41f9-b8f7-443b71978645",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    ":sweepId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "correlationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sweepId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "490f3695-64a6-43f1-afff-ddeae03e8be4",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    ":sweepId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "correlationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sweepId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a03b2c83-b50e-4eff-915d-c12ac2f24275",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    ":sweepId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "correlationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sweepId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8718f31d-3bfa-4c1e-b00d-e6002b182c13",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    ":sweepId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "correlationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sweepId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d43f2842-c469-4788-a0a0-f9278887d2fa",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    ":sweepId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "correlationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sweepId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 4392,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b958de6e-ebd4-42d5-94c9-08adc8819a65",
+          "name": "List transactions for a sweep instance",
+          "request": {
+            "name": "List transactions for a sweep instance",
+            "description": {
+              "content": "List all transactions for a given sweep instance",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "transactions",
+                "sweep",
+                "{{sweepId}}:list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correlationId\": \"<string>\",\n  \"pageSize\": \"<integer>\",\n  \"pageToken\": \"<string>\",\n  \"pagination\": {\n    \"pageSize\": \"<integer>\",\n    \"pageToken\": \"<string>\",\n    \"orderBy\": \"<string>\",\n    \"order\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8f42dbac-f959-445a-a37a-27bcc5fd314e",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    "{{sweepId}}:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"correlationId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"filter\": {\n    \"total\": 100,\n    \"previousPageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"nextPageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\"\n  },\n  \"transactions\": [\n    {\n      \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n      \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n      \"status\": \"REQUESTED\",\n      \"action\": \"DEPOSIT\",\n      \"asset\": {\n        \"id\": \"5:0xbehbehfb:USDC\",\n        \"standard\": \"ERC20\",\n        \"symbol\": \"LINK\",\n        \"blockchain\": \"TRON\",\n        \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n        \"name\": \"Chainlink\",\n        \"decimals\": 18,\n        \"vetted\": true,\n        \"enabled\": true,\n        \"contract\": \"0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e\",\n        \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n        \"organizationId\": \"string\",\n        \"coingeckoId\": \"ethereum\",\n        \"source\": \"ASSET_SOURCE_COINGECKO\",\n        \"sourceMetadata\": {\n          \"@type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lastSyncedAt\": \"2024-08-08T10:22:22.420Z\",\n        \"syncVersion\": 1,\n        \"contractAddressChecksummed\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"iconUrl\": \"https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png\"\n      },\n      \"feeAsset\": {\n        \"id\": \"5:0xbehbehfb:USDC\",\n        \"standard\": \"ERC20\",\n        \"symbol\": \"LINK\",\n        \"blockchain\": \"HEDERA\",\n        \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n        \"name\": \"Chainlink\",\n        \"decimals\": 18,\n        \"vetted\": true,\n        \"enabled\": true,\n        \"contract\": \"0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e\",\n        \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n        \"organizationId\": \"string\",\n        \"coingeckoId\": \"ethereum\",\n        \"source\": \"ASSET_SOURCE_COINGECKO\",\n        \"sourceMetadata\": {\n          \"@type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lastSyncedAt\": \"2024-08-08T10:22:22.420Z\",\n        \"syncVersion\": 1,\n        \"contractAddressChecksummed\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"iconUrl\": \"https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png\"\n      },\n      \"blockchain\": \"HEDERA\",\n      \"originAddress\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n      \"origin\": {\n        \"type\": \"EXTERNAL\",\n        \"address\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n        \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"counterpartyId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n      },\n      \"qty\": \"155.672\",\n      \"signOnly\": false,\n      \"freezeInfo\": {\n        \"isFrozen\": false,\n        \"history\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"attributes\": {\n        \"key_0\": \"string\"\n      },\n      \"externalId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"correlationId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"destinationAddress\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n      \"destination\": {\n        \"type\": \"EXTERNAL\",\n        \"address\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n        \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"counterpartyId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n      },\n      \"feeQtyLimit\": \"155.672\",\n      \"sequence\": \"2\",\n      \"encodedTransaction\": \"ed408505d21dba00825208942352d20fc81225c8ecd8f6faa1b37f24fed450c98089736f6d657468696e67808080\",\n      \"config\": {\n        \"sourceTag\": \"123456\",\n        \"destinationTag\": \"123456\"\n      },\n      \"feeQty\": \"155.672\",\n      \"hash\": \"0x30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n      \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n      \"transactionType\": \"Payment\",\n      \"reasons\": [\n        \"unfunded\"\n      ],\n      \"canonicalSignature\": \"3045022100C60DC1337D69261E7C7E92E4DAC78E0C317D444D4690BE2B86CC53B1989D1B0602206F39C1C5A3096D36C78D6DBAE0525FC619CA048C7FEC0E4DA157FB2EDFF235FE\",\n      \"signedTransaction\": \"12000024002A8F37201B002A8F5561400000000098968068400000000000000A732103E0C61B861ADE7AC58D27D65ABCEF4C22FA874DD13D809E02A99609A8CA31892C74473045022100C60DC1337D69261E7C7E92E4DAC78E0C317D444D4690BE2B86CC53B1989D1B0602206F39C1C5A3096D36C78D6DBAE0525FC619CA048C7FEC0E4DA157FB2EDFF235FE8114EC8E7F9FF5C9B157D55890956376D15740FAE943831451FE87A95FA6CAC3EBEF33387DE8225F7D0352CB\",\n      \"proposedAssetChanges\": [\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"confirmedAssetChanges\": [\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"expiresAt\": \"2026-03-16T16:22:22.420Z\",\n      \"problems\": [\n        {\n          \"code\": 7658,\n          \"reason\": \"string\",\n          \"domain\": \"string\",\n          \"message\": \"string\",\n          \"retryability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"metadata\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"code\": 1934,\n          \"reason\": \"string\",\n          \"domain\": \"string\",\n          \"message\": \"string\",\n          \"retryability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"metadata\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"signingPayloads\": [\n        {\n          \"inputIndex\": 0,\n          \"signingHash\": \"30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n          \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n          \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n        },\n        {\n          \"inputIndex\": 0,\n          \"signingHash\": \"30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n          \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n          \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n        }\n      ]\n    },\n    {\n      \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n      \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n      \"status\": \"REQUESTED\",\n      \"action\": \"DEPOSIT\",\n      \"asset\": {\n        \"id\": \"5:0xbehbehfb:USDC\",\n        \"standard\": \"ERC20\",\n        \"symbol\": \"LINK\",\n        \"blockchain\": \"TRON\",\n        \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n        \"name\": \"Chainlink\",\n        \"decimals\": 18,\n        \"vetted\": true,\n        \"enabled\": true,\n        \"contract\": \"0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e\",\n        \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n        \"organizationId\": \"string\",\n        \"coingeckoId\": \"ethereum\",\n        \"source\": \"ASSET_SOURCE_COINGECKO\",\n        \"sourceMetadata\": {\n          \"@type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lastSyncedAt\": \"2024-08-08T10:22:22.420Z\",\n        \"syncVersion\": 1,\n        \"contractAddressChecksummed\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"iconUrl\": \"https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png\"\n      },\n      \"feeAsset\": {\n        \"id\": \"5:0xbehbehfb:USDC\",\n        \"standard\": \"ERC20\",\n        \"symbol\": \"LINK\",\n        \"blockchain\": \"TRON\",\n        \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n        \"name\": \"Chainlink\",\n        \"decimals\": 18,\n        \"vetted\": true,\n        \"enabled\": true,\n        \"contract\": \"0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e\",\n        \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n        \"organizationId\": \"string\",\n        \"coingeckoId\": \"ethereum\",\n        \"source\": \"ASSET_SOURCE_COINGECKO\",\n        \"sourceMetadata\": {\n          \"@type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lastSyncedAt\": \"2024-08-08T10:22:22.420Z\",\n        \"syncVersion\": 1,\n        \"contractAddressChecksummed\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"iconUrl\": \"https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png\"\n      },\n      \"blockchain\": \"HEDERA\",\n      \"originAddress\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n      \"origin\": {\n        \"type\": \"EXTERNAL\",\n        \"address\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n        \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"counterpartyId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n      },\n      \"qty\": \"155.672\",\n      \"signOnly\": true,\n      \"freezeInfo\": {\n        \"isFrozen\": false,\n        \"history\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"attributes\": {\n        \"key_0\": \"string\"\n      },\n      \"externalId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"correlationId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"destinationAddress\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n      \"destination\": {\n        \"type\": \"EXTERNAL\",\n        \"address\": \"0x55502b9d5a68b0F8a48384352295BeD968aD8AA4\",\n        \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"counterpartyId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n        \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n      },\n      \"feeQtyLimit\": \"155.672\",\n      \"sequence\": \"2\",\n      \"encodedTransaction\": \"ed408505d21dba00825208942352d20fc81225c8ecd8f6faa1b37f24fed450c98089736f6d657468696e67808080\",\n      \"config\": {\n        \"sourceTag\": \"123456\",\n        \"destinationTag\": \"123456\"\n      },\n      \"feeQty\": \"155.672\",\n      \"hash\": \"0x30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n      \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n      \"transactionType\": \"Payment\",\n      \"reasons\": [\n        \"unfunded\"\n      ],\n      \"canonicalSignature\": \"3045022100C60DC1337D69261E7C7E92E4DAC78E0C317D444D4690BE2B86CC53B1989D1B0602206F39C1C5A3096D36C78D6DBAE0525FC619CA048C7FEC0E4DA157FB2EDFF235FE\",\n      \"signedTransaction\": \"12000024002A8F37201B002A8F5561400000000098968068400000000000000A732103E0C61B861ADE7AC58D27D65ABCEF4C22FA874DD13D809E02A99609A8CA31892C74473045022100C60DC1337D69261E7C7E92E4DAC78E0C317D444D4690BE2B86CC53B1989D1B0602206F39C1C5A3096D36C78D6DBAE0525FC619CA048C7FEC0E4DA157FB2EDFF235FE8114EC8E7F9FF5C9B157D55890956376D15740FAE943831451FE87A95FA6CAC3EBEF33387DE8225F7D0352CB\",\n      \"proposedAssetChanges\": [\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"confirmedAssetChanges\": [\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"purpose\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"asset\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"qty\": \"155.672\",\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"destination\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"expiresAt\": \"2026-03-16T16:22:22.420Z\",\n      \"problems\": [\n        {\n          \"code\": 4401,\n          \"reason\": \"string\",\n          \"domain\": \"string\",\n          \"message\": \"string\",\n          \"retryability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"metadata\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"code\": 3623,\n          \"reason\": \"string\",\n          \"domain\": \"string\",\n          \"message\": \"string\",\n          \"retryability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"metadata\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"signingPayloads\": [\n        {\n          \"inputIndex\": 0,\n          \"signingHash\": \"30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n          \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n          \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n        },\n        {\n          \"inputIndex\": 0,\n          \"signingHash\": \"30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671\",\n          \"signature\": \"3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43\",\n          \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9033c0f-0121-4b9f-9a22-0e6a92a90c2e",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    "{{sweepId}}:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"correlationId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa8baab6-7d9c-4560-90c6-a3b341fab28d",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    "{{sweepId}}:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"correlationId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed7701da-6d60-4f36-b0bb-131f80ef4c24",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    "{{sweepId}}:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"correlationId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7832bd1d-ae40-42ed-88ec-1eb299199f5a",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    "{{sweepId}}:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"correlationId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7e0fe25-e859-41e7-8b74-b931e530be15",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "transactions",
+                    "sweep",
+                    "{{sweepId}}:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"correlationId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9679,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) ",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "sweepId"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b2f23044-3a81-4cf4-999d-0dbb0868e60a",
+    "name": "Palisade Addresses Transactions - Sweep API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

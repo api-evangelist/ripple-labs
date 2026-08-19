@@ -1,0 +1,1642 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Transactions API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/transactions",
+            "params": [
+              {
+                "name": "filter.status.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact transaction status match"
+              },
+              {
+                "name": "filter.status.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Exclude this transaction status"
+              },
+              {
+                "name": "filter.status.in",
+                "value": "",
+                "type": "query",
+                "description": "Transaction status is in this list"
+              },
+              {
+                "name": "filter.status.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Transaction status is not in this list"
+              },
+              {
+                "name": "filter.blockchain.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact blockchain match"
+              },
+              {
+                "name": "filter.blockchain.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Exclude this blockchain"
+              },
+              {
+                "name": "filter.blockchain.in",
+                "value": "",
+                "type": "query",
+                "description": "Blockchain is in this list"
+              },
+              {
+                "name": "filter.blockchain.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Blockchain is not in this list"
+              },
+              {
+                "name": "filter.assetSymbol.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.assetSymbol.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.assetSymbol.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.assetSymbol.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.assetSymbol.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.createdAt.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact timestamp match"
+              },
+              {
+                "name": "filter.createdAt.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.before",
+                "value": "",
+                "type": "query",
+                "description": "Before this timestamp"
+              },
+              {
+                "name": "filter.createdAt.after",
+                "value": "",
+                "type": "query",
+                "description": "After this timestamp"
+              },
+              {
+                "name": "filter.createdAt.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.between.start",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (inclusive)"
+              },
+              {
+                "name": "filter.createdAt.between.end",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (inclusive)"
+              },
+              {
+                "name": "filter.createdAt.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.createdAt.relativeDays",
+                "value": "",
+                "type": "query",
+                "description": "Relative days from now (negative for past, positive for future)"
+              },
+              {
+                "name": "filter.qty.eq",
+                "value": "",
+                "type": "query",
+                "description": "Equals"
+              },
+              {
+                "name": "filter.qty.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.qty.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.qty.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.qty.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.qty.gt",
+                "value": "",
+                "type": "query",
+                "description": "Greater than"
+              },
+              {
+                "name": "filter.qty.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to"
+              },
+              {
+                "name": "filter.qty.lt",
+                "value": "",
+                "type": "query",
+                "description": "Less than"
+              },
+              {
+                "name": "filter.qty.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to"
+              },
+              {
+                "name": "filter.originAddress.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.originAddress.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.originAddress.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.originAddress.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.originAddress.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.originAddress.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.originAddress.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.originAddress.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.destinationAddress.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.destinationAddress.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.destinationAddress.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.destinationAddress.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.destinationAddress.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.destinationAddress.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.destinationAddress.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.destinationAddress.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.transactionId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.transactionId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.transactionId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.transactionId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.transactionId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.transactionHash.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.transactionHash.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.transactionHash.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionHash.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionHash.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionHash.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.transactionHash.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.transactionHash.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.externalId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.externalId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.externalId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.externalId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.externalId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.externalId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.externalId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.externalId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.updatedAt.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact timestamp match"
+              },
+              {
+                "name": "filter.updatedAt.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.before",
+                "value": "",
+                "type": "query",
+                "description": "Before this timestamp"
+              },
+              {
+                "name": "filter.updatedAt.after",
+                "value": "",
+                "type": "query",
+                "description": "After this timestamp"
+              },
+              {
+                "name": "filter.updatedAt.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.between.start",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (inclusive)"
+              },
+              {
+                "name": "filter.updatedAt.between.end",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (inclusive)"
+              },
+              {
+                "name": "filter.updatedAt.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.updatedAt.relativeDays",
+                "value": "",
+                "type": "query",
+                "description": "Relative days from now (negative for past, positive for future)"
+              },
+              {
+                "name": "filter.correlationId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.correlationId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.correlationId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.correlationId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.correlationId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.correlationId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.correlationId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.correlationId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.type.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact transaction type match"
+              },
+              {
+                "name": "filter.type.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Exclude this transaction type"
+              },
+              {
+                "name": "filter.type.in",
+                "value": "",
+                "type": "query",
+                "description": "Transaction type is in this list"
+              },
+              {
+                "name": "filter.type.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Transaction type is not in this list"
+              },
+              {
+                "name": "pagination.pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (default 50, max 1000)"
+              },
+              {
+                "name": "pagination.pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Token for pagination from previous response"
+              },
+              {
+                "name": "pagination.orderBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "pagination.order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (ASC or DESC)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Case-insensitive free-text search over transaction ID, transaction hash, external ID, correlation ID, asset symbol, origin address, and destination address."
+              }
+            ]
+          },
+          "docs": "List organization transactions with optional filtering, search, sorting, and pagination. Supports both GET (bookmarkable, simple queries) and POST :list (complex filter objects as a JSON body)."
+        },
+        {
+          "info": {
+            "name": "Estimate the fee for a transfer transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/transactions/transfer/estimate-fee",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Estimate the fee for a transfer transaction"
+        },
+        {
+          "info": {
+            "name": "List transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/transactions:list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List organization transactions with optional filtering, search, sorting, and pagination. Supports both GET (bookmarkable, simple queries) and POST :list (complex filter objects as a JSON body)."
+        },
+        {
+          "info": {
+            "name": "List wallet transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: use pagination.page_size instead. The number of results to return per page (default 50, max 1000)."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: use pagination.page_token instead. The token to retrieve the next page of results."
+              },
+              {
+                "name": "correlationId",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: use filter.correlation_id instead. Correlation ID for this request, used to correlate multiple actions."
+              },
+              {
+                "name": "filter.status.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact transaction status match"
+              },
+              {
+                "name": "filter.status.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Exclude this transaction status"
+              },
+              {
+                "name": "filter.status.in",
+                "value": "",
+                "type": "query",
+                "description": "Transaction status is in this list"
+              },
+              {
+                "name": "filter.status.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Transaction status is not in this list"
+              },
+              {
+                "name": "filter.blockchain.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact blockchain match"
+              },
+              {
+                "name": "filter.blockchain.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Exclude this blockchain"
+              },
+              {
+                "name": "filter.blockchain.in",
+                "value": "",
+                "type": "query",
+                "description": "Blockchain is in this list"
+              },
+              {
+                "name": "filter.blockchain.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Blockchain is not in this list"
+              },
+              {
+                "name": "filter.assetSymbol.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.assetSymbol.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.assetSymbol.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.assetSymbol.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.assetSymbol.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.createdAt.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact timestamp match"
+              },
+              {
+                "name": "filter.createdAt.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.before",
+                "value": "",
+                "type": "query",
+                "description": "Before this timestamp"
+              },
+              {
+                "name": "filter.createdAt.after",
+                "value": "",
+                "type": "query",
+                "description": "After this timestamp"
+              },
+              {
+                "name": "filter.createdAt.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.between.start",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (inclusive)"
+              },
+              {
+                "name": "filter.createdAt.between.end",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (inclusive)"
+              },
+              {
+                "name": "filter.createdAt.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.createdAt.relativeDays",
+                "value": "",
+                "type": "query",
+                "description": "Relative days from now (negative for past, positive for future)"
+              },
+              {
+                "name": "filter.qty.eq",
+                "value": "",
+                "type": "query",
+                "description": "Equals"
+              },
+              {
+                "name": "filter.qty.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.qty.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.qty.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.qty.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.qty.gt",
+                "value": "",
+                "type": "query",
+                "description": "Greater than"
+              },
+              {
+                "name": "filter.qty.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to"
+              },
+              {
+                "name": "filter.qty.lt",
+                "value": "",
+                "type": "query",
+                "description": "Less than"
+              },
+              {
+                "name": "filter.qty.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to"
+              },
+              {
+                "name": "filter.originAddress.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.originAddress.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.originAddress.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.originAddress.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.originAddress.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.originAddress.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.originAddress.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.originAddress.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.destinationAddress.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.destinationAddress.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.destinationAddress.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.destinationAddress.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.destinationAddress.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.destinationAddress.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.destinationAddress.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.destinationAddress.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.transactionId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.transactionId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.transactionId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.transactionId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.transactionId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.transactionHash.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.transactionHash.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.transactionHash.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionHash.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionHash.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.transactionHash.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.transactionHash.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.transactionHash.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.externalId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.externalId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.externalId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.externalId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.externalId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.externalId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.externalId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.externalId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.updatedAt.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact timestamp match"
+              },
+              {
+                "name": "filter.updatedAt.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.before",
+                "value": "",
+                "type": "query",
+                "description": "Before this timestamp"
+              },
+              {
+                "name": "filter.updatedAt.after",
+                "value": "",
+                "type": "query",
+                "description": "After this timestamp"
+              },
+              {
+                "name": "filter.updatedAt.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.between.start",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (inclusive)"
+              },
+              {
+                "name": "filter.updatedAt.between.end",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (inclusive)"
+              },
+              {
+                "name": "filter.updatedAt.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.updatedAt.relativeDays",
+                "value": "",
+                "type": "query",
+                "description": "Relative days from now (negative for past, positive for future)"
+              },
+              {
+                "name": "filter.correlationId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.correlationId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.correlationId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.correlationId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.correlationId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.correlationId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.correlationId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.correlationId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.type.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact transaction type match"
+              },
+              {
+                "name": "filter.type.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Exclude this transaction type"
+              },
+              {
+                "name": "filter.type.in",
+                "value": "",
+                "type": "query",
+                "description": "Transaction type is in this list"
+              },
+              {
+                "name": "filter.type.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Transaction type is not in this list"
+              },
+              {
+                "name": "pagination.pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (default 50, max 1000)"
+              },
+              {
+                "name": "pagination.pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Token for pagination from previous response"
+              },
+              {
+                "name": "pagination.orderBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "pagination.order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (ASC or DESC)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Case-insensitive free-text search over transaction ID, transaction hash, external ID, correlation ID, asset symbol, origin address, and destination address."
+              }
+            ]
+          },
+          "docs": "List wallet transactions with optional filtering, sorting, and pagination. Supports both GET (bookmarkable, simple queries) and POST :list (complex filter objects as a JSON body)."
+        },
+        {
+          "info": {
+            "name": "Create a new raw transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/raw",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new raw transaction, and optionally publish it to the blockchain"
+        },
+        {
+          "info": {
+            "name": "(BETA) Create a new sign plaintext transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/sign-plaintext",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "(BETA) Create a new sign plaintext transaction"
+        },
+        {
+          "info": {
+            "name": "Create a new transfer transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/transfer",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new transfer transaction"
+        },
+        {
+          "info": {
+            "name": "Get a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/:transactionId",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction ID"
+              }
+            ]
+          },
+          "docs": "Get a transaction by ID"
+        },
+        {
+          "info": {
+            "name": "Freeze a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/:transactionId/freeze",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction ID"
+              },
+              {
+                "name": "reason",
+                "value": "",
+                "type": "query",
+                "description": "Reason for freezing the transaction"
+              }
+            ]
+          },
+          "docs": "Freeze a transaction by ID"
+        },
+        {
+          "info": {
+            "name": "Unfreeze a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions/:transactionId/unfreeze",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction ID"
+              },
+              {
+                "name": "reason",
+                "value": "",
+                "type": "query",
+                "description": "Reason for unfreezing the transaction"
+              }
+            ]
+          },
+          "docs": "Unfreeze a transaction by ID"
+        },
+        {
+          "info": {
+            "name": "List wallet transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/transactions:list",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List wallet transactions with optional filtering, sorting, and pagination. Supports both GET (bookmarkable, simple queries) and POST :list (complex filter objects as a JSON body)."
+        },
+        {
+          "info": {
+            "name": "List transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v1/stablecoin/transactions",
+            "params": [
+              {
+                "name": "transactionTypes",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transaction type. Repeatable."
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status. Repeatable."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number, 0-indexed (default 0)"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Page size (default 20)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort field and direction (default: updatedAt,desc).\nSupported fields: updatedAt, createdAt, type, status, amount.\n"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of transactions, optionally filtered by type and status."
+        },
+        {
+          "info": {
+            "name": "Get a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v1/stablecoin/transactions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Transaction UUID"
+              }
+            ]
+          },
+          "docs": "Returns a single transaction by ID."
+        },
+        {
+          "info": {
+            "name": "Approve a pending redemption",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/v1/stablecoin/transactions/:id/destination",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Transaction UUID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approves a transaction held in `PENDING` status (flexible redemption) and directs it.\nSet `type` to `FIAT` to settle to your default bank account (creates a `REDEMPTION`), or\nto `CRYPTO` with a `walletId` to bridge to one of your wallets (creates a `BRIDGE`).\n\nRe-submitting the same destination after the transaction has moved to `PROCESSING` is\nidempotent and returns `200`. Submitting a *different* destination, or approving a\ntransaction that was never `PENDING`, returns `409`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

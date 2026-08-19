@@ -1,0 +1,994 @@
+{
+  "item": [
+    {
+      "id": "59394dda-9216-44aa-95dc-4afda42e6995",
+      "name": "Request for payment",
+      "description": {
+        "content": "\nUse these operations to interact with your payment requests.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get requests for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/getrequestsforpayment)         | GET   | Gets requests for payment that match the query parameters. |\n| [Send request for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/sendrequestforpayment)         | POST  | Sends a new request for payment. |\n| [Get request for payment by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/getrequestforpaymentbyid) | GET   | Gets a request for payment by request for payment ID. |\n| [Accept request for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/acceptrequestforpayment)     | POST  | Accepts a request for payment. |\n| [Fail request for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/request-for-payment/failrequestforpayment)         | POST  | Fails a request for payment. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e4dee857-6f00-4621-9f12-f2ab6af28cc4",
+          "name": "Get requests for payment",
+          "request": {
+            "name": "Get requests for payment",
+            "description": {
+              "content": "Gets requests for payment that match the query parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "request_for_payment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "end_to_end_id",
+                  "value": "<string>",
+                  "description": "Optional parameter to filter results matching this `endToEndId` value."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "State by which to filter results."
+                },
+                {
+                  "disabled": false,
+                  "key": "sender_address",
+                  "value": "<string>",
+                  "description": "Field to filter results matching this `senderAddress` value."
+                },
+                {
+                  "disabled": false,
+                  "key": "receiver_address",
+                  "value": "<string>",
+                  "description": "Field to filter results matching this `receiverAddress` value."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_id",
+                  "value": "<uuid>",
+                  "description": "Field to filter results matching this `paymentId` value."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "Filters for requests for payment whose `range_field` column value is before this specified time stamp (not inclusive). You can also specify `after` to create a time range between `after` and `before`. If before is specified, `range_field` must also be specified"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "Filters for requests for payment whose `range_field` column value is after this specified time stamp (not inclusive). You can also specify `before` to create a time range between `after` and `before`. If `after` is specified, `range_field` must also be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "range_field",
+                  "value": "<string>",
+                  "description": "Designates the column name of the requests for payment database table that is used for filtering payments before/after/between time stamps. For example, if you specify `range_field`=`MODIFIED_AT`, you would specify a time stamp (in the 24 character ISO 8601 YYYY-MM-DDTHH:mm:ss.sssZ format used in request for payment objects) as the value for `before` and/or `after` to fetch request for payment before, after, or between the specified time range(s) (not inclusive). If `range_field` is specified, `before` and/or `after` must also be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_field",
+                  "value": "<string>",
+                  "description": "Field to use to sort results."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_direction",
+                  "value": "DESC",
+                  "description": "Sorts result according to the specified direction."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Zero-based index of the page number of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "The number of payments per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "4f23f382-3be6-4da3-8271-f174a9acb399",
+              "name": "Successfully retrieves requests for payment matching query parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "request_for_payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "end_to_end_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sender_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "receiver_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": false,\n  \"last\": false,\n  \"number\": 9460,\n  \"numberOfElements\": 8712,\n  \"size\": 7639,\n  \"totalElements\": 8871,\n  \"totalPages\": 5089,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"amount\": 100.01,\n      \"created_at\": \"1978-08-26T06:11:36.785Z\",\n      \"currency\": \"USD\",\n      \"quote_type\": \"SENDER_AMOUNT\",\n      \"receiver_address\": \"trans_gbp_lon@rn.eur.uk.london\",\n      \"request_for_payment_id\": \"1bf93760-ef69-4697-b2b4-47d9e1c42aa7\",\n      \"request_for_payment_state\": \"REQUESTED\",\n      \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n      \"user_info\": [\n        {\n          \"node_address\": \"string\",\n          \"requested\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"accepted\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"failed\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"node_address\": \"string\",\n          \"requested\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"accepted\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"failed\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"end_to_end_id\": \"string\",\n      \"payment_id\": \"5492648d-2132-4e70-9ded-2fc86f22b321\"\n    },\n    {\n      \"amount\": 100.01,\n      \"created_at\": \"1991-06-01T01:15:13.792Z\",\n      \"currency\": \"USD\",\n      \"quote_type\": \"SENDER_AMOUNT\",\n      \"receiver_address\": \"trans_gbp_lon@rn.eur.uk.london\",\n      \"request_for_payment_id\": \"1bf93760-ef69-4697-b2b4-47d9e1c42aa7\",\n      \"request_for_payment_state\": \"REQUESTED\",\n      \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n      \"user_info\": [\n        {\n          \"node_address\": \"string\",\n          \"requested\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"accepted\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"failed\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"node_address\": \"string\",\n          \"requested\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"accepted\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"failed\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"end_to_end_id\": \"string\",\n      \"payment_id\": \"5492648d-2132-4e70-9ded-2fc86f22b321\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b5c463a-5b8c-4dd7-b6b9-2ed590bf4207",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "request_for_payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "end_to_end_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sender_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "receiver_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c0cba35-0514-4d44-b256-743b84ff694f",
+          "name": "Send request for payment",
+          "request": {
+            "name": "Send request for payment",
+            "description": {
+              "content": "Sends a new request for payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "request_for_payment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"quote_type\": \"<string>\",\n  \"receiver_address\": \"<string>\",\n  \"sender_address\": \"<string>\",\n  \"end_to_end_id\": \"<string>\",\n  \"user_info\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5eee3a90-5237-437a-915c-bcd327b77def",
+              "name": "Successfully sent a request for payment resulting in a request for payment object in the `REQUESTED` state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "request_for_payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100.01,\n  \"currency\": \"USD\",\n  \"quote_type\": \"SENDER_AMOUNT\",\n  \"receiver_address\": \"trans_gbp_lon@rn.eur.uk.london\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"end_to_end_id\": \"<string>\",\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": 100.01,\n  \"created_at\": \"2024-12-29T02:59:39.129Z\",\n  \"currency\": \"USD\",\n  \"quote_type\": \"SENDER_AMOUNT\",\n  \"receiver_address\": \"trans_gbp_lon@rn.eur.uk.london\",\n  \"request_for_payment_id\": \"1bf93760-ef69-4697-b2b4-47d9e1c42aa7\",\n  \"request_for_payment_state\": \"REQUESTED\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"user_info\": [\n    {\n      \"node_address\": \"string\",\n      \"requested\": [\n        {\n          \"created_at\": \"1956-10-01T17:22:46.601Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1990-10-27T23:56:17.654Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"accepted\": [\n        {\n          \"created_at\": \"1991-02-06T02:06:25.260Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1964-08-11T11:08:39.623Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"failed\": [\n        {\n          \"created_at\": \"1994-08-14T20:25:22.241Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1955-08-08T17:56:28.274Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ]\n    },\n    {\n      \"node_address\": \"string\",\n      \"requested\": [\n        {\n          \"created_at\": \"1947-03-13T22:47:01.166Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"2003-06-26T22:15:51.129Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"accepted\": [\n        {\n          \"created_at\": \"1985-06-15T14:53:14.397Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1972-12-26T21:33:20.530Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"failed\": [\n        {\n          \"created_at\": \"2024-08-14T14:21:54.428Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1992-10-07T12:53:12.985Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ]\n    }\n  ],\n  \"end_to_end_id\": \"string\",\n  \"payment_id\": \"5492648d-2132-4e70-9ded-2fc86f22b321\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4c04ba4-9427-455d-878e-dbde6385e545",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "request_for_payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100.01,\n  \"currency\": \"USD\",\n  \"quote_type\": \"SENDER_AMOUNT\",\n  \"receiver_address\": \"trans_gbp_lon@rn.eur.uk.london\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"end_to_end_id\": \"<string>\",\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56c8c7fb-0d25-425d-86a6-d0c2c77136ef",
+          "name": "Get request for payment by ID",
+          "request": {
+            "name": "Get request for payment by ID",
+            "description": {
+              "content": "Gets a request for payment by request for payment ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "request_for_payment",
+                ":request_for_payment_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "request_for_payment_id",
+                  "description": "(Required) Unique identifier of the request for payment to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "3924b896-60de-4632-ae83-fbacd38c9179",
+              "name": "Successfully retrieves a request for payment by its ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "request_for_payment",
+                    ":request_for_payment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "request_for_payment_id",
+                      "description": "(Required) Unique identifier of the request for payment to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": 100.01,\n  \"created_at\": \"2024-12-29T02:59:39.129Z\",\n  \"currency\": \"USD\",\n  \"quote_type\": \"SENDER_AMOUNT\",\n  \"receiver_address\": \"trans_gbp_lon@rn.eur.uk.london\",\n  \"request_for_payment_id\": \"1bf93760-ef69-4697-b2b4-47d9e1c42aa7\",\n  \"request_for_payment_state\": \"REQUESTED\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"user_info\": [\n    {\n      \"node_address\": \"string\",\n      \"requested\": [\n        {\n          \"created_at\": \"1956-10-01T17:22:46.601Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1990-10-27T23:56:17.654Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"accepted\": [\n        {\n          \"created_at\": \"1991-02-06T02:06:25.260Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1964-08-11T11:08:39.623Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"failed\": [\n        {\n          \"created_at\": \"1994-08-14T20:25:22.241Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1955-08-08T17:56:28.274Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ]\n    },\n    {\n      \"node_address\": \"string\",\n      \"requested\": [\n        {\n          \"created_at\": \"1947-03-13T22:47:01.166Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"2003-06-26T22:15:51.129Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"accepted\": [\n        {\n          \"created_at\": \"1985-06-15T14:53:14.397Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1972-12-26T21:33:20.530Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"failed\": [\n        {\n          \"created_at\": \"2024-08-14T14:21:54.428Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1992-10-07T12:53:12.985Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ]\n    }\n  ],\n  \"end_to_end_id\": \"string\",\n  \"payment_id\": \"5492648d-2132-4e70-9ded-2fc86f22b321\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aef68442-6d5c-4136-9b16-79752aea2f37",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "request_for_payment",
+                    ":request_for_payment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "request_for_payment_id",
+                      "description": "(Required) Unique identifier of the request for payment to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ca237c6-aed5-4360-ba1d-a3db0b64e161",
+          "name": "Accept request for payment",
+          "request": {
+            "name": "Accept request for payment",
+            "description": {
+              "content": "Accepts a request for payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "request_for_payment",
+                ":request_for_payment_id",
+                "accept"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "request_for_payment_id",
+                  "description": "(Required) Unique identifier of the request for payment to accept."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_id\": \"<uuid>\",\n  \"user_info\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c9fb33ba-724f-4c26-a7ca-4033587966b8",
+              "name": "Successfully accepts a request for payment resulting in a request for payment object in the `ACCEPTED` state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "request_for_payment",
+                    ":request_for_payment_id",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "request_for_payment_id",
+                      "description": "(Required) Unique identifier of the request for payment to accept."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_id\": \"1bf93760-ef69-4697-b2b4-47d9e1c42aa7\",\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": 100.01,\n  \"created_at\": \"2024-12-29T02:59:39.129Z\",\n  \"currency\": \"USD\",\n  \"quote_type\": \"SENDER_AMOUNT\",\n  \"receiver_address\": \"trans_gbp_lon@rn.eur.uk.london\",\n  \"request_for_payment_id\": \"1bf93760-ef69-4697-b2b4-47d9e1c42aa7\",\n  \"request_for_payment_state\": \"REQUESTED\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"user_info\": [\n    {\n      \"node_address\": \"string\",\n      \"requested\": [\n        {\n          \"created_at\": \"1956-10-01T17:22:46.601Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1990-10-27T23:56:17.654Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"accepted\": [\n        {\n          \"created_at\": \"1991-02-06T02:06:25.260Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1964-08-11T11:08:39.623Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"failed\": [\n        {\n          \"created_at\": \"1994-08-14T20:25:22.241Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1955-08-08T17:56:28.274Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ]\n    },\n    {\n      \"node_address\": \"string\",\n      \"requested\": [\n        {\n          \"created_at\": \"1947-03-13T22:47:01.166Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"2003-06-26T22:15:51.129Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"accepted\": [\n        {\n          \"created_at\": \"1985-06-15T14:53:14.397Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1972-12-26T21:33:20.530Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"failed\": [\n        {\n          \"created_at\": \"2024-08-14T14:21:54.428Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1992-10-07T12:53:12.985Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ]\n    }\n  ],\n  \"end_to_end_id\": \"string\",\n  \"payment_id\": \"5492648d-2132-4e70-9ded-2fc86f22b321\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d917d1b-d83c-49a7-98f1-927e012482dc",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "request_for_payment",
+                    ":request_for_payment_id",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "request_for_payment_id",
+                      "description": "(Required) Unique identifier of the request for payment to accept."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_id\": \"1bf93760-ef69-4697-b2b4-47d9e1c42aa7\",\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2cc41057-5ea6-4ef3-819d-d0875bd17ed4",
+          "name": "Fail request for payment",
+          "request": {
+            "name": "Fail request for payment",
+            "description": {
+              "content": "Fails a request for payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "request_for_payment",
+                ":request_for_payment_id",
+                "fail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "request_for_payment_id",
+                  "description": "(Required) Unique identifier of the request for payment to fail."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_info\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4d09785e-9807-4561-b301-0a27b1d36c7f",
+              "name": "Successfully fails a request for payment resulting in a request for payment object in the `FAILED` state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "request_for_payment",
+                    ":request_for_payment_id",
+                    "fail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "request_for_payment_id",
+                      "description": "(Required) Unique identifier of the request for payment to fail."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": 100.01,\n  \"created_at\": \"2024-12-29T02:59:39.129Z\",\n  \"currency\": \"USD\",\n  \"quote_type\": \"SENDER_AMOUNT\",\n  \"receiver_address\": \"trans_gbp_lon@rn.eur.uk.london\",\n  \"request_for_payment_id\": \"1bf93760-ef69-4697-b2b4-47d9e1c42aa7\",\n  \"request_for_payment_state\": \"REQUESTED\",\n  \"sender_address\": \"trans_usd_sf@rn.us.ca.san_francisco\",\n  \"user_info\": [\n    {\n      \"node_address\": \"string\",\n      \"requested\": [\n        {\n          \"created_at\": \"1956-10-01T17:22:46.601Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1990-10-27T23:56:17.654Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"accepted\": [\n        {\n          \"created_at\": \"1991-02-06T02:06:25.260Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1964-08-11T11:08:39.623Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"failed\": [\n        {\n          \"created_at\": \"1994-08-14T20:25:22.241Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1955-08-08T17:56:28.274Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ]\n    },\n    {\n      \"node_address\": \"string\",\n      \"requested\": [\n        {\n          \"created_at\": \"1947-03-13T22:47:01.166Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"2003-06-26T22:15:51.129Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"accepted\": [\n        {\n          \"created_at\": \"1985-06-15T14:53:14.397Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1972-12-26T21:33:20.530Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ],\n      \"failed\": [\n        {\n          \"created_at\": \"2024-08-14T14:21:54.428Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        },\n        {\n          \"created_at\": \"1992-10-07T12:53:12.985Z\",\n          \"json\": {},\n          \"subState\": \"EXECUTING\"\n        }\n      ]\n    }\n  ],\n  \"end_to_end_id\": \"string\",\n  \"payment_id\": \"5492648d-2132-4e70-9ded-2fc86f22b321\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d92a0870-3a88-418e-bf6a-87cc3bb3eea0",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "request_for_payment",
+                    ":request_for_payment_id",
+                    "fail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "request_for_payment_id",
+                      "description": "(Required) Unique identifier of the request for payment to fail."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9f35dbf4-0a70-4480-aaaf-b5ceeb265f8f",
+    "name": "Palisade Addresses Request for payment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

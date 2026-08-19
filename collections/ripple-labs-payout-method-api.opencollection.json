@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Payout method API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payout method",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get payout methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/payout_methods",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of payments to return per page."
+              }
+            ]
+          },
+          "docs": "Returns a list of payout methods created by a receiving partner."
+        },
+        {
+          "info": {
+            "name": "Create payout method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/config/payout_methods",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a payout method (for example, `LOCAL_RAILS`). <p>The Payout Method API lets receivers create and manage payout methods. Senders can generate quotes based on these receiver payout methods by enabling the flag <code>enable_quote_per_payout_method</code> in the body of the [Create quote collection] request. </p><p><b>Caution&#58;</b> The existing quote parameter is named <code>payment_method</code> while elsewhere it is <code>payout_method</code>.</p><p><b>Note&#58;</b> On-Demand Liquidity "
+        },
+        {
+          "info": {
+            "name": "Get payout method by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/payout_methods/:payout_method_id",
+            "params": [
+              {
+                "name": "payout_method_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payout method you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns a payout method by its ID."
+        },
+        {
+          "info": {
+            "name": "Update payout method",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/config/payout_methods/:payout_method_id",
+            "params": [
+              {
+                "name": "payout_method_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payout method you want to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a payout method."
+        },
+        {
+          "info": {
+            "name": "Delete payout method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.palisade.co/config/payout_methods/:payout_method_id",
+            "params": [
+              {
+                "name": "payout_method_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payout method you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Deletes a payout method."
+        },
+        {
+          "info": {
+            "name": "Get all categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/payout_methods/categories"
+          },
+          "docs": "Returns all the payout method categories."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

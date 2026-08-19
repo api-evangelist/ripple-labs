@@ -1,0 +1,798 @@
+{
+  "item": [
+    {
+      "id": "ec21c9a6-cc36-4d5a-9f29-c48ee8119146",
+      "name": "Fees",
+      "description": {
+        "content": "\nUse these operations to configure fees.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get fees](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/getfees)           | GET       | List all fees. |\n| [Create fee](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/createfee)       | POST      | Creates a fee.   |\n| [Get fee by ID ](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/getfeebyid)  | GET       | Gets a fee by ID. |\n| [Update fee ](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/updatefee)      | PUT       | Updates an existing fee. |\n| [Delete fee ](/products/payments-odl/api-docs/ripplenet/reference/openapi/fees/deletefee)      | DELETE    | Deletes a fee. Once deleted, a fee cannot be accessed. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "56f90b7b-c94b-4bc8-af64-33e65aee35e9",
+          "name": "Get fees",
+          "request": {
+            "name": "Get fees",
+            "description": {
+              "content": "Gets a list of fees.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "fees"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Number of pages returned. Returns one page of results when set to `0`."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of objects returned per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "9c58d857-caea-46f2-80e6-339f05833a65",
+              "name": "Successfully returns list of fees.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "fees"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": false,\n  \"last\": true,\n  \"number\": 353,\n  \"numberOfElements\": 4980,\n  \"size\": 1811,\n  \"totalElements\": 9242,\n  \"totalPages\": 1518,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": false,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": false,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"currency_code\": \"USD\",\n      \"feeId\": \"7740f31c-ca03-4414-b491-b285aef71eb1\",\n      \"fee_type\": \"FLAT_RATE\",\n      \"node_type\": \"INITIAL\",\n      \"payment_type\": \"REGULAR\",\n      \"role_type\": \"SENDING\",\n      \"value\": 2,\n      \"partner_name\": \"rn.us.ca.san_francisco\",\n      \"account_name\": \"conct_usd_sf\",\n      \"upper_limit\": 1000,\n      \"lower_limit\": 0,\n      \"payout_method\": \"LOCAL_RAILS\",\n      \"fee_category\": \"BENEFICIARY_BANK_CHARGE\",\n      \"fee_description\": \"string\"\n    },\n    {\n      \"currency_code\": \"USD\",\n      \"feeId\": \"7740f31c-ca03-4414-b491-b285aef71eb1\",\n      \"fee_type\": \"FLAT_RATE\",\n      \"node_type\": \"INITIAL\",\n      \"payment_type\": \"REGULAR\",\n      \"role_type\": \"SENDING\",\n      \"value\": 2,\n      \"partner_name\": \"rn.us.ca.san_francisco\",\n      \"account_name\": \"conct_usd_sf\",\n      \"upper_limit\": 1000,\n      \"lower_limit\": 0,\n      \"payout_method\": \"LOCAL_RAILS\",\n      \"fee_category\": \"BENEFICIARY_BANK_CHARGE\",\n      \"fee_description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34c100e6-aaff-4a5d-a0c2-2753543df22f",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "fees"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0a9d113-e540-43b1-91e0-397b75ce7017",
+          "name": "Create fee",
+          "request": {
+            "name": "Create fee",
+            "description": {
+              "content": "Creates a fee.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "fees"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currency_code\": \"<string>\",\n  \"fee_type\": \"<string>\",\n  \"node_type\": \"<string>\",\n  \"payment_type\": \"<string>\",\n  \"role_type\": \"<string>\",\n  \"value\": \"<number>\",\n  \"partner_name\": \"<string>\",\n  \"account_name\": \"<string>\",\n  \"upper_limit\": \"<number>\",\n  \"lower_limit\": \"<number>\",\n  \"payout_method\": \"<string>\",\n  \"fee_category\": \"NONE\",\n  \"fee_description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ef2a55b8-771a-44e5-a056-bed51caa53a3",
+              "name": "Successfully created fee.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "fees"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"currency_code\": \"USD\",\n  \"feeId\": \"7740f31c-ca03-4414-b491-b285aef71eb1\",\n  \"fee_type\": \"FLAT_RATE\",\n  \"node_type\": \"INITIAL\",\n  \"payment_type\": \"REGULAR\",\n  \"role_type\": \"SENDING\",\n  \"value\": 2,\n  \"partner_name\": \"rn.us.ca.san_francisco\",\n  \"account_name\": \"conct_usd_sf\",\n  \"upper_limit\": 1000,\n  \"lower_limit\": 0,\n  \"payout_method\": \"LOCAL_RAILS\",\n  \"fee_category\": \"BENEFICIARY_BANK_CHARGE\",\n  \"fee_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a7114a0-da9e-4783-b9df-7dc4727f7177",
+              "name": "Bad Request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "fees"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d5a8dd6-8675-45c7-b262-5a02c266f939",
+          "name": "Get fee by ID",
+          "request": {
+            "name": "Get fee by ID",
+            "description": {
+              "content": "Gets a fee by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "fees",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Provide the `feeId` of the fee you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "ef8408ed-46c1-4452-a092-173a6ca713ea",
+              "name": "Successfully retrieved fee.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "fees",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Provide the `feeId` of the fee you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"currency_code\": \"USD\",\n  \"feeId\": \"7740f31c-ca03-4414-b491-b285aef71eb1\",\n  \"fee_type\": \"FLAT_RATE\",\n  \"node_type\": \"INITIAL\",\n  \"payment_type\": \"REGULAR\",\n  \"role_type\": \"SENDING\",\n  \"value\": 2,\n  \"partner_name\": \"rn.us.ca.san_francisco\",\n  \"account_name\": \"conct_usd_sf\",\n  \"upper_limit\": 1000,\n  \"lower_limit\": 0,\n  \"payout_method\": \"LOCAL_RAILS\",\n  \"fee_category\": \"BENEFICIARY_BANK_CHARGE\",\n  \"fee_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "586271fb-c667-42fc-82f2-01ac257af9ce",
+              "name": "Fee not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "fees",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Provide the `feeId` of the fee you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce947477-3724-41e4-b940-701821340f1e",
+          "name": "Update fee",
+          "request": {
+            "name": "Update fee",
+            "description": {
+              "content": "Updates an existing fee.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "fees",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Provide the `feeId` of the fee you want to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currency_code\": \"<string>\",\n  \"fee_type\": \"<string>\",\n  \"node_type\": \"<string>\",\n  \"payment_type\": \"<string>\",\n  \"role_type\": \"<string>\",\n  \"value\": \"<number>\",\n  \"partner_name\": \"<string>\",\n  \"account_name\": \"<string>\",\n  \"upper_limit\": \"<number>\",\n  \"lower_limit\": \"<number>\",\n  \"payout_method\": \"<string>\",\n  \"fee_category\": \"NONE\",\n  \"fee_description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7b882485-7987-4046-895e-52df23b60067",
+              "name": "Successfully updated fee.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "fees",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Provide the `feeId` of the fee you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"currency_code\": \"USD\",\n  \"feeId\": \"7740f31c-ca03-4414-b491-b285aef71eb1\",\n  \"fee_type\": \"FLAT_RATE\",\n  \"node_type\": \"INITIAL\",\n  \"payment_type\": \"REGULAR\",\n  \"role_type\": \"SENDING\",\n  \"value\": 2,\n  \"partner_name\": \"rn.us.ca.san_francisco\",\n  \"account_name\": \"conct_usd_sf\",\n  \"upper_limit\": 1000,\n  \"lower_limit\": 0,\n  \"payout_method\": \"LOCAL_RAILS\",\n  \"fee_category\": \"BENEFICIARY_BANK_CHARGE\",\n  \"fee_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07fd098a-50f7-43f5-8a14-63bf3e15523d",
+              "name": "Bad Request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "fees",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Provide the `feeId` of the fee you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fe5ca86-e711-42ca-a2bd-bd3f2e31bd5b",
+          "name": "Delete fee",
+          "request": {
+            "name": "Delete fee",
+            "description": {
+              "content": "Deletes a fee. Once deleted, a fee cannot be accessed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "fees",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Provide the `feeId` of the fee you want to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "c1ffd6bd-c583-4931-9223-87d97a14264c",
+              "name": "Successfully deleted fee.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "fees",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Provide the `feeId` of the fee you want to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3a68998f-0b2c-4e2c-8eb2-a963b79bc80a",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "fees",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Provide the `feeId` of the fee you want to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9d31e4e8-a2f6-4287-bfec-badf9962ce93",
+    "name": "Palisade Addresses Fees API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1939 @@
+{
+  "item": [
+    {
+      "id": "a9f1ccd0-ed15-4813-aed4-81f1a3d67ab1",
+      "name": "Platform accounts",
+      "description": {
+        "content": "\nUse these operations to configure your RippleNet platform accounts.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Create platform](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/createplatform)                                         | POST      | Creates a RippleNet platform that represents a financial entity that holds accounts in the real world. For example, a Bank, Exchange, or Wallet provider.  |\n| [Get all platforms](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getallplatforms)                                          | GET       | Returns a list of all active RippleNet platforms. |\n| [Get platform by platform ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformbyplatformid)                             | GET       | Get a RippleNet platform by its platform ID. |\n| [Update platform](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/updateplatform)                                         | PUT       | Updates a RippleNet platform. |\n| [Delete platform by platform ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/deleteplatformbyplatformid)                  | DELETE    | Deletes a RippleNet platform by its platform ID. |\n| [Create platform account](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/createplatformaccount)                          | POST      | Creates a RippleNet platform account, which represents a real-world account owned by a financial entity. |\n| [Get platform accounts](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccounts)                              | GET       | Returns a paged list of all active RippleNet platform accounts. |\n| [Get platform account by platform account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccountbyplatformaccountid)       | GET       | Gets a RippleNet platform account by its platform account ID. |\n| [Update platform account](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/updateplatformaccount)                          | PUT       | Updates a RippleNet platform account. |\n| [Delete platform account by platform account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/deleteplatformaccountbyplatformaccountid) | DELETE    | Deletes a RippleNet platform account by its platform account ID. |\n| [Get platform accounts balances](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccountsbalances)             | GET       | Get balances for local Platform Accounts |\n| [Get platform account statement](/products/payments-odl/api-docs/ripplenet/reference/openapi/platform-accounts/getplatformaccountstatement)             | GET       | Get statement for a specified Platform Account |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6c830003-c1b4-49a5-a09a-bdb60da4db0e",
+          "name": "Create platform",
+          "request": {
+            "name": "Create platform",
+            "description": {
+              "content": "Creates a RippleNet platform, which represents a financial entity that holds accounts in the real world (e.g. Bank, Exchange or Wallet provider). This operation creates a database record for a platform account on a RippleNet node.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "platforms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"platform_type\": \"<string>\",\n  \"institution\": \"<string>\",\n  \"servicer_code\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "42465e17-4f7a-4503-ab16-d2813d788812",
+              "name": "Successfully created RippleNet platform.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"platform_type\": \"<string>\",\n  \"institution\": \"<string>\",\n  \"servicer_code\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"platform_id\": \"1a3ab8af-3704-b37a-cb1f-836367def025\",\n  \"name\": \"string\",\n  \"platform_type\": \"FIAT_INSTITUTION\",\n  \"description\": \"string\",\n  \"institution\": \"string\",\n  \"servicer_code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "886fe1d7-44e1-4f31-9be8-3f7945da90df",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"platform_type\": \"<string>\",\n  \"institution\": \"<string>\",\n  \"servicer_code\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ece68277-1154-4c07-93b4-a2280576e34c",
+          "name": "Get all platforms",
+          "request": {
+            "name": "Get all platforms",
+            "description": {
+              "content": "Returns a list of all active RippleNet platforms.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "platforms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "2b895617-2983-40d0-bb47-28f9e7932fe6",
+              "name": "List of all active RippleNet platforms.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"platform_id\": \"edbacea3-903b-39bb-c8b9-26f755101c02\",\n    \"name\": \"string\",\n    \"platform_type\": \"FIAT_INSTITUTION\",\n    \"description\": \"string\",\n    \"institution\": \"string\",\n    \"servicer_code\": \"string\"\n  },\n  {\n    \"platform_id\": \"6473840d-82a4-3337-cb46-6a47d23f3a25\",\n    \"name\": \"string\",\n    \"platform_type\": \"FIAT_INSTITUTION\",\n    \"description\": \"string\",\n    \"institution\": \"string\",\n    \"servicer_code\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "263b2d8d-cc94-426e-bbe8-2570854b9acd",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "14217711-1756-4d7d-93f3-5ca32d5bbd78",
+          "name": "Get platform by platform ID",
+          "request": {
+            "name": "Get platform by platform ID",
+            "description": {
+              "content": "Get a RippleNet platform by its platform ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "platforms",
+                ":platform_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "platform_id",
+                  "description": "(Required) ID of the platform you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "abaab3c6-1e15-4e9d-a4ba-02d116a069ea",
+              "name": "Returns a RippleNet platform for the given platform ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    ":platform_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_id",
+                      "description": "(Required) ID of the platform you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"platform_id\": \"1a3ab8af-3704-b37a-cb1f-836367def025\",\n  \"name\": \"string\",\n  \"platform_type\": \"FIAT_INSTITUTION\",\n  \"description\": \"string\",\n  \"institution\": \"string\",\n  \"servicer_code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1de21ad0-1332-4f1f-8ca0-2929357ad7d1",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    ":platform_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_id",
+                      "description": "(Required) ID of the platform you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb6db66c-19ce-45ad-b32a-4da2479f1662",
+          "name": "Update platform",
+          "request": {
+            "name": "Update platform",
+            "description": {
+              "content": "Updates a RippleNet platform, which represents a financial entity that holds accounts in the real world (e.g. Bank, Exchange or Wallet provider). This operation creates a database record for a platform account on a RippleNet node.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "platforms",
+                ":platform_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "platform_id",
+                  "description": "(Required) ID of the platform you want to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"platform_type\": \"<string>\",\n  \"description\": \"<string>\",\n  \"institution\": \"<string>\",\n  \"servicer_code\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b738bbda-8008-4fe6-9f40-4997d545ee78",
+              "name": "Successfully updated RippleNet platform.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    ":platform_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_id",
+                      "description": "(Required) ID of the platform you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"platform_type\": \"<string>\",\n  \"description\": \"<string>\",\n  \"institution\": \"<string>\",\n  \"servicer_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"platform_id\": \"1a3ab8af-3704-b37a-cb1f-836367def025\",\n  \"name\": \"string\",\n  \"platform_type\": \"FIAT_INSTITUTION\",\n  \"description\": \"string\",\n  \"institution\": \"string\",\n  \"servicer_code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcf4b769-7ca3-4e1a-88eb-bf99eccce3d1",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    ":platform_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_id",
+                      "description": "(Required) ID of the platform you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"platform_type\": \"<string>\",\n  \"description\": \"<string>\",\n  \"institution\": \"<string>\",\n  \"servicer_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3256e2a4-f306-40c6-a5bd-1081da8ecc13",
+          "name": "Delete platform by platform ID",
+          "request": {
+            "name": "Delete platform by platform ID",
+            "description": {
+              "content": "Deletes a RippleNet platform by its platform ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "platforms",
+                ":platform_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "platform_id",
+                  "description": "(Required) ID of the platform you want to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "85dfa6b8-25a3-4bf6-a5f7-1f262e4b36ac",
+              "name": "Deleted platform successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    ":platform_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_id",
+                      "description": "(Required) ID of the platform you want to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2218c3c9-e6cd-4952-9adc-dd2528767a52",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    ":platform_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_id",
+                      "description": "(Required) ID of the platform you want to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "30ed9d46-1724-4200-9b5c-743497173ff8",
+          "name": "Create platform account",
+          "request": {
+            "name": "Create platform account",
+            "description": {
+              "content": "Creates a RippleNet platform account, which represents a real-world account owned by a financial entity (e.g. Bank, Exchange or Wallet provider). This operation creates a database record for a platform account on a RippleNet node.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "platforms",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"platform_id\": \"<uuid>\",\n  \"external_account_id\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4670643e-3c12-4570-a7cf-d4af21ea3b25",
+              "name": "Successfully created RippleNet platform account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"platform_id\": \"<uuid>\",\n  \"external_account_id\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"platform_account_id\": \"4c09ac1c-43b6-17d9-dfc8-5acf87ee1018\",\n  \"name\": \"string\",\n  \"platform_id\": \"d43a2fce-265d-f787-b095-ecc14f45518f\",\n  \"description\": \"string\",\n  \"external_account_id\": \"string\",\n  \"currency\": \"string\",\n  \"balance\": 4189.87807895145\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01d2dd0f-18dd-4837-aed6-f30953715303",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"platform_id\": \"<uuid>\",\n  \"external_account_id\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4a2491e-b34a-4f15-81cb-18b2921a8775",
+          "name": "Get platform accounts",
+          "request": {
+            "name": "Get platform accounts",
+            "description": {
+              "content": "Returns a paged list of all active RippleNet platform accounts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "platforms",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of objects to return per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "0f9470d1-513c-4bcb-84e7-9de5005ddf11",
+              "name": "Paged list of all active RippleNet platform accounts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": true,\n  \"last\": true,\n  \"number\": 2194,\n  \"numberOfElements\": 4742,\n  \"size\": 7578,\n  \"totalElements\": 8113,\n  \"totalPages\": 3605,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": false,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"platform_account_id\": \"31ff6045-b80e-4010-1b0b-924d93102e72\",\n      \"name\": \"string\",\n      \"platform_id\": \"d6807a47-dae7-449d-3f3c-26ff0c86338c\",\n      \"description\": \"string\",\n      \"external_account_id\": \"string\",\n      \"currency\": \"string\",\n      \"balance\": 922.4771169160762\n    },\n    {\n      \"platform_account_id\": \"16e8dc96-fb26-f59f-cf84-718f4ae46719\",\n      \"name\": \"string\",\n      \"platform_id\": \"2a458e58-1856-4f34-873a-4466e1ec933f\",\n      \"description\": \"string\",\n      \"external_account_id\": \"string\",\n      \"currency\": \"string\",\n      \"balance\": 4303.627641006077\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f775589-0cfc-402f-9af3-e13c240fba24",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "644e3eaf-ada5-4420-bad3-90e1029a6a17",
+          "name": "Get platform account by platform account ID",
+          "request": {
+            "name": "Get platform account by platform account ID",
+            "description": {
+              "content": "Gets a RippleNet platform account by its platform account ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "platforms",
+                "accounts",
+                ":platform_account_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "platform_account_id",
+                  "description": "(Required) ID of the platform account you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "49928b5a-ba76-46eb-bad7-a5f4edde7e0a",
+              "name": "Returns a RippleNet platform account for the given platform account ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    "accounts",
+                    ":platform_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_account_id",
+                      "description": "(Required) ID of the platform account you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"platform_account_id\": \"4c09ac1c-43b6-17d9-dfc8-5acf87ee1018\",\n  \"name\": \"string\",\n  \"platform_id\": \"d43a2fce-265d-f787-b095-ecc14f45518f\",\n  \"description\": \"string\",\n  \"external_account_id\": \"string\",\n  \"currency\": \"string\",\n  \"balance\": 4189.87807895145\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b13808d-f824-4821-8a6d-285b841abe12",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    "accounts",
+                    ":platform_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_account_id",
+                      "description": "(Required) ID of the platform account you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b535213b-0898-4a4b-aece-1d97e06cbd5a",
+          "name": "Update platform account",
+          "request": {
+            "name": "Update platform account",
+            "description": {
+              "content": "Updates a RippleNet platform account, which represents a real-world account owned by a financial entity (e.g. Bank, Exchange or Wallet provider).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "platforms",
+                "accounts",
+                ":platform_account_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "platform_account_id",
+                  "description": "(Required) ID of the platform account you want to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"platform_id\": \"<uuid>\",\n  \"description\": \"<string>\",\n  \"external_account_id\": \"<string>\",\n  \"currency\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ab20a183-a5aa-452f-954c-a044975a5edb",
+              "name": "Successfully updated RippleNet platform account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    "accounts",
+                    ":platform_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_account_id",
+                      "description": "(Required) ID of the platform account you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"platform_id\": \"<uuid>\",\n  \"description\": \"<string>\",\n  \"external_account_id\": \"<string>\",\n  \"currency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"platform_account_id\": \"4c09ac1c-43b6-17d9-dfc8-5acf87ee1018\",\n  \"name\": \"string\",\n  \"platform_id\": \"d43a2fce-265d-f787-b095-ecc14f45518f\",\n  \"description\": \"string\",\n  \"external_account_id\": \"string\",\n  \"currency\": \"string\",\n  \"balance\": 4189.87807895145\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5562ca1-f4bf-4b37-a6e4-537e8e132759",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    "accounts",
+                    ":platform_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_account_id",
+                      "description": "(Required) ID of the platform account you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"platform_id\": \"<uuid>\",\n  \"description\": \"<string>\",\n  \"external_account_id\": \"<string>\",\n  \"currency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0ff3e26-074e-4a80-b586-e8551120f6fb",
+          "name": "Delete platform account by platform account ID",
+          "request": {
+            "name": "Delete platform account by platform account ID",
+            "description": {
+              "content": "Deletes a RippleNet platform account by its platform account ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "platforms",
+                "accounts",
+                ":platform_account_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "platform_account_id",
+                  "description": "(Required) ID of the platform account you want to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "fe6774d2-ef0c-4704-8611-26a969f720d6",
+              "name": "Deleted platform account successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    "accounts",
+                    ":platform_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_account_id",
+                      "description": "(Required) ID of the platform account you want to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f49a9cc0-f212-4902-97cd-e2f02e9d56db",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "platforms",
+                    "accounts",
+                    ":platform_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "platform_account_id",
+                      "description": "(Required) ID of the platform account you want to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04689357-00dd-43d9-be9f-7d743266ff87",
+          "name": "Get platform accounts balances",
+          "request": {
+            "name": "Get platform accounts balances",
+            "description": {
+              "content": "Get balances for local Platform Accounts",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitor",
+                "platform",
+                "accounts",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "4fc11b62-3df6-4bca-b465-cef49fb0a71e",
+              "name": "Successfully returned balances for all platform accounts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitor",
+                    "platform",
+                    "accounts",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"platforms\": [\n    {\n      \"platform_id\": \"349d2720-38ed-6bf9-724b-9ce66985a3c3\",\n      \"name\": \"string\",\n      \"institution\": \"string\",\n      \"type\": \"string\",\n      \"servicer_code\": \"string\",\n      \"accounts\": [\n        {\n          \"platform_account_id\": \"c732b8a0-9387-d103-ff01-577f4027fdd8\",\n          \"name\": \"string\",\n          \"external_account_id\": \"string\",\n          \"currency\": \"string\",\n          \"total_balance\": 4600.957367048834,\n          \"available_balance\": 76.61233278373092,\n          \"errors\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"platform_account_id\": \"31610811-b5c9-b928-889f-73f52b78a0a9\",\n          \"name\": \"string\",\n          \"external_account_id\": \"string\",\n          \"currency\": \"string\",\n          \"total_balance\": 8089.471216307747,\n          \"available_balance\": 2737.3417432566494,\n          \"errors\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    {\n      \"platform_id\": \"2389dcc4-3a96-7000-028a-ff193d83e012\",\n      \"name\": \"string\",\n      \"institution\": \"string\",\n      \"type\": \"string\",\n      \"servicer_code\": \"string\",\n      \"accounts\": [\n        {\n          \"platform_account_id\": \"a0a2d3ed-2464-2db6-039f-a92bbc2d39ab\",\n          \"name\": \"string\",\n          \"external_account_id\": \"string\",\n          \"currency\": \"string\",\n          \"total_balance\": 5821.893131706362,\n          \"available_balance\": 3598.5835034223333,\n          \"errors\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"platform_account_id\": \"307ff16f-7d27-038b-8226-51d5b4c6763c\",\n          \"name\": \"string\",\n          \"external_account_id\": \"string\",\n          \"currency\": \"string\",\n          \"total_balance\": 6217.269789972426,\n          \"available_balance\": 4153.913394972938,\n          \"errors\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2820f3e3-9682-40cb-bb57-5877d78b65a3",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitor",
+                    "platform",
+                    "accounts",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69ef6ea9-0634-42b4-b5fc-76d4fa3e6a05",
+          "name": "Get platform account statement",
+          "request": {
+            "name": "Get platform account statement",
+            "description": {
+              "content": "Get statement for a specified Platform Account",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitor",
+                "platform",
+                "accounts",
+                ":platformAccountId",
+                "statement"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start-date",
+                  "value": "<string>",
+                  "description": "(Required) The lower bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "end-date",
+                  "value": "<string>",
+                  "description": "(Required) The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC For example, `2018-08-06T23:15:13.218Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of payment and transfer objects to return per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "platformAccountId",
+                  "description": "(Required) The RippleNet platform account ID that you want to get a statement for. Example: `bitso`"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "481c11b4-ecfc-4606-a71a-cdca9726fdd2",
+              "name": "Successfully returned statement for a specified platform account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitor",
+                    "platform",
+                    "accounts",
+                    ":platformAccountId",
+                    "statement"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "platformAccountId",
+                      "description": "(Required) The RippleNet platform account ID that you want to get a statement for. Example: `bitso`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_name\": \"trans_usd_sf\",\n  \"closing_balance\": -909,\n  \"currency\": \"USD\",\n  \"end_datetime\": \"2020-08-06T23:13:55.997Z\",\n  \"generated_at\": \"2019-10-01T21:58:23.621Z\",\n  \"opening_balance\": 0,\n  \"owner\": \"rn.us.ca.san_francisco\",\n  \"start_datetime\": \"2018-08-06T23:13:55.997Z\",\n  \"transactions\": {\n    \"content\": [\n      {\n        \"balance_change\": -15,\n        \"balance_result\": -909,\n        \"created_at\": \"2019-10-01T21:28:28.354Z\",\n        \"end_to_end_id\": \"91ecb6bd-4dd8-4b53-a900-72b79f3064e4\",\n        \"internal_id\": \"8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c\",\n        \"returned_by_payment_with_id\": \"52fb89af-e04b-49c0-5b22-bfae2266fea7\",\n        \"returns_payment_with_id\": \"66fca5c0-7948-5eae-925a-8911b432a077\",\n        \"transaction_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n        \"transaction_state\": \"COMPLETED\",\n        \"transaction_type\": \"PAYMENT\",\n        \"sender_address\": \"rn.us.ca.san_francisco\",\n        \"receiver_address\": \"rn.mx.mexico\",\n        \"venue_id\": \"nz7RpAujYgnQtjEM\",\n        \"transaction_hash\": \"DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6\",\n        \"balance_change_created_at\": \"2019-10-01T21:28:28.354Z\"\n      },\n      {\n        \"balance_change\": -15,\n        \"balance_result\": -909,\n        \"created_at\": \"2019-10-01T21:28:28.354Z\",\n        \"end_to_end_id\": \"91ecb6bd-4dd8-4b53-a900-72b79f3064e4\",\n        \"internal_id\": \"8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c\",\n        \"returned_by_payment_with_id\": \"98718dea-7212-7a55-be12-c1800ffb3192\",\n        \"returns_payment_with_id\": \"f96eef30-64f1-944f-8403-7c3a6a22fdec\",\n        \"transaction_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n        \"transaction_state\": \"COMPLETED\",\n        \"transaction_type\": \"PAYMENT\",\n        \"sender_address\": \"rn.us.ca.san_francisco\",\n        \"receiver_address\": \"rn.mx.mexico\",\n        \"venue_id\": \"nz7RpAujYgnQtjEM\",\n        \"transaction_hash\": \"DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6\",\n        \"balance_change_created_at\": \"2019-10-01T21:28:28.354Z\"\n      }\n    ],\n    \"first\": true,\n    \"last\": true,\n    \"number\": 0,\n    \"numberOfElements\": 1,\n    \"size\": 10,\n    \"sort\": \"string\",\n    \"totalPages\": 1,\n    \"total_elements\": 1\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96aae466-327a-4ba0-917c-c77b1db0cd99",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitor",
+                    "platform",
+                    "accounts",
+                    ":platformAccountId",
+                    "statement"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "platformAccountId",
+                      "description": "(Required) The RippleNet platform account ID that you want to get a statement for. Example: `bitso`"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f46d5490-7c6f-4786-8b38-e9e260f2401b",
+    "name": "Palisade Addresses Platform accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

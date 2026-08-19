@@ -1,0 +1,322 @@
+{
+  "item": [
+    {
+      "id": "5e897257-b0fd-46f2-b5ab-0fc80d0be0ff",
+      "name": "Pool accounts",
+      "description": {
+        "content": "\nUse these operations to configure your RippleNet pool accounts.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get all pool accounts](/products/payments-odl/api-docs/ripplenet/reference/openapi/pool-accounts/getallpoolaccounts)                               | GET    | Returns a list of all pool accounts on a RippleNet node. |\n| [Get pool account by pool account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/pool-accounts/getpoolaccountbypoolaccountid)               | GET    | Get a pool account by its pool account ID. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "492c16e9-9761-40b4-b09f-a0bf35feafcf",
+          "name": "Get all pool accounts",
+          "request": {
+            "name": "Get all pool accounts",
+            "description": {
+              "content": "Returns a list of all pool accounts on a RippleNet node.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "pool_accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "763a418c-cf96-48d0-868c-ffb204cd6f5e",
+              "name": "List of all pool accounts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "pool_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"pool_account_id\": \"2972bc01-be3f-540d-147e-fa019e3f8787\",\n    \"pool_account_name\": \"string\",\n    \"currency\": \"string\",\n    \"description\": \"string\",\n    \"owner\": \"rn.us.ca.san_francisco\",\n    \"linkedAccountNames\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"pool_account_id\": \"0c0e99bf-6c72-982f-1478-ea69ff0a2ce8\",\n    \"pool_account_name\": \"string\",\n    \"currency\": \"string\",\n    \"description\": \"string\",\n    \"owner\": \"rn.us.ca.san_francisco\",\n    \"linkedAccountNames\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29bfc25e-e6bb-4c50-83f1-eae3374cede7",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "pool_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce2b1534-1bed-4a03-967c-9c9e968becd0",
+          "name": "Get pool account by pool account ID",
+          "request": {
+            "name": "Get pool account by pool account ID",
+            "description": {
+              "content": "Get a pool account by its pool account ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "pool_accounts",
+                ":pool_account_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "pool_account_id",
+                  "description": "(Required) Unique name to identify the pool account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "795a8793-ef8d-44ad-8799-cb1ff712d66f",
+              "name": "Returns pool account for the given pool account ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "pool_accounts",
+                    ":pool_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "pool_account_id",
+                      "description": "(Required) Unique name to identify the pool account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pool_account_id\": \"6ee77121-d130-7c3a-474f-5e765a84eed7\",\n  \"pool_account_name\": \"string\",\n  \"currency\": \"string\",\n  \"description\": \"string\",\n  \"owner\": \"rn.us.ca.san_francisco\",\n  \"linkedAccountNames\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b14b46c-f693-41fa-a8a0-8468ceac7216",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "pool_accounts",
+                    ":pool_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "pool_account_id",
+                      "description": "(Required) Unique name to identify the pool account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5006021d-4805-4112-9625-9d4ac953aad1",
+    "name": "Palisade Addresses Pool accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

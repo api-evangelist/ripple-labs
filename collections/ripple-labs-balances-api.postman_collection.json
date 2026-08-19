@@ -1,0 +1,1883 @@
+{
+  "item": [
+    {
+      "id": "fa1ec5e2-0e56-4fdc-bef7-3abfc19109dc",
+      "name": "Balances",
+      "description": {
+        "content": "Used to view balances",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4576b75c-dbef-4686-a600-fc1c4101fce0",
+          "name": "Get Organization Balances",
+          "request": {
+            "name": "Get Organization Balances",
+            "description": {
+              "content": "Get the balance of an organization",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "currencyCode",
+                  "value": "<string>",
+                  "description": "The currency code to be used for the fiat value. When omitted, 'USD' will be used."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c06b6f4-db01-4e41-a386-988d6c638d91",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"currencyCode\": \"USD\",\n  \"aggregatedFiatValue\": \"100.00\",\n  \"balances\": [\n    {\n      \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"aggregatedFiatValue\": \"100.00\"\n    },\n    {\n      \"vaultId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"aggregatedFiatValue\": \"100.00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c7f5da8-ef4b-4ca9-b786-dd38a0a3fc5d",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed7b7a6d-1924-4ca1-8352-498ce6bfcf72",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7495d85-efac-440b-8694-affb9720af43",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2a5a73c-dc58-4398-9c20-b7e6c5134538",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51abf36d-b009-4e94-a6a7-295ae825d8f6",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2415,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a70b9eb-49d0-44ff-bf1a-6ff20823b19c",
+          "name": "Get Vault Balances",
+          "request": {
+            "name": "Get Vault Balances",
+            "description": {
+              "content": "Get the balances of a vault",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "vaults",
+                ":vaultId",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "currencyCode",
+                  "value": "<string>",
+                  "description": "The currency code to be used for the fiat value. When omitted, 'USD' will be used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vaultId",
+                  "description": "(Required) The vault ID that the connection is associated with"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ee694f65-3552-4c71-a16b-9daf2a536b9f",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID that the connection is associated with"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"currencyCode\": \"USD\",\n  \"aggregatedFiatValue\": \"100.00\",\n  \"balances\": [\n    {\n      \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"aggregatedFiatValue\": \"100.00\"\n    },\n    {\n      \"walletId\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"aggregatedFiatValue\": \"100.00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bda7fa04-9825-45e8-8d92-d5d74fa09874",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID that the connection is associated with"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f096f7d5-4139-447b-b2f3-61e1c25ed8e8",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID that the connection is associated with"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1cc53e6-8c41-4fca-99f7-6e1b3ff48b3b",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID that the connection is associated with"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db8cf103-6b16-4ba4-9e1e-03550ed05937",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID that the connection is associated with"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "513eb841-dc1e-4dd3-a5f5-9c7b079d59c1",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID that the connection is associated with"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3203,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9aa745ab-1128-4973-8cf5-8044160030ee",
+          "name": "Get Wallet Balances",
+          "request": {
+            "name": "Get Wallet Balances",
+            "description": {
+              "content": "Get the balances of a wallet",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "vaults",
+                ":vaultId",
+                "wallets",
+                ":walletId",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "currencyCode",
+                  "value": "<string>",
+                  "description": "The currency code to be used for the fiat value. When omitted, 'USD' will be used."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.source.eq",
+                  "value": "<string>",
+                  "description": "Exact asset source match\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.source.notEq",
+                  "value": "<string>",
+                  "description": "Exclude this asset source\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.source.in",
+                  "value": "<string>",
+                  "description": "Asset source is in this list\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.source.in",
+                  "value": "<string>",
+                  "description": "Asset source is in this list\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.source.notIn",
+                  "value": "<string>",
+                  "description": "Asset source is not in this list\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.source.notIn",
+                  "value": "<string>",
+                  "description": "Asset source is not in this list\n\n - ASSET_SOURCE_LEGACY: Legacy entries\n - ASSET_SOURCE_AUTO: Auto-generated\n - ASSET_SOURCE_COINGECKO: From CoinGecko sync\n - ASSET_SOURCE_PALISADE: Admin entries\n - ASSET_SOURCE_CUSTOMER: Customer entries"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vaultId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "walletId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3104a31b-baa7-43f8-a099-ca0e5b0b69c1",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"currencyCode\": \"USD\",\n  \"aggregatedFiatValue\": \"string\",\n  \"balances\": [\n    {\n      \"asset\": {\n        \"id\": \"5:0xbehbehfb:USDC\",\n        \"standard\": \"ERC20\",\n        \"symbol\": \"LINK\",\n        \"blockchain\": \"HEDERA\",\n        \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n        \"name\": \"Chainlink\",\n        \"decimals\": 18,\n        \"vetted\": true,\n        \"enabled\": true,\n        \"contract\": \"0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e\",\n        \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n        \"organizationId\": \"string\",\n        \"coingeckoId\": \"ethereum\",\n        \"source\": \"ASSET_SOURCE_COINGECKO\",\n        \"sourceMetadata\": {\n          \"@type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lastSyncedAt\": \"2024-08-08T10:22:22.420Z\",\n        \"syncVersion\": 1,\n        \"contractAddressChecksummed\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"iconUrl\": \"https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png\"\n      },\n      \"balance\": \"200.00\",\n      \"rate\": \"0.50\",\n      \"fiatValue\": \"100.00\",\n      \"availableBalance\": \"150.00\",\n      \"pendingBalance\": \"30.00\",\n      \"frozenBalance\": \"20.00\"\n    },\n    {\n      \"asset\": {\n        \"id\": \"5:0xbehbehfb:USDC\",\n        \"standard\": \"ERC20\",\n        \"symbol\": \"LINK\",\n        \"blockchain\": \"ETHEREUM\",\n        \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n        \"name\": \"Chainlink\",\n        \"decimals\": 18,\n        \"vetted\": true,\n        \"enabled\": true,\n        \"contract\": \"0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e\",\n        \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n        \"organizationId\": \"string\",\n        \"coingeckoId\": \"ethereum\",\n        \"source\": \"ASSET_SOURCE_COINGECKO\",\n        \"sourceMetadata\": {\n          \"@type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lastSyncedAt\": \"2024-08-08T10:22:22.420Z\",\n        \"syncVersion\": 1,\n        \"contractAddressChecksummed\": \"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48\",\n        \"iconUrl\": \"https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png\"\n      },\n      \"balance\": \"200.00\",\n      \"rate\": \"0.50\",\n      \"fiatValue\": \"100.00\",\n      \"availableBalance\": \"150.00\",\n      \"pendingBalance\": \"30.00\",\n      \"frozenBalance\": \"20.00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06c3b689-a9a6-4c09-8344-eef643065895",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f956e94c-a3c4-40d2-84ea-84bd177fad4d",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "655d86ac-090e-47fd-87bc-865dc8629fba",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee6f97a7-8053-4d87-b62e-e97cb660848b",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3d89a70-517b-4845-bf0e-8511665eb027",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currencyCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.source.notIn",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3203,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dbeb9d6c-0bb7-4182-abf2-f1da68983ec1",
+          "name": "Sync Wallet Balances",
+          "request": {
+            "name": "Sync Wallet Balances",
+            "description": {
+              "content": "Trigger a refresh of the balances for a wallet. Note: This only syncs balances for assets already known to the system. It will not discover new tokens that were received but not yet tracked.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "vaults",
+                ":vaultId",
+                "wallets",
+                ":walletId",
+                "balances",
+                "sync"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vaultId",
+                  "description": "(Required) The vault ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "walletId",
+                  "description": "(Required) The wallet ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b2602455-206d-47c9-b5eb-655ee8c1d2bf",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) The wallet ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83fb5f14-1b48-4321-a78f-b2a18557031c",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) The wallet ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2954212c-55c6-481b-afc4-5c03852c5974",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) The wallet ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2f1a11c-343d-4d26-b373-61107510a81f",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) The wallet ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f1d8ff1-74ae-49c7-9912-1e05a294d484",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) The wallet ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fcf7d13-d07c-443d-8685-8ea95f5e4356",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "vaults",
+                    ":vaultId",
+                    "wallets",
+                    ":walletId",
+                    "balances",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vaultId",
+                      "description": "(Required) The vault ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) The wallet ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3203,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2a8574bf-962d-4e37-9460-16171f41c759",
+    "name": "Palisade Addresses Balances API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

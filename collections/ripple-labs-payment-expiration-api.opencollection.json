@@ -1,0 +1,127 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Payment expiration API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment expiration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get payment expiry by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/payments/payment_expiries/:payment_expiry_id",
+            "params": [
+              {
+                "name": "payment_expiry_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payment expiry you want returned."
+              }
+            ]
+          },
+          "docs": "Gets the time to live (ttl) of a payment expiry in seconds."
+        },
+        {
+          "info": {
+            "name": "Update payment expiry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/config/payments/payment_expiries/:payment_expiry_id",
+            "params": [
+              {
+                "name": "payment_expiry_id",
+                "value": "",
+                "type": "path",
+                "description": "Provide the `payment_expiry_id` of the payment expiry you want to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the time to live (ttl) of a payment expiry in seconds."
+        },
+        {
+          "info": {
+            "name": "Delete payment expiry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.palisade.co/config/payments/payment_expiries/:payment_expiry_id",
+            "params": [
+              {
+                "name": "payment_expiry_id",
+                "value": "",
+                "type": "path",
+                "description": "Provide the `payment_expiry_id` of the payment expiry you want to delete."
+              }
+            ]
+          },
+          "docs": "Deletes a payment expiry."
+        },
+        {
+          "info": {
+            "name": "Get payment expiries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/payments/payment_expiries",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based index of the page number of results."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of payments returned per page."
+              }
+            ]
+          },
+          "docs": "Returns all configured payment expiries."
+        },
+        {
+          "info": {
+            "name": "Create payment expiry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/config/payments/payment_expiries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a payment expiration window, or time to live (ttl), in seconds."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

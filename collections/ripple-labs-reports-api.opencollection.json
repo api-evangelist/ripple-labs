@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Reports API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v1/reports",
+            "params": [
+              {
+                "name": "created-by",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns an array of reports available for download. Each array element represents an available report, and contains the `reportId`, `reportType`, and `reportFormat` fields associated with that report.\n\nTo get the download link for a specific report, store the `reportId` for the report you want, and use it with the [Get a report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport) operation.\n"
+        },
+        {
+          "info": {
+            "name": "Create report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v1/reports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request the generation of a custom report based on the specified parameters.\n\n**Report duration**\n\nReports can contain up to 90 days of transactions from the previous 9 months.\n\n* Minimum report duration is 1 day.\n* Maximum report duration is 90 days.\n\n#### Report retention\n\nReports are retained for 6 months after the `endDate` specified in your request.  After this period, the report is purged and will no longer be accessible.\n"
+        },
+        {
+          "info": {
+            "name": "Get a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v1/reports/:report-id",
+            "params": [
+              {
+                "name": "report-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a report."
+              }
+            ]
+          },
+          "docs": "Here, you apply the `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation as the path parameter to get a `downloadlink` containing the report.\n\nDownload the report at the link in the `downloadLink` field in the response.\n"
+        },
+        {
+          "info": {
+            "name": "Delete reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.palisade.co/v1/reports/:report-id",
+            "params": [
+              {
+                "name": "report-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID for a report"
+              }
+            ]
+          },
+          "docs": "Delete a specific report with the `report-id` path parameter."
+        },
+        {
+          "info": {
+            "name": "Download a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v1/reports/download/:report-id",
+            "params": [
+              {
+                "name": "report-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a report. Get this `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation."
+              }
+            ]
+          },
+          "docs": "Download a transaction report. Download the report by applying the `report-id` from the [List reports](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreports) operation as a path parameter.\n\n**Note**: Depending on the `reportId` you specified, the returned report is either a Payment operations report or a Reconciliation report.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

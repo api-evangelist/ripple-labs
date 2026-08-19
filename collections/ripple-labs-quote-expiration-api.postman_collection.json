@@ -1,0 +1,664 @@
+{
+  "item": [
+    {
+      "id": "7d09220b-f675-409a-9a59-231737ae592a",
+      "name": "Quote expiration",
+      "description": {
+        "content": "\nUse these operations to manage quote expirations.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [List quote expiries](/products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/getquoteexpiries)     | GET        | Returns all configured quote expiries. |\n| [Create quote expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/createquoteexpiry)    | POST       | Creates a quote expiration window, or time to live (ttl), in seconds. |\n| [Get quote expiry](//products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/getquoteexpirybyid)      | GET        | Gets the configured quote expiration window, or time to live (ttl),  in seconds. |\n| [Update quote expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/quote-expiration/updatequoteexpiry)    | PUT        | Sets a quote expiration window, or time to live (ttl), in seconds. |\n\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f655d152-6342-4c98-b547-96e0dd21bf05",
+          "name": "List quote expiries",
+          "request": {
+            "name": "List quote expiries",
+            "description": {
+              "content": "Returns all configured quote expiries.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payments",
+                "quote_expiries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Zero-based index of the page number of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of payments returned per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "8857f550-cc1c-4091-b0de-592ea8f046f3",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "quote_expiries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": false,\n  \"last\": true,\n  \"number\": 6372,\n  \"numberOfElements\": 7776,\n  \"size\": 9447,\n  \"totalElements\": 3543,\n  \"totalPages\": 7840,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": false,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"quote_ttl\": 5900,\n      \"sending_partner\": \"rn.us.ca.san_francisco\",\n      \"receiving_partner\": \"rn.us.tx.austin\",\n      \"currency\": \"USD\",\n      \"id\": 2\n    },\n    {\n      \"quote_ttl\": 5900,\n      \"sending_partner\": \"rn.us.ca.san_francisco\",\n      \"receiving_partner\": \"rn.us.tx.austin\",\n      \"currency\": \"USD\",\n      \"id\": 2\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcdfbf77-f4cd-4866-971b-d546492270c4",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "quote_expiries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ccaefd14-f680-4384-a230-5c54c6369490",
+          "name": "Create quote expiry",
+          "request": {
+            "name": "Create quote expiry",
+            "description": {
+              "content": "Creates a quote expiration window, or time to live (ttl), in seconds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payments",
+                "quote_expiries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quote_ttl\": \"<number>\",\n  \"sending_partner\": \"<string>\",\n  \"receiving_partner\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"id\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ab688869-c7a6-4ba0-a4d9-debda7fd03a6",
+              "name": "Successfully created the quote expiration window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "quote_expiries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quote_ttl\": 5900,\n  \"sending_partner\": \"rn.us.ca.san_francisco\",\n  \"receiving_partner\": \"rn.us.tx.austin\",\n  \"currency\": \"USD\",\n  \"id\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f29e577e-2be9-49ee-ab1b-3a7ba708c19e",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "quote_expiries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7fcac7c5-d26d-43a6-8ae9-5e7de99bb313",
+          "name": "Get quote expiry",
+          "request": {
+            "name": "Get quote expiry",
+            "description": {
+              "content": "Gets the time to live (ttl) of a quote expiry in seconds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payments",
+                "quote_expiries",
+                ":quote_expiry_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "quote_expiry_id",
+                  "description": "(Required) The ID of the quote expiry you want returned."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "68a31993-9fe0-440e-b343-a30c6a3e40dd",
+              "name": "Successfully returned a quote expiry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "quote_expiries",
+                    ":quote_expiry_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "quote_expiry_id",
+                      "description": "(Required) The ID of the quote expiry you want returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quote_ttl\": 5900,\n  \"sending_partner\": \"rn.us.ca.san_francisco\",\n  \"receiving_partner\": \"rn.us.tx.austin\",\n  \"currency\": \"USD\",\n  \"id\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9f74774-c021-464e-a427-1001f8c2025f",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "quote_expiries",
+                    ":quote_expiry_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "quote_expiry_id",
+                      "description": "(Required) The ID of the quote expiry you want returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "034b85e8-d8f3-43a0-89a2-82ef1bc5efb9",
+          "name": "Update quote expiry",
+          "request": {
+            "name": "Update quote expiry",
+            "description": {
+              "content": "Updates the time to live (ttl) of a quote expiry in seconds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payments",
+                "quote_expiries",
+                ":quote_expiry_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "quote_expiry_id",
+                  "description": "(Required) Provide the `quote_expiry_id` of the quote expiry you want to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quote_ttl\": \"<number>\",\n  \"sending_partner\": \"<string>\",\n  \"receiving_partner\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"id\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0f0cafca-6957-4fac-8dc2-ce96baabe995",
+              "name": "Successfully updated quote expiry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "quote_expiries",
+                    ":quote_expiry_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "quote_expiry_id",
+                      "description": "(Required) Provide the `quote_expiry_id` of the quote expiry you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quote_ttl\": 5900,\n  \"sending_partner\": \"rn.us.ca.san_francisco\",\n  \"receiving_partner\": \"rn.us.tx.austin\",\n  \"currency\": \"USD\",\n  \"id\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfe1d1a8-121c-4097-b116-e542fdc5cbfc",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "quote_expiries",
+                    ":quote_expiry_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "quote_expiry_id",
+                      "description": "(Required) Provide the `quote_expiry_id` of the quote expiry you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "145490ea-26d9-4029-bac8-ccc2a7a2e22f",
+    "name": "Palisade Addresses Quote expiration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Auditing API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auditing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get audits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/audit",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of payments to return per page."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Filters for audit events where the `range_field` value is before this specified time stamp (not inclusive). You can also specify `after` to create a time range between `after` and `before`. If before is specified, `range_field` must also be specified."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Filters for audit events where the `range_field` value is after this specified time stamp (not inclusive). You can also specify `before` to create a time range between `after` and `before`. If `after` is specified, `range_field` must also be specified."
+              },
+              {
+                "name": "range_field",
+                "value": "",
+                "type": "query",
+                "description": "Filters payments before/after/between created and modified timestamps (`CREATED_AT`, `MODIFIED_AT`). For example, if you specify `range_field`=`CREATED_AT`, you would specify a timestamp (in the 24-character ISO 8601 YYYY-MM-DDTHH:mm:ss.sssZ format used in payment objects) as the value for `before` and/or `after` to fetch audit events before, after, or between the specified time range(s) (not inclusive). If `range_field` is specified, `before` and/or `after` must also be specified."
+              },
+              {
+                "name": "actor",
+                "value": "",
+                "type": "query",
+                "description": "Filters for audit events based upon actor."
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Filters for audit events based upon action."
+              },
+              {
+                "name": "level",
+                "value": "",
+                "type": "query",
+                "description": "Filters for audit events based upon audit level."
+              },
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query",
+                "description": "Filters for audit events based upon audit domain."
+              }
+            ]
+          },
+          "docs": "Gets an audit trail of user actions and configuration changes (to accounts, fees, and rates) on a RippleNet instance."
+        },
+        {
+          "info": {
+            "name": "Get event trail for payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/audit/payment/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of a payment."
+              }
+            ]
+          },
+          "docs": "Gets an audit trail of a payment's state changes on a local RippleNet instance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Exchange transfers API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Exchange transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get exchange transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/exchange_transfers",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects to return per page."
+              }
+            ]
+          },
+          "docs": "Gets all exchange transfers."
+        },
+        {
+          "info": {
+            "name": "Execute exchange transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/exchange_transfers/execute",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute an exchange transfer to move funds from one of your accounts in one currency (USD, for example) to another one of your accounts in another currency (EUR, for example) at an exchange rate set by your peer who maintains both of your accounts on their ledger. An exchange transfer enables you to fund a foreign currency account from your domestic currency account in bulk.\n\nBefore you make this request, you may want to use the Quote Exchange Transfer request to see a quote for the exchange tra"
+        },
+        {
+          "info": {
+            "name": "Get exchange transfer quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/exchange_transfers/quote",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requests a quote for an exchange transfer."
+        },
+        {
+          "info": {
+            "name": "Complete exchange transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/exchange_transfers/:id/complete",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the exchange transfer to complete."
+              }
+            ]
+          },
+          "docs": "Updates the status of an exchange transfer to `COMPLETED`. Make this request once the exchange transfer has been made on both the ledger and on internal systems."
+        },
+        {
+          "info": {
+            "name": "Get exchange transfer by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/exchange_transfers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the exchange transfer you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Gets an exchange transfer by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

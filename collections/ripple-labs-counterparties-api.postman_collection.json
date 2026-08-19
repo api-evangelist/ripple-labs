@@ -1,0 +1,3965 @@
+{
+  "item": [
+    {
+      "id": "49cd45a7-16af-4e33-8653-0f80433b774b",
+      "name": "Counterparties",
+      "description": {
+        "content": "Used to manage counterparties",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7c55fea0-b857-4a38-939d-e37abffc7e6e",
+          "name": "List counterparties",
+          "request": {
+            "name": "List counterparties",
+            "description": {
+              "content": "List counterparties",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "counterparties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "The number of results to return per page (default 50, max 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>",
+                  "description": "The token to retrieve the next page of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "pagination.pageSize",
+                  "value": "<integer>",
+                  "description": "Number of results per page (default 50, max 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pagination.pageToken",
+                  "value": "<string>",
+                  "description": "Token for pagination from previous response"
+                },
+                {
+                  "disabled": false,
+                  "key": "pagination.orderBy",
+                  "value": "<string>",
+                  "description": "Field to order results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "pagination.order",
+                  "value": "<string>",
+                  "description": "Sort order (ASC or DESC)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.id.eq",
+                  "value": "<string>",
+                  "description": "Exact match"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.id.notEq",
+                  "value": "<string>",
+                  "description": "Not equal to"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.id.contains",
+                  "value": "<string>",
+                  "description": "Contains substring (case-insensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.id.startsWith",
+                  "value": "<string>",
+                  "description": "Starts with prefix (case-insensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.id.endsWith",
+                  "value": "<string>",
+                  "description": "Ends with suffix (case-insensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.id.in",
+                  "value": "<string>",
+                  "description": "Value is in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.id.in",
+                  "value": "<string>",
+                  "description": "Value is in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.id.notIn",
+                  "value": "<string>",
+                  "description": "Value is not in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.id.notIn",
+                  "value": "<string>",
+                  "description": "Value is not in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.id.isNull",
+                  "value": "<boolean>",
+                  "description": "Check if field is null"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.name.eq",
+                  "value": "<string>",
+                  "description": "Exact match"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.name.notEq",
+                  "value": "<string>",
+                  "description": "Not equal to"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.name.contains",
+                  "value": "<string>",
+                  "description": "Contains substring (case-insensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.name.startsWith",
+                  "value": "<string>",
+                  "description": "Starts with prefix (case-insensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.name.endsWith",
+                  "value": "<string>",
+                  "description": "Ends with suffix (case-insensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.name.in",
+                  "value": "<string>",
+                  "description": "Value is in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.name.in",
+                  "value": "<string>",
+                  "description": "Value is in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.name.notIn",
+                  "value": "<string>",
+                  "description": "Value is not in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.name.notIn",
+                  "value": "<string>",
+                  "description": "Value is not in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.name.isNull",
+                  "value": "<boolean>",
+                  "description": "Check if field is null"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.description.eq",
+                  "value": "<string>",
+                  "description": "Exact match"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.description.notEq",
+                  "value": "<string>",
+                  "description": "Not equal to"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.description.contains",
+                  "value": "<string>",
+                  "description": "Contains substring (case-insensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.description.startsWith",
+                  "value": "<string>",
+                  "description": "Starts with prefix (case-insensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.description.endsWith",
+                  "value": "<string>",
+                  "description": "Ends with suffix (case-insensitive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.description.in",
+                  "value": "<string>",
+                  "description": "Value is in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.description.in",
+                  "value": "<string>",
+                  "description": "Value is in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.description.notIn",
+                  "value": "<string>",
+                  "description": "Value is not in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.description.notIn",
+                  "value": "<string>",
+                  "description": "Value is not in the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.description.isNull",
+                  "value": "<boolean>",
+                  "description": "Check if field is null"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.type",
+                  "value": "<string>",
+                  "description": "Filter by counterparty type"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.createdAt.eq",
+                  "value": "<dateTime>",
+                  "description": "Exact timestamp match"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.createdAt.notEq",
+                  "value": "<dateTime>",
+                  "description": "Not equal to timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.createdAt.before",
+                  "value": "<dateTime>",
+                  "description": "Before this timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.createdAt.after",
+                  "value": "<dateTime>",
+                  "description": "After this timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.createdAt.gte",
+                  "value": "<dateTime>",
+                  "description": "Greater than or equal to timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.createdAt.lte",
+                  "value": "<dateTime>",
+                  "description": "Less than or equal to timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.createdAt.between.start",
+                  "value": "<dateTime>",
+                  "description": "Start of time range (inclusive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.createdAt.between.end",
+                  "value": "<dateTime>",
+                  "description": "End of time range (inclusive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.createdAt.isNull",
+                  "value": "<boolean>",
+                  "description": "Check if field is null"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.createdAt.relativeDays",
+                  "value": "<integer>",
+                  "description": "Relative days from now (negative for past, positive for future)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.updatedAt.eq",
+                  "value": "<dateTime>",
+                  "description": "Exact timestamp match"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.updatedAt.notEq",
+                  "value": "<dateTime>",
+                  "description": "Not equal to timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.updatedAt.before",
+                  "value": "<dateTime>",
+                  "description": "Before this timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.updatedAt.after",
+                  "value": "<dateTime>",
+                  "description": "After this timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.updatedAt.gte",
+                  "value": "<dateTime>",
+                  "description": "Greater than or equal to timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.updatedAt.lte",
+                  "value": "<dateTime>",
+                  "description": "Less than or equal to timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.updatedAt.between.start",
+                  "value": "<dateTime>",
+                  "description": "Start of time range (inclusive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.updatedAt.between.end",
+                  "value": "<dateTime>",
+                  "description": "End of time range (inclusive)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.updatedAt.isNull",
+                  "value": "<boolean>",
+                  "description": "Check if field is null"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter.updatedAt.relativeDays",
+                  "value": "<integer>",
+                  "description": "Relative days from now (negative for past, positive for future)"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Case-insensitive search over counterparty ID, name, description, and counterparty details."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6e9427f1-c794-4e37-9222-cc33062f6e3f",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.name.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.description.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.createdAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.createdAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter.updatedAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.updatedAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"filter\": {\n    \"total\": 100,\n    \"previousPageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"nextPageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\"\n  },\n  \"counterparties\": [\n    {\n      \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n      \"updatedBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n      \"name\": \"Palisade\",\n      \"details\": {\n        \"type\": \"ORGANIZATION\",\n        \"individual\": {\n          \"firstName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lastName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"organization\": {\n          \"legalName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"dApp\": {}\n      },\n      \"addressCount\": 5,\n      \"description\": \"A counterparty used by the treasury department\"\n    },\n    {\n      \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n      \"updatedBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n      \"name\": \"Palisade\",\n      \"details\": {\n        \"type\": \"ORGANIZATION\",\n        \"individual\": {\n          \"firstName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lastName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"organization\": {\n          \"legalName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"dApp\": {}\n      },\n      \"addressCount\": 5,\n      \"description\": \"A counterparty used by the treasury department\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56bfbd5a-f69e-49e8-bdc4-ff479ad69c94",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.name.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.description.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.createdAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.createdAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter.updatedAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.updatedAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06b4ff36-c9f1-4901-a14a-fb24aefec437",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.name.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.description.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.createdAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.createdAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter.updatedAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.updatedAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b2f144f-86d2-46aa-8262-9421a08c89ab",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.name.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.description.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.createdAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.createdAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter.updatedAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.updatedAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "098b08ee-3da7-49c5-9a40-5e10d59ff5a9",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.name.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.description.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.createdAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.createdAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter.updatedAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.updatedAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1182ccb-408e-42e7-ad37-6ad171f1af0f",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pagination.pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pagination.order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.id.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.name.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.name.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.description.eq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notEq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.contains",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.startsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.endsWith",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.in",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.notIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.description.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter.createdAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.createdAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.createdAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter.updatedAt.eq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.notEq",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.between.end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter.updatedAt.isNull",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter.updatedAt.relativeDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8398,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b5e8071-194d-46f6-ac88-f574d5c0d1b9",
+          "name": "Create counterparties",
+          "request": {
+            "name": "Create counterparties",
+            "description": {
+              "content": "Create a new counterparty",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "counterparties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"details\": \"<object>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "494e05e1-c345-4cdd-9756-e39a08226e95",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"details\": \"<object>\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n  \"updatedBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n  \"name\": \"Palisade\",\n  \"details\": {\n    \"type\": \"ORGANIZATION\",\n    \"individual\": {\n      \"firstName\": \"Joe\",\n      \"lastName\": \"Bloggs\",\n      \"address\": {\n        \"address1\": \"Flat B\",\n        \"city\": \"London\",\n        \"state\": \"Greater London\",\n        \"postCode\": \"W1 1AA\",\n        \"country\": \"United Kingdom\",\n        \"address2\": \"10 Mayo Road\"\n      }\n    },\n    \"organization\": {\n      \"legalName\": \"Palisade Financial\",\n      \"address\": {\n        \"address1\": \"Flat B\",\n        \"city\": \"London\",\n        \"state\": \"Greater London\",\n        \"postCode\": \"W1 1AA\",\n        \"country\": \"United Kingdom\",\n        \"address2\": \"10 Mayo Road\"\n      }\n    },\n    \"dApp\": \"<object>\"\n  },\n  \"addressCount\": 5,\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "216a0bde-6715-40e2-8053-0dce18077429",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"details\": \"<object>\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f0aebb9-6661-444a-a11a-3526486b149f",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"details\": \"<object>\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c6e7215-8b35-4c1a-8649-a1290fcffe18",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"details\": \"<object>\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "771a0b42-c170-4f72-be4b-cbd596a26cc9",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"details\": \"<object>\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b86fb6a-37b1-4b17-8713-f6b7af9ddf80",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"details\": \"<object>\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7659,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0063fe1b-fe0b-4287-8737-4d6f84eb07f8",
+          "name": "Get counterparties",
+          "request": {
+            "name": "Get counterparties",
+            "description": {
+              "content": "Get a counterparty",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "counterparties",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The counterparty ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3fa8c6fc-faff-4dd3-b55d-67b76f865923",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n  \"updatedBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n  \"name\": \"Palisade\",\n  \"details\": {\n    \"type\": \"ORGANIZATION\",\n    \"individual\": {\n      \"firstName\": \"Joe\",\n      \"lastName\": \"Bloggs\",\n      \"address\": {\n        \"address1\": \"Flat B\",\n        \"city\": \"London\",\n        \"state\": \"Greater London\",\n        \"postCode\": \"W1 1AA\",\n        \"country\": \"United Kingdom\",\n        \"address2\": \"10 Mayo Road\"\n      }\n    },\n    \"organization\": {\n      \"legalName\": \"Palisade Financial\",\n      \"address\": {\n        \"address1\": \"Flat B\",\n        \"city\": \"London\",\n        \"state\": \"Greater London\",\n        \"postCode\": \"W1 1AA\",\n        \"country\": \"United Kingdom\",\n        \"address2\": \"10 Mayo Road\"\n      }\n    },\n    \"dApp\": \"<object>\"\n  },\n  \"addressCount\": 5,\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3a36f4f-19f8-41b0-a6d2-2942627660e4",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7eaf3cc6-3b51-45e0-abc6-291933446f0f",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "977b04e2-12cf-4d7d-bb79-98b27bf5ae6d",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81299b21-68b9-4cf7-969e-e7bf3c78ad76",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eaa89ffd-5b7b-47f5-a9a7-428fc0c69078",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7659,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7021d443-aa6e-4c3f-911b-97e150cab224",
+          "name": "Delete counterparties",
+          "request": {
+            "name": "Delete counterparties",
+            "description": {
+              "content": "Delete a counterparty",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "counterparties",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The counterparty ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e31b24f-2508-416d-bd8d-54fd6dbf0644",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4a2e5e1-3782-423e-9a3c-15438da023af",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b67553f-bfeb-4041-9f24-79b8c977bd8b",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11478b37-21ab-45c9-8491-c61fa6a36522",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe774b18-aa84-4508-8a5a-8fd438f8a61e",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3f38af0-bd85-4d70-b7d1-6d2843c969dc",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7659,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b77b3c1-1944-490a-b97c-7ce992349e4e",
+          "name": "Update counterparties",
+          "request": {
+            "name": "Update counterparties",
+            "description": {
+              "content": "Update a counterparty",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "counterparties",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The counterparty ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "09dc61a6-b8c1-422a-aa0d-161c7094e420",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n  \"updatedBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n  \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n  \"name\": \"Palisade\",\n  \"details\": {\n    \"type\": \"ORGANIZATION\",\n    \"individual\": {\n      \"firstName\": \"Joe\",\n      \"lastName\": \"Bloggs\",\n      \"address\": {\n        \"address1\": \"Flat B\",\n        \"city\": \"London\",\n        \"state\": \"Greater London\",\n        \"postCode\": \"W1 1AA\",\n        \"country\": \"United Kingdom\",\n        \"address2\": \"10 Mayo Road\"\n      }\n    },\n    \"organization\": {\n      \"legalName\": \"Palisade Financial\",\n      \"address\": {\n        \"address1\": \"Flat B\",\n        \"city\": \"London\",\n        \"state\": \"Greater London\",\n        \"postCode\": \"W1 1AA\",\n        \"country\": \"United Kingdom\",\n        \"address2\": \"10 Mayo Road\"\n      }\n    },\n    \"dApp\": \"<object>\"\n  },\n  \"addressCount\": 5,\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fbb9f9b-a48c-4a54-a3eb-0368c86b3541",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d9556e0-b899-4eee-b2ed-88525db4269a",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "502f81b4-1e90-4deb-9c6d-866f4943cab8",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31a5b4df-383c-4516-a295-6e64b23a0525",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "728afdf5-f061-4531-8f3d-d48aaf9332fc",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterparty ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Palisade\",\n  \"description\": \"A counterparty used by the treasury department\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7659,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "590a8996-3904-417e-8ace-c288415b5312",
+          "name": "List counterparties",
+          "request": {
+            "name": "List counterparties",
+            "description": {
+              "content": "List counterparties",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "counterparties:list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pageSize\": \"<integer>\",\n  \"pageToken\": \"<string>\",\n  \"pagination\": {\n    \"pageSize\": \"<integer>\",\n    \"pageToken\": \"<string>\",\n    \"orderBy\": \"<string>\",\n    \"order\": \"<string>\"\n  },\n  \"filter\": {\n    \"id\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"name\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"description\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"type\": \"<string>\",\n    \"createdAt\": {\n      \"eq\": \"<dateTime>\",\n      \"notEq\": \"<dateTime>\",\n      \"before\": \"<dateTime>\",\n      \"after\": \"<dateTime>\",\n      \"gte\": \"<dateTime>\",\n      \"lte\": \"<dateTime>\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": \"<integer>\"\n    },\n    \"updatedAt\": {\n      \"eq\": \"<dateTime>\",\n      \"notEq\": \"<dateTime>\",\n      \"before\": \"<dateTime>\",\n      \"after\": \"<dateTime>\",\n      \"gte\": \"<dateTime>\",\n      \"lte\": \"<dateTime>\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": \"<integer>\"\n    }\n  },\n  \"search\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "89569cd3-ffcc-4646-883d-84ad7df9b1e6",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  },\n  \"filter\": {\n    \"id\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"name\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"description\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"type\": \"<string>\",\n    \"createdAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    },\n    \"updatedAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    }\n  },\n  \"search\": \"Treasury\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"filter\": {\n    \"total\": 100,\n    \"previousPageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"nextPageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\"\n  },\n  \"counterparties\": [\n    {\n      \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n      \"updatedBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n      \"name\": \"Palisade\",\n      \"details\": {\n        \"type\": \"ORGANIZATION\",\n        \"individual\": {\n          \"firstName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lastName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"organization\": {\n          \"legalName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"dApp\": \"<object>\"\n      },\n      \"addressCount\": 5,\n      \"description\": \"A counterparty used by the treasury department\"\n    },\n    {\n      \"id\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"createdAt\": \"2022-03-29T10:22:22.420Z\",\n      \"updatedBy\": \"ce4918bf-a199-4ce2-85a3-d0d296855384\",\n      \"updatedAt\": \"2022-03-29T10:22:22.420Z\",\n      \"name\": \"Palisade\",\n      \"details\": {\n        \"type\": \"ORGANIZATION\",\n        \"individual\": {\n          \"firstName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lastName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"organization\": {\n          \"legalName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"dApp\": \"<object>\"\n      },\n      \"addressCount\": 5,\n      \"description\": \"A counterparty used by the treasury department\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aea37570-2256-4b06-907e-52020f84e6e9",
+              "name": "Returned when the request is malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  },\n  \"filter\": {\n    \"id\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"name\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"description\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"type\": \"<string>\",\n    \"createdAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    },\n    \"updatedAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    }\n  },\n  \"search\": \"Treasury\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"validation error: - name: value length must be at least 1 characters [string.min_len].\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06925991-9d6a-4127-8b43-3edeef31d7fd",
+              "name": "Returned when the request was unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  },\n  \"filter\": {\n    \"id\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"name\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"description\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"type\": \"<string>\",\n    \"createdAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    },\n    \"updatedAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    }\n  },\n  \"search\": \"Treasury\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authorization requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "768d26ed-5713-4730-ae91-2db1fa19cea3",
+              "name": "Returned when the request was forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  },\n  \"filter\": {\n    \"id\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"name\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"description\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"type\": \"<string>\",\n    \"createdAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    },\n    \"updatedAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    }\n  },\n  \"search\": \"Treasury\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The access token provided does not meet the authentication requirements.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef1056cc-59ee-4693-8898-918401534f2e",
+              "name": "Returned when the resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  },\n  \"filter\": {\n    \"id\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"name\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"description\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"type\": \"<string>\",\n    \"createdAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    },\n    \"updatedAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    }\n  },\n  \"search\": \"Treasury\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 123,\n  \"message\": \"The resource does not exist.\",\n  \"details\": [\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n      \"reason\": \"PAL000.000\",\n      \"domain\": \"app.development.palisade.co/api\",\n      \"metadata\": {}\n    },\n    {\n      \"@type\": \"type.googleapis.com/google.rpc.RequestInfo\",\n      \"requestId\": \"c817569e-b765-4e6e-a3af-bdb1d07e7517\",\n      \"servingData\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eda0da84-ec02-4dc5-b6ab-1efd54715dba",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "counterparties:list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pageSize\": 1000,\n  \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n  \"pagination\": {\n    \"pageSize\": 50,\n    \"pageToken\": \"cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=\",\n    \"orderBy\": \"created_at\",\n    \"order\": \"<string>\"\n  },\n  \"filter\": {\n    \"id\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"name\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"description\": {\n      \"eq\": \"<string>\",\n      \"notEq\": \"<string>\",\n      \"contains\": \"<string>\",\n      \"startsWith\": \"<string>\",\n      \"endsWith\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"notIn\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"isNull\": \"<boolean>\"\n    },\n    \"type\": \"<string>\",\n    \"createdAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    },\n    \"updatedAt\": {\n      \"eq\": \"2024-08-08T10:00:00Z\",\n      \"notEq\": \"2024-08-08T10:00:00Z\",\n      \"before\": \"2024-08-08T10:00:00Z\",\n      \"after\": \"2024-08-08T10:00:00Z\",\n      \"gte\": \"2024-08-08T10:00:00Z\",\n      \"lte\": \"2024-08-08T10:00:00Z\",\n      \"between\": {\n        \"start\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"isNull\": \"<boolean>\",\n      \"relativeDays\": -7\n    }\n  },\n  \"search\": \"Treasury\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7659,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c5251cca-2e8f-4f17-8ff5-9eaefb8eb7bb",
+    "name": "Palisade Addresses Counterparties API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

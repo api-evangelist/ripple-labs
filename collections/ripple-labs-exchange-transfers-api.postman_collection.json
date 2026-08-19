@@ -1,0 +1,801 @@
+{
+  "item": [
+    {
+      "id": "903a1392-9f2e-409e-861c-218c32f233e1",
+      "name": "Exchange transfers",
+      "description": {
+        "content": "\nUse these operations to manage exchange transfers.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get exchange transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/getexchangetransfers)  | GET   | List all exchange transfers. |\n| [Execute exchange transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/executeexchangetransfer) | POST  | Execute an exchange transfer to move funds from one of your accounts in one currency, to another one of your accounts in another currency.   |\n| [Get exchange transfer quote ](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/getexchangetransferquote)  | POST  | Requests a quote for an exchange transfer. |\n| [Complete exchange transfer ](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/completeexchangetransfer) | POST  | Updates the status of an exchange transfer to `COMPLETED`. Make this request once the exchange transfer has been made on both the ledger and on internal systems. |\n| [Get exchange transfer by ID ](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/getexchangetransferbyid)  | GET   | Gets an exchange transfer by ID. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a497b3ff-9e23-4012-98b6-a9927ac6c012",
+          "name": "Get exchange transfers",
+          "request": {
+            "name": "Get exchange transfers",
+            "description": {
+              "content": "Gets all exchange transfers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange_transfers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "20",
+                  "description": "Number of objects to return per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "1080600e-d587-467d-b820-cb326044ca6f",
+              "name": "Successfully retrieved exchange transfers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange_transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": true,\n  \"last\": false,\n  \"number\": 139,\n  \"numberOfElements\": 9235,\n  \"size\": 79,\n  \"totalElements\": 3439,\n  \"totalPages\": 2610,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"destination_amount\": 355,\n      \"destination_currency\": \"GBP\",\n      \"end_to_end_id\": \"string\",\n      \"exchange_transfer_id\": \"e3b20ba4-28ed-4752-990d-e67887bb331e\",\n      \"fx_transfer_rate\": {\n        \"base_currency\": \"USD\",\n        \"counter_currency\": \"GBP\",\n        \"rate\": 0.89,\n        \"rate_type\": \"BUY\"\n      },\n      \"internal_id\": \"string\",\n      \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n      \"source_amount\": 1,\n      \"source_currency\": \"USD\",\n      \"state\": \"EXECUTED\",\n      \"type\": \"INDICATIVE\",\n      \"user_info\": [\n        {\n          \"json\": {},\n          \"node_address\": \"rn.us.ny.new_york\",\n          \"state\": \"EXECUTED\",\n          \"created_at\": \"1990-10-27T18:14:42.310Z\"\n        },\n        {\n          \"json\": {},\n          \"node_address\": \"rn.us.ny.new_york\",\n          \"state\": \"EXECUTED\",\n          \"created_at\": \"2018-11-28T05:14:38.170Z\"\n        }\n      ]\n    },\n    {\n      \"destination_amount\": 355,\n      \"destination_currency\": \"GBP\",\n      \"end_to_end_id\": \"string\",\n      \"exchange_transfer_id\": \"e3b20ba4-28ed-4752-990d-e67887bb331e\",\n      \"fx_transfer_rate\": {\n        \"base_currency\": \"USD\",\n        \"counter_currency\": \"GBP\",\n        \"rate\": 0.89,\n        \"rate_type\": \"BUY\"\n      },\n      \"internal_id\": \"string\",\n      \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n      \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n      \"source_amount\": 1,\n      \"source_currency\": \"USD\",\n      \"state\": \"EXECUTED\",\n      \"type\": \"INDICATIVE\",\n      \"user_info\": [\n        {\n          \"json\": {},\n          \"node_address\": \"rn.us.ny.new_york\",\n          \"state\": \"EXECUTED\",\n          \"created_at\": \"2005-12-26T06:38:27.896Z\"\n        },\n        {\n          \"json\": {},\n          \"node_address\": \"rn.us.ny.new_york\",\n          \"state\": \"EXECUTED\",\n          \"created_at\": \"2013-08-06T21:18:17.589Z\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61149a58-7ae5-45fb-91af-60f23764d4d9",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange_transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "896d6aa2-cec2-49ad-8882-0057e9c4e227",
+          "name": "Execute exchange transfer",
+          "request": {
+            "name": "Execute exchange transfer",
+            "description": {
+              "content": "Execute an exchange transfer to move funds from one of your accounts in one currency (USD, for example) to another one of your accounts in another currency (EUR, for example) at an exchange rate set by your peer who maintains both of your accounts on their ledger. An exchange transfer enables you to fund a foreign currency account from your domestic currency account in bulk.\n\nBefore you make this request, you may want to use the Quote Exchange Transfer request to see a quote for the exchange transfer you want to make.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange_transfers",
+                "execute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"amount_type\": \"<string>\",\n  \"receiver_address\": \"<string>\",\n  \"sender_address\": \"<string>\",\n  \"end_to_end_id\": \"<string>\",\n  \"internal_id\": \"<string>\",\n  \"user_info\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "409dae78-e711-4b16-b6ea-56044c19383c",
+              "name": "Successfully executed exchange transfer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange_transfers",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100,\n  \"amount_type\": \"SENDER_AMOUNT\",\n  \"receiver_address\": \"conct_gbp_lon@rn.eur.uk.london\",\n  \"sender_address\": \"alias_usd_lon@rn.eur.uk.london\",\n  \"end_to_end_id\": \"<string>\",\n  \"internal_id\": \"<string>\",\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"destination_amount\": 355,\n  \"destination_currency\": \"GBP\",\n  \"end_to_end_id\": \"string\",\n  \"exchange_transfer_id\": \"e3b20ba4-28ed-4752-990d-e67887bb331e\",\n  \"fx_transfer_rate\": {\n    \"base_currency\": \"USD\",\n    \"counter_currency\": \"GBP\",\n    \"rate\": 0.89,\n    \"rate_type\": \"BUY\"\n  },\n  \"internal_id\": \"string\",\n  \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n  \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n  \"source_amount\": 1,\n  \"source_currency\": \"USD\",\n  \"state\": \"EXECUTED\",\n  \"type\": \"INDICATIVE\",\n  \"user_info\": [\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ny.new_york\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"1971-10-20T22:36:21.939Z\"\n    },\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ny.new_york\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2001-07-25T17:35:42.160Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9301aa1-802c-4d6f-a4fc-f58a0d5512be",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange_transfers",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100,\n  \"amount_type\": \"SENDER_AMOUNT\",\n  \"receiver_address\": \"conct_gbp_lon@rn.eur.uk.london\",\n  \"sender_address\": \"alias_usd_lon@rn.eur.uk.london\",\n  \"end_to_end_id\": \"<string>\",\n  \"internal_id\": \"<string>\",\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4e68d369-7264-4488-b503-1c01c7b28008",
+          "name": "Get exchange transfer quote",
+          "request": {
+            "name": "Get exchange transfer quote",
+            "description": {
+              "content": "Requests a quote for an exchange transfer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange_transfers",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"amount_type\": \"<string>\",\n  \"receiver_address\": \"<string>\",\n  \"sender_address\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bf074a3d-f53d-43ba-9d16-d4d07c78e783",
+              "name": "Successfully quoted exchange transfer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange_transfers",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100,\n  \"amount_type\": \"SENDER_AMOUNT\",\n  \"receiver_address\": \"conct_gbp_lon@rn.eur.uk.london\",\n  \"sender_address\": \"alias_usd_lon@rn.eur.uk.london\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"destination_amount\": 89,\n  \"destination_currency\": \"GBP\",\n  \"fx_transfer_rate\": {\n    \"base_currency\": \"USD\",\n    \"counter_currency\": \"GBP\",\n    \"rate\": 0.89,\n    \"rate_type\": \"BUY\"\n  },\n  \"receiver_address\": \"conct_gbp_lon@rn.eur.uk.london\",\n  \"sender_address\": \"alias_usd_lon@rn.eur.uk.london\",\n  \"source_amount\": 100,\n  \"source_currency\": \"USD\",\n  \"type\": \"INDICATIVE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f890bcfc-0ddc-4335-9319-4022027668dc",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange_transfers",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100,\n  \"amount_type\": \"SENDER_AMOUNT\",\n  \"receiver_address\": \"conct_gbp_lon@rn.eur.uk.london\",\n  \"sender_address\": \"alias_usd_lon@rn.eur.uk.london\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ded3f75e-db5e-489a-9439-8b621058c51f",
+          "name": "Complete exchange transfer",
+          "request": {
+            "name": "Complete exchange transfer",
+            "description": {
+              "content": "Updates the status of an exchange transfer to `COMPLETED`. Make this request once the exchange transfer has been made on both the ledger and on internal systems.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange_transfers",
+                ":id",
+                "complete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the exchange transfer to complete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST"
+          },
+          "response": [
+            {
+              "id": "a999ff99-6ddb-4b9c-960e-47c59e289ed8",
+              "name": "Successfully completed exchange transfer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange_transfers",
+                    ":id",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the exchange transfer to complete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"destination_amount\": 355,\n  \"destination_currency\": \"GBP\",\n  \"end_to_end_id\": \"string\",\n  \"exchange_transfer_id\": \"e3b20ba4-28ed-4752-990d-e67887bb331e\",\n  \"fx_transfer_rate\": {\n    \"base_currency\": \"USD\",\n    \"counter_currency\": \"GBP\",\n    \"rate\": 0.89,\n    \"rate_type\": \"BUY\"\n  },\n  \"internal_id\": \"string\",\n  \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n  \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n  \"source_amount\": 1,\n  \"source_currency\": \"USD\",\n  \"state\": \"EXECUTED\",\n  \"type\": \"INDICATIVE\",\n  \"user_info\": [\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ny.new_york\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"1971-10-20T22:36:21.939Z\"\n    },\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ny.new_york\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2001-07-25T17:35:42.160Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48eb5612-049f-4fd5-beb7-28f0a995a99e",
+              "name": "Exchange transfer not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange_transfers",
+                    ":id",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the exchange transfer to complete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa836361-0b76-4963-adf3-9f5dc931f524",
+          "name": "Get exchange transfer by ID",
+          "request": {
+            "name": "Get exchange transfer by ID",
+            "description": {
+              "content": "Gets an exchange transfer by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange_transfers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Unique identifier of the exchange transfer you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "dbc1f950-8b16-4906-917e-859d037f6d04",
+              "name": "Successfully retrieved exchange transfer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange_transfers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the exchange transfer you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"destination_amount\": 355,\n  \"destination_currency\": \"GBP\",\n  \"end_to_end_id\": \"string\",\n  \"exchange_transfer_id\": \"e3b20ba4-28ed-4752-990d-e67887bb331e\",\n  \"fx_transfer_rate\": {\n    \"base_currency\": \"USD\",\n    \"counter_currency\": \"GBP\",\n    \"rate\": 0.89,\n    \"rate_type\": \"BUY\"\n  },\n  \"internal_id\": \"string\",\n  \"receiver_address\": \"sf_gbp@rn.us.ca.san_francisco\",\n  \"sender_address\": \"sf@rn.us.ca.san_francisco\",\n  \"source_amount\": 1,\n  \"source_currency\": \"USD\",\n  \"state\": \"EXECUTED\",\n  \"type\": \"INDICATIVE\",\n  \"user_info\": [\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ny.new_york\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"1971-10-20T22:36:21.939Z\"\n    },\n    {\n      \"json\": {},\n      \"node_address\": \"rn.us.ny.new_york\",\n      \"state\": \"EXECUTED\",\n      \"created_at\": \"2001-07-25T17:35:42.160Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f190af10-10f1-40fc-9e57-f78ccf5adf44",
+              "name": "Exchange transfer not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange_transfers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Unique identifier of the exchange transfer you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4596c1fa-a446-41a8-b85c-ec3f19d67a3e",
+    "name": "Palisade Addresses Exchange transfers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

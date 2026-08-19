@@ -1,0 +1,798 @@
+{
+  "item": [
+    {
+      "id": "0376539f-9d0b-4280-86da-0561cf3101a0",
+      "name": "Rates",
+      "description": {
+        "content": "\nUse these operations to manage your rates.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get rates](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/getrates)         | GET    | Gets a list of configured exchange rates. |\n| [Create rate](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/createrate)     | POST   | Creates an exchange rate for a specified currency pair. |\n| [Get rate by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/getratebyid) | GET    | Gets a configured exchange rate by ID. |\n| [Update rate](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/updaterate)     | PUT    | Updates an existing exchange rate. |\n| [Delete rate](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/deleterate)     | DELETE | Deletes an exchange rate. Once deleted, an exchange rate cannot be accessed. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a8664015-6097-4050-be8b-16d014136c99",
+          "name": "Get rates",
+          "request": {
+            "name": "Get rates",
+            "description": {
+              "content": "Gets a list of configured exchange rates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "rates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "20",
+                  "description": "Number of objects to return per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c8375519-0236-4628-8394-8aa392deb083",
+              "name": "Successfully returned list of rates.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": [\n    {\n      \"base_currency\": \"USD\",\n      \"counter_currency\": \"GBP\",\n      \"created_date\": \"2022-05-06T15:01:57.658Z\",\n      \"destination_currency\": \"GBP\",\n      \"destination_ledger\": \"rn.eur.uk.london\",\n      \"destination_ledger_account\": \"conct_gbp_lon\",\n      \"expiration_offset\": 95000,\n      \"lower_limit\": 0,\n      \"order_type\": \"buy\",\n      \"rate\": 0.89,\n      \"rate_id\": \"328b3e50-7983-46d5-94a0-ef004d78db1d\",\n      \"rate_scale\": 9,\n      \"source_currency\": \"USD\",\n      \"source_ledger\": \"rn.eur.uk.london\",\n      \"source_ledger_account\": \"alias_usd_lon\",\n      \"upper_limit\": 1000,\n      \"value_type\": \"MARGIN\",\n      \"margin_type\": \"BPS\",\n      \"expires_at\": \"1966-09-24T11:34:16.985Z\",\n      \"payout_method\": \"LOCAL_RAILS\"\n    },\n    {\n      \"base_currency\": \"USD\",\n      \"counter_currency\": \"GBP\",\n      \"created_date\": \"2025-02-23T23:09:12.569Z\",\n      \"destination_currency\": \"GBP\",\n      \"destination_ledger\": \"rn.eur.uk.london\",\n      \"destination_ledger_account\": \"conct_gbp_lon\",\n      \"expiration_offset\": 95000,\n      \"lower_limit\": 0,\n      \"order_type\": \"buy\",\n      \"rate\": 0.89,\n      \"rate_id\": \"328b3e50-7983-46d5-94a0-ef004d78db1d\",\n      \"rate_scale\": 9,\n      \"source_currency\": \"USD\",\n      \"source_ledger\": \"rn.eur.uk.london\",\n      \"source_ledger_account\": \"alias_usd_lon\",\n      \"upper_limit\": 1000,\n      \"value_type\": \"MARGIN\",\n      \"margin_type\": \"BPS\",\n      \"expires_at\": \"2012-07-22T15:21:44.628Z\",\n      \"payout_method\": \"LOCAL_RAILS\"\n    }\n  ],\n  \"first\": false,\n  \"last\": true,\n  \"number\": 5887,\n  \"numberOfElements\": 112,\n  \"size\": 3250,\n  \"totalElements\": 8309,\n  \"totalPages\": 8826,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f86b7cb-d925-42b2-8f89-cba435eae7c4",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73b3b57c-c8eb-4560-b2c6-1dca83fdd690",
+          "name": "Create rate",
+          "request": {
+            "name": "Create rate",
+            "description": {
+              "content": "Creates an exchange rate for a specified currency pair.\n\n**Example** - Applying a margin to the live FX rate:<br>\nA USD-GBP live FX rate of 0.80 is provided by a third-party rate provider and you want to reduce that rate by 20 BPS. In this API call, you would set `\"value_type\": \"MARGIN\"`, then `\"margin_type\": \"BPS\"`, and `\"rate\": \"20\"`. After that, during the `Get quotes` call, the final FX rate will be calculated as 0.80*(1-(20/10000))=`0.7984` and then applied during quote creation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "rates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"base_currency\": \"<string>\",\n  \"counter_currency\": \"<string>\",\n  \"expiration_offset\": \"<integer>\",\n  \"order_type\": \"<string>\",\n  \"rate\": \"<number>\",\n  \"ledger\": {\n    \"destination_ledger\": \"<string>\",\n    \"source_ledger\": \"<string>\"\n  },\n  \"account\": {\n    \"destination_ledger\": \"<string>\",\n    \"destination_ledger_account\": \"<string>\",\n    \"source_ledger\": \"<string>\",\n    \"source_ledger_account\": \"<string>\"\n  },\n  \"lower_limit\": \"<number>\",\n  \"upper_limit\": \"<number>\",\n  \"payout_method\": \"<string>\",\n  \"value_type\": \"<string>\",\n  \"margin_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bfa5a325-92ee-4538-bf86-2485386188ac",
+              "name": "Successfully created rate.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"base_currency\": \"USD\",\n  \"counter_currency\": \"GBP\",\n  \"created_date\": \"2006-01-11T03:54:38.126Z\",\n  \"destination_currency\": \"GBP\",\n  \"destination_ledger\": \"rn.eur.uk.london\",\n  \"destination_ledger_account\": \"conct_gbp_lon\",\n  \"expiration_offset\": 95000,\n  \"lower_limit\": 0,\n  \"order_type\": \"buy\",\n  \"rate\": 0.89,\n  \"rate_id\": \"328b3e50-7983-46d5-94a0-ef004d78db1d\",\n  \"rate_scale\": 9,\n  \"source_currency\": \"USD\",\n  \"source_ledger\": \"rn.eur.uk.london\",\n  \"source_ledger_account\": \"alias_usd_lon\",\n  \"upper_limit\": 1000,\n  \"value_type\": \"MARGIN\",\n  \"margin_type\": \"BPS\",\n  \"expires_at\": \"1967-03-07T06:26:08.694Z\",\n  \"payout_method\": \"LOCAL_RAILS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad4b5356-fe4e-4a75-bf6b-11fa962bcad7",
+              "name": "Request error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df03bf18-3c9b-44fc-a9b4-41706cb4a839",
+          "name": "Get rate by ID",
+          "request": {
+            "name": "Get rate by ID",
+            "description": {
+              "content": "Gets a configured exchange rate by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "rates",
+                ":rate_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "rate_id",
+                  "description": "(Required) Provide the `rate_id` of the exchange rate you want to return."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c40a30b6-1e54-4b0c-bb9d-3729008a3134",
+              "name": "Sucessfully returned rate.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "rates",
+                    ":rate_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "rate_id",
+                      "description": "(Required) Provide the `rate_id` of the exchange rate you want to return."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"base_currency\": \"USD\",\n  \"counter_currency\": \"GBP\",\n  \"created_date\": \"2006-01-11T03:54:38.126Z\",\n  \"destination_currency\": \"GBP\",\n  \"destination_ledger\": \"rn.eur.uk.london\",\n  \"destination_ledger_account\": \"conct_gbp_lon\",\n  \"expiration_offset\": 95000,\n  \"lower_limit\": 0,\n  \"order_type\": \"buy\",\n  \"rate\": 0.89,\n  \"rate_id\": \"328b3e50-7983-46d5-94a0-ef004d78db1d\",\n  \"rate_scale\": 9,\n  \"source_currency\": \"USD\",\n  \"source_ledger\": \"rn.eur.uk.london\",\n  \"source_ledger_account\": \"alias_usd_lon\",\n  \"upper_limit\": 1000,\n  \"value_type\": \"MARGIN\",\n  \"margin_type\": \"BPS\",\n  \"expires_at\": \"1967-03-07T06:26:08.694Z\",\n  \"payout_method\": \"LOCAL_RAILS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ecb43fde-a132-452a-9686-a41ceb85af59",
+              "name": "Rate not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "rates",
+                    ":rate_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "rate_id",
+                      "description": "(Required) Provide the `rate_id` of the exchange rate you want to return."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e53be6c-fd4b-43cf-bd91-8b5c509b60c5",
+          "name": "Update rate",
+          "request": {
+            "name": "Update rate",
+            "description": {
+              "content": "Updates an existing exchange rate. With this call, you can change `value_type` from `RATE` to `MARGIN` (and vice versa), change the actual `rate` value of the specified value type, or both.\n\n**Example** - Updating an existing margin applied to the live FX rate:<br>\nA USD-GBP live FX rate of 0.80 is provided by a third-party rate provider and you currently reduce that rate by 20 BPS. You now want to change it and reduce it by 10 BPS instead. To do so, set `\"rate\": \"10\"` in the request. Once the change is applied, the final FX rate is calculated as 0.80*(1-(10/10000))=`0.7992` during the `Get quotes` call, and then applied during quote creation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "rates",
+                ":rate_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "rate_id",
+                  "description": "(Required) Provide the `rate_id` of the exchange rate you want to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"base_currency\": \"<string>\",\n  \"counter_currency\": \"<string>\",\n  \"expiration_offset\": \"<integer>\",\n  \"order_type\": \"<string>\",\n  \"rate\": \"<number>\",\n  \"ledger\": {\n    \"destination_ledger\": \"<string>\",\n    \"source_ledger\": \"<string>\"\n  },\n  \"account\": {\n    \"destination_ledger\": \"<string>\",\n    \"destination_ledger_account\": \"<string>\",\n    \"source_ledger\": \"<string>\",\n    \"source_ledger_account\": \"<string>\"\n  },\n  \"lower_limit\": \"<number>\",\n  \"upper_limit\": \"<number>\",\n  \"payout_method\": \"<string>\",\n  \"value_type\": \"<string>\",\n  \"margin_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "11f7cb36-0a4f-4301-9081-667f8d17ffa3",
+              "name": "Successfully updated rate.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "rates",
+                    ":rate_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "rate_id",
+                      "description": "(Required) Provide the `rate_id` of the exchange rate you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"base_currency\": \"USD\",\n  \"counter_currency\": \"GBP\",\n  \"created_date\": \"2006-01-11T03:54:38.126Z\",\n  \"destination_currency\": \"GBP\",\n  \"destination_ledger\": \"rn.eur.uk.london\",\n  \"destination_ledger_account\": \"conct_gbp_lon\",\n  \"expiration_offset\": 95000,\n  \"lower_limit\": 0,\n  \"order_type\": \"buy\",\n  \"rate\": 0.89,\n  \"rate_id\": \"328b3e50-7983-46d5-94a0-ef004d78db1d\",\n  \"rate_scale\": 9,\n  \"source_currency\": \"USD\",\n  \"source_ledger\": \"rn.eur.uk.london\",\n  \"source_ledger_account\": \"alias_usd_lon\",\n  \"upper_limit\": 1000,\n  \"value_type\": \"MARGIN\",\n  \"margin_type\": \"BPS\",\n  \"expires_at\": \"1967-03-07T06:26:08.694Z\",\n  \"payout_method\": \"LOCAL_RAILS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0485bb6e-ac06-4261-b834-b17b447e3d78",
+              "name": "Request error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "rates",
+                    ":rate_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "rate_id",
+                      "description": "(Required) Provide the `rate_id` of the exchange rate you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9b8b06d-f20f-4e40-a75f-60f3929adc04",
+          "name": "Delete rate",
+          "request": {
+            "name": "Delete rate",
+            "description": {
+              "content": "Deletes an exchange rate. Once deleted, an exchange rate cannot be accessed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "rates",
+                ":rate_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "rate_id",
+                  "description": "(Required) Provide the `rate_id` of the exchange rate you want to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "a934a5c5-b19b-4a5c-ab25-da9b7fbdbbd3",
+              "name": "Successfully deleted rate.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "rates",
+                    ":rate_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "rate_id",
+                      "description": "(Required) Provide the `rate_id` of the exchange rate you want to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8a72b899-3ed0-4a93-9f03-9139f040bd53",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "rates",
+                    ":rate_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "rate_id",
+                      "description": "(Required) Provide the `rate_id` of the exchange rate you want to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "518e40fc-ded1-4dad-b3d4-18c31ed22dd9",
+    "name": "Palisade Addresses Rates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

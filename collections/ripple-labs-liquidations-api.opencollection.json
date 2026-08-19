@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Liquidations API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Liquidations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get liquidations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/liquidations",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Start date (inclusive) of first activity. Specified in ISO-8601 format, for example `2018-08-06T23:13:55.997Z`"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "End date (exclusive) of last activity. Specified in ISO-8601 format, for example `2018-08-06T23:13:55.997Z`"
+              },
+              {
+                "name": "payment_id",
+                "value": "",
+                "type": "query",
+                "description": "RippleNet payment ID(s)"
+              },
+              {
+                "name": "reference_id",
+                "value": "",
+                "type": "query",
+                "description": "Unique reference ID(s)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Liquidation status"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of liquidations to return per page."
+              }
+            ]
+          },
+          "docs": "List all liquidations by date range"
+        },
+        {
+          "info": {
+            "name": "Get liquidation by Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/liquidations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the liquidation. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+              }
+            ]
+          },
+          "docs": "Get a specific liquidation by its unique `Id` value"
+        },
+        {
+          "info": {
+            "name": "Get liquidations by payment Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/liquidations/ripplenet-payment-id/:ripplenet_payment_id",
+            "params": [
+              {
+                "name": "ripplenet_payment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a RippleNet payment. Obtain this value by performing a [GET liquidations](#operation/getLiquidations) operation."
+              }
+            ]
+          },
+          "docs": "Get a list of liquidations associated with a `ripplenet_payment_id`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

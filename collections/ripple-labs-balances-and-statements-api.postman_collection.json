@@ -1,0 +1,1131 @@
+{
+  "item": [
+    {
+      "id": "4ea6e6a5-62a1-4c58-9f00-ec8f2a000448",
+      "name": "Balances and statements",
+      "description": {
+        "content": "\nUse these operations to view balances and statements for a ledger.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get balances](/products/payments-odl/api-docs/ripplenet/reference/openapi/balances-and-statements/getbalances)  | GET   | Get balances for local and remote accounts owned by a RippleNet address. |\n| [Get ledger balances](/products/payments-odl/api-docs/ripplenet/reference/openapi/balances-and-statements/getledgerbalances)  | GET   | Get balances for ledger owned by a RippleNet address. |\n| [Get statement](/products/payments-odl/api-docs/ripplenet/reference/openapi/balances-and-statements/getstatement)  | GET   | Gets a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range. |\n| [Get statement by external account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/balances-and-statements/getstatementbyexternalaccountid)   | GET   | Gets a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range. |\n| [Get ledger account statement](/products/payments-odl/api-docs/ripplenet/reference/openapi/balances-and-statements/getledgeraccountstatement)  | GET   | Get statement for a specified Ledger Account |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1583608f-ff9c-4050-b295-3ca3b5961894",
+          "name": "Get balances",
+          "request": {
+            "name": "Get balances",
+            "description": {
+              "content": "Get balances for local and remote accounts owned by a RippleNet address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitor",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "e7274518-ad89-4658-b33c-e3760e89a178",
+              "name": "Successfully returned balances.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitor",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"local_balance\": {},\n  \"remote_balances\": [\n    {\n      \"currency_balances\": [\n        {\n          \"account_balances\": [\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"aggregate_balance\": 0,\n          \"currency\": \"USD\"\n        },\n        {\n          \"account_balances\": [\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"aggregate_balance\": 0,\n          \"currency\": \"USD\"\n        }\n      ],\n      \"institution\": \"rn.us.ca.san_francisco\",\n      \"institution_address\": \"rn.us.ca.san_francisco\",\n      \"pool_account_balances\": [\n        {\n          \"pool_account_name\": \"string\",\n          \"balance\": 7144.917349185677,\n          \"owner\": \"string\",\n          \"currency\": \"string\",\n          \"linked_accounts\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"pool_account_name\": \"string\",\n          \"balance\": 8623.673214214636,\n          \"owner\": \"string\",\n          \"currency\": \"string\",\n          \"linked_accounts\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    {\n      \"currency_balances\": [\n        {\n          \"account_balances\": [\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"aggregate_balance\": 0,\n          \"currency\": \"USD\"\n        },\n        {\n          \"account_balances\": [\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"aggregate_balance\": 0,\n          \"currency\": \"USD\"\n        }\n      ],\n      \"institution\": \"rn.us.ca.san_francisco\",\n      \"institution_address\": \"rn.us.ca.san_francisco\",\n      \"pool_account_balances\": [\n        {\n          \"pool_account_name\": \"string\",\n          \"balance\": 6988.143484708315,\n          \"owner\": \"string\",\n          \"currency\": \"string\",\n          \"linked_accounts\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"pool_account_name\": \"string\",\n          \"balance\": 9756.002567172258,\n          \"owner\": \"string\",\n          \"currency\": \"string\",\n          \"linked_accounts\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "673a7301-6425-48cc-8d6e-0c104050e10a",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitor",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1f72f8da-0d14-47dc-8eae-ac0bfdde3262",
+          "name": "Get ledger balances",
+          "request": {
+            "name": "Get ledger balances",
+            "description": {
+              "content": "Get balances for ledger owned by a RippleNet address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitor",
+                "ledger",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "8376f6bb-9f11-4edc-861d-b0a9ab5a606d",
+              "name": "Successfully returned balances.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitor",
+                    "ledger",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"local_balance\": {},\n  \"remote_balances\": [\n    {\n      \"currency_balances\": [\n        {\n          \"account_balances\": [\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"aggregate_balance\": 0,\n          \"currency\": \"USD\"\n        },\n        {\n          \"account_balances\": [\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"aggregate_balance\": 0,\n          \"currency\": \"USD\"\n        }\n      ],\n      \"institution\": \"rn.us.ca.san_francisco\",\n      \"institution_address\": \"rn.us.ca.san_francisco\",\n      \"pool_account_balances\": [\n        {\n          \"pool_account_name\": \"string\",\n          \"balance\": 9442.378601740373,\n          \"owner\": \"string\",\n          \"currency\": \"string\",\n          \"linked_accounts\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"pool_account_name\": \"string\",\n          \"balance\": 3880.823472355511,\n          \"owner\": \"string\",\n          \"currency\": \"string\",\n          \"linked_accounts\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    {\n      \"currency_balances\": [\n        {\n          \"account_balances\": [\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"aggregate_balance\": 0,\n          \"currency\": \"USD\"\n        },\n        {\n          \"account_balances\": [\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"account_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"minimum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"maximum_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"low_liquidity_threshold\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_min_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"owner_max_allowed_balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"aggregate_balance\": 0,\n          \"currency\": \"USD\"\n        }\n      ],\n      \"institution\": \"rn.us.ca.san_francisco\",\n      \"institution_address\": \"rn.us.ca.san_francisco\",\n      \"pool_account_balances\": [\n        {\n          \"pool_account_name\": \"string\",\n          \"balance\": 4332.744585119338,\n          \"owner\": \"string\",\n          \"currency\": \"string\",\n          \"linked_accounts\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"pool_account_name\": \"string\",\n          \"balance\": 541.9516345900411,\n          \"owner\": \"string\",\n          \"currency\": \"string\",\n          \"linked_accounts\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddcc6882-0790-49d2-9c6a-2a167b12bbc9",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitor",
+                    "ledger",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24575979-0849-4629-9a31-706e9f84bcc1",
+          "name": "Get statement",
+          "request": {
+            "name": "Get statement",
+            "description": {
+              "content": "Gets a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statement",
+                ":account_name_with_address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start-date",
+                  "value": "<string>",
+                  "description": "(Required) The lower bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "end-date",
+                  "value": "<string>",
+                  "description": "(Required) The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC For example, `2018-08-06T23:15:13.218Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of payment and transfer objects to return per page, with a limit of 100 per page.\n\nFor example, a query with `\"size\": \"100\"` results in `\"totalPages\": \"43\"` when the query result is `\"totalElements\": \"4290\"`.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_name_with_address",
+                  "description": "(Required) The RippleNet account name and address that you want to return a statement for. Use the format `accountname@ripplenetaddress`. For example, `san_francisco@rn.us.ca.san_francisco`."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "2c530f36-5817-4e23-86a8-39c87d236ec1",
+              "name": "Successfully returns an account statement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statement",
+                    ":account_name_with_address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_name_with_address",
+                      "description": "(Required) The RippleNet account name and address that you want to return a statement for. Use the format `accountname@ripplenetaddress`. For example, `san_francisco@rn.us.ca.san_francisco`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_name\": \"trans_usd_sf\",\n  \"closing_balance\": -909,\n  \"currency\": \"USD\",\n  \"end_datetime\": \"2020-08-06T23:13:55.997Z\",\n  \"generated_at\": \"2019-10-01T21:58:23.621Z\",\n  \"opening_balance\": 0,\n  \"owner\": \"rn.us.ca.san_francisco\",\n  \"start_datetime\": \"2018-08-06T23:13:55.997Z\",\n  \"transactions\": {\n    \"content\": [\n      {\n        \"balance_change\": -15,\n        \"balance_result\": -909,\n        \"created_at\": \"2019-10-01T21:28:28.354Z\",\n        \"end_to_end_id\": \"91ecb6bd-4dd8-4b53-a900-72b79f3064e4\",\n        \"internal_id\": \"8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c\",\n        \"returned_by_payment_with_id\": \"1a46b855-c6e5-a456-5cea-eae3f07ce4ff\",\n        \"returns_payment_with_id\": \"b3aee23f-71fd-65cc-4577-35543d4f5c74\",\n        \"transaction_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n        \"transaction_state\": \"COMPLETED\",\n        \"transaction_type\": \"PAYMENT\",\n        \"sender_address\": \"rn.us.ca.san_francisco\",\n        \"receiver_address\": \"rn.mx.mexico\",\n        \"venue_id\": \"nz7RpAujYgnQtjEM\",\n        \"transaction_hash\": \"DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6\",\n        \"balance_change_created_at\": \"2019-10-01T21:28:28.354Z\"\n      },\n      {\n        \"balance_change\": -15,\n        \"balance_result\": -909,\n        \"created_at\": \"2019-10-01T21:28:28.354Z\",\n        \"end_to_end_id\": \"91ecb6bd-4dd8-4b53-a900-72b79f3064e4\",\n        \"internal_id\": \"8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c\",\n        \"returned_by_payment_with_id\": \"68f8bf38-a428-cf1f-e250-8dba398c6a41\",\n        \"returns_payment_with_id\": \"9a161c03-6946-0b2f-f165-a40f57b0d1c0\",\n        \"transaction_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n        \"transaction_state\": \"COMPLETED\",\n        \"transaction_type\": \"PAYMENT\",\n        \"sender_address\": \"rn.us.ca.san_francisco\",\n        \"receiver_address\": \"rn.mx.mexico\",\n        \"venue_id\": \"nz7RpAujYgnQtjEM\",\n        \"transaction_hash\": \"DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6\",\n        \"balance_change_created_at\": \"2019-10-01T21:28:28.354Z\"\n      }\n    ],\n    \"first\": true,\n    \"last\": true,\n    \"number\": 0,\n    \"numberOfElements\": 1,\n    \"size\": 10,\n    \"sort\": \"string\",\n    \"totalPages\": 1,\n    \"total_elements\": 1\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1be0705e-80bb-4528-9062-ef5d962151ba",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statement",
+                    ":account_name_with_address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_name_with_address",
+                      "description": "(Required) The RippleNet account name and address that you want to return a statement for. Use the format `accountname@ripplenetaddress`. For example, `san_francisco@rn.us.ca.san_francisco`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e9beb09-f2b0-4db6-af97-85296622b98e",
+              "name": "Peer or Account not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statement",
+                    ":account_name_with_address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_name_with_address",
+                      "description": "(Required) The RippleNet account name and address that you want to return a statement for. Use the format `accountname@ripplenetaddress`. For example, `san_francisco@rn.us.ca.san_francisco`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5836ed83-1abb-4a9c-b963-ba9c011e943b",
+          "name": "Get statement by external account ID",
+          "request": {
+            "name": "Get statement by external account ID",
+            "description": {
+              "content": "Gets a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statement",
+                "external_account_id",
+                ":external_account_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start-date",
+                  "value": "<string>",
+                  "description": "(Required) The lower bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "end-date",
+                  "value": "<string>",
+                  "description": "(Required) The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:15:13.218Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of payment and transfer objects to return per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "external_account_id",
+                  "description": "(Required) The external account ID associated with the account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "b0c3a762-aad8-428b-af7b-9cf2b8fd477d",
+              "name": "Successfully returns an account statement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statement",
+                    "external_account_id",
+                    ":external_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) The external account ID associated with the account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_name\": \"trans_usd_sf\",\n  \"closing_balance\": -909,\n  \"currency\": \"USD\",\n  \"end_datetime\": \"2020-08-06T23:13:55.997Z\",\n  \"generated_at\": \"2019-10-01T21:58:23.621Z\",\n  \"opening_balance\": 0,\n  \"owner\": \"rn.us.ca.san_francisco\",\n  \"start_datetime\": \"2018-08-06T23:13:55.997Z\",\n  \"transactions\": {\n    \"content\": [\n      {\n        \"balance_change\": -15,\n        \"balance_result\": -909,\n        \"created_at\": \"2019-10-01T21:28:28.354Z\",\n        \"end_to_end_id\": \"91ecb6bd-4dd8-4b53-a900-72b79f3064e4\",\n        \"internal_id\": \"8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c\",\n        \"returned_by_payment_with_id\": \"897dddd1-1adc-a2e8-41b3-61c2671c5617\",\n        \"returns_payment_with_id\": \"7c3963ce-e7fc-3a3e-05b2-7a2ae6a04945\",\n        \"transaction_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n        \"transaction_state\": \"COMPLETED\",\n        \"transaction_type\": \"PAYMENT\",\n        \"sender_address\": \"rn.us.ca.san_francisco\",\n        \"receiver_address\": \"rn.mx.mexico\",\n        \"venue_id\": \"nz7RpAujYgnQtjEM\",\n        \"transaction_hash\": \"DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6\",\n        \"balance_change_created_at\": \"2019-10-01T21:28:28.354Z\"\n      },\n      {\n        \"balance_change\": -15,\n        \"balance_result\": -909,\n        \"created_at\": \"2019-10-01T21:28:28.354Z\",\n        \"end_to_end_id\": \"91ecb6bd-4dd8-4b53-a900-72b79f3064e4\",\n        \"internal_id\": \"8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c\",\n        \"returned_by_payment_with_id\": \"80c1bdf3-918b-b331-4b3d-7cdaca5820e2\",\n        \"returns_payment_with_id\": \"f6b68085-cc29-7fda-98de-469656107663\",\n        \"transaction_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n        \"transaction_state\": \"COMPLETED\",\n        \"transaction_type\": \"PAYMENT\",\n        \"sender_address\": \"rn.us.ca.san_francisco\",\n        \"receiver_address\": \"rn.mx.mexico\",\n        \"venue_id\": \"nz7RpAujYgnQtjEM\",\n        \"transaction_hash\": \"DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6\",\n        \"balance_change_created_at\": \"2019-10-01T21:28:28.354Z\"\n      }\n    ],\n    \"first\": true,\n    \"last\": true,\n    \"number\": 0,\n    \"numberOfElements\": 1,\n    \"size\": 10,\n    \"sort\": \"string\",\n    \"totalPages\": 1,\n    \"total_elements\": 1\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6c6a20a-172a-476f-a3b9-34e4ef59a764",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statement",
+                    "external_account_id",
+                    ":external_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) The external account ID associated with the account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "262774c5-2775-4b1c-8794-5ffbfd530418",
+              "name": "Peer or Account not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statement",
+                    "external_account_id",
+                    ":external_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) The external account ID associated with the account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0bbbe59a-87be-4326-9701-39c8f34e0239",
+          "name": "Get ledger account statement",
+          "request": {
+            "name": "Get ledger account statement",
+            "description": {
+              "content": "Get statement for a specified Ledger account.\n\n**Note**: This operation is deprecated. Use the [Reports API](https://docs.ripple.com/payments-odl/api-docs/report_service/reference/) to view your statements.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "statement",
+                "ledger",
+                ":account_name_with_address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start-date",
+                  "value": "<string>",
+                  "description": "(Required) The lower bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "end-date",
+                  "value": "<string>",
+                  "description": "(Required) The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC For example, `2018-08-06T23:15:13.218Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of payment and transfer objects to return per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_name_with_address",
+                  "description": "(Required) The RippleNet account name and address that you want to return a statement for. Use the format `accountname@ripplenetaddress`. For example, `san_francisco@rn.us.ca.san_francisco`."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "714791a0-03b9-417b-ab34-93cede6c0a69",
+              "name": "Successfully returned statement for a specified ledger account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statement",
+                    "ledger",
+                    ":account_name_with_address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_name_with_address",
+                      "description": "(Required) The RippleNet account name and address that you want to return a statement for. Use the format `accountname@ripplenetaddress`. For example, `san_francisco@rn.us.ca.san_francisco`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_name\": \"trans_usd_sf\",\n  \"closing_balance\": -909,\n  \"currency\": \"USD\",\n  \"end_datetime\": \"2020-08-06T23:13:55.997Z\",\n  \"generated_at\": \"2019-10-01T21:58:23.621Z\",\n  \"opening_balance\": 0,\n  \"owner\": \"rn.us.ca.san_francisco\",\n  \"start_datetime\": \"2018-08-06T23:13:55.997Z\",\n  \"transactions\": {\n    \"content\": [\n      {\n        \"balance_change\": -15,\n        \"balance_result\": -909,\n        \"created_at\": \"2019-10-01T21:28:28.354Z\",\n        \"end_to_end_id\": \"91ecb6bd-4dd8-4b53-a900-72b79f3064e4\",\n        \"internal_id\": \"8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c\",\n        \"returned_by_payment_with_id\": \"897dddd1-1adc-a2e8-41b3-61c2671c5617\",\n        \"returns_payment_with_id\": \"7c3963ce-e7fc-3a3e-05b2-7a2ae6a04945\",\n        \"transaction_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n        \"transaction_state\": \"COMPLETED\",\n        \"transaction_type\": \"PAYMENT\",\n        \"sender_address\": \"rn.us.ca.san_francisco\",\n        \"receiver_address\": \"rn.mx.mexico\",\n        \"venue_id\": \"nz7RpAujYgnQtjEM\",\n        \"transaction_hash\": \"DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6\",\n        \"balance_change_created_at\": \"2019-10-01T21:28:28.354Z\"\n      },\n      {\n        \"balance_change\": -15,\n        \"balance_result\": -909,\n        \"created_at\": \"2019-10-01T21:28:28.354Z\",\n        \"end_to_end_id\": \"91ecb6bd-4dd8-4b53-a900-72b79f3064e4\",\n        \"internal_id\": \"8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c\",\n        \"returned_by_payment_with_id\": \"80c1bdf3-918b-b331-4b3d-7cdaca5820e2\",\n        \"returns_payment_with_id\": \"f6b68085-cc29-7fda-98de-469656107663\",\n        \"transaction_id\": \"9eca588f-e89d-4629-82fa-da9c4646310f\",\n        \"transaction_state\": \"COMPLETED\",\n        \"transaction_type\": \"PAYMENT\",\n        \"sender_address\": \"rn.us.ca.san_francisco\",\n        \"receiver_address\": \"rn.mx.mexico\",\n        \"venue_id\": \"nz7RpAujYgnQtjEM\",\n        \"transaction_hash\": \"DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6\",\n        \"balance_change_created_at\": \"2019-10-01T21:28:28.354Z\"\n      }\n    ],\n    \"first\": true,\n    \"last\": true,\n    \"number\": 0,\n    \"numberOfElements\": 1,\n    \"size\": 10,\n    \"sort\": \"string\",\n    \"totalPages\": 1,\n    \"total_elements\": 1\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d056a28-fe43-4256-88b1-3fc057ca2644",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statement",
+                    "ledger",
+                    ":account_name_with_address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_name_with_address",
+                      "description": "(Required) The RippleNet account name and address that you want to return a statement for. Use the format `accountname@ripplenetaddress`. For example, `san_francisco@rn.us.ca.san_francisco`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d935a03-16d3-490f-9703-fcffe6761eed",
+              "name": "Peer or Account not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statement",
+                    "ledger",
+                    ":account_name_with_address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end-date",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_name_with_address",
+                      "description": "(Required) The RippleNet account name and address that you want to return a statement for. Use the format `accountname@ripplenetaddress`. For example, `san_francisco@rn.us.ca.san_francisco`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7c1ce49c-ba7e-41de-8624-255ff8b225b5",
+    "name": "Palisade Addresses Balances and statements API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

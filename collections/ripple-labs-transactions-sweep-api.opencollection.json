@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Transactions - Sweep API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions - Sweep",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List transactions for a sweep instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/transactions/sweep/:sweepId",
+            "params": [
+              {
+                "name": "sweepId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "correlationId",
+                "value": "",
+                "type": "query",
+                "description": "Correlation ID for this request, used to correlate multiple actions"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return per page (default 50, max 1000)"
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "The token to retrieve the next page of results"
+              },
+              {
+                "name": "pagination.pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (default 50, max 1000)"
+              },
+              {
+                "name": "pagination.pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Token for pagination from previous response"
+              },
+              {
+                "name": "pagination.orderBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "pagination.order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (ASC or DESC)"
+              }
+            ]
+          },
+          "docs": "List all transactions for a given sweep instance"
+        },
+        {
+          "info": {
+            "name": "List transactions for a sweep instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/transactions/sweep/:sweepId:list",
+            "params": [
+              {
+                "name": "sweepId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List all transactions for a given sweep instance"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

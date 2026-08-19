@@ -1,0 +1,177 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Balances and statements API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Balances and statements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/monitor/balances"
+          },
+          "docs": "Get balances for local and remote accounts owned by a RippleNet address."
+        },
+        {
+          "info": {
+            "name": "Get ledger balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/monitor/ledger/balances"
+          },
+          "docs": "Get balances for ledger owned by a RippleNet address."
+        },
+        {
+          "info": {
+            "name": "Get statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/statement/:account_name_with_address",
+            "params": [
+              {
+                "name": "account_name_with_address",
+                "value": "",
+                "type": "path",
+                "description": "The RippleNet account name and address that you want to return a statement for. Use the format `accountname@ripplenetaddress`. For example, `san_francisco@rn.us.ca.san_francisco`."
+              },
+              {
+                "name": "start-date",
+                "value": "",
+                "type": "query",
+                "description": "The lower bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`."
+              },
+              {
+                "name": "end-date",
+                "value": "",
+                "type": "query",
+                "description": "The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC For example, `2018-08-06T23:15:13.218Z`."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of payment and transfer objects to return per page, with a limit of 100 per page.\n\nFor example, a query with `\"size\": \"100\"` results in `\"totalPages\": \"43\"` when the query result is `\"totalElements\": \"4290\"`.\n"
+              }
+            ]
+          },
+          "docs": "Gets a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range."
+        },
+        {
+          "info": {
+            "name": "Get statement by external account ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/statement/external_account_id/:external_account_id",
+            "params": [
+              {
+                "name": "external_account_id",
+                "value": "",
+                "type": "path",
+                "description": "The external account ID associated with the account."
+              },
+              {
+                "name": "start-date",
+                "value": "",
+                "type": "query",
+                "description": "The lower bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`."
+              },
+              {
+                "name": "end-date",
+                "value": "",
+                "type": "query",
+                "description": "The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:15:13.218Z`."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of payment and transfer objects to return per page."
+              }
+            ]
+          },
+          "docs": "Gets a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range."
+        },
+        {
+          "info": {
+            "name": "Get ledger account statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/statement/ledger/:account_name_with_address",
+            "params": [
+              {
+                "name": "account_name_with_address",
+                "value": "",
+                "type": "path",
+                "description": "The RippleNet account name and address that you want to return a statement for. Use the format `accountname@ripplenetaddress`. For example, `san_francisco@rn.us.ca.san_francisco`."
+              },
+              {
+                "name": "start-date",
+                "value": "",
+                "type": "query",
+                "description": "The lower bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`."
+              },
+              {
+                "name": "end-date",
+                "value": "",
+                "type": "query",
+                "description": "The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC For example, `2018-08-06T23:15:13.218Z`."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of payment and transfer objects to return per page."
+              }
+            ]
+          },
+          "docs": "Get statement for a specified Ledger account.\n\n**Note**: This operation is deprecated. Use the [Reports API](https://docs.ripple.com/payments-odl/api-docs/report_service/reference/) to view your statements.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

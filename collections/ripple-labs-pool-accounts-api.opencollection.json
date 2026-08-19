@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Pool accounts API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pool accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all pool accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/pool_accounts"
+          },
+          "docs": "Returns a list of all pool accounts on a RippleNet node."
+        },
+        {
+          "info": {
+            "name": "Get pool account by pool account ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/pool_accounts/:pool_account_id",
+            "params": [
+              {
+                "name": "pool_account_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique name to identify the pool account."
+              }
+            ]
+          },
+          "docs": "Get a pool account by its pool account ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

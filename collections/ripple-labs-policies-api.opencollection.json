@@ -1,0 +1,1009 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Policies API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List organization wallet limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/policy-rules/limits",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return per page (default 50, max 1000)"
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "The token to retrieve the next page of results"
+              },
+              {
+                "name": "pagination.pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (default 50, max 1000)"
+              },
+              {
+                "name": "pagination.pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Token for pagination from previous response"
+              },
+              {
+                "name": "pagination.orderBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "pagination.order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (ASC or DESC)"
+              },
+              {
+                "name": "filter.id.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.id.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.id.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.id.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.id.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.id.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.id.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.id.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.vaultId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.vaultId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.vaultId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.vaultId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.vaultId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.vaultId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.vaultId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.vaultId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.walletId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.walletId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.walletId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.walletId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.walletId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.walletId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.walletId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.walletId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.assetSymbol.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.assetSymbol.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.assetSymbol.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.assetSymbol.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.assetSymbol.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.blockchain.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact blockchain match"
+              },
+              {
+                "name": "filter.blockchain.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Exclude this blockchain"
+              },
+              {
+                "name": "filter.blockchain.in",
+                "value": "",
+                "type": "query",
+                "description": "Blockchain is in this list"
+              },
+              {
+                "name": "filter.blockchain.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Blockchain is not in this list"
+              },
+              {
+                "name": "filter.limitType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by limit type"
+              },
+              {
+                "name": "filter.status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by wallet limit status"
+              },
+              {
+                "name": "filter.active.eq",
+                "value": "",
+                "type": "query",
+                "description": "Equals"
+              },
+              {
+                "name": "filter.active.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.createdAt.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact timestamp match"
+              },
+              {
+                "name": "filter.createdAt.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.before",
+                "value": "",
+                "type": "query",
+                "description": "Before this timestamp"
+              },
+              {
+                "name": "filter.createdAt.after",
+                "value": "",
+                "type": "query",
+                "description": "After this timestamp"
+              },
+              {
+                "name": "filter.createdAt.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.between.start",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (inclusive)"
+              },
+              {
+                "name": "filter.createdAt.between.end",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (inclusive)"
+              },
+              {
+                "name": "filter.createdAt.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.createdAt.relativeDays",
+                "value": "",
+                "type": "query",
+                "description": "Relative days from now (negative for past, positive for future)"
+              },
+              {
+                "name": "filter.updatedAt.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact timestamp match"
+              },
+              {
+                "name": "filter.updatedAt.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.before",
+                "value": "",
+                "type": "query",
+                "description": "Before this timestamp"
+              },
+              {
+                "name": "filter.updatedAt.after",
+                "value": "",
+                "type": "query",
+                "description": "After this timestamp"
+              },
+              {
+                "name": "filter.updatedAt.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.between.start",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (inclusive)"
+              },
+              {
+                "name": "filter.updatedAt.between.end",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (inclusive)"
+              },
+              {
+                "name": "filter.updatedAt.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.updatedAt.relativeDays",
+                "value": "",
+                "type": "query",
+                "description": "Relative days from now (negative for past, positive for future)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Case-insensitive search over wallet limit ID, vault ID, wallet ID, and asset symbol."
+              }
+            ]
+          },
+          "docs": "List all wallet limits within the organization"
+        },
+        {
+          "info": {
+            "name": "List organization wallet limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/policy-rules/limits:list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List all wallet limits within the organization"
+        },
+        {
+          "info": {
+            "name": "List wallet limit policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/policy-rules/limits",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return per page (default 50, max 1000)"
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "The token to retrieve the next page of results"
+              },
+              {
+                "name": "blockchain",
+                "value": "",
+                "type": "query",
+                "description": "Optional filter by blockchain. If not specified, returns policies for all blockchains."
+              },
+              {
+                "name": "pagination.pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (default 50, max 1000)"
+              },
+              {
+                "name": "pagination.pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Token for pagination from previous response"
+              },
+              {
+                "name": "pagination.orderBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "pagination.order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (ASC or DESC)"
+              },
+              {
+                "name": "filter.id.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.id.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.id.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.id.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.id.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.id.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.id.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.id.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.vaultId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.vaultId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.vaultId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.vaultId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.vaultId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.vaultId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.vaultId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.vaultId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.walletId.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.walletId.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.walletId.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.walletId.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.walletId.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.walletId.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.walletId.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.walletId.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.assetSymbol.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact match"
+              },
+              {
+                "name": "filter.assetSymbol.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to"
+              },
+              {
+                "name": "filter.assetSymbol.contains",
+                "value": "",
+                "type": "query",
+                "description": "Contains substring (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.startsWith",
+                "value": "",
+                "type": "query",
+                "description": "Starts with prefix (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.endsWith",
+                "value": "",
+                "type": "query",
+                "description": "Ends with suffix (case-insensitive)"
+              },
+              {
+                "name": "filter.assetSymbol.in",
+                "value": "",
+                "type": "query",
+                "description": "Value is in the list"
+              },
+              {
+                "name": "filter.assetSymbol.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Value is not in the list"
+              },
+              {
+                "name": "filter.assetSymbol.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.blockchain.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact blockchain match"
+              },
+              {
+                "name": "filter.blockchain.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Exclude this blockchain"
+              },
+              {
+                "name": "filter.blockchain.in",
+                "value": "",
+                "type": "query",
+                "description": "Blockchain is in this list"
+              },
+              {
+                "name": "filter.blockchain.notIn",
+                "value": "",
+                "type": "query",
+                "description": "Blockchain is not in this list"
+              },
+              {
+                "name": "filter.limitType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by limit type"
+              },
+              {
+                "name": "filter.status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by wallet limit status"
+              },
+              {
+                "name": "filter.active.eq",
+                "value": "",
+                "type": "query",
+                "description": "Equals"
+              },
+              {
+                "name": "filter.active.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.createdAt.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact timestamp match"
+              },
+              {
+                "name": "filter.createdAt.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.before",
+                "value": "",
+                "type": "query",
+                "description": "Before this timestamp"
+              },
+              {
+                "name": "filter.createdAt.after",
+                "value": "",
+                "type": "query",
+                "description": "After this timestamp"
+              },
+              {
+                "name": "filter.createdAt.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to timestamp"
+              },
+              {
+                "name": "filter.createdAt.between.start",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (inclusive)"
+              },
+              {
+                "name": "filter.createdAt.between.end",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (inclusive)"
+              },
+              {
+                "name": "filter.createdAt.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.createdAt.relativeDays",
+                "value": "",
+                "type": "query",
+                "description": "Relative days from now (negative for past, positive for future)"
+              },
+              {
+                "name": "filter.updatedAt.eq",
+                "value": "",
+                "type": "query",
+                "description": "Exact timestamp match"
+              },
+              {
+                "name": "filter.updatedAt.notEq",
+                "value": "",
+                "type": "query",
+                "description": "Not equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.before",
+                "value": "",
+                "type": "query",
+                "description": "Before this timestamp"
+              },
+              {
+                "name": "filter.updatedAt.after",
+                "value": "",
+                "type": "query",
+                "description": "After this timestamp"
+              },
+              {
+                "name": "filter.updatedAt.gte",
+                "value": "",
+                "type": "query",
+                "description": "Greater than or equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.lte",
+                "value": "",
+                "type": "query",
+                "description": "Less than or equal to timestamp"
+              },
+              {
+                "name": "filter.updatedAt.between.start",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (inclusive)"
+              },
+              {
+                "name": "filter.updatedAt.between.end",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (inclusive)"
+              },
+              {
+                "name": "filter.updatedAt.isNull",
+                "value": "",
+                "type": "query",
+                "description": "Check if field is null"
+              },
+              {
+                "name": "filter.updatedAt.relativeDays",
+                "value": "",
+                "type": "query",
+                "description": "Relative days from now (negative for past, positive for future)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Case-insensitive search over wallet limit ID, vault ID, wallet ID, and asset symbol."
+              }
+            ]
+          },
+          "docs": "List wallet limit policies for the specified wallet"
+        },
+        {
+          "info": {
+            "name": "Create a wallet limit policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/policy-rules/limits",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a wallet limit policy for the specified wallet"
+        },
+        {
+          "info": {
+            "name": "Get a wallet limit policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/policy-rules/limits/:id",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The wallet limit policy ID"
+              }
+            ]
+          },
+          "docs": "Get the specified wallet limit policy"
+        },
+        {
+          "info": {
+            "name": "Delete a wallet limit policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/policy-rules/limits/:id",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The wallet limit policy ID"
+              }
+            ]
+          },
+          "docs": "Delete the specified wallet limit policy"
+        },
+        {
+          "info": {
+            "name": "List wallet limit policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v2/vaults/:vaultId/wallets/:walletId/policy-rules/limits:list",
+            "params": [
+              {
+                "name": "vaultId",
+                "value": "",
+                "type": "path",
+                "description": "The vault ID"
+              },
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path",
+                "description": "The wallet ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List wallet limit policies for the specified wallet"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

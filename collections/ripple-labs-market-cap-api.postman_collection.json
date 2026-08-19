@@ -1,0 +1,905 @@
+{
+  "item": [
+    {
+      "id": "5f3697bc-2b12-4dc8-a17b-734d406441f7",
+      "name": "Market Cap",
+      "description": {
+        "content": "Use these API operations to obtain details about market-capitalization supply for a stablecoin currency.\n\n| Operation | Method | Description |\n| --------- | ------ | ----------- |\n| [Get total supply](#operation/getMarketCapTotal) | GET | Get the total amount of currency supply, with a per-chain breakdown. |\n| [Get total supply amount](#operation/getMarketCapTotalAmount) | GET | Get the total supply as a plain decimal string. |\n| [Get circulating supply](#operation/getMarketCapCirculating) | GET | Get the circulating amount of currency supply, with a per-chain breakdown. |\n| [Get circulating supply amount](#operation/getMarketCapCirculatingAmount) | GET | Get the circulating supply as a plain decimal string. |\n\n**Note:** These Market Cap operations do not require authentication.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0fa0f2f5-9678-4066-aee5-62eead69ab88",
+          "name": "Get total supply",
+          "request": {
+            "name": "Get total supply",
+            "description": {
+              "content": "Returns the total RLUSD supply (all issued tokens, regardless of circulating status)\nwith a per-chain breakdown. No authentication required.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "stablecoin",
+                "market-cap",
+                ":currencyCode",
+                "total"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "currencyCode",
+                  "description": "(Required) Currency code (e.g. `RLUSD`)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7740649c-2ac4-40cf-a03b-9ede0f293cfe",
+              "name": "Total supply",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "total"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"balance\": {\n    \"amount\": \"string\",\n    \"ledgerIndex\": 4201\n  },\n  \"chainBalances\": {\n    \"key_0\": {\n      \"amount\": \"string\",\n      \"ledgerIndex\": 1736\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc69cf67-23d1-45b6-a08f-87e81745e53e",
+              "name": "Resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "total"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://hJjFyphmnXExwORZSUDkjRMN.ezO9IUrhZ6rS2TtYV1x0zQJc4,stApjB8WlcuFKgDk0Fc1udReOefsOxO,zwnxUFY1uXTMcl\",\n  \"title\": \"string\",\n  \"status\": 6803,\n  \"code\": \"UNKNOWN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2142071-ae5a-458d-9d91-5cacdae7fa43",
+              "name": "Unexpected server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "total"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://hJjFyphmnXExwORZSUDkjRMN.ezO9IUrhZ6rS2TtYV1x0zQJc4,stApjB8WlcuFKgDk0Fc1udReOefsOxO,zwnxUFY1uXTMcl\",\n  \"title\": \"string\",\n  \"status\": 6803,\n  \"code\": \"UNKNOWN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eab72056-55e5-44ad-90cf-8de2275ac1ea",
+          "name": "Get total supply amount",
+          "request": {
+            "name": "Get total supply amount",
+            "description": {
+              "content": "Returns the total RLUSD supply as a plain decimal string (e.g. `\"1000000000.00\"`).\nUseful for lightweight integrations that only need the aggregate figure.\nNo authentication required.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "stablecoin",
+                "market-cap",
+                ":currencyCode",
+                "total",
+                "amount"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "currencyCode",
+                  "description": "(Required) Currency code (e.g. `RLUSD`)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ef18ff3-92cb-48bf-97fb-60a2494797e5",
+              "name": "Total supply amount as plain text",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "total",
+                    "amount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "1000000000.00",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6f60a488-aff7-493f-9546-22acfdd93a94",
+              "name": "Resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "total",
+                    "amount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://hJjFyphmnXExwORZSUDkjRMN.ezO9IUrhZ6rS2TtYV1x0zQJc4,stApjB8WlcuFKgDk0Fc1udReOefsOxO,zwnxUFY1uXTMcl\",\n  \"title\": \"string\",\n  \"status\": 6803,\n  \"code\": \"UNKNOWN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a95f0787-efba-4d23-87c9-64be76e35ca6",
+              "name": "Unexpected server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "total",
+                    "amount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://hJjFyphmnXExwORZSUDkjRMN.ezO9IUrhZ6rS2TtYV1x0zQJc4,stApjB8WlcuFKgDk0Fc1udReOefsOxO,zwnxUFY1uXTMcl\",\n  \"title\": \"string\",\n  \"status\": 6803,\n  \"code\": \"UNKNOWN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d1d2308-f6c2-4fdc-978e-9c814395e287",
+          "name": "Get circulating supply",
+          "request": {
+            "name": "Get circulating supply",
+            "description": {
+              "content": "Returns the circulating RLUSD supply with a per-chain breakdown.\nReturns `404` if the circulating supply API is not enabled.\nNo authentication required.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "stablecoin",
+                "market-cap",
+                ":currencyCode",
+                "circulating"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "currencyCode",
+                  "description": "(Required) Currency code (e.g. `RLUSD`)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "48d8f50a-ad21-4cc9-a45d-31351a7359e5",
+              "name": "Circulating supply",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "circulating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"balance\": {\n    \"amount\": \"string\",\n    \"ledgerIndex\": 4201\n  },\n  \"chainBalances\": {\n    \"key_0\": {\n      \"amount\": \"string\",\n      \"ledgerIndex\": 1736\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c4dcd75-6683-4636-9f58-4e5f8e2d9ec9",
+              "name": "Resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "circulating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://hJjFyphmnXExwORZSUDkjRMN.ezO9IUrhZ6rS2TtYV1x0zQJc4,stApjB8WlcuFKgDk0Fc1udReOefsOxO,zwnxUFY1uXTMcl\",\n  \"title\": \"string\",\n  \"status\": 6803,\n  \"code\": \"UNKNOWN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b78fcf2-8a4b-4c11-bb60-4c7084a54de2",
+              "name": "Unexpected server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "circulating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://hJjFyphmnXExwORZSUDkjRMN.ezO9IUrhZ6rS2TtYV1x0zQJc4,stApjB8WlcuFKgDk0Fc1udReOefsOxO,zwnxUFY1uXTMcl\",\n  \"title\": \"string\",\n  \"status\": 6803,\n  \"code\": \"UNKNOWN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc08407f-b81f-436f-938b-b6a83efc9071",
+          "name": "Get circulating supply amount",
+          "request": {
+            "name": "Get circulating supply amount",
+            "description": {
+              "content": "Returns the circulating RLUSD supply as a plain decimal string.\nReturns `404` if the circulating supply API is not enabled.\nNo authentication required.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "stablecoin",
+                "market-cap",
+                ":currencyCode",
+                "circulating",
+                "amount"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "currencyCode",
+                  "description": "(Required) Currency code (e.g. `RLUSD`)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9a01643b-88ca-4b29-949e-3ae70690bc71",
+              "name": "Circulating supply amount as plain text",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "circulating",
+                    "amount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "950000000.00",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2f022a9d-296a-4ca2-9af0-e9bcb4a7b950",
+              "name": "Resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "circulating",
+                    "amount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://hJjFyphmnXExwORZSUDkjRMN.ezO9IUrhZ6rS2TtYV1x0zQJc4,stApjB8WlcuFKgDk0Fc1udReOefsOxO,zwnxUFY1uXTMcl\",\n  \"title\": \"string\",\n  \"status\": 6803,\n  \"code\": \"UNKNOWN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3a37346-f4eb-4a8b-be26-c44b73550ea8",
+              "name": "Unexpected server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "stablecoin",
+                    "market-cap",
+                    ":currencyCode",
+                    "circulating",
+                    "amount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "currencyCode",
+                      "description": "(Required) Currency code (e.g. `RLUSD`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://hJjFyphmnXExwORZSUDkjRMN.ezO9IUrhZ6rS2TtYV1x0zQJc4,stApjB8WlcuFKgDk0Fc1udReOefsOxO,zwnxUFY1uXTMcl\",\n  \"title\": \"string\",\n  \"status\": 6803,\n  \"code\": \"UNKNOWN_EXCEPTION\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "95d3902e-2505-435e-b9a6-19b630a3a9f4",
+    "name": "Palisade Addresses Market Cap API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

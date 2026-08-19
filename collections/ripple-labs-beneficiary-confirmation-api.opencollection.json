@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Beneficiary confirmation API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Beneficiary confirmation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get account lookup by status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/account_lookups",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects to return per page"
+              },
+              {
+                "name": "account_lookup_status",
+                "value": "",
+                "type": "query",
+                "description": "Account Lookup status"
+              },
+              {
+                "name": "start-date",
+                "value": "",
+                "type": "query",
+                "description": "The lower bound of the date-time range you want to return account lookup for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`."
+              },
+              {
+                "name": "end-date",
+                "value": "",
+                "type": "query",
+                "description": "The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC For example, `2018-08-06T23:15:13.218Z`."
+              },
+              {
+                "name": "sort_field",
+                "value": "",
+                "type": "query",
+                "description": "Attribute for how to sort the results"
+              },
+              {
+                "name": "sort_direction",
+                "value": "",
+                "type": "query",
+                "description": "Direction of sorted results."
+              }
+            ]
+          },
+          "docs": "Get Account Lookup entities by status and other filters. Status defaults to `REQUESTED`."
+        },
+        {
+          "info": {
+            "name": "Initiate account lookup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/account_lookups/request",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an Account Lookup request to validate a beneficiary's account details before sending a payment. Account lookups are not part of the payment flow and can be made at any time in the payment process."
+        },
+        {
+          "info": {
+            "name": "Complete account lookup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/account_lookups/response",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Posts an Account Lookup response to validate a beneficiary's account details before payment."
+        },
+        {
+          "info": {
+            "name": "Get account lookup by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/account_lookups/:account_lookup_id",
+            "params": [
+              {
+                "name": "account_lookup_id",
+                "value": "",
+                "type": "path",
+                "description": "AccountLookupId"
+              }
+            ]
+          },
+          "docs": "Gets an Account Lookup entity for its `account_lookup_id` value."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

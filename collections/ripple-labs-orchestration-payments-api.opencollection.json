@@ -1,0 +1,308 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Orchestration payments API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orchestration payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get orchestration payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/).\n\nThe value is zero-based, where `0` represents the first page.\n\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects to return per page."
+              },
+              {
+                "name": "sort_field",
+                "value": "",
+                "type": "query",
+                "description": "Attribute to sort the results on.\n\n| Enum: | Sort by |\n| --- | --- |\n| CREATED_AT | Created date-time |\n| MODIFIED_AT | Modified date-time |\n"
+              },
+              {
+                "name": "sort_direction",
+                "value": "",
+                "type": "query",
+                "description": "Direction of sorted results based on `sort_field`.\n\n| Enum: | Description |\n| --- | --- |\n| ASC | Sort ascending |\n| DESC | Sort descending |\n"
+              },
+              {
+                "name": "unique_reference_number",
+                "value": "",
+                "type": "query",
+                "description": "Parameter for filtering with unique reference number."
+              },
+              {
+                "name": "orchestration_status",
+                "value": "",
+                "type": "query",
+                "description": "Parameter for filtering with status of the orchestration payment.\n\n| Enum | Description |\n| --- | --- |\n| INITIAL | Filter by payments in the initial state |\n| RUNNING | Filter by payments in the running state |\n| COMPLETED | Filter by completed payments |\n| PAUSED | Filter by paused payments |\n| FAILURE | Filter by payment failures |\n| DECLINED | Filter by declined payments |\n| RETRY | Filter by payments that have a retry status |\n"
+              },
+              {
+                "name": "range_field",
+                "value": "",
+                "type": "query",
+                "description": "**Range field**\n\nDesignates the column name of the payments database table that is used for filtering payments before/after/between time stamps.\n\nThe following options are valid:\n\n  | Range field | Description |\n  | --- | --- |\n  | CREATED_AT | Filter by created date-time |\n  | MODIFIED_AT | Filter by modified date-time |\n\n**Example usage**\n\nIf you specify `range_field` = `MODIFIED_AT`, you need to specify a time stamp (in the 24 character ISO 8601 format used in payment objects: `YYYY-MM-DDTHH:mm:ss.sssZ`) as the value for `before` and/or `after` to fetch payments before, after, or between the specified time range(s) (inclusive).\n\n**Dependency**: If you specify `range_field`, you must also specify `before` and/or `after`.\n"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "**Before** time stamp\n\nFilters for payments where the `range_field` column value is before this specified time stamp (inclusive).\n\nYou can also specify `after` to create a time range between `after` and `before`.\n\n**Dependency**: If you specify `before`, you must also specify `range_field`.\n\n**Example**: `2023-10-13T10:16:29.000Z`\n"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "**After** time stamp\n\nFilters for payments where the `range_field` column value is after this specified time stamp (inclusive).\n\nYou can also specify `before` to create a time range between `after` and `before`.\n\n**Dependency**: If you specify `after`, you must also specify `range_field`.\n\n**Example**: `2023-10-13T10:16:29.000Z`\n"
+              }
+            ]
+          },
+          "docs": "Gets a list of orchestration payments."
+        },
+        {
+          "info": {
+            "name": "Create orchestration payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an orchestration payment."
+        },
+        {
+          "info": {
+            "name": "Get orchestration payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment/:uniqueReferenceNumber",
+            "params": [
+              {
+                "name": "uniqueReferenceNumber",
+                "value": "",
+                "type": "path",
+                "description": "Unique reference number of the orchestration payment to fetch."
+              }
+            ]
+          },
+          "docs": "Gets orchestration payment by unique reference number."
+        },
+        {
+          "info": {
+            "name": "Return orchestration payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment/return",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the orchestration payment with customer end-to-end ID."
+        },
+        {
+          "info": {
+            "name": "Accept orchestration payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment/accept",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts the orchestration payment with customer end-to-end ID and Quote ID."
+        },
+        {
+          "info": {
+            "name": "Reverse orchestration payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment/reversal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reverses the orchestration payment with customer end-to-end ID."
+        },
+        {
+          "info": {
+            "name": "Get orchestration notifications by status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment/notification",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The 'status' of the notifications to retrieve."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects to return per page."
+              },
+              {
+                "name": "delay_time",
+                "value": "",
+                "type": "query",
+                "description": "Delay time in minutes to retrieve the SENT notifications."
+              },
+              {
+                "name": "range_field",
+                "value": "",
+                "type": "query",
+                "description": "**Range Field**\n\nDesignates the column name of the notifications database table that is used for filtering notifications before/after/between time stamps.\n\nThe following options are valid:\n\n  | Range field | Description |\n  | --- | --- |\n  | CREATED_AT | Filter by created date-time |\n  | MODIFIED_AT | Filter by modified date-time |\n\n**Example usage**\n\nIf you specify `range_field` = `MODIFIED_AT`, you need to specify a time stamp (in the 24 character ISO 8601 format used in notifications objects: `YYYY-MM-DDTHH:mm:ss.sssZ`) as the value for `before` and/or `after` to fetch notifications before, after, or between the specified time range(s) (inclusive).\n\n**Dependency**: If `range_field` is specified, `before` and/or `after` must also be specified.\n"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "**Before** time stamp\n\nFilters for notifications where the notifications `range_field` column value is before this specified time stamp (inclusive).\n\nYou can also specify `after` to create a time range between `after` and `before`.\n\n**Dependency**: If you specify `before`, you must also specify `range_field`.\n\n**Example**: `2023-10-13T10:16:29.000Z`\n"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "**After** time stamp\n\nFilters for notifications where the notifications `range_field` column value is after this specified time stamp (inclusive).\n\nYou can also specify `before` to create a time range between `after` and `before`.\n\n**Dependency**: If you specify `after`, you must also specify `range_field`.\n\n**Example**: `2023-10-13T10:16:29.000Z`\n"
+              }
+            ]
+          },
+          "docs": "Gets a list of orchestration payment notifications with a given status."
+        },
+        {
+          "info": {
+            "name": "Get orchestration notifications by unique reference number",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment/notification/urn/:uniqueReferenceNumber",
+            "params": [
+              {
+                "name": "uniqueReferenceNumber",
+                "value": "",
+                "type": "path",
+                "description": "The `sender_end_to_end_id` of the orchestration payment notification in case of sender and `payment_id` in case of receiver."
+              }
+            ]
+          },
+          "docs": "Gets orchestration payment notifications with a given unique reference number."
+        },
+        {
+          "info": {
+            "name": "Get orchestration notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment/notification/:uuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the orchestration payment notification."
+              }
+            ]
+          },
+          "docs": "Gets a given orchestration payment notification by UUID."
+        },
+        {
+          "info": {
+            "name": "Acknowledge orchestration notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment/notification/:uuid/ack",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the orchestration payment notification."
+              }
+            ]
+          },
+          "docs": "Acknowledges an orchestration payment notification with a specified UUID."
+        },
+        {
+          "info": {
+            "name": "Acknowledge orchestration notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment/notification/ack",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Acknowledges multiple orchestration payment notifications using a list of UUIDs."
+        },
+        {
+          "info": {
+            "name": "Post action to orchestration payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/v4/orchestration/payment/action",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Posts action into the Orchestration service."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

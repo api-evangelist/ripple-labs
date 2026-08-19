@@ -1,0 +1,127 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Rates API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/rates",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects to return per page."
+              }
+            ]
+          },
+          "docs": "Gets a list of configured exchange rates."
+        },
+        {
+          "info": {
+            "name": "Create rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/config/rates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an exchange rate for a specified currency pair.\n\n**Example** - Applying a margin to the live FX rate:<br>\nA USD-GBP live FX rate of 0.80 is provided by a third-party rate provider and you want to reduce that rate by 20 BPS. In this API call, you would set `\"value_type\": \"MARGIN\"`, then `\"margin_type\": \"BPS\"`, and `\"rate\": \"20\"`. After that, during the `Get quotes` call, the final FX rate will be calculated as 0.80*(1-(20/10000))=`0.7984` and then applied during quote creation.\n"
+        },
+        {
+          "info": {
+            "name": "Get rate by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/rates/:rate_id",
+            "params": [
+              {
+                "name": "rate_id",
+                "value": "",
+                "type": "path",
+                "description": "Provide the `rate_id` of the exchange rate you want to return."
+              }
+            ]
+          },
+          "docs": "Gets a configured exchange rate by ID."
+        },
+        {
+          "info": {
+            "name": "Update rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/config/rates/:rate_id",
+            "params": [
+              {
+                "name": "rate_id",
+                "value": "",
+                "type": "path",
+                "description": "Provide the `rate_id` of the exchange rate you want to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing exchange rate. With this call, you can change `value_type` from `RATE` to `MARGIN` (and vice versa), change the actual `rate` value of the specified value type, or both.\n\n**Example** - Updating an existing margin applied to the live FX rate:<br>\nA USD-GBP live FX rate of 0.80 is provided by a third-party rate provider and you currently reduce that rate by 20 BPS. You now want to change it and reduce it by 10 BPS instead. To do so, set `\"rate\": \"10\"` in the request. Once the c"
+        },
+        {
+          "info": {
+            "name": "Delete rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.palisade.co/config/rates/:rate_id",
+            "params": [
+              {
+                "name": "rate_id",
+                "value": "",
+                "type": "path",
+                "description": "Provide the `rate_id` of the exchange rate you want to delete."
+              }
+            ]
+          },
+          "docs": "Deletes an exchange rate. Once deleted, an exchange rate cannot be accessed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1409 @@
+{
+  "item": [
+    {
+      "id": "388327f7-41be-49d6-9301-3a4788d1e284",
+      "name": "Orchestration payments",
+      "description": {
+        "content": " ",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b6e8c875-9fa2-4efc-b966-0b06199a04e1",
+          "name": "Create orchestration payment",
+          "request": {
+            "name": "Create orchestration payment",
+            "description": {
+              "content": "Creates an orchestration payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sender_end_to_end_id\": \"<string>\",\n  \"sending_address\": \"<string>\",\n  \"receiving_address\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"quote_type\": \"<string>\",\n  \"user_info\": {},\n  \"internal_id\": \"<string>\",\n  \"orchestration_template\": \"<string>\",\n  \"sender_or_receiver_currency\": \"<string>\",\n  \"custom_fee\": \"<number>\",\n  \"custom_rate\": {\n    \"base_currency\": \"<string>\",\n    \"counter_currency\": \"<string>\",\n    \"rate\": \"<number>\",\n    \"rate_type\": \"<string>\"\n  },\n  \"quote_route\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payment_method\": \"<string>\",\n  \"enable_quote_per_payout_method\": \"<boolean>\",\n  \"digital_asset_origination\": \"<boolean>\",\n  \"force_path_finding_and_liquidity_path_finding\": false,\n  \"payout_method_category\": \"<string>\",\n  \"sender_segregated_account\": \"<string>\",\n  \"quote_limit\": \"<integer>\",\n  \"quote_filter_types\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ae4eafda-27a5-4dd3-80cd-e2bc79960a06",
+              "name": "Successfully created orchestration payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sender_end_to_end_id\": \"<string>\",\n  \"sending_address\": \"<string>\",\n  \"receiving_address\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"currency\": \"USD\",\n  \"quote_type\": \"SENDER_AMOUNT\",\n  \"user_info\": {},\n  \"internal_id\": \"<string>\",\n  \"orchestration_template\": \"<string>\",\n  \"sender_or_receiver_currency\": \"USD\",\n  \"custom_fee\": \"<number>\",\n  \"custom_rate\": {\n    \"base_currency\": \"<string>\",\n    \"counter_currency\": \"<string>\",\n    \"rate\": \"<number>\",\n    \"rate_type\": \"<string>\"\n  },\n  \"quote_route\": [\n    \"rn.us.ca.san_francisco\",\n    \"rn.us.tx.austin\",\n    \"rn.us.ny.new_york\"\n  ],\n  \"payment_method\": \"<string>\",\n  \"enable_quote_per_payout_method\": true,\n  \"digital_asset_origination\": false,\n  \"force_path_finding_and_liquidity_path_finding\": false,\n  \"payout_method_category\": \"BOOK_TRANSFER\",\n  \"sender_segregated_account\": \"conct_php_receiver_coins_sender@receiver\",\n  \"quote_limit\": \"<integer>\",\n  \"quote_filter_types\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sender_end_to_end_id\": \"00310000015\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7998f9ac-5e19-4927-94f0-a0d46fa2a658",
+          "name": "Get orchestration payments",
+          "request": {
+            "name": "Get orchestration payments",
+            "description": {
+              "content": "Gets a list of orchestration payments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/).\n\nThe value is zero-based, where `0` represents the first page.\n\nSet it to `0` to get the first page of results.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of objects to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_field",
+                  "value": "MODIFIED_AT",
+                  "description": "Attribute to sort the results on.\n\n| Enum: | Sort by |\n| --- | --- |\n| CREATED_AT | Created date-time |\n| MODIFIED_AT | Modified date-time |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_direction",
+                  "value": "ASC",
+                  "description": "Direction of sorted results based on `sort_field`.\n\n| Enum: | Description |\n| --- | --- |\n| ASC | Sort ascending |\n| DESC | Sort descending |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "unique_reference_number",
+                  "value": "<string>",
+                  "description": "Parameter for filtering with unique reference number."
+                },
+                {
+                  "disabled": false,
+                  "key": "orchestration_status",
+                  "value": "<string>",
+                  "description": "Parameter for filtering with status of the orchestration payment.\n\n| Enum | Description |\n| --- | --- |\n| INITIAL | Filter by payments in the initial state |\n| RUNNING | Filter by payments in the running state |\n| COMPLETED | Filter by completed payments |\n| PAUSED | Filter by paused payments |\n| FAILURE | Filter by payment failures |\n| DECLINED | Filter by declined payments |\n| RETRY | Filter by payments that have a retry status |\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "range_field",
+                  "value": "<string>",
+                  "description": "**Range field**\n\nDesignates the column name of the payments database table that is used for filtering payments before/after/between time stamps.\n\nThe following options are valid:\n\n  | Range field | Description |\n  | --- | --- |\n  | CREATED_AT | Filter by created date-time |\n  | MODIFIED_AT | Filter by modified date-time |\n\n**Example usage**\n\nIf you specify `range_field` = `MODIFIED_AT`, you need to specify a time stamp (in the 24 character ISO 8601 format used in payment objects: `YYYY-MM-DDTHH:mm:ss.sssZ`) as the value for `before` and/or `after` to fetch payments before, after, or between the specified time range(s) (inclusive).\n\n**Dependency**: If you specify `range_field`, you must also specify `before` and/or `after`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "**Before** time stamp\n\nFilters for payments where the `range_field` column value is before this specified time stamp (inclusive).\n\nYou can also specify `after` to create a time range between `after` and `before`.\n\n**Dependency**: If you specify `before`, you must also specify `range_field`.\n\n**Example**: `2023-10-13T10:16:29.000Z`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "**After** time stamp\n\nFilters for payments where the `range_field` column value is after this specified time stamp (inclusive).\n\nYou can also specify `before` to create a time range between `after` and `before`.\n\n**Dependency**: If you specify `after`, you must also specify `range_field`.\n\n**Example**: `2023-10-13T10:16:29.000Z`\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "65431610-66e9-45ea-9e79-3f72c1cd8d06",
+              "name": "Successfully fetched all orchestration payments.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort_field",
+                      "value": "MODIFIED_AT"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "ASC"
+                    },
+                    {
+                      "key": "unique_reference_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orchestration_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "range_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": false,\n  \"last\": true,\n  \"number\": 7504,\n  \"numberOfElements\": 6532,\n  \"size\": 6150,\n  \"totalElements\": 2828,\n  \"totalPages\": 8714,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": false,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n      \"unique_reference_number\": \"00310000015\",\n      \"sender_end_to_end_id\": \"00310000015\",\n      \"payment_type\": \"RETURN\",\n      \"connector_role\": \"SENDING\",\n      \"payment_id\": \"26bf269b-1a2b-c3d4-872a-7f18d7dcf9f2\",\n      \"payment_status\": \"SUCCESS\",\n      \"previous_payment_status\": \"EXECUTED\",\n      \"orchestration_template\": \"default_template\",\n      \"orchestration_status\": \"RUNNING\",\n      \"current_activity\": \"get_quote_v1\",\n      \"current_activity_status\": \"SUCCESS\",\n      \"initial_context\": {},\n      \"current_context\": {},\n      \"error_message\": {},\n      \"activity_list\": {},\n      \"created_at\": \"2018-04-06T20:33:35Z\",\n      \"modified_at\": \"2018-04-06T20:33:35Z\"\n    },\n    {\n      \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n      \"unique_reference_number\": \"00310000015\",\n      \"sender_end_to_end_id\": \"00310000015\",\n      \"payment_type\": \"RETURN\",\n      \"connector_role\": \"RECEIVING\",\n      \"payment_id\": \"26bf269b-1a2b-c3d4-872a-7f18d7dcf9f2\",\n      \"payment_status\": \"SUCCESS\",\n      \"previous_payment_status\": \"EXECUTED\",\n      \"orchestration_template\": \"default_template\",\n      \"orchestration_status\": \"RUNNING\",\n      \"current_activity\": \"get_quote_v1\",\n      \"current_activity_status\": \"SUCCESS\",\n      \"initial_context\": {},\n      \"current_context\": {},\n      \"error_message\": {},\n      \"activity_list\": {},\n      \"created_at\": \"2018-04-06T20:33:35Z\",\n      \"modified_at\": \"2018-04-06T20:33:35Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10df7520-09dd-4535-8760-30947e91ef98",
+          "name": "Get orchestration payment",
+          "request": {
+            "name": "Get orchestration payment",
+            "description": {
+              "content": "Gets orchestration payment by unique reference number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment",
+                ":uniqueReferenceNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<String>",
+                  "key": "uniqueReferenceNumber",
+                  "description": "(Required) Unique reference number of the orchestration payment to fetch."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "11e2c86e-f5ea-4ca6-a79c-bec2916b19b1",
+              "name": "Successfully returned orchestration payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment",
+                    ":uniqueReferenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<String>",
+                      "key": "uniqueReferenceNumber",
+                      "description": "(Required) Unique reference number of the orchestration payment to fetch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n  \"unique_reference_number\": \"00310000015\",\n  \"sender_end_to_end_id\": \"00310000015\",\n  \"payment_type\": \"REVERSAL\",\n  \"connector_role\": \"SENDING\",\n  \"payment_id\": \"26bf269b-1a2b-c3d4-872a-7f18d7dcf9f2\",\n  \"payment_status\": \"SUCCESS\",\n  \"previous_payment_status\": \"EXECUTED\",\n  \"orchestration_template\": \"default_template\",\n  \"orchestration_status\": \"RUNNING\",\n  \"current_activity\": \"get_quote_v1\",\n  \"current_activity_status\": \"SUCCESS\",\n  \"initial_context\": {},\n  \"current_context\": {},\n  \"error_message\": {},\n  \"activity_list\": {},\n  \"created_at\": \"2018-04-06T20:33:35Z\",\n  \"modified_at\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "416ee8d9-d614-48fb-91a5-96d1ecdb90b2",
+          "name": "Return orchestration payment",
+          "request": {
+            "name": "Return orchestration payment",
+            "description": {
+              "content": "Returns the orchestration payment with customer end-to-end ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment",
+                "return"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sender_end_to_end_id\": \"<string>\",\n  \"original_payment_id\": \"<string>\",\n  \"return_reasons\": {},\n  \"return_amount_type\": \"TOTAL_RECEIVED\",\n  \"custom_fee\": \"<number>\",\n  \"custom_rate\": {\n    \"base_currency\": \"<string>\",\n    \"counter_currency\": \"<string>\",\n    \"rate\": \"<number>\",\n    \"rate_type\": \"<string>\"\n  },\n  \"force_path_finding_and_liquidity_path_finding\": false,\n  \"user_info\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f00fd32f-bc71-42ff-8940-c8f5e6f572d5",
+              "name": "Successfully returned orchestration payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment",
+                    "return"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sender_end_to_end_id\": \"<string>\",\n  \"original_payment_id\": \"<string>\",\n  \"return_reasons\": {},\n  \"return_amount_type\": \"TOTAL_RECEIVED\",\n  \"custom_fee\": \"<number>\",\n  \"custom_rate\": {\n    \"base_currency\": \"<string>\",\n    \"counter_currency\": \"<string>\",\n    \"rate\": \"<number>\",\n    \"rate_type\": \"<string>\"\n  },\n  \"force_path_finding_and_liquidity_path_finding\": false,\n  \"user_info\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sender_end_to_end_id\": \"00310000015\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6e3267f-f4ef-4cd4-bdb1-f4f224c5c6f0",
+          "name": "Accept orchestration payment",
+          "request": {
+            "name": "Accept orchestration payment",
+            "description": {
+              "content": "Accepts the orchestration payment with customer end-to-end ID and Quote ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment",
+                "accept"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sender_end_to_end_id\": \"<string>\",\n  \"quote_id\": \"<uuid>\",\n  \"user_info\": {},\n  \"internal_id\": \"<string>\",\n  \"orchestration_template\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cc50c55a-06a2-4819-a186-a11208246a62",
+              "name": "Successfully accepted orchestration payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sender_end_to_end_id\": \"<string>\",\n  \"quote_id\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n  \"user_info\": {},\n  \"internal_id\": \"<string>\",\n  \"orchestration_template\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sender_end_to_end_id\": \"00310000015\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42a77205-fb77-44f6-bfd5-1fd955450e73",
+          "name": "Reverse orchestration payment",
+          "request": {
+            "name": "Reverse orchestration payment",
+            "description": {
+              "content": "Reverses the orchestration payment with customer end-to-end ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment",
+                "reversal"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sender_end_to_end_id\": \"<string>\",\n  \"original_payment_id\": \"<string>\",\n  \"reversal_reason\": {\n    \"code\": \"<string>\",\n    \"description\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9dba5d25-359b-46c1-9494-a78e39739567",
+              "name": "Successfully returned orchestration payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment",
+                    "reversal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sender_end_to_end_id\": \"<string>\",\n  \"original_payment_id\": \"<string>\",\n  \"reversal_reason\": {\n    \"code\": \"RB001\",\n    \"description\": \"No account / Unable to locate account\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sender_end_to_end_id\": \"00310000015\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ecaddd1-72a6-4c90-a575-a1802629275e",
+          "name": "Get orchestration notifications by status",
+          "request": {
+            "name": "Get orchestration notifications by status",
+            "description": {
+              "content": "Gets a list of orchestration payment notifications with a given status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment",
+                "notification"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "(Required) The 'status' of the notifications to retrieve."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of objects to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "delay_time",
+                  "value": "30",
+                  "description": "Delay time in minutes to retrieve the SENT notifications."
+                },
+                {
+                  "disabled": false,
+                  "key": "range_field",
+                  "value": "<string>",
+                  "description": "**Range Field**\n\nDesignates the column name of the notifications database table that is used for filtering notifications before/after/between time stamps.\n\nThe following options are valid:\n\n  | Range field | Description |\n  | --- | --- |\n  | CREATED_AT | Filter by created date-time |\n  | MODIFIED_AT | Filter by modified date-time |\n\n**Example usage**\n\nIf you specify `range_field` = `MODIFIED_AT`, you need to specify a time stamp (in the 24 character ISO 8601 format used in notifications objects: `YYYY-MM-DDTHH:mm:ss.sssZ`) as the value for `before` and/or `after` to fetch notifications before, after, or between the specified time range(s) (inclusive).\n\n**Dependency**: If `range_field` is specified, `before` and/or `after` must also be specified.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "**Before** time stamp\n\nFilters for notifications where the notifications `range_field` column value is before this specified time stamp (inclusive).\n\nYou can also specify `after` to create a time range between `after` and `before`.\n\n**Dependency**: If you specify `before`, you must also specify `range_field`.\n\n**Example**: `2023-10-13T10:16:29.000Z`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "**After** time stamp\n\nFilters for notifications where the notifications `range_field` column value is after this specified time stamp (inclusive).\n\nYou can also specify `before` to create a time range between `after` and `before`.\n\n**Dependency**: If you specify `after`, you must also specify `range_field`.\n\n**Example**: `2023-10-13T10:16:29.000Z`\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1ef636d0-e52f-4507-82dd-ca09ca8202cf",
+              "name": "Successfully fetched orchestration payment notifications list.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment",
+                    "notification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "delay_time",
+                      "value": "30"
+                    },
+                    {
+                      "key": "range_field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n    \"notification_type\": \"PAYMENT_SUCCESS\",\n    \"notification_version\": \"string\",\n    \"notification_status\": \"NEW\",\n    \"notification_payload\": {},\n    \"created_at\": \"2018-04-06T20:33:35Z\",\n    \"modified_at\": \"2018-04-06T20:33:35Z\"\n  },\n  {\n    \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n    \"notification_type\": \"PAYMENT_SUCCESS\",\n    \"notification_version\": \"string\",\n    \"notification_status\": \"ACK\",\n    \"notification_payload\": {},\n    \"created_at\": \"2018-04-06T20:33:35Z\",\n    \"modified_at\": \"2018-04-06T20:33:35Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "99869d0e-646a-4d3f-b024-a33ef80d9155",
+          "name": "Get orchestration notifications by unique reference number",
+          "request": {
+            "name": "Get orchestration notifications by unique reference number",
+            "description": {
+              "content": "Gets orchestration payment notifications with a given unique reference number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment",
+                "notification",
+                "urn",
+                ":uniqueReferenceNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "uniqueReferenceNumber",
+                  "description": "(Required) The `sender_end_to_end_id` of the orchestration payment notification in case of sender and `payment_id` in case of receiver."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "83661020-986e-4458-b9d5-b9f1f17cfe2a",
+              "name": "Successfully fetched orchestration payment notifications.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment",
+                    "notification",
+                    "urn",
+                    ":uniqueReferenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "uniqueReferenceNumber",
+                      "description": "(Required) The `sender_end_to_end_id` of the orchestration payment notification in case of sender and `payment_id` in case of receiver."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n    \"notification_type\": \"PAYMENT_SUCCESS\",\n    \"notification_version\": \"string\",\n    \"notification_status\": \"NEW\",\n    \"notification_payload\": {},\n    \"created_at\": \"2018-04-06T20:33:35Z\",\n    \"modified_at\": \"2018-04-06T20:33:35Z\"\n  },\n  {\n    \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n    \"notification_type\": \"PAYMENT_SUCCESS\",\n    \"notification_version\": \"string\",\n    \"notification_status\": \"NEW\",\n    \"notification_payload\": {},\n    \"created_at\": \"2018-04-06T20:33:35Z\",\n    \"modified_at\": \"2018-04-06T20:33:35Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a947e3c6-79cf-4b08-8603-076252ccd0b8",
+          "name": "Get orchestration notification",
+          "request": {
+            "name": "Get orchestration notification",
+            "description": {
+              "content": "Gets a given orchestration payment notification by UUID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment",
+                "notification",
+                ":uuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) The UUID of the orchestration payment notification."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0d15357-ab5c-483e-b731-d6374c43b6fc",
+              "name": "Successfully fetched orchestration paymnet notification.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment",
+                    "notification",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) The UUID of the orchestration payment notification."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n  \"notification_type\": \"PAYMENT_SUCCESS\",\n  \"notification_version\": \"string\",\n  \"notification_status\": \"SENT\",\n  \"notification_payload\": {},\n  \"created_at\": \"2018-04-06T20:33:35Z\",\n  \"modified_at\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c68ba2f-8e7b-4b34-8d83-45787bc42f4b",
+          "name": "Acknowledge orchestration notification",
+          "request": {
+            "name": "Acknowledge orchestration notification",
+            "description": {
+              "content": "Acknowledges an orchestration payment notification with a specified UUID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment",
+                "notification",
+                ":uuid",
+                "ack"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) The UUID of the orchestration payment notification."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3750cf2b-6882-431c-9de1-db0ba3d23a17",
+              "name": "Successfully updated orchestration payment notification status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment",
+                    "notification",
+                    ":uuid",
+                    "ack"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) The UUID of the orchestration payment notification."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n  \"notification_type\": \"PAYMENT_SUCCESS\",\n  \"notification_version\": \"string\",\n  \"notification_status\": \"SENT\",\n  \"notification_payload\": {},\n  \"created_at\": \"2018-04-06T20:33:35Z\",\n  \"modified_at\": \"2018-04-06T20:33:35Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "871ce237-829b-4355-ac32-9ee25c15bebe",
+          "name": "Acknowledge orchestration notifications",
+          "request": {
+            "name": "Acknowledge orchestration notifications",
+            "description": {
+              "content": "Acknowledges multiple orchestration payment notifications using a list of UUIDs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment",
+                "notification",
+                "ack"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uuids\": [\n    \"<uuid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a0be132c-0f23-4a47-a695-af4488e829fe",
+              "name": "Successfully acknowledged orchestration payment notifications.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment",
+                    "notification",
+                    "ack"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"uuids\": [\n    \"328b3e50-7983-46d5-94a0-ef004d78db1d\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"notification_ack_list\": [\n    {\n      \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n      \"notification_type\": \"PAYMENT_SUCCESS\",\n      \"notification_version\": \"string\",\n      \"notification_status\": \"NEW\",\n      \"notification_payload\": {},\n      \"created_at\": \"2018-04-06T20:33:35Z\",\n      \"modified_at\": \"2018-04-06T20:33:35Z\"\n    },\n    {\n      \"uuid\": \"5492648d-2132-4e70-9ded-2fc86f22b321\",\n      \"notification_type\": \"PAYMENT_SUCCESS\",\n      \"notification_version\": \"string\",\n      \"notification_status\": \"SENT\",\n      \"notification_payload\": {},\n      \"created_at\": \"2018-04-06T20:33:35Z\",\n      \"modified_at\": \"2018-04-06T20:33:35Z\"\n    }\n  ],\n  \"invalid_uuid_list\": [\n    \"328b3e50-7983-46d5-94a0-ef004d78db1d\",\n    \"328b3e50-7983-46d5-94a0-ef004d78db1d\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e91524e5-ab22-4c3a-852f-1a392aa5066a",
+          "name": "Post action to orchestration payment",
+          "request": {
+            "name": "Post action to orchestration payment",
+            "description": {
+              "content": "Posts action into the Orchestration service.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orchestration",
+                "payment",
+                "action"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unique_reference_number\": \"<string>\",\n  \"status\": \"<string>\",\n  \"notification_type\": \"<string>\",\n  \"output\": {\n    \"sub_state\": \"<string>\",\n    \"memo\": \"<string>\",\n    \"info\": {}\n  },\n  \"error\": [\n    {\n      \"type\": \"<string>\",\n      \"code\": \"<string>\",\n      \"reason\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"code\": \"<string>\",\n      \"reason\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "285b18f7-ec2a-4dc0-8344-beb4ef89e9ba",
+              "name": "Successfully posted action.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orchestration",
+                    "payment",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"unique_reference_number\": \"310000015\",\n  \"status\": \"SUBSTATE\",\n  \"notification_type\": \"PARTNER_SUBSTATE\",\n  \"output\": {\n    \"sub_state\": \"AMENDED\",\n    \"memo\": \"Last name must be corrected\",\n    \"info\": {\n      \"last_name\": \"Gonzales\"\n    }\n  },\n  \"error\": [\n    {\n      \"type\": \"<string>\",\n      \"code\": \"<string>\",\n      \"reason\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"code\": \"<string>\",\n      \"reason\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"unique_reference_number\": \"00310000015\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "00fb1d4d-9f9a-47d7-826a-64a77fd83048",
+    "name": "Palisade Addresses Orchestration payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}

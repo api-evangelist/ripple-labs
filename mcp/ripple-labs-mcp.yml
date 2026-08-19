@@ -4,10 +4,9 @@ status: published
 source: https://docs.ripple.com/.well-known/oauth-authorization-server
 server:
   name: ripple-docs
-  description: >-
-    Ripple's product documentation (docs.ripple.com) is served on the Redocly platform,
-    which exposes a hosted, OAuth-protected Model Context Protocol server over the docs and
-    API references. An MCP client can query Ripple product/API documentation as tools.
+  description: Ripple's product documentation (docs.ripple.com) is served on the Redocly platform, which
+    exposes a hosted, OAuth-protected Model Context Protocol server over the docs and API references.
+    An MCP client can query Ripple product/API documentation as tools.
   transport: http
   url: https://docs.ripple.com/mcp
   auth:
@@ -16,8 +15,17 @@ server:
     authorization_endpoint: https://docs.ripple.com/_mcp/oauth2/auth
     token_endpoint: https://docs.ripple.com/_mcp/oauth2/token-portal
     registration_endpoint: https://docs.ripple.com/_mcp/register
-    scopes_supported: [openid, profile, email, offline_access]
+    scopes_supported:
+    - openid
+    - profile
+    - email
+    - offline_access
 related:
 - name: xrpl-docs
   url: https://xrpl.org/mcp
   note: The XRP Ledger documentation (xrpl.org) exposes the same Redocly-hosted docs MCP server.
+deployment:
+  mode: remote
+  verified: searched
+  checked: '2026-08-12'
+  source: catalog MCP census

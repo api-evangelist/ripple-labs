@@ -1,0 +1,268 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Palisade Addresses Platform accounts API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Platform accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all platforms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/platforms"
+          },
+          "docs": "Returns a list of all active RippleNet platforms."
+        },
+        {
+          "info": {
+            "name": "Create platform",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/config/platforms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a RippleNet platform, which represents a financial entity that holds accounts in the real world (e.g. Bank, Exchange or Wallet provider). This operation creates a database record for a platform account on a RippleNet node."
+        },
+        {
+          "info": {
+            "name": "Get platform by platform ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/platforms/:platform_id",
+            "params": [
+              {
+                "name": "platform_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the platform you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Get a RippleNet platform by its platform ID."
+        },
+        {
+          "info": {
+            "name": "Update platform",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/config/platforms/:platform_id",
+            "params": [
+              {
+                "name": "platform_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the platform you want to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a RippleNet platform, which represents a financial entity that holds accounts in the real world (e.g. Bank, Exchange or Wallet provider). This operation creates a database record for a platform account on a RippleNet node."
+        },
+        {
+          "info": {
+            "name": "Delete platform by platform ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.palisade.co/config/platforms/:platform_id",
+            "params": [
+              {
+                "name": "platform_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the platform you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Deletes a RippleNet platform by its platform ID."
+        },
+        {
+          "info": {
+            "name": "Get platform accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/platforms/accounts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects to return per page."
+              }
+            ]
+          },
+          "docs": "Returns a paged list of all active RippleNet platform accounts."
+        },
+        {
+          "info": {
+            "name": "Create platform account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.palisade.co/config/platforms/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a RippleNet platform account, which represents a real-world account owned by a financial entity (e.g. Bank, Exchange or Wallet provider). This operation creates a database record for a platform account on a RippleNet node."
+        },
+        {
+          "info": {
+            "name": "Get platform account by platform account ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/config/platforms/accounts/:platform_account_id",
+            "params": [
+              {
+                "name": "platform_account_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the platform account you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Gets a RippleNet platform account by its platform account ID."
+        },
+        {
+          "info": {
+            "name": "Update platform account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sandbox.palisade.co/config/platforms/accounts/:platform_account_id",
+            "params": [
+              {
+                "name": "platform_account_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the platform account you want to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a RippleNet platform account, which represents a real-world account owned by a financial entity (e.g. Bank, Exchange or Wallet provider)."
+        },
+        {
+          "info": {
+            "name": "Delete platform account by platform account ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.palisade.co/config/platforms/accounts/:platform_account_id",
+            "params": [
+              {
+                "name": "platform_account_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the platform account you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Deletes a RippleNet platform account by its platform account ID."
+        },
+        {
+          "info": {
+            "name": "Get platform accounts balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/monitor/platform/accounts/balances"
+          },
+          "docs": "Get balances for local Platform Accounts"
+        },
+        {
+          "info": {
+            "name": "Get platform account statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.palisade.co/monitor/platform/accounts/:platformAccountId/statement",
+            "params": [
+              {
+                "name": "platformAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The RippleNet platform account ID that you want to get a statement for. Example: `bitso`"
+              },
+              {
+                "name": "start-date",
+                "value": "",
+                "type": "query",
+                "description": "The lower bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC. For example, `2018-08-06T23:13:55.997Z`."
+              },
+              {
+                "name": "end-date",
+                "value": "",
+                "type": "query",
+                "description": "The upper bound of the date-time range you want to return statement information for, as an ISO-8601 timestamp in UTC For example, `2018-08-06T23:15:13.218Z`."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number for [paginated results](/products/payments-odl/api-docs/ripplenet/best-practices/pagination/). The value is zero-based, where `0` represents the first page.<br/>\nSet it to `0` to get the first page of results.\n"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Number of payment and transfer objects to return per page."
+              }
+            ]
+          },
+          "docs": "Get statement for a specified Platform Account"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

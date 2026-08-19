@@ -1,0 +1,813 @@
+{
+  "item": [
+    {
+      "id": "041dc92a-55aa-4363-b7ae-f0001c90fa67",
+      "name": "Payment expiration",
+      "description": {
+        "content": "\nUse these operations to manage payment expirations.\n\n| Operation | Method | Description |\n| -- | -- | -- |\n| [Get payment expiry by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/getpaymentexpirybyid)  | GET    | Gets the time to live (ttl) of a payment expiry in seconds. |\n| [Update payment expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/updatepaymentexpiry) | PUT    | Updates the time to live (ttl) of a payment expiry in seconds. |\n| [Delete payment expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/deletepaymentexpiry)  | DELETE | Deletes a payment expiry. |\n| [Get payment expiries](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/getpaymentexpiries)        | GET    | Returns all configured payment expiries. |\n| [Create payment expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/createpaymentexpiry) | POST   | Creates a payment expiration window, or time to live (ttl), in seconds. |\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f000c538-f8e8-42b1-8798-6fb249a68d6e",
+          "name": "Get payment expiry by ID",
+          "request": {
+            "name": "Get payment expiry by ID",
+            "description": {
+              "content": "Gets the time to live (ttl) of a payment expiry in seconds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payments",
+                "payment_expiries",
+                ":payment_expiry_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "payment_expiry_id",
+                  "description": "(Required) The ID of the payment expiry you want returned."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "1b49da33-819e-431b-824e-4e69e826740f",
+              "name": "Successfully returned a payment expiry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "payment_expiries",
+                    ":payment_expiry_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payment_expiry_id",
+                      "description": "(Required) The ID of the payment expiry you want returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payment_ttl\": 5900,\n  \"sending_partner\": \"rn.us.ca.san_francisco\",\n  \"receiving_partner\": \"rn.us.tx.austin\",\n  \"currency\": \"USD\",\n  \"expiry_id\": \"4711728c-cd35-49ec-96a5-72732b4333ec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c086a1b-f919-43ac-87ce-a90b250086a2",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "payment_expiries",
+                    ":payment_expiry_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payment_expiry_id",
+                      "description": "(Required) The ID of the payment expiry you want returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "16d7b85a-96e2-41fe-8717-ace1ec4f310e",
+          "name": "Update payment expiry",
+          "request": {
+            "name": "Update payment expiry",
+            "description": {
+              "content": "Updates the time to live (ttl) of a payment expiry in seconds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payments",
+                "payment_expiries",
+                ":payment_expiry_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "payment_expiry_id",
+                  "description": "(Required) Provide the `payment_expiry_id` of the payment expiry you want to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_ttl\": \"<number>\",\n  \"sending_partner\": \"<string>\",\n  \"receiving_partner\": \"<string>\",\n  \"currency\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "61267499-f972-464c-9021-1557c56b1ebc",
+              "name": "Successfully updated payment expiry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "payment_expiries",
+                    ":payment_expiry_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payment_expiry_id",
+                      "description": "(Required) Provide the `payment_expiry_id` of the payment expiry you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payment_ttl\": 5900,\n  \"sending_partner\": \"rn.us.ca.san_francisco\",\n  \"receiving_partner\": \"rn.us.tx.austin\",\n  \"currency\": \"USD\",\n  \"expiry_id\": \"4711728c-cd35-49ec-96a5-72732b4333ec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce0d2634-75b7-4be1-9f2f-8f34f3606946",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "payment_expiries",
+                    ":payment_expiry_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payment_expiry_id",
+                      "description": "(Required) Provide the `payment_expiry_id` of the payment expiry you want to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ba2602b9-a55e-4cc8-8346-a9ff19373229",
+          "name": "Delete payment expiry",
+          "request": {
+            "name": "Delete payment expiry",
+            "description": {
+              "content": "Deletes a payment expiry.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payments",
+                "payment_expiries",
+                ":payment_expiry_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "payment_expiry_id",
+                  "description": "(Required) Provide the `payment_expiry_id` of the payment expiry you want to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "2364438a-a7bc-42b3-9c48-ec8555fc5cdc",
+              "name": "Successfully deleted payment expiry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "payment_expiries",
+                    ":payment_expiry_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payment_expiry_id",
+                      "description": "(Required) Provide the `payment_expiry_id` of the payment expiry you want to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e1788cc3-343d-4967-ae5e-4b7bb94d1770",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "payment_expiries",
+                    ":payment_expiry_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "payment_expiry_id",
+                      "description": "(Required) Provide the `payment_expiry_id` of the payment expiry you want to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42b4d93a-c7fc-4ea8-a644-5bf4667fd195",
+          "name": "Get payment expiries",
+          "request": {
+            "name": "Get payment expiries",
+            "description": {
+              "content": "Returns all configured payment expiries.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payments",
+                "payment_expiries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Zero-based index of the page number of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "10",
+                  "description": "Number of payments returned per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "76310648-7bb2-4928-b2dc-04d439810780",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "payment_expiries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first\": false,\n  \"last\": true,\n  \"number\": 8578,\n  \"numberOfElements\": 8442,\n  \"size\": 5680,\n  \"totalElements\": 1760,\n  \"totalPages\": 6376,\n  \"sort\": [\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    },\n    {\n      \"direction\": \"ASC\",\n      \"property\": \"string\",\n      \"ignoreCase\": true,\n      \"nullHandling\": \"NULLS_FIRST\",\n      \"ascending\": true,\n      \"descending\": false\n    }\n  ],\n  \"content\": [\n    {\n      \"payment_ttl\": 5900,\n      \"sending_partner\": \"rn.us.ca.san_francisco\",\n      \"receiving_partner\": \"rn.us.tx.austin\",\n      \"currency\": \"USD\",\n      \"expiry_id\": \"4711728c-cd35-49ec-96a5-72732b4333ec\"\n    },\n    {\n      \"payment_ttl\": 5900,\n      \"sending_partner\": \"rn.us.ca.san_francisco\",\n      \"receiving_partner\": \"rn.us.tx.austin\",\n      \"currency\": \"USD\",\n      \"expiry_id\": \"4711728c-cd35-49ec-96a5-72732b4333ec\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4ab9b1e-058e-48f5-8762-8c987f33c0ad",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "payment_expiries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31b7b45a-24cb-490d-a226-4ed4aa2b6df2",
+          "name": "Create payment expiry",
+          "request": {
+            "name": "Create payment expiry",
+            "description": {
+              "content": "Creates a payment expiration window, or time to live (ttl), in seconds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "payments",
+                "payment_expiries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_ttl\": \"<number>\",\n  \"sending_partner\": \"<string>\",\n  \"receiving_partner\": \"<string>\",\n  \"currency\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "767a2bb1-229f-419e-8932-3a0c6a46c3e3",
+              "name": "Successfully created the payment expiration window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "payment_expiries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payment_ttl\": 5900,\n  \"sending_partner\": \"rn.us.ca.san_francisco\",\n  \"receiving_partner\": \"rn.us.tx.austin\",\n  \"currency\": \"USD\",\n  \"expiry_id\": \"4711728c-cd35-49ec-96a5-72732b4333ec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d498a75b-ad49-4f83-a78f-be0a8199df08",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "payments",
+                    "payment_expiries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://errors.ripplenet.ripple.com/error/json-processing-error\",\n  \"title\": \"Invalid Request Object\",\n  \"detail\": \"The request parameter [account_id] is not in the correct format.\",\n  \"status\": 400,\n  \"ripplenet_error_code\": \"E0104\",\n  \"finality\": \"PERMANENT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.palisade.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cdba0652-fadb-4800-adbd-8a7bbb9a1554",
+    "name": "Palisade Addresses Payment expiration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Palisade API enables programmatic interaction with the various features of the Palisade platform",
+      "type": "text/plain"
+    }
+  }
+}
