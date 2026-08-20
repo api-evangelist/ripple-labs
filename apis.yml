@@ -39,6 +39,18 @@ modified: '2026-07-21'
 image: https://ripple.com/favicon.ico
 tags:
 - Company
+- Financial-Services
+- Payments
+- Cross-Border Payments
+- Blockchain
+- Cryptocurrency
+- Stablecoins
+- Digital Assets
+- Custody
+- Wallets
+- Fintech
+tags_raw:
+- Company
 - Financial Services
 - Payments
 - Cross-Border Payments
@@ -760,6 +772,8 @@ apis:
   humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
   baseURL: https://api.ripple.com
   tags:
+  - Request for Payment
+  tags_raw:
   - Request for payment
   properties:
   - type: OpenAPI
@@ -802,6 +816,8 @@ apis:
   humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
   baseURL: https://api.ripple.com
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
@@ -901,6 +917,8 @@ apis:
   humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
   baseURL: https://api.ripple.com
   tags:
+  - Vault
+  tags_raw:
   - Vaults
   properties:
   - type: OpenAPI
@@ -943,6 +961,8 @@ apis:
   humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
   baseURL: https://api.ripple.com
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
