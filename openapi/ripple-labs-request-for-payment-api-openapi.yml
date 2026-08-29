@@ -1,15 +1,41 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Request for payment API
-  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
-  version: '2.0'
+  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
+
+
+    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
+
+
+    ### Authentication
+
+
+    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
+
+
+    ### API environments
+
+
+    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
+
+
+    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
+
+
+    | Environment  | Domaing Prefix | Domain | Base URL |
+
+    | --- | --- | --- | --- |
+
+    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
+
+    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
+
+    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  version: 4.0.0
+  title: RippleNet Server Request for payment API
 servers:
-- url: https://api.sandbox.palisade.co
-  description: Sandbox server (uses TESTNET data, private keys and accounts)
-- url: https://api.palisade.co
-  description: Palisade server (uses MAINNET data, private keys and accounts)
+- url: //[domainPrefix].ripplexcurrent.com/v4
 security:
-- TokenAuth: []
+- Bearer: []
 tags:
 - name: Request for payment
   description: '
@@ -299,6 +325,116 @@ components:
         descending:
           type: boolean
           example: false
+    FailRequestForPaymentRequest:
+      type: object
+      properties:
+        user_info:
+          type: object
+          description: User-provided data with arbitrary key/value pairs.
+          properties: {}
+      description: Use this JSON object to fail a request for payment.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    UserInfoEntry:
+      type: object
+      required:
+      - created_at
+      - json
+      properties:
+        json:
+          type: object
+          description: User information provided across the payment lifecycle stored as arbitrary JSON key/value pairs.
+          properties: {}
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time at which the user information was added to the payment, as an ISO-8601 timestamp in UTC.
+        subState:
+          type: string
+          example: EXECUTING
+          description: If provided, this parameter descibes payment state more granularly.
+      description: User information provided as arbitrary key/value pairs.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    RippleNetNodeRequestForPaymentUserInfo:
+      type: object
+      required:
+      - node_address
+      properties:
+        node_address:
+          type: string
+          description: RippleNet address of the node that provided the user information.
+        requested:
+          type: array
+          description: User information optionally provided when sending the request for payment.
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        accepted:
+          type: array
+          description: User information optionally provided when accepting the request for payment.
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        failed:
+          type: array
+          description: User information optionally provided when failing the request payment.
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+      description: User information provided across the payment lifecycle.
     RippleNetNodeRequestForPaymentRequest:
       type: object
       required:
@@ -341,6 +477,15 @@ components:
           description: User-provided data with arbitrary key/value pairs.
           properties: {}
       description: Use this JSON object to request a request for payment.
+    RippleNetNodeRequestsForPayment:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/RippleNetNodeRequestForPayment'
+      description: 'Paged response for requests for payment includes:'
     AcceptRequestForPaymentRequest:
       type: object
       required:
@@ -356,97 +501,6 @@ components:
           description: User-provided data with arbitrary key/value pairs.
           properties: {}
       description: Use this JSON object to accept a request for payment.
-    FailRequestForPaymentRequest:
-      type: object
-      properties:
-        user_info:
-          type: object
-          description: User-provided data with arbitrary key/value pairs.
-          properties: {}
-      description: Use this JSON object to fail a request for payment.
-    RippleNetNodeRequestForPaymentUserInfo:
-      type: object
-      required:
-      - node_address
-      properties:
-        node_address:
-          type: string
-          description: RippleNet address of the node that provided the user information.
-        requested:
-          type: array
-          description: User information optionally provided when sending the request for payment.
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        accepted:
-          type: array
-          description: User information optionally provided when accepting the request for payment.
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        failed:
-          type: array
-          description: User information optionally provided when failing the request payment.
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-      description: User information provided across the payment lifecycle.
-    RippleNetNodeRequestsForPayment:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            items:
-              $ref: '#/components/schemas/RippleNetNodeRequestForPayment'
-      description: 'Paged response for requests for payment includes:'
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
-    UserInfoEntry:
-      type: object
-      required:
-      - created_at
-      - json
-      properties:
-        json:
-          type: object
-          description: User information provided across the payment lifecycle stored as arbitrary JSON key/value pairs.
-          properties: {}
-        created_at:
-          type: string
-          format: date-time
-          description: Date and time at which the user information was added to the payment, as an ISO-8601 timestamp in UTC.
-        subState:
-          type: string
-          example: EXECUTING
-          description: If provided, this parameter descibes payment state more granularly.
-      description: User information provided as arbitrary key/value pairs.
     RippleNetNodeRequestForPayment:
       type: object
       required:
@@ -516,39 +570,9 @@ components:
           example: 5492648d-2132-4e70-9ded-2fc86f22b321
           description: Unique identifier of a payment associated to request for payment.
       description: Use this JSON object represent a request for payment.
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
   securitySchemes:
-    TokenAuth:
+    Bearer:
       type: apiKey
+      description: All operations require a `Bearer` access token in the `Authorization` header of each request.<br>Learn about [authentication](/products/payments-odl/api-docs/ripplenet/best-practices/authentication/).
       name: Authorization
       in: header
-externalDocs:
-  description: Click here for the API docs
-  url: https://palisade.readme.io

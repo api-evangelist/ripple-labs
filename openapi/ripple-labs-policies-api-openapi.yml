@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Policies API
+  title: Palisade Policies API
   description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
   version: '2.0'
 servers:
@@ -1910,122 +1910,52 @@ paths:
       - Policies
 components:
   schemas:
-    v2WalletLimit:
-      type: object
-      properties:
-        id:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The wallet limit policy ID
-        createdBy:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The creator ID
-        walletId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The wallet ID
-        vaultId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The vault ID
-        limitQty:
-          type: string
-          example: '200.00'
-          description: The limit quantity
-        duration:
-          type: string
-          example: 200s
-          description: The limit duration
-        limitType:
-          allOf:
-          - $ref: '#/components/schemas/v2LimitType'
-          - type: string
-            example: PER_TX
-            description: The limit type
-        createdAt:
-          type: string
-          format: date-time
-          example: '2022-03-29T10:22:22.420Z'
-          description: The date and time the wallet limit policy was created
-        updatedAt:
-          type: string
-          format: date-time
-          example: '2022-03-29T10:22:22.420Z'
-          description: The date and time the wallet limit policy was updated
-        asset:
-          $ref: '#/components/schemas/commonv2Asset'
-        matchers:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2Matcher'
-            - type: object
-        status:
-          allOf:
-          - $ref: '#/components/schemas/v2WalletLimitStatus'
-          - type: string
-            example: PENDING
-            description: The wallet limit status
-        active:
-          type: boolean
-          example: true
-          description: Whether the limit is active
-        blockchain:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - type: string
-            example: ETHEREUM
-            description: The blockchain associated with this policy
-      required:
-      - id
-      - createdBy
-      - walletId
-      - vaultId
-      - limitType
-      - createdAt
-      - updatedAt
-      - asset
-      - status
-      - active
-    v2ListGlobalWalletLimitsRequest:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-          format: int32
-          example: 1000
-          description: The number of results to return per page (default 50, max 1000)
-        pageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        pagination:
-          allOf:
-          - $ref: '#/components/schemas/v2FilterRequest'
-          - description: 'Pagination and sorting. Sortable fields: asset_symbol, blockchain, limit_type, status, active, created_at, updated_at.'
-        filter:
-          allOf:
-          - $ref: '#/components/schemas/v2WalletLimitFilter'
-          - description: Optional wallet-limit filters. Each populated sub-filter is AND-ed.
-        search:
-          type: string
-          example: limit
-          description: Case-insensitive search over wallet limit ID, vault ID, wallet ID, and asset symbol.
-    v2WalletLimitStatus:
+    v2MatcherType:
       type: string
       enum:
-      - LIMIT_CREATED
-      - LIMIT_ENABLED
-      - LIMIT_REJECTED
-      - LIMIT_DELETED
-      - LIMIT_ERROR
-      - LIMIT_CREATION_APPROVAL_PENDING
-      - LIMIT_CREATION_APPROVAL_COMPLETE
-      - LIMIT_DELETION_APPROVAL_PENDING
-      - LIMIT_DELETION_APPROVAL_COMPLETE
-    v2DeleteWalletLimitResponse:
+      - USER
+      - API_CREDENTIAL
+      - COUNTERPARTY
+      - TRANSACTION_TYPE
+      - SIGN_FOR
+      - COUNTERPARTY_ID
+      - ADDRESS_ID
+      - WALLET_ID
+      - CHAIN_ID
+    TimestampFilterTimestampRange:
       type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          example: '2024-08-01T00:00:00Z'
+          description: Start of time range (inclusive)
+        end:
+          type: string
+          format: date-time
+          example: '2024-08-31T23:59:59Z'
+          description: End of time range (inclusive)
+    v2BlockchainFilter:
+      type: object
+      properties:
+        eq:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - description: Exact blockchain match
+        notEq:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - description: Exclude this blockchain
+        in:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Blockchain'
+          description: Blockchain is in this list
+        notIn:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Blockchain'
+          description: Blockchain is not in this list
     commonv2Asset:
       type: object
       properties:
@@ -2119,23 +2049,24 @@ components:
       - symbol
       - blockchain
       - createdAt
-    v2ListWalletLimitsResponse:
+    v2FilterResponse:
       type: object
       properties:
-        filter:
-          $ref: '#/components/schemas/v2FilterResponse'
-        walletLimits:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2WalletLimit'
-            - type: object
-    v2LimitType:
-      type: string
-      enum:
-      - PER_TX
-      - CONSTANT
-      - ROLLING_DURATION
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
     v2Standard:
       type: string
       enum:
@@ -2145,34 +2076,113 @@ components:
       - ERC721
       - SPL
       - CUSTOM
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2WalletLimitStatus:
+      type: string
+      enum:
+      - LIMIT_CREATED
+      - LIMIT_ENABLED
+      - LIMIT_REJECTED
+      - LIMIT_DELETED
+      - LIMIT_ERROR
+      - LIMIT_CREATION_APPROVAL_PENDING
+      - LIMIT_CREATION_APPROVAL_COMPLETE
+      - LIMIT_DELETION_APPROVAL_PENDING
+      - LIMIT_DELETION_APPROVAL_COMPLETE
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
     protobufAny:
       type: object
       properties:
         '@type':
           type: string
       additionalProperties: {}
-    v2BoolFilter:
+    v2Matcher:
       type: object
       properties:
-        eq:
-          type: boolean
-          description: Equals
-        isNull:
-          type: boolean
-          description: Check if field is null
-    TimestampFilterTimestampRange:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/v2MatcherType'
+          - type: string
+            description: Type of the matcher. The `value` field depends on this field.
+        value:
+          type: string
+          description: Comma seperated list of matcher values.
+        values:
+          type: array
+          items:
+            type: string
+          description: Matcher values.
+      required:
+      - type
+    v2ListGlobalWalletLimitsRequest:
       type: object
       properties:
-        start:
+        pageSize:
+          type: integer
+          format: int32
+          example: 1000
+          description: The number of results to return per page (default 50, max 1000)
+        pageToken:
           type: string
-          format: date-time
-          example: '2024-08-01T00:00:00Z'
-          description: Start of time range (inclusive)
-        end:
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/v2FilterRequest'
+          - description: 'Pagination and sorting. Sortable fields: asset_symbol, blockchain, limit_type, status, active, created_at, updated_at.'
+        filter:
+          allOf:
+          - $ref: '#/components/schemas/v2WalletLimitFilter'
+          - description: Optional wallet-limit filters. Each populated sub-filter is AND-ed.
+        search:
           type: string
-          format: date-time
-          example: '2024-08-31T23:59:59Z'
-          description: End of time range (inclusive)
+          example: limit
+          description: Case-insensitive search over wallet limit ID, vault ID, wallet ID, and asset symbol.
+    v2DeleteWalletLimitResponse:
+      type: object
     v2TimestampFilter:
       type: object
       properties:
@@ -2218,24 +2228,129 @@ components:
           format: int32
           example: -7
           description: Relative days from now (negative for past, positive for future)
-    v2Matcher:
+    v2LimitType:
+      type: string
+      enum:
+      - PER_TX
+      - CONSTANT
+      - ROLLING_DURATION
+    v2AssetSource:
+      type: string
+      enum:
+      - ASSET_SOURCE_LEGACY
+      - ASSET_SOURCE_AUTO
+      - ASSET_SOURCE_COINGECKO
+      - ASSET_SOURCE_PALISADE
+      - ASSET_SOURCE_CUSTOMER
+    v2WalletLimit:
       type: object
       properties:
-        type:
-          allOf:
-          - $ref: '#/components/schemas/v2MatcherType'
-          - type: string
-            description: Type of the matcher. The `value` field depends on this field.
-        value:
+        id:
           type: string
-          description: Comma seperated list of matcher values.
-        values:
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet limit policy ID
+        createdBy:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The creator ID
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        limitQty:
+          type: string
+          example: '200.00'
+          description: The limit quantity
+        duration:
+          type: string
+          example: 200s
+          description: The limit duration
+        limitType:
+          allOf:
+          - $ref: '#/components/schemas/v2LimitType'
+          - type: string
+            example: PER_TX
+            description: The limit type
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the wallet limit policy was created
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the wallet limit policy was updated
+        asset:
+          $ref: '#/components/schemas/commonv2Asset'
+        matchers:
           type: array
           items:
-            type: string
-          description: Matcher values.
+            allOf:
+            - $ref: '#/components/schemas/v2Matcher'
+            - type: object
+        status:
+          allOf:
+          - $ref: '#/components/schemas/v2WalletLimitStatus'
+          - type: string
+            example: PENDING
+            description: The wallet limit status
+        active:
+          type: boolean
+          example: true
+          description: Whether the limit is active
+        blockchain:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - type: string
+            example: ETHEREUM
+            description: The blockchain associated with this policy
       required:
-      - type
+      - id
+      - createdBy
+      - walletId
+      - vaultId
+      - limitType
+      - createdAt
+      - updatedAt
+      - asset
+      - status
+      - active
+    v2ListWalletLimitsResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        walletLimits:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2WalletLimit'
+            - type: object
+    v2Blockchain:
+      type: string
+      enum:
+      - AVALANCHE
+      - ETHEREUM
+      - XRP_LEDGER
+      - POLYGON
+      - BNBCHAIN
+      - BASE
+      - HEDERA
+      - ARBITRUM
+      - ONE_MONEY
+      - SOLANA
+      - TRON
+      - BITCOIN
+    v2SortOrder:
+      type: string
+      enum:
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
     v2ListGlobalWalletLimitsResponse:
       type: object
       properties:
@@ -2247,44 +2362,35 @@ components:
             allOf:
             - $ref: '#/components/schemas/v2WalletLimit'
             - type: object
-    v2FilterResponse:
+    v2BoolFilter:
       type: object
       properties:
-        previousPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the previous page of results
-        nextPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        total:
+        eq:
+          type: boolean
+          description: Equals
+        isNull:
+          type: boolean
+          description: Check if field is null
+    v2FilterRequest:
+      type: object
+      properties:
+        pageSize:
           type: integer
           format: int32
-          example: 100
-          description: The total number of results
-      required:
-      - total
-    v2AssetSource:
-      type: string
-      enum:
-      - ASSET_SOURCE_LEGACY
-      - ASSET_SOURCE_AUTO
-      - ASSET_SOURCE_COINGECKO
-      - ASSET_SOURCE_PALISADE
-      - ASSET_SOURCE_CUSTOMER
-    v2MatcherType:
-      type: string
-      enum:
-      - USER
-      - API_CREDENTIAL
-      - COUNTERPARTY
-      - TRANSACTION_TYPE
-      - SIGN_FOR
-      - COUNTERPARTY_ID
-      - ADDRESS_ID
-      - WALLET_ID
-      - CHAIN_ID
+          example: 50
+          description: Number of results per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: Token for pagination from previous response
+        orderBy:
+          type: string
+          example: created_at
+          description: Field to order results by
+        order:
+          allOf:
+          - $ref: '#/components/schemas/v2SortOrder'
+          - description: Sort order (ASC or DESC)
     v2WalletLimitFilter:
       type: object
       properties:
@@ -2328,112 +2434,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/v2TimestampFilter'
           - description: Filter by last-update timestamp
-    v2Blockchain:
-      type: string
-      enum:
-      - AVALANCHE
-      - ETHEREUM
-      - XRP_LEDGER
-      - POLYGON
-      - BNBCHAIN
-      - BASE
-      - HEDERA
-      - ARBITRUM
-      - ONE_MONEY
-      - SOLANA
-      - TRON
-      - BITCOIN
-    v2StringFilter:
-      type: object
-      properties:
-        eq:
-          type: string
-          description: Exact match
-        notEq:
-          type: string
-          description: Not equal to
-        contains:
-          type: string
-          description: Contains substring (case-insensitive)
-        startsWith:
-          type: string
-          description: Starts with prefix (case-insensitive)
-        endsWith:
-          type: string
-          description: Ends with suffix (case-insensitive)
-        in:
-          type: array
-          items:
-            type: string
-          description: Value is in the list
-        notIn:
-          type: array
-          items:
-            type: string
-          description: Value is not in the list
-        isNull:
-          type: boolean
-          description: Check if field is null
-    v2SortOrder:
-      type: string
-      enum:
-      - SORT_ORDER_ASC
-      - SORT_ORDER_DESC
-    v2BlockchainFilter:
-      type: object
-      properties:
-        eq:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - description: Exact blockchain match
-        notEq:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - description: Exclude this blockchain
-        in:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2Blockchain'
-          description: Blockchain is in this list
-        notIn:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2Blockchain'
-          description: Blockchain is not in this list
-    v2FilterRequest:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-          format: int32
-          example: 50
-          description: Number of results per page (default 50, max 1000)
-        pageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: Token for pagination from previous response
-        orderBy:
-          type: string
-          example: created_at
-          description: Field to order results by
-        order:
-          allOf:
-          - $ref: '#/components/schemas/v2SortOrder'
-          - description: Sort order (ASC or DESC)
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
   securitySchemes:
     TokenAuth:
       type: apiKey

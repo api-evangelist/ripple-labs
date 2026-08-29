@@ -1,15 +1,41 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Quote expiration API
-  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
-  version: '2.0'
+  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
+
+
+    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
+
+
+    ### Authentication
+
+
+    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
+
+
+    ### API environments
+
+
+    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
+
+
+    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
+
+
+    | Environment  | Domaing Prefix | Domain | Base URL |
+
+    | --- | --- | --- | --- |
+
+    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
+
+    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
+
+    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  version: 4.0.0
+  title: RippleNet Server Quote expiration API
 servers:
-- url: https://api.sandbox.palisade.co
-  description: Sandbox server (uses TESTNET data, private keys and accounts)
-- url: https://api.palisade.co
-  description: Palisade server (uses MAINNET data, private keys and accounts)
+- url: //[domainPrefix].ripplexcurrent.com/v4
 security:
-- TokenAuth: []
+- Bearer: []
 tags:
 - name: Quote expiration
   description: '
@@ -154,16 +180,14 @@ paths:
       security:
       - Bearer: []
 components:
+  requestBodies:
+    QuoteExpiry:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/QuoteExpiry'
+      required: true
   schemas:
-    QuoteExpiries:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            items:
-              $ref: '#/components/schemas/QuoteExpiry'
-      description: Provides a `content` array of quote expiry objects and a set of pagination information fields.
     Sort:
       type: object
       properties:
@@ -184,30 +208,43 @@ components:
         descending:
           type: boolean
           example: false
-    QuoteExpiry:
+    RippleNetProblem:
       type: object
+      description: Represents a request to create and update a payout method record.
       properties:
-        quote_ttl:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
           type: number
-          example: 5900
-          description: Quote expiration window, or time to live (ttl), in seconds. To calculate the quote expiration date, xCurrent adds this value to the quote creation timestamp.
-        sending_partner:
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
           type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet address of the sender, in the format `ripplenetaddress`. For example, `rn.us.sf.san_francisco`.
-        receiving_partner:
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
           type: string
-          example: rn.us.tx.austin
-          description: RippleNet address of the receiver, in the format `ripplenetaddress`. For example, `rn.us.ny.new_york`.
-        currency:
-          type: string
-          example: USD
-          description: currency of the exchange rate.
-        id:
-          type: integer
-          example: 2
-          description: id of quote expiry object
-      description: Use this JSON request object to update the quote time to live represented in seconds.
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    QuoteExpiries:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/QuoteExpiry'
+      description: Provides a `content` array of quote expiry objects and a set of pagination information fields.
     Page:
       type: object
       properties:
@@ -239,46 +276,33 @@ components:
           items:
             $ref: '#/components/schemas/Sort'
       description: Paginated response base object.
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
-  requestBodies:
     QuoteExpiry:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/QuoteExpiry'
-      required: true
+      type: object
+      properties:
+        quote_ttl:
+          type: number
+          example: 5900
+          description: Quote expiration window, or time to live (ttl), in seconds. To calculate the quote expiration date, xCurrent adds this value to the quote creation timestamp.
+        sending_partner:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the sender, in the format `ripplenetaddress`. For example, `rn.us.sf.san_francisco`.
+        receiving_partner:
+          type: string
+          example: rn.us.tx.austin
+          description: RippleNet address of the receiver, in the format `ripplenetaddress`. For example, `rn.us.ny.new_york`.
+        currency:
+          type: string
+          example: USD
+          description: currency of the exchange rate.
+        id:
+          type: integer
+          example: 2
+          description: id of quote expiry object
+      description: Use this JSON request object to update the quote time to live represented in seconds.
   securitySchemes:
-    TokenAuth:
+    Bearer:
       type: apiKey
+      description: All operations require a `Bearer` access token in the `Authorization` header of each request.<br>Learn about [authentication](/products/payments-odl/api-docs/ripplenet/best-practices/authentication/).
       name: Authorization
       in: header
-externalDocs:
-  description: Click here for the API docs
-  url: https://palisade.readme.io

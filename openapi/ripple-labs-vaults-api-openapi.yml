@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Vaults API
+  title: Palisade Vaults API
   description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
   version: '2.0'
 servers:
@@ -1003,48 +1003,6 @@ paths:
       - Vaults
 components:
   schemas:
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    v2SortOrder:
-      type: string
-      enum:
-      - SORT_ORDER_ASC
-      - SORT_ORDER_DESC
-    v2VaultFilter:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by vault ID
-        name:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by vault name
-        description:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by vault description
-        externalId:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by external ID
-        correlationId:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by correlation ID
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/v2TimestampFilter'
-          - description: Filter by creation timestamp
-        updatedAt:
-          allOf:
-          - $ref: '#/components/schemas/v2TimestampFilter'
-          - description: Filter by last-update timestamp
     v2ListVaultsRequest:
       type: object
       properties:
@@ -1073,19 +1031,91 @@ components:
           type: string
           example: Treasury
           description: Case-insensitive search over vault ID, name, description, external ID, and correlation ID.
-    TimestampFilterTimestampRange:
+    v2Vault:
       type: object
       properties:
-        start:
+        id:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        createdBy:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The user ID that created the vault
+        createdAt:
           type: string
           format: date-time
-          example: '2024-08-01T00:00:00Z'
-          description: Start of time range (inclusive)
-        end:
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the vault was created
+        updatedAt:
           type: string
           format: date-time
-          example: '2024-08-31T23:59:59Z'
-          description: End of time range (inclusive)
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the vault was updated
+        name:
+          type: string
+          example: Treasury vault
+          description: The name of the vault
+        description:
+          type: string
+          example: A vault used by the treasury department
+          description: The description of the vault
+        externalId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: External ID of this vault, unique to the organization
+        correlationId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Correlation ID for the vault
+      required:
+      - id
+      - createdBy
+      - createdAt
+      - updatedAt
+      - name
+    v2SortOrder:
+      type: string
+      enum:
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
     v2TimestampFilter:
       type: object
       properties:
@@ -1151,27 +1181,22 @@ components:
           allOf:
           - $ref: '#/components/schemas/v2SortOrder'
           - description: Sort order (ASC or DESC)
-    v2Vault:
+    TimestampFilterTimestampRange:
       type: object
       properties:
-        id:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The vault ID
-        createdBy:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The user ID that created the vault
-        createdAt:
+        start:
           type: string
           format: date-time
-          example: '2022-03-29T10:22:22.420Z'
-          description: The date and time the vault was created
-        updatedAt:
+          example: '2024-08-01T00:00:00Z'
+          description: Start of time range (inclusive)
+        end:
           type: string
           format: date-time
-          example: '2022-03-29T10:22:22.420Z'
-          description: The date and time the vault was updated
+          example: '2024-08-31T23:59:59Z'
+          description: End of time range (inclusive)
+    v2CreateVaultRequest:
+      type: object
+      properties:
         name:
           type: string
           example: Treasury vault
@@ -1187,24 +1212,40 @@ components:
         correlationId:
           type: string
           example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: Correlation ID for the vault
+          description: Correlation ID for tracking correlating actions with this vault creation
       required:
-      - id
-      - createdBy
-      - createdAt
-      - updatedAt
       - name
-    v2ListVaultsResponse:
+    v2VaultFilter:
       type: object
       properties:
-        filter:
-          $ref: '#/components/schemas/v2FilterResponse'
-        vaults:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2Vault'
-            - type: object
+        id:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by vault ID
+        name:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by vault name
+        description:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by vault description
+        externalId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by external ID
+        correlationId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by correlation ID
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by creation timestamp
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-update timestamp
     v2FilterResponse:
       type: object
       properties:
@@ -1237,58 +1278,17 @@ components:
             allOf:
             - $ref: '#/components/schemas/protobufAny'
             - type: object
-    v2StringFilter:
+    v2ListVaultsResponse:
       type: object
       properties:
-        eq:
-          type: string
-          description: Exact match
-        notEq:
-          type: string
-          description: Not equal to
-        contains:
-          type: string
-          description: Contains substring (case-insensitive)
-        startsWith:
-          type: string
-          description: Starts with prefix (case-insensitive)
-        endsWith:
-          type: string
-          description: Ends with suffix (case-insensitive)
-        in:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        vaults:
           type: array
           items:
-            type: string
-          description: Value is in the list
-        notIn:
-          type: array
-          items:
-            type: string
-          description: Value is not in the list
-        isNull:
-          type: boolean
-          description: Check if field is null
-    v2CreateVaultRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Treasury vault
-          description: The name of the vault
-        description:
-          type: string
-          example: A vault used by the treasury department
-          description: The description of the vault
-        externalId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: External ID of this vault, unique to the organization
-        correlationId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: Correlation ID for tracking correlating actions with this vault creation
-      required:
-      - name
+            allOf:
+            - $ref: '#/components/schemas/v2Vault'
+            - type: object
   securitySchemes:
     TokenAuth:
       type: apiKey

@@ -1,15 +1,18 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Market Cap API
-  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
-  version: '2.0'
+  title: Ripple Mint Market Cap API
+  version: 1.0.0
+  description: 'API operations for programmatic integration with Ripple Mint.
+
+    Covers transaction queries for issuance, redemption, and bridge activity,
+
+    as well as public market cap endpoints for RLUSD supply data.
+
+    '
 servers:
-- url: https://api.sandbox.palisade.co
-  description: Sandbox server (uses TESTNET data, private keys and accounts)
-- url: https://api.palisade.co
-  description: Palisade server (uses MAINNET data, private keys and accounts)
+- url: https://api.ripple.com
 security:
-- TokenAuth: []
+- oauth2: []
 tags:
 - name: Market Cap
   x-displayName: Market Cap
@@ -143,19 +146,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
-    MarketCapBalance:
-      type: object
-      required:
-      - amount
-      description: Balance for a single currency or chain.
-      properties:
-        amount:
-          type: string
-          description: Balance as a decimal string (e.g. "1000000000.00")
-        ledgerIndex:
-          type: integer
-          nullable: true
-          description: Ledger index at which this balance was last observed. Absent when not applicable.
     ProblemDetail:
       type: object
       description: 'Error response following RFC 9457 (Problem Details for HTTP APIs), the successor to RFC 7807.
@@ -196,6 +186,29 @@ components:
           description: Per-chain balance breakdown. Keys are blockchain network names (e.g. `XRPL`, `ETH`).
           additionalProperties:
             $ref: '#/components/schemas/MarketCapBalance'
+    MarketCapBalance:
+      type: object
+      required:
+      - amount
+      description: Balance for a single currency or chain.
+      properties:
+        amount:
+          type: string
+          description: Balance as a decimal string (e.g. "1000000000.00")
+        ledgerIndex:
+          type:
+          - integer
+          - 'null'
+          description: Ledger index at which this balance was last observed. Absent when not applicable.
+  parameters:
+    currencyCode:
+      name: currencyCode
+      in: path
+      required: true
+      description: Currency code (e.g. `RLUSD`)
+      schema:
+        type: string
+        example: RLUSD
   responses:
     NotFound:
       description: Resource does not exist
@@ -209,20 +222,12 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/ProblemDetail'
-  parameters:
-    currencyCode:
-      name: currencyCode
-      in: path
-      required: true
-      description: Currency code (e.g. `RLUSD`)
-      schema:
-        type: string
-        example: RLUSD
   securitySchemes:
-    TokenAuth:
-      type: apiKey
-      name: Authorization
-      in: header
-externalDocs:
-  description: Click here for the API docs
-  url: https://palisade.readme.io
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.ripple.com/v2/oauth/token
+          scopes:
+            rlusd_customers:read: Read transaction data
+            rlusd_customers:write: Approve pending redemptions

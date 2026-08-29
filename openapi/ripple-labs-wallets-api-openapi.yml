@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Wallets API
+  title: Palisade Wallets API
   description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
   version: '2.0'
 servers:
@@ -2663,6 +2663,218 @@ paths:
       - Wallets
 components:
   schemas:
+    v2WalletSettings:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          example: 'true'
+          description: Whether the wallet is enabled or not
+        rawSigningEnabled:
+          type: boolean
+          example: 'true'
+          description: Whether raw signing is enabled for the wallet
+        sweepingEnabled:
+          type: boolean
+          example: 'true'
+          description: Whether sweeping is enabled for the wallet
+        defaultFreezeEnabled:
+          type: boolean
+          example: 'true'
+          description: Whether to freeze inbound transactions by default
+      required:
+      - enabled
+      - rawSigningEnabled
+      - sweepingEnabled
+      - defaultFreezeEnabled
+    v2ListGlobalWalletsResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        wallets:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/vaultv2Wallet'
+            - type: object
+    TimestampFilterTimestampRange:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          example: '2024-08-01T00:00:00Z'
+          description: Start of time range (inclusive)
+        end:
+          type: string
+          format: date-time
+          example: '2024-08-31T23:59:59Z'
+          description: End of time range (inclusive)
+    v2BlockchainFilter:
+      type: object
+      properties:
+        eq:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - description: Exact blockchain match
+        notEq:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - description: Exclude this blockchain
+        in:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Blockchain'
+          description: Blockchain is in this list
+        notIn:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Blockchain'
+          description: Blockchain is not in this list
+    v2FilterResponse:
+      type: object
+      properties:
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
+    v2Keystore:
+      type: string
+      enum:
+      - HSM
+      - MPC
+    v2KeyAlgorithm:
+      type: string
+      enum:
+      - SECP256K1
+      - ED25519
+    vaultv2WalletStatus:
+      type: string
+      enum:
+      - CREATED
+      - PROVISIONING
+      - PROVISIONED_WALLET
+      - PROVISIONING_POLICY
+      - PROVISIONING_COMPLIANCE
+      - PROVISIONED_COMPLIANCE
+      - PROVISIONED
+      - PROVISIONING_FAILED
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2GetWalletSequenceResponse:
+      type: object
+      properties:
+        sequence:
+          type: string
+          format: uint64
+          example: '2'
+          description: The wallets nonce/sequence
+    v2TimestampFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Exact timestamp match
+        notEq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Not equal to timestamp
+        before:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Before this timestamp
+        after:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: After this timestamp
+        gte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Greater than or equal to timestamp
+        lte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Less than or equal to timestamp
+        between:
+          allOf:
+          - $ref: '#/components/schemas/TimestampFilterTimestampRange'
+          - description: Between two timestamps (inclusive)
+        isNull:
+          type: boolean
+          description: Check if field is null
+        relativeDays:
+          type: integer
+          format: int32
+          example: -7
+          description: Relative days from now (negative for past, positive for future)
     vaultv2Wallet:
       type: object
       properties:
@@ -2773,27 +2985,7 @@ components:
       - settings
       - status
       - keyAlgorithm
-    v2WalletType:
-      type: string
-      enum:
-      - WALLET_TYPE_BLOCKCHAIN
-    v2KeyAlgorithm:
-      type: string
-      enum:
-      - SECP256K1
-      - ED25519
-    v2Keystore:
-      type: string
-      enum:
-      - HSM
-      - MPC
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    v2ListGlobalWalletsResponse:
+    v2ListVaultWalletsResponse:
       type: object
       properties:
         filter:
@@ -2804,133 +2996,6 @@ components:
             allOf:
             - $ref: '#/components/schemas/vaultv2Wallet'
             - type: object
-    TimestampFilterTimestampRange:
-      type: object
-      properties:
-        start:
-          type: string
-          format: date-time
-          example: '2024-08-01T00:00:00Z'
-          description: Start of time range (inclusive)
-        end:
-          type: string
-          format: date-time
-          example: '2024-08-31T23:59:59Z'
-          description: End of time range (inclusive)
-    v2TimestampFilter:
-      type: object
-      properties:
-        eq:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Exact timestamp match
-        notEq:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Not equal to timestamp
-        before:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Before this timestamp
-        after:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: After this timestamp
-        gte:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Greater than or equal to timestamp
-        lte:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Less than or equal to timestamp
-        between:
-          allOf:
-          - $ref: '#/components/schemas/TimestampFilterTimestampRange'
-          - description: Between two timestamps (inclusive)
-        isNull:
-          type: boolean
-          description: Check if field is null
-        relativeDays:
-          type: integer
-          format: int32
-          example: -7
-          description: Relative days from now (negative for past, positive for future)
-    v2DeleteWalletResponse:
-      type: object
-    v2FilterResponse:
-      type: object
-      properties:
-        previousPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the previous page of results
-        nextPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        total:
-          type: integer
-          format: int32
-          example: 100
-          description: The total number of results
-      required:
-      - total
-    vaultv2WalletStatus:
-      type: string
-      enum:
-      - CREATED
-      - PROVISIONING
-      - PROVISIONED_WALLET
-      - PROVISIONING_POLICY
-      - PROVISIONING_COMPLIANCE
-      - PROVISIONED_COMPLIANCE
-      - PROVISIONED
-      - PROVISIONING_FAILED
-    v2ListGlobalWalletsRequest:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-          format: int32
-          example: 1000
-          description: The number of results to return per page (default 50, max 1000)
-        pageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        blockchain:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - type: string
-            example: ETHEREUM
-            description: The blockchain of the wallet
-        correlationId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: Correlation ID for tracking various actions on the wallet
-        address:
-          type: string
-          example: '0x1234567890abcdef1234567890abcdef12345678'
-          description: The wallet address to filter by
-        pagination:
-          allOf:
-          - $ref: '#/components/schemas/v2FilterRequest'
-          - description: 'Pagination and sorting. Sortable fields: name, address, blockchain, status, created_at, updated_at.'
-        filter:
-          allOf:
-          - $ref: '#/components/schemas/v2WalletFilter'
-          - description: Optional wallet filters. Each populated sub-filter is AND-ed.
-        search:
-          type: string
-          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
-          description: Case-insensitive search over wallet ID, name, address, alias, external ID, and correlation ID.
     v2Blockchain:
       type: string
       enum:
@@ -2946,106 +3011,15 @@ components:
       - SOLANA
       - TRON
       - BITCOIN
-    v2ListVaultWalletsResponse:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/v2FilterResponse'
-        wallets:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/vaultv2Wallet'
-            - type: object
-    v2GetWalletSequenceResponse:
-      type: object
-      properties:
-        sequence:
-          type: string
-          format: uint64
-          example: '2'
-          description: The wallets nonce/sequence
-    v2WalletSettings:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          example: 'true'
-          description: Whether the wallet is enabled or not
-        rawSigningEnabled:
-          type: boolean
-          example: 'true'
-          description: Whether raw signing is enabled for the wallet
-        sweepingEnabled:
-          type: boolean
-          example: 'true'
-          description: Whether sweeping is enabled for the wallet
-        defaultFreezeEnabled:
-          type: boolean
-          example: 'true'
-          description: Whether to freeze inbound transactions by default
-      required:
-      - enabled
-      - rawSigningEnabled
-      - sweepingEnabled
-      - defaultFreezeEnabled
-    v2StringFilter:
-      type: object
-      properties:
-        eq:
-          type: string
-          description: Exact match
-        notEq:
-          type: string
-          description: Not equal to
-        contains:
-          type: string
-          description: Contains substring (case-insensitive)
-        startsWith:
-          type: string
-          description: Starts with prefix (case-insensitive)
-        endsWith:
-          type: string
-          description: Ends with suffix (case-insensitive)
-        in:
-          type: array
-          items:
-            type: string
-          description: Value is in the list
-        notIn:
-          type: array
-          items:
-            type: string
-          description: Value is not in the list
-        isNull:
-          type: boolean
-          description: Check if field is null
-    v2BlockchainFilter:
-      type: object
-      properties:
-        eq:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - description: Exact blockchain match
-        notEq:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - description: Exclude this blockchain
-        in:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2Blockchain'
-          description: Blockchain is in this list
-        notIn:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2Blockchain'
-          description: Blockchain is not in this list
     v2SortOrder:
       type: string
       enum:
       - SORT_ORDER_ASC
       - SORT_ORDER_DESC
+    v2WalletType:
+      type: string
+      enum:
+      - WALLET_TYPE_BLOCKCHAIN
     v2FilterRequest:
       type: object
       properties:
@@ -3066,6 +3040,8 @@ components:
           allOf:
           - $ref: '#/components/schemas/v2SortOrder'
           - description: Sort order (ASC or DESC)
+    v2DeleteWalletResponse:
+      type: object
     v2WalletFilter:
       type: object
       properties:
@@ -3113,20 +3089,44 @@ components:
           allOf:
           - $ref: '#/components/schemas/v2TimestampFilter'
           - description: Filter by last-update timestamp
-    rpcStatus:
+    v2ListGlobalWalletsRequest:
       type: object
       properties:
-        code:
+        pageSize:
           type: integer
           format: int32
-        message:
+          example: 1000
+          description: The number of results to return per page (default 50, max 1000)
+        pageToken:
           type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        blockchain:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - type: string
+            example: ETHEREUM
+            description: The blockchain of the wallet
+        correlationId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Correlation ID for tracking various actions on the wallet
+        address:
+          type: string
+          example: '0x1234567890abcdef1234567890abcdef12345678'
+          description: The wallet address to filter by
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/v2FilterRequest'
+          - description: 'Pagination and sorting. Sortable fields: name, address, blockchain, status, created_at, updated_at.'
+        filter:
+          allOf:
+          - $ref: '#/components/schemas/v2WalletFilter'
+          - description: Optional wallet filters. Each populated sub-filter is AND-ed.
+        search:
+          type: string
+          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
+          description: Case-insensitive search over wallet ID, name, address, alias, external ID, and correlation ID.
   securitySchemes:
     TokenAuth:
       type: apiKey

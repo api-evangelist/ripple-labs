@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Vault Tags API
+  title: Palisade Vault Tags API
   description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
   version: '2.0'
 servers:
@@ -450,22 +450,6 @@ paths:
       - Vault Tags
 components:
   schemas:
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
-    v2DeleteVaultTagResponse:
-      type: object
     v2VaultTag:
       type: object
       properties:
@@ -488,6 +472,22 @@ components:
         '@type':
           type: string
       additionalProperties: {}
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2DeleteVaultTagResponse:
+      type: object
   securitySchemes:
     TokenAuth:
       type: apiKey

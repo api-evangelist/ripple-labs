@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Balances API
+  title: Palisade Balances API
   description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
   version: '2.0'
 servers:
@@ -512,14 +512,6 @@ components:
       - ASSET_SOURCE_COINGECKO
       - ASSET_SOURCE_PALISADE
       - ASSET_SOURCE_CUSTOMER
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    v2SyncWalletBalancesResponse:
-      type: object
     v2GetWalletBalancesResponse:
       type: object
       properties:
@@ -537,49 +529,6 @@ components:
             - type: object
       required:
       - currencyCode
-    v2GetVaultBalancesResponse:
-      type: object
-      properties:
-        currencyCode:
-          type: string
-          example: USD
-          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
-        aggregatedFiatValue:
-          type: string
-          example: '100.00'
-          description: The aggregated fiat value of the vault's balances
-        balances:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2WalletBalance'
-            - type: object
-      required:
-      - currencyCode
-    v2Standard:
-      type: string
-      enum:
-      - NATIVE
-      - ERC20
-      - ISSUED_CURRENCY
-      - ERC721
-      - SPL
-      - CUSTOM
-    v2Blockchain:
-      type: string
-      enum:
-      - AVALANCHE
-      - ETHEREUM
-      - XRP_LEDGER
-      - POLYGON
-      - BNBCHAIN
-      - BASE
-      - HEDERA
-      - ARBITRUM
-      - ONE_MONEY
-      - SOLANA
-      - TRON
-      - BITCOIN
     v2GetOrgBalancesResponse:
       type: object
       properties:
@@ -639,6 +588,25 @@ components:
           type: string
           example: '20.00'
           description: The balance frozen by policy actions
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2SyncWalletBalancesResponse:
+      type: object
+    v2VaultBalance:
+      type: object
+      properties:
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID that the connection is associated with
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the vault
     commonv2Asset:
       type: object
       properties:
@@ -732,6 +700,15 @@ components:
       - symbol
       - blockchain
       - createdAt
+    v2Standard:
+      type: string
+      enum:
+      - NATIVE
+      - ERC20
+      - ISSUED_CURRENCY
+      - ERC721
+      - SPL
+      - CUSTOM
     rpcStatus:
       type: object
       properties:
@@ -746,17 +723,40 @@ components:
             allOf:
             - $ref: '#/components/schemas/protobufAny'
             - type: object
-    v2VaultBalance:
+    v2GetVaultBalancesResponse:
       type: object
       properties:
-        vaultId:
+        currencyCode:
           type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The vault ID that the connection is associated with
+          example: USD
+          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
         aggregatedFiatValue:
           type: string
           example: '100.00'
-          description: The aggregated fiat value of the vault
+          description: The aggregated fiat value of the vault's balances
+        balances:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2WalletBalance'
+            - type: object
+      required:
+      - currencyCode
+    v2Blockchain:
+      type: string
+      enum:
+      - AVALANCHE
+      - ETHEREUM
+      - XRP_LEDGER
+      - POLYGON
+      - BNBCHAIN
+      - BASE
+      - HEDERA
+      - ARBITRUM
+      - ONE_MONEY
+      - SOLANA
+      - TRON
+      - BITCOIN
   securitySchemes:
     TokenAuth:
       type: apiKey

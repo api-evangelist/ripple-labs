@@ -1,15 +1,41 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Quotes API
-  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
-  version: '2.0'
+  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
+
+
+    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
+
+
+    ### Authentication
+
+
+    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
+
+
+    ### API environments
+
+
+    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
+
+
+    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
+
+
+    | Environment  | Domaing Prefix | Domain | Base URL |
+
+    | --- | --- | --- | --- |
+
+    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
+
+    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
+
+    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  version: 4.0.0
+  title: RippleNet Server Quotes API
 servers:
-- url: https://api.sandbox.palisade.co
-  description: Sandbox server (uses TESTNET data, private keys and accounts)
-- url: https://api.palisade.co
-  description: Palisade server (uses MAINNET data, private keys and accounts)
+- url: //[domainPrefix].ripplexcurrent.com/v4
 security:
-- TokenAuth: []
+- Bearer: []
 tags:
 - name: Quotes
   description: '
@@ -197,6 +223,822 @@ paths:
       - Bearer: []
 components:
   schemas:
+    InternalInfo:
+      required:
+      - connector_role
+      - internal_id
+      - labels
+      properties:
+        connector_role:
+          type: string
+          example: RECEIVING
+          description: 'Role of the RippleNet node that sets one or more values in the Internal Info object.
+
+
+            Use as follows:
+
+
+            * `SENDING`: Sending account in the payment resides on this RippleNet instance.
+
+            * `RECEIVING`: Receiving account in the payment resides on this RippleNet instance.
+
+            * `INTERMEDIARY`: Neither sending nor receiving accounts in the payment reside on this RippleNet instance.
+
+            * `INTERNAL`: Both sending and receiving accounts in the payment (usually between RippleNet Cloud and RippleNet) reside on this RippleNet instance.
+
+            '
+          enum:
+          - SENDING
+          - RECEIVING
+          - INTERMEDIARY
+          - INTERNAL
+        labels:
+          type: array
+          description: Array of objects that provide `label` values that are set by including the `sub_state` field at any stage of the payment's lifecycle. Labels can used as a filtering mechanism when searching for payments. Labels are visible only to the node that added them to this copy of a payment. If the values that populate this array are not set in the request or if the values set in the request are not viewable by your node, this array is empty.
+          items:
+            $ref: '#/components/schemas/Label'
+        internal_id:
+          type: string
+          description: ID that is viewable only to the node that set it. This value can be set by the sender when accepting a payment. This value can also be set by any intermediary and the receiver when locking the payment. If this value is not set in the request or if the value set in the request is not viewable by your node, this field value is set to `null`.
+      description: JSON object containing information that only the RippleNet instance that set it can view. These values can be set by the sender when accepting a payment and by an intermediary or receiver when locking the payment.
+    PaymentAcceptRequest:
+      type: object
+      required:
+      - quote_id
+      properties:
+        quote_id:
+          type: string
+          format: uuid
+          example: 9bb53b3b-a774-43e2-9a1b-f18fbc3640f7
+          description: ID of the quote to accept and continue as a payment.
+        sender_end_to_end_id:
+          type: string
+          maxLength: 128
+          description: ID that the sender can specify. Persisted on all RippleNet instances that participate in the payment.
+        internal_id:
+          type: string
+          maxLength: 128
+          description: Internal ID that the sender can specify. Only visible to the sender. Only the sending RippleNet instance stores this ID.
+        user_info:
+          type: object
+          description: 'Your receiver defines the required [User info](/products/payments-odl/api-docs/ripplenet/resources/srpo/user-info) structure. Provide the structure as required by your use case.
+
+
+            **Payout Service (SLS) customers**: Use the ISO20022 descriptions used with the [RippleNet Payment Object (RPO)](/products/payments-odl/api-docs/ripplenet/resources/srpo/supporting-info-full-json-schema) structure.
+
+
+            **One-to-one liquidation customers**: Use the [Outbound instructions](/products/payments-odl/api-docs/ripplenet/resources/outbound-instructions/#payout-examples) format.
+
+            '
+          properties: {}
+      description: Use this JSON request object to accept a quote ID to start the payment process.
+    QuoteCollection:
+      type: object
+      required:
+      - quote_collection_id
+      - quotes
+      properties:
+        quote_collection_id:
+          type: string
+          format: uuid
+          example: 4711728c-cd35-49ec-96a5-72732b4333ec
+          description: Unique identifier of the quote collection.
+        quotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Quote'
+          description: For more information on quote elements, see [Create quote collections](/products/payments-odl/api-docs/ripplenet/tutorials/configure-fees#create-quote-collections).
+        quote_errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteError'
+      description: When provided as a response to the [Create quote collection](#operation/createQuoteCollection) request, provides a JSON object representing quotes for a proposed payment. <p>When provided as a response to the [Create quote to return payment](#operation/createQuoteToReturnPayment)  request, provides a JSON object representing quotes for a proposed return payment.</p> <p>When provided as a response to the [Reverse Payment](#operation/createQuoteToReversePayment) request, provides a JSON object representing a quote for a proposed reverse payment.</p> <p>When provided as a response to the [Get quote collection by ID](#operation/createQuoteCollection) request, provides the requested quote collection.</p>
+    FeeInfo:
+      type: object
+      required:
+      - nodes
+      - total_fees
+      properties:
+        nodes:
+          type: object
+          description: Fees charged by each node participating in the payment.
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/FeeDetails'
+        total_fees:
+          type: array
+          description: Total fees charged in the payment, separated by currency.
+          items:
+            $ref: '#/components/schemas/TotalFees'
+      description: Itemized list of fees charged by each node.
+    UserInfo:
+      type: object
+      required:
+      - accepted
+      - completed
+      - executed
+      - failed
+      - forwarded
+      - lock_declined
+      - locked
+      - node_address
+      - retry_accept
+      - retry_settlement
+      - returned
+      - settlement
+      - settlement_declined
+      properties:
+        node_address:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the node that provided the user information.
+        accepted:
+          type: array
+          description: User information optionally provided when accepting the payment.
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        locked:
+          type: array
+          description: User information optionally provided when locking the payment. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        lock_declined:
+          type: array
+          description: User information optionally provided when declining to lock the payment. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        retry_accept:
+          type: array
+          description: User information optionally provided when retrying acceptance of the payment. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        retry_settlement:
+          type: array
+          description: User information optionally provided when retrying settlement of the payment. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        settlement:
+          type: array
+          description: User information optionally provided when settling the payment. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        settlement_declined:
+          type: array
+          description: User information optionally provided when settlement for the payment is declined. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        failed:
+          type: array
+          description: User information optionally provided when failing the payment. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        executed:
+          type: array
+          description: Payment sub-state information provided using `sub_state` and `memo` fields when finalizing the payment. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        completed:
+          type: array
+          description: User information optionally provided when completing the payment. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        forwarded:
+          type: array
+          description: If applicable, user information optionally provided when forwarding the payment. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        returned:
+          type: array
+          description: If applicable, information optionally provided using `return_reasons` when returning the payment. For more information, see [User Info Entry Object][user-info-entry].
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+      description: User information provided across the payment lifecycle.
+    BasePayment:
+      type: object
+      required:
+      - contract
+      - contract_hash
+      - crypto_transaction_id
+      - execution_condition
+      - execution_results
+      - modified_at
+      - payment_id
+      - payment_state
+      - payment_type
+      - returned_by_payment_with_id
+      - returns_payment_with_id
+      - validator
+      properties:
+        payment_id:
+          type: string
+          format: uuid
+          example: d485f100-2af7-4e48-9ab1-3c7e28775691
+          description: Unique identifier of a payment.
+        contract_hash:
+          type: string
+          example: ccb23bd87f13cc13b9d616a9723f76e112aeac8628b2082e0f8bf3b8c670b103
+          description: Hash of all values in the Contract object used to ensure immutability. Once a payment transitions to the `LOCKED` state, the values in this object cannot change.
+        payment_state:
+          type: string
+          example: COMPLETED
+          description: State of the payment. For details about payment states, see **Payment States** in the _RippleNet Developer Guide_.
+          enum:
+          - ACCEPTED
+          - AWAITING_COLLECTION
+          - COMPLETED
+          - EXECUTED
+          - FAILED
+          - FORWARDED
+          - LOCK_DECLINED
+          - LOCKED
+          - PREPARED
+          - RETURNED
+          - SETTLEMENT_DECLINED
+        modified_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T18:25:47.347Z'
+          description: Date and time at which the payment was last modified, as an ISO-8601 timestamp in UTC.
+        contract:
+          $ref: '#/components/schemas/PaymentContract'
+        ripplenet_info:
+          type: array
+          description: Application-provided data explaining actions taken by RippleNet applications.
+          items:
+            $ref: '#/components/schemas/RippleNetInfo'
+        execution_condition:
+          type: string
+          example: PrefixSha256Condition{subtypes=[ED25519-SHA-256], type=PREFIX-SHA-256, fingerprint=sfGGHCrkyaMsLQNB62w_4zarlPChHKm47JkXVQbs1z0, cost=132360}
+          description: A Base64-encoded execution condition for this payment, the fulfillment of which will be presented to the validator to complete this payment. This value must match the `execution_condition` in the associated crypto transaction.
+        crypto_transaction_id:
+          type: string
+          example: 4e05da26-7872-4a1f-b9b7-db7604757c37
+          description: Unique identifier of the crypto transaction associated with this payment.
+        validator:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: Address of the validator that validated the payment.
+        payment_type:
+          type: string
+          example: REGULAR
+          description: Payment type.
+          enum:
+          - REGULAR
+          - RETURN
+        returns_payment_with_id:
+          type: string
+          format: uuid
+          description: If the `payment_type` is `RETURN`, provides the payment ID of the original payment that this payment returns. Otherwise, this field value is set to `null`.
+        returned_by_payment_with_id:
+          type: string
+          format: uuid
+          description: If the `payment_type` is `REGULAR` and the payment has an associated return payment, provides the payment ID of the return payment. Otherwise, this field value is set to `null`.
+        execution_results:
+          type: array
+          description: Represents the actual movement of funds in a payment. Each execution result corresponds to a quote element and represents its execution in a payment.
+          items:
+            $ref: '#/components/schemas/ExecutionResult'
+        liquidation_execution_results:
+          type: array
+          description: Represents the actual movement of funds in a payment as part of liquidation of a Wallet Receive payment.
+          items:
+            $ref: '#/components/schemas/ExecutionResult'
+        liquidation_details:
+          $ref: '#/components/schemas/LiquidationDetails'
+        push_forward_execution_results:
+          type: array
+          description: Represents the movement of funds after an On-Demand Liquidity payment fails at intermediary transfer or destination exchange.
+          items:
+            $ref: '#/components/schemas/ExecutionResult'
+      description: JSON response object that represents a payment. A payment is the movement of value across accounts on potentially different RippleNet instances involving one or more currencies.
+    Label:
+      properties:
+        label:
+          type: string
+          description: Label to be attached
+      description: Label object
+    Payment:
+      description: JSON response object that represents a payment. A payment is the movement of value across accounts on potentially different RippleNet instances involving one or more currencies.
+      required:
+      - user_info
+      - internal_info
+      - accepted_at
+      allOf:
+      - $ref: '#/components/schemas/BasePayment'
+      - type: object
+        properties:
+          accepted_at:
+            type: string
+            format: date-time
+            example: '2019-10-01T18:25:47.347Z'
+            description: Date and time at which the payment was last accepted, as an ISO-8601 timestamp in UTC.
+          locked_at:
+            type: string
+            format: date-time
+            example: '2019-10-01T18:25:47.347Z'
+            description: Date and time at which the payment was last locked, as an ISO-8601 timestamp in UTC.
+          executed_at:
+            type: string
+            format: date-time
+            example: '2019-10-01T18:25:47.347Z'
+            description: Date and time at which the payment was last executed, as an ISO-8601 timestamp in UTC.
+          completed_at:
+            type: string
+            format: date-time
+            example: '2019-10-01T18:25:47.347Z'
+            description: Date and time at which the payment was last completed, as an ISO-8601 timestamp in UTC.
+          returned_at:
+            type: string
+            format: date-time
+            example: '2019-10-01T18:25:47.347Z'
+            description: Date and time at which the payment was returned, as an ISO-8601 timestamp in UTC.
+          internal_info:
+            $ref: '#/components/schemas/InternalInfo'
+          user_info:
+            type: array
+            description: User-provided data with arbitrary key/value pairs.
+            items:
+              $ref: '#/components/schemas/UserInfo'
+    LiquidationDetails:
+      type: object
+      description: Payment liquidation details
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Liquidation ID, unique to the liquidation process of this payment
+        status:
+          type: string
+          description: Liquidation status
+        failure_reason:
+          type: string
+          description: Reason behind failure of the liquidation, only applicable if the status is failure
+        failure_count:
+          type: integer
+          description: Number of times the liquidation failed. Irrelevant if status is successful.
+    FXRate:
+      type: object
+      required:
+      - base_currency_code
+      - counter_currency_code
+      - rate
+      - type
+      properties:
+        rate:
+          type: number
+          example: 3.25
+          description: Exchange rate between a base and counter currency.
+        base_currency_code:
+          type: string
+          example: USD
+          description: Currency code of the base currency.
+        counter_currency_code:
+          type: string
+          example: GBP
+          description: Currency code of the counter currency.
+        type:
+          type: string
+          example: buy
+          description: Order type of the exchange rate. Valid values are `buy` or `sell`.
+      description: The details of an FX Rate for a quote or payment.
+    RippleNetInfoEntry:
+      type: object
+      properties:
+        info:
+          type: string
+          example: L001
+          description: Information explaining the action taken by a RippleNet application. Could be a RippleNet error code, or a written explanation of the action taken
+        created_at:
+          type: string
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+          description: The DateTime that this quote was created, as an ISO-8601 timestamp in UTC.
+      description: Application-generated information explaining an action taken by a RippleNet application
+    UserInfoEntry:
+      type: object
+      required:
+      - created_at
+      - json
+      properties:
+        json:
+          type: object
+          description: User information provided across the payment lifecycle stored as arbitrary JSON key/value pairs.
+          properties: {}
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time at which the user information was added to the payment, as an ISO-8601 timestamp in UTC.
+        subState:
+          type: string
+          example: EXECUTING
+          description: If provided, this parameter descibes payment state more granularly.
+      description: User information provided as arbitrary key/value pairs.
+    QuoteError:
+      type: object
+      required:
+      - failed_path
+      - error_message
+      properties:
+        failed_path:
+          type: array
+          description: Quote path that failed.
+          items:
+            $ref: '#/components/schemas/QuotePathRos'
+        error_origin:
+          type: string
+          description: RippleNet address of where the error originated. For example, `rn.us.ny.new_york`.
+        error_message:
+          type: string
+          description: Message that describes the error.
+      description: Object that describes an error that happened during quote collection.
+      x-docs-model-object:
+        object-name: Quote Error Object
+        nested-objects-array:
+        - property-name: failed_path
+          object: quote-path
+          docs-name: Quote Path Array
+          data-type: Array
+          has-nested-display: true
+    FeeDetails:
+      type: object
+      required:
+      - fee_value
+      - fee_currency
+      - category
+      properties:
+        fee_value:
+          type: number
+          description: value of the fee
+        fee_currency:
+          type: string
+          description: currency of the fee charged
+        category:
+          type: string
+          description: category of the fee
+        fee_description:
+          type: string
+          description: optional description of the fee
+    TotalFees:
+      type: object
+      required:
+      - total_fee
+      - fee_currency
+      properties:
+        total_fee:
+          type: number
+          description: total value of fee
+        fee_currency:
+          type: string
+          description: currency of the fee charged
+    RippleNetInfo:
+      type: object
+      required:
+      - node_address
+      - settlement_declined
+      properties:
+        node_address:
+          type: string
+          example: rn.us.ny.new_york
+          description: RippleNet address of the node from which the RippleNetInfo originated.
+        settlement_declined:
+          type: array
+          description: If applicable, provides an array of RippleNetInfoEntry's explaining transitions into the `SETTLEMENT_DECLINED` state
+          items:
+            $ref: '#/components/schemas/RippleNetInfoEntry'
+      description: Application-generated information explaining actions taken by RippleNet applications.
+    PaymentContract:
+      type: object
+      required:
+      - created_at
+      - expires_at
+      - quote
+      - sender_end_to_end_id
+      properties:
+        sender_end_to_end_id:
+          type: string
+          description: ID that the sender can specify. Persisted on all RippleNet instances that participate in the payment.
+          maxLength: 128
+          minLength: 1
+        created_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T18:18:13.665Z'
+          description: Date and time at which this payment contract was created, as an ISO-8601 timestamp in UTC.
+        expires_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T18:55:22.824Z'
+          description: Date and time after which this payment contract expires, as an ISO-8601 timestamp in UTC.
+          default: 300s/300000ms
+        quote:
+          $ref: '#/components/schemas/Quote'
+        fee_info:
+          $ref: '#/components/schemas/FeeInfo'
+      description: Represents all immutable parts of a payment agreed upon by all participants as a part of the [Lock payment](#operation/lockPayment) flow. Once a payment transitions to the `LOCKED` state, the values in this object cannot change.
+    ExecutionResult:
+      type: object
+      required:
+      - execution_result_id
+      - execution_result_order
+      - execution_result_type
+      - execution_timestamp
+      - receiver_address
+      - receiving_amount
+      - receiving_fee
+      - sender_address
+      - sending_amount
+      - sending_fee
+      properties:
+        execution_result_id:
+          type: string
+          format: uuid
+          example: 06f6d4e2-3523-4d17-92fd-53192a06207f
+          description: Unique identifier for this payment result.
+        execution_timestamp:
+          type: string
+          format: date-time
+          example: '2019-10-01T18:24:29.867Z'
+          description: Date and time at which this portion of the payment was executed, as an ISO-8601 timestamp in UTC.
+        execution_result_type:
+          type: string
+          example: TRANSFER
+          description: Type of payment execution result.<p><ul> <li>`TRANSFER` represents the movement of funds between two accounts.</li> <li>`EXCHANGE` represents the exchange of currencies between two accounts.</li> <li>`EXCHANGE_TRADE` represents the exchange of fiat to digital currency on a digital exchange.</li> <li>`CRYPTO_TRANSFER` represents the movement of digital funds between two digital exchanges.</li> </ul></p>
+          enum:
+          - TRANSFER
+          - EXCHANGE
+          - EXCHANGE_TRADE
+          - CRYPTO_TRANSFER
+        execution_result_order:
+          type: integer
+          example: 1
+          description: Order in which the payment execution action was taken along the liquidity path. For example, a payment may include five execution results along the liquidity path. Each execution result has an order number that indicates the order in which the execution result was achieved to make the payment.
+        sender_address:
+          type: string
+          example: trans_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        receiver_address:
+          type: string
+          example: conct_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        sending_amount:
+          type: number
+          example: 498
+          description: Amount the sender is sending.
+        receiving_amount:
+          type: number
+          example: 498
+          description: Amount the receiver is receiving.
+        sending_fee:
+          type: number
+          example: 2
+          description: Fees the sender is charging.
+        receiving_fee:
+          type: number
+          example: 0
+          description: Fees the receiver is charging.
+        sending_currency_code:
+          type: string
+          example: USD
+          description: Currency code of the sending amount. Included in execution results with `execution_result_type` set to `EXCHANGE`.
+        receiving_currency_code:
+          type: string
+          example: GBP
+          description: Currency of the receiving amount. Included in execution results with `execution_result_type` set to `EXCHANGE`.
+        fx_rate:
+          $ref: '#/components/schemas/FXRate'
+        transfer_currency_code:
+          type: string
+          description: Currency of the transfer. Returned in execution results with `execute_result_type` set to `TRANSFER`.
+        intermediary_delta:
+          type: number
+          example: 0.2
+          description: Amount of XRP representing the difference in FX rate between the moment of quoting and the moment of execution. A positive value is the amount taken out of the incentive pool. A negative value is the amount returned to the incentive pool. (Soon to be deprecated)
+        incentive_type:
+          type: string
+          example: firm
+          description: Configuration of the incentive pool on the xRapid side. Two values are supported, `firm` and `fx`. For `firm`, xRapid guarantees that the FX rate at the moment of execution is the same as at the moment of quoting. For `fx`, xRapid guaratees a predefined FX rate.
+        incentive_value:
+          type: number
+          example: 0.2
+          description: Amount of XRP representing the difference in FX rate between the moment of quoting and the moment of execution. A positive value is the amount taken out of the incentive pool. A negative value is the amount returned to the incentive pool.
+        transaction_hash:
+          type: string
+          example: 5.5467794184785867e+76
+          description: Hash representing the unique identifier for the transfer of funds in the XRP ledger.
+        venue_id:
+          type: string
+          example: nz7RpAujYgnQtjEM
+          description: The id from an exchange associated with a transaction involving an exchange account.
+        fiat_adjusted_value:
+          type: number
+          example: 0.02
+          description: Represents the delta between quoted and received executed amounts, for exchange trades.
+        odl_payment_id:
+          type: string
+          description: Payment ID in On-Demand Liquidity (ODL) for an executed ODL payment containing the transaction represented by this execution result.
+      description: Represents the actual movement of funds in a payment. Each execution result corresponds to a quote element and represents its execution in a payment. Included once the payment is in `EXECUTED` state.
+    Quote:
+      type: object
+      required:
+      - amount
+      - created_at
+      - currency_code
+      - currency_code_filter
+      - expires_at
+      - liquidity_warning
+      - price_guarantee
+      - quote_elements
+      - quote_id
+      - receiver_address
+      - sender_address
+      - service_type
+      - type
+      properties:
+        quote_id:
+          type: string
+          format: uuid
+          example: 2a547e56-4aac-4375-86a8-8b3e7014801d
+          description: Unique identifier for the quote.
+        created_at:
+          type: string
+          format: date-time
+          example: '2020-01-29T20:59:44.925Z'
+          description: Date and time at which the quote was created, as an ISO-8601 timestamp in UTC.
+        expires_at:
+          type: string
+          format: date-time
+          example: '2020-01-29T21:29:44.925Z'
+          description: Date and time after which the quote and its pricing expire, as an ISO-8601 timestamp in UTC.
+          default: 300s/300000ms
+        type:
+          type: string
+          example: SENDER_AMOUNT
+          description: Indicates how the amount field should be treated for calculating quote values.
+          enum:
+          - SENDER_AMOUNT
+          - RECEIVER_AMOUNT
+          - SENDER_INSTITUTION_AMOUNT
+          - RECEIVER_INSTITUTION_AMOUNT
+          - REVERSAL_AMOUNT
+        price_guarantee:
+          type: string
+          example: FIRM
+          description: Indicates whether a quote's pricing is `INDICATIVE` or `FIRM`. An `INDICATIVE` quote allows for price movements between quote issuance and payment execution, such that the quoted amount and delivered amount may differ. A `FIRM` quote ensures that the quoted and delivered payment amounts are equal.
+          default: FIRM
+        sender_address:
+          type: string
+          example: sf@rn.us.ca.san_francisco
+          description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        receiver_address:
+          type: string
+          example: sf_gbp@rn.us.ca.san_francisco
+          description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        amount:
+          type: string
+          example: '1'
+          description: Amount to be sent or received, depending on the `type` value.
+        currency_code:
+          type: string
+          example: USD
+          description: Currency code for the `amount` value.
+        currency_code_filter:
+          type: string
+          example: EUR
+          description: Currency code that can be used to filter quotes at the opposite end of the quote request. For example, you can filter by this currency code to find the receiving currency for a quote with a `SENDER_AMOUNT` quote_type. If not sent in the request, this field value is set to `null`.
+        service_type:
+          type: string
+          description: Returns `null`.
+        quote_elements:
+          type: array
+          description: Transfer and exchange elements. A transfer element represents a movement of funds between two accounts. An exchange element represents the exchange of currencies between two accounts.
+          items:
+            $ref: '#/components/schemas/QuoteElement'
+        liquidity_warning:
+          type: string
+          description: Triggered when a quote causes an account to go below its `minimum_allowed_balance`. Otherwise, this field value is set to `null`.
+        payment_method:
+          type: string
+          example: LOCAL_RAILS
+          description: Payout method for the quote.
+        payment_method_fields:
+          type: string
+          example: '{"category_id":"bank","required_originator_fields":[{"field_name":"sender_address","field_label":"Sender address"}]}'
+          description: JSON object containing payment method metadata.
+        payout_method_info:
+          type: object
+          description: Details about the payout method.
+          properties:
+            payout_method_name:
+              type: string
+              example: Cash Payout
+              description: Payout method for the quote.
+            payout_method_category:
+              type: string
+              example: BOOK_TRANSFER
+              description: Category of the payout method. Defaults to <code>OTHER</code> if not specified.
+              enum:
+              - REAL_TIME_GROSS_SETTLEMENT_SYSTEM
+              - REAL_TIME_NET_SETTLEMENT_SYSTEM
+              - MASS_NET_PAYMENT_SYSTEM
+              - BOOK_TRANSFER
+              - CASH_PAYOUT
+              - WALLET_PAYMENT
+              - OTHER
+            description:
+              type: string
+              example: local rails
+              description: User defined description of the payout method.
+            estimated_time_to_credit:
+              type: string
+              example: 3 days
+              description: The estimated time to credit the beneficiary using this payout method.
+      description: JSON response object that represents a quote for a proposed payment or return payment.
+    QuotePathRos:
+      type: object
+      required:
+      - source
+      - destination
+      - source_currency
+      - destination_currency
+      properties:
+        source:
+          type: string
+          description: RippleNet account name and address of the source account, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        destination:
+          type: string
+          description: RippleNet account name and address of the destination account, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        source_currency:
+          type: string
+          description: Currency associated with the source account.
+        destination_currency:
+          type: string
+          description: Currency associated with the destination account.
+        account_liquidity_relationship_id:
+          type: string
+          format: uuid
+          example: 480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6
+          description: Unique identifier for an account liquidity relationship.
+        peer_liquidity_relationship_id:
+          type: string
+          format: uuid
+          example: 480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6
+          description: Unique identifier for a peer liquidity relationship.
+      description: Object that describes a liquidity path used to generate a quote.
+      x-docs-model-object:
+        object-name: Quote Path Object
+    PaymentQuoteCustomRateRequest:
+      type: object
+      required:
+      - base_currency
+      - counter_currency
+      - rate
+      - rate_type
+      properties:
+        rate:
+          type: number
+          description: Exchange rate for a base and counter currency.
+        base_currency:
+          type: string
+          description: Base currency of the exchange rate.
+        counter_currency:
+          type: string
+          description: Counter currency of the exchange rate.
+        rate_type:
+          type: string
+          enum:
+          - buy
+          - sell
+          description: Order type for the exchange rate. Valid values are `sell` or `buy`. <p><ul><li>When rate_type = buy, `base_currency` is source ccy and `counter_currency` is destination ccy.</li> <li>When rate_type = sell, `base_currency` is destination ccy and `counter_currency` is source ccy.</li> </ul></p>
+      description: JSON request object to specify a custom exchange rate during quote collection generation.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
     PaymentQuoteRequest:
       type: object
       required:
@@ -497,827 +1339,9 @@ components:
           type: string
           description: Currency code of the transfer. Included in quote elements with `quote_element_type` set to `TRANSFER`.
       description: JSON object that provides transfer and exchange elements used to provide the quote. A transfer element represents the transfer of currency between two accounts. An exchange element represents the exchange of currencies between two accounts.
-    TotalFees:
-      type: object
-      required:
-      - total_fee
-      - fee_currency
-      properties:
-        total_fee:
-          type: number
-          description: total value of fee
-        fee_currency:
-          type: string
-          description: currency of the fee charged
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
-    Quote:
-      type: object
-      required:
-      - amount
-      - created_at
-      - currency_code
-      - currency_code_filter
-      - expires_at
-      - liquidity_warning
-      - price_guarantee
-      - quote_elements
-      - quote_id
-      - receiver_address
-      - sender_address
-      - service_type
-      - type
-      properties:
-        quote_id:
-          type: string
-          format: uuid
-          example: 2a547e56-4aac-4375-86a8-8b3e7014801d
-          description: Unique identifier for the quote.
-        created_at:
-          type: string
-          format: date-time
-          example: '2020-01-29T20:59:44.925Z'
-          description: Date and time at which the quote was created, as an ISO-8601 timestamp in UTC.
-        expires_at:
-          type: string
-          format: date-time
-          example: '2020-01-29T21:29:44.925Z'
-          description: Date and time after which the quote and its pricing expire, as an ISO-8601 timestamp in UTC.
-          default: 300s/300000ms
-        type:
-          type: string
-          example: SENDER_AMOUNT
-          description: Indicates how the amount field should be treated for calculating quote values.
-          enum:
-          - SENDER_AMOUNT
-          - RECEIVER_AMOUNT
-          - SENDER_INSTITUTION_AMOUNT
-          - RECEIVER_INSTITUTION_AMOUNT
-          - REVERSAL_AMOUNT
-        price_guarantee:
-          type: string
-          example: FIRM
-          description: Indicates whether a quote's pricing is `INDICATIVE` or `FIRM`. An `INDICATIVE` quote allows for price movements between quote issuance and payment execution, such that the quoted amount and delivered amount may differ. A `FIRM` quote ensures that the quoted and delivered payment amounts are equal.
-          default: FIRM
-        sender_address:
-          type: string
-          example: sf@rn.us.ca.san_francisco
-          description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        receiver_address:
-          type: string
-          example: sf_gbp@rn.us.ca.san_francisco
-          description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        amount:
-          type: string
-          example: '1'
-          description: Amount to be sent or received, depending on the `type` value.
-        currency_code:
-          type: string
-          example: USD
-          description: Currency code for the `amount` value.
-        currency_code_filter:
-          type: string
-          example: EUR
-          description: Currency code that can be used to filter quotes at the opposite end of the quote request. For example, you can filter by this currency code to find the receiving currency for a quote with a `SENDER_AMOUNT` quote_type. If not sent in the request, this field value is set to `null`.
-        service_type:
-          type: string
-          description: Returns `null`.
-        quote_elements:
-          type: array
-          description: Transfer and exchange elements. A transfer element represents a movement of funds between two accounts. An exchange element represents the exchange of currencies between two accounts.
-          items:
-            $ref: '#/components/schemas/QuoteElement'
-        liquidity_warning:
-          type: string
-          description: Triggered when a quote causes an account to go below its `minimum_allowed_balance`. Otherwise, this field value is set to `null`.
-        payment_method:
-          type: string
-          example: LOCAL_RAILS
-          description: Payout method for the quote.
-        payment_method_fields:
-          type: string
-          example: '{"category_id":"bank","required_originator_fields":[{"field_name":"sender_address","field_label":"Sender address"}]}'
-          description: JSON object containing payment method metadata.
-        payout_method_info:
-          type: object
-          description: Details about the payout method.
-          properties:
-            payout_method_name:
-              type: string
-              example: Cash Payout
-              description: Payout method for the quote.
-            payout_method_category:
-              type: string
-              example: BOOK_TRANSFER
-              description: Category of the payout method. Defaults to <code>OTHER</code> if not specified.
-              enum:
-              - REAL_TIME_GROSS_SETTLEMENT_SYSTEM
-              - REAL_TIME_NET_SETTLEMENT_SYSTEM
-              - MASS_NET_PAYMENT_SYSTEM
-              - BOOK_TRANSFER
-              - CASH_PAYOUT
-              - WALLET_PAYMENT
-              - OTHER
-            description:
-              type: string
-              example: local rails
-              description: User defined description of the payout method.
-            estimated_time_to_credit:
-              type: string
-              example: 3 days
-              description: The estimated time to credit the beneficiary using this payout method.
-      description: JSON response object that represents a quote for a proposed payment or return payment.
-    QuotePathRos:
-      type: object
-      required:
-      - source
-      - destination
-      - source_currency
-      - destination_currency
-      properties:
-        source:
-          type: string
-          description: RippleNet account name and address of the source account, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        destination:
-          type: string
-          description: RippleNet account name and address of the destination account, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        source_currency:
-          type: string
-          description: Currency associated with the source account.
-        destination_currency:
-          type: string
-          description: Currency associated with the destination account.
-        account_liquidity_relationship_id:
-          type: string
-          format: uuid
-          example: 480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6
-          description: Unique identifier for an account liquidity relationship.
-        peer_liquidity_relationship_id:
-          type: string
-          format: uuid
-          example: 480e3a6f-3bcd-48cd-9ce9-9d940aa3c9c6
-          description: Unique identifier for a peer liquidity relationship.
-      description: Object that describes a liquidity path used to generate a quote.
-      x-docs-model-object:
-        object-name: Quote Path Object
-    ExecutionResult:
-      type: object
-      required:
-      - execution_result_id
-      - execution_result_order
-      - execution_result_type
-      - execution_timestamp
-      - receiver_address
-      - receiving_amount
-      - receiving_fee
-      - sender_address
-      - sending_amount
-      - sending_fee
-      properties:
-        execution_result_id:
-          type: string
-          format: uuid
-          example: 06f6d4e2-3523-4d17-92fd-53192a06207f
-          description: Unique identifier for this payment result.
-        execution_timestamp:
-          type: string
-          format: date-time
-          example: '2019-10-01T18:24:29.867Z'
-          description: Date and time at which this portion of the payment was executed, as an ISO-8601 timestamp in UTC.
-        execution_result_type:
-          type: string
-          example: TRANSFER
-          description: Type of payment execution result.<p><ul> <li>`TRANSFER` represents the movement of funds between two accounts.</li> <li>`EXCHANGE` represents the exchange of currencies between two accounts.</li> <li>`EXCHANGE_TRADE` represents the exchange of fiat to digital currency on a digital exchange.</li> <li>`CRYPTO_TRANSFER` represents the movement of digital funds between two digital exchanges.</li> </ul></p>
-          enum:
-          - TRANSFER
-          - EXCHANGE
-          - EXCHANGE_TRADE
-          - CRYPTO_TRANSFER
-        execution_result_order:
-          type: integer
-          example: 1
-          description: Order in which the payment execution action was taken along the liquidity path. For example, a payment may include five execution results along the liquidity path. Each execution result has an order number that indicates the order in which the execution result was achieved to make the payment.
-        sender_address:
-          type: string
-          example: trans_usd_sf@rn.us.ca.san_francisco
-          description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        receiver_address:
-          type: string
-          example: conct_usd_sf@rn.us.ca.san_francisco
-          description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        sending_amount:
-          type: number
-          example: 498
-          description: Amount the sender is sending.
-        receiving_amount:
-          type: number
-          example: 498
-          description: Amount the receiver is receiving.
-        sending_fee:
-          type: number
-          example: 2
-          description: Fees the sender is charging.
-        receiving_fee:
-          type: number
-          example: 0
-          description: Fees the receiver is charging.
-        sending_currency_code:
-          type: string
-          example: USD
-          description: Currency code of the sending amount. Included in execution results with `execution_result_type` set to `EXCHANGE`.
-        receiving_currency_code:
-          type: string
-          example: GBP
-          description: Currency of the receiving amount. Included in execution results with `execution_result_type` set to `EXCHANGE`.
-        fx_rate:
-          $ref: '#/components/schemas/FXRate'
-        transfer_currency_code:
-          type: string
-          description: Currency of the transfer. Returned in execution results with `execute_result_type` set to `TRANSFER`.
-        intermediary_delta:
-          type: number
-          example: 0.2
-          description: Amount of XRP representing the difference in FX rate between the moment of quoting and the moment of execution. A positive value is the amount taken out of the incentive pool. A negative value is the amount returned to the incentive pool. (Soon to be deprecated)
-        incentive_type:
-          type: string
-          example: firm
-          description: Configuration of the incentive pool on the xRapid side. Two values are supported, `firm` and `fx`. For `firm`, xRapid guarantees that the FX rate at the moment of execution is the same as at the moment of quoting. For `fx`, xRapid guaratees a predefined FX rate.
-        incentive_value:
-          type: number
-          example: 0.2
-          description: Amount of XRP representing the difference in FX rate between the moment of quoting and the moment of execution. A positive value is the amount taken out of the incentive pool. A negative value is the amount returned to the incentive pool.
-        transaction_hash:
-          type: string
-          example: 5.5467794184785867e+76
-          description: Hash representing the unique identifier for the transfer of funds in the XRP ledger.
-        venue_id:
-          type: string
-          example: nz7RpAujYgnQtjEM
-          description: The id from an exchange associated with a transaction involving an exchange account.
-        fiat_adjusted_value:
-          type: number
-          example: 0.02
-          description: Represents the delta between quoted and received executed amounts, for exchange trades.
-        odl_payment_id:
-          type: string
-          description: Payment ID in On-Demand Liquidity (ODL) for an executed ODL payment containing the transaction represented by this execution result.
-      description: Represents the actual movement of funds in a payment. Each execution result corresponds to a quote element and represents its execution in a payment. Included once the payment is in `EXECUTED` state.
-    RippleNetInfo:
-      type: object
-      required:
-      - node_address
-      - settlement_declined
-      properties:
-        node_address:
-          type: string
-          example: rn.us.ny.new_york
-          description: RippleNet address of the node from which the RippleNetInfo originated.
-        settlement_declined:
-          type: array
-          description: If applicable, provides an array of RippleNetInfoEntry's explaining transitions into the `SETTLEMENT_DECLINED` state
-          items:
-            $ref: '#/components/schemas/RippleNetInfoEntry'
-      description: Application-generated information explaining actions taken by RippleNet applications.
-    Payment:
-      description: JSON response object that represents a payment. A payment is the movement of value across accounts on potentially different RippleNet instances involving one or more currencies.
-      required:
-      - user_info
-      - internal_info
-      - accepted_at
-      allOf:
-      - $ref: '#/components/schemas/BasePayment'
-      - type: object
-        properties:
-          accepted_at:
-            type: string
-            format: date-time
-            example: '2019-10-01T18:25:47.347Z'
-            description: Date and time at which the payment was last accepted, as an ISO-8601 timestamp in UTC.
-          locked_at:
-            type: string
-            format: date-time
-            example: '2019-10-01T18:25:47.347Z'
-            description: Date and time at which the payment was last locked, as an ISO-8601 timestamp in UTC.
-          executed_at:
-            type: string
-            format: date-time
-            example: '2019-10-01T18:25:47.347Z'
-            description: Date and time at which the payment was last executed, as an ISO-8601 timestamp in UTC.
-          completed_at:
-            type: string
-            format: date-time
-            example: '2019-10-01T18:25:47.347Z'
-            description: Date and time at which the payment was last completed, as an ISO-8601 timestamp in UTC.
-          returned_at:
-            type: string
-            format: date-time
-            example: '2019-10-01T18:25:47.347Z'
-            description: Date and time at which the payment was returned, as an ISO-8601 timestamp in UTC.
-          internal_info:
-            $ref: '#/components/schemas/InternalInfo'
-          user_info:
-            type: array
-            description: User-provided data with arbitrary key/value pairs.
-            items:
-              $ref: '#/components/schemas/UserInfo'
-    InternalInfo:
-      required:
-      - connector_role
-      - internal_id
-      - labels
-      properties:
-        connector_role:
-          type: string
-          example: RECEIVING
-          description: 'Role of the RippleNet node that sets one or more values in the Internal Info object.
-
-
-            Use as follows:
-
-
-            * `SENDING`: Sending account in the payment resides on this RippleNet instance.
-
-            * `RECEIVING`: Receiving account in the payment resides on this RippleNet instance.
-
-            * `INTERMEDIARY`: Neither sending nor receiving accounts in the payment reside on this RippleNet instance.
-
-            * `INTERNAL`: Both sending and receiving accounts in the payment (usually between RippleNet Cloud and RippleNet) reside on this RippleNet instance.
-
-            '
-          enum:
-          - SENDING
-          - RECEIVING
-          - INTERMEDIARY
-          - INTERNAL
-        labels:
-          type: array
-          description: Array of objects that provide `label` values that are set by including the `sub_state` field at any stage of the payment's lifecycle. Labels can used as a filtering mechanism when searching for payments. Labels are visible only to the node that added them to this copy of a payment. If the values that populate this array are not set in the request or if the values set in the request are not viewable by your node, this array is empty.
-          items:
-            $ref: '#/components/schemas/Label'
-        internal_id:
-          type: string
-          description: ID that is viewable only to the node that set it. This value can be set by the sender when accepting a payment. This value can also be set by any intermediary and the receiver when locking the payment. If this value is not set in the request or if the value set in the request is not viewable by your node, this field value is set to `null`.
-      description: JSON object containing information that only the RippleNet instance that set it can view. These values can be set by the sender when accepting a payment and by an intermediary or receiver when locking the payment.
-    PaymentQuoteCustomRateRequest:
-      type: object
-      required:
-      - base_currency
-      - counter_currency
-      - rate
-      - rate_type
-      properties:
-        rate:
-          type: number
-          description: Exchange rate for a base and counter currency.
-        base_currency:
-          type: string
-          description: Base currency of the exchange rate.
-        counter_currency:
-          type: string
-          description: Counter currency of the exchange rate.
-        rate_type:
-          type: string
-          enum:
-          - buy
-          - sell
-          description: Order type for the exchange rate. Valid values are `sell` or `buy`. <p><ul><li>When rate_type = buy, `base_currency` is source ccy and `counter_currency` is destination ccy.</li> <li>When rate_type = sell, `base_currency` is destination ccy and `counter_currency` is source ccy.</li> </ul></p>
-      description: JSON request object to specify a custom exchange rate during quote collection generation.
-    LiquidationDetails:
-      type: object
-      description: Payment liquidation details
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Liquidation ID, unique to the liquidation process of this payment
-        status:
-          type: string
-          description: Liquidation status
-        failure_reason:
-          type: string
-          description: Reason behind failure of the liquidation, only applicable if the status is failure
-        failure_count:
-          type: integer
-          description: Number of times the liquidation failed. Irrelevant if status is successful.
-    QuoteError:
-      type: object
-      required:
-      - failed_path
-      - error_message
-      properties:
-        failed_path:
-          type: array
-          description: Quote path that failed.
-          items:
-            $ref: '#/components/schemas/QuotePathRos'
-        error_origin:
-          type: string
-          description: RippleNet address of where the error originated. For example, `rn.us.ny.new_york`.
-        error_message:
-          type: string
-          description: Message that describes the error.
-      description: Object that describes an error that happened during quote collection.
-      x-docs-model-object:
-        object-name: Quote Error Object
-        nested-objects-array:
-        - property-name: failed_path
-          object: quote-path
-          docs-name: Quote Path Array
-          data-type: Array
-          has-nested-display: true
-    QuoteCollection:
-      type: object
-      required:
-      - quote_collection_id
-      - quotes
-      properties:
-        quote_collection_id:
-          type: string
-          format: uuid
-          example: 4711728c-cd35-49ec-96a5-72732b4333ec
-          description: Unique identifier of the quote collection.
-        quotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Quote'
-          description: For more information on quote elements, see [Create quote collections](/products/payments-odl/api-docs/ripplenet/tutorials/configure-fees#create-quote-collections).
-        quote_errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteError'
-      description: When provided as a response to the [Create quote collection](#operation/createQuoteCollection) request, provides a JSON object representing quotes for a proposed payment. <p>When provided as a response to the [Create quote to return payment](#operation/createQuoteToReturnPayment)  request, provides a JSON object representing quotes for a proposed return payment.</p> <p>When provided as a response to the [Reverse Payment](#operation/createQuoteToReversePayment) request, provides a JSON object representing a quote for a proposed reverse payment.</p> <p>When provided as a response to the [Get quote collection by ID](#operation/createQuoteCollection) request, provides the requested quote collection.</p>
-    UserInfo:
-      type: object
-      required:
-      - accepted
-      - completed
-      - executed
-      - failed
-      - forwarded
-      - lock_declined
-      - locked
-      - node_address
-      - retry_accept
-      - retry_settlement
-      - returned
-      - settlement
-      - settlement_declined
-      properties:
-        node_address:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet address of the node that provided the user information.
-        accepted:
-          type: array
-          description: User information optionally provided when accepting the payment.
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        locked:
-          type: array
-          description: User information optionally provided when locking the payment. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        lock_declined:
-          type: array
-          description: User information optionally provided when declining to lock the payment. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        retry_accept:
-          type: array
-          description: User information optionally provided when retrying acceptance of the payment. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        retry_settlement:
-          type: array
-          description: User information optionally provided when retrying settlement of the payment. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        settlement:
-          type: array
-          description: User information optionally provided when settling the payment. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        settlement_declined:
-          type: array
-          description: User information optionally provided when settlement for the payment is declined. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        failed:
-          type: array
-          description: User information optionally provided when failing the payment. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        executed:
-          type: array
-          description: Payment sub-state information provided using `sub_state` and `memo` fields when finalizing the payment. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        completed:
-          type: array
-          description: User information optionally provided when completing the payment. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        forwarded:
-          type: array
-          description: If applicable, user information optionally provided when forwarding the payment. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        returned:
-          type: array
-          description: If applicable, information optionally provided using `return_reasons` when returning the payment. For more information, see [User Info Entry Object][user-info-entry].
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-      description: User information provided across the payment lifecycle.
-    UserInfoEntry:
-      type: object
-      required:
-      - created_at
-      - json
-      properties:
-        json:
-          type: object
-          description: User information provided across the payment lifecycle stored as arbitrary JSON key/value pairs.
-          properties: {}
-        created_at:
-          type: string
-          format: date-time
-          description: Date and time at which the user information was added to the payment, as an ISO-8601 timestamp in UTC.
-        subState:
-          type: string
-          example: EXECUTING
-          description: If provided, this parameter descibes payment state more granularly.
-      description: User information provided as arbitrary key/value pairs.
-    RippleNetInfoEntry:
-      type: object
-      properties:
-        info:
-          type: string
-          example: L001
-          description: Information explaining the action taken by a RippleNet application. Could be a RippleNet error code, or a written explanation of the action taken
-        created_at:
-          type: string
-          format: date-time
-          example: '2018-04-06T20:33:35Z'
-          description: The DateTime that this quote was created, as an ISO-8601 timestamp in UTC.
-      description: Application-generated information explaining an action taken by a RippleNet application
-    PaymentContract:
-      type: object
-      required:
-      - created_at
-      - expires_at
-      - quote
-      - sender_end_to_end_id
-      properties:
-        sender_end_to_end_id:
-          type: string
-          description: ID that the sender can specify. Persisted on all RippleNet instances that participate in the payment.
-          maxLength: 128
-          minLength: 1
-        created_at:
-          type: string
-          format: date-time
-          example: '2019-10-01T18:18:13.665Z'
-          description: Date and time at which this payment contract was created, as an ISO-8601 timestamp in UTC.
-        expires_at:
-          type: string
-          format: date-time
-          example: '2019-10-01T18:55:22.824Z'
-          description: Date and time after which this payment contract expires, as an ISO-8601 timestamp in UTC.
-          default: 300s/300000ms
-        quote:
-          $ref: '#/components/schemas/Quote'
-        fee_info:
-          $ref: '#/components/schemas/FeeInfo'
-      description: Represents all immutable parts of a payment agreed upon by all participants as a part of the [Lock payment](#operation/lockPayment) flow. Once a payment transitions to the `LOCKED` state, the values in this object cannot change.
-    BasePayment:
-      type: object
-      required:
-      - contract
-      - contract_hash
-      - crypto_transaction_id
-      - execution_condition
-      - execution_results
-      - modified_at
-      - payment_id
-      - payment_state
-      - payment_type
-      - returned_by_payment_with_id
-      - returns_payment_with_id
-      - validator
-      properties:
-        payment_id:
-          type: string
-          format: uuid
-          example: d485f100-2af7-4e48-9ab1-3c7e28775691
-          description: Unique identifier of a payment.
-        contract_hash:
-          type: string
-          example: ccb23bd87f13cc13b9d616a9723f76e112aeac8628b2082e0f8bf3b8c670b103
-          description: Hash of all values in the Contract object used to ensure immutability. Once a payment transitions to the `LOCKED` state, the values in this object cannot change.
-        payment_state:
-          type: string
-          example: COMPLETED
-          description: State of the payment. For details about payment states, see **Payment States** in the _RippleNet Developer Guide_.
-          enum:
-          - ACCEPTED
-          - AWAITING_COLLECTION
-          - COMPLETED
-          - EXECUTED
-          - FAILED
-          - FORWARDED
-          - LOCK_DECLINED
-          - LOCKED
-          - PREPARED
-          - RETURNED
-          - SETTLEMENT_DECLINED
-        modified_at:
-          type: string
-          format: date-time
-          example: '2019-10-01T18:25:47.347Z'
-          description: Date and time at which the payment was last modified, as an ISO-8601 timestamp in UTC.
-        contract:
-          $ref: '#/components/schemas/PaymentContract'
-        ripplenet_info:
-          type: array
-          description: Application-provided data explaining actions taken by RippleNet applications.
-          items:
-            $ref: '#/components/schemas/RippleNetInfo'
-        execution_condition:
-          type: string
-          example: PrefixSha256Condition{subtypes=[ED25519-SHA-256], type=PREFIX-SHA-256, fingerprint=sfGGHCrkyaMsLQNB62w_4zarlPChHKm47JkXVQbs1z0, cost=132360}
-          description: A Base64-encoded execution condition for this payment, the fulfillment of which will be presented to the validator to complete this payment. This value must match the `execution_condition` in the associated crypto transaction.
-        crypto_transaction_id:
-          type: string
-          example: 4e05da26-7872-4a1f-b9b7-db7604757c37
-          description: Unique identifier of the crypto transaction associated with this payment.
-        validator:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: Address of the validator that validated the payment.
-        payment_type:
-          type: string
-          example: REGULAR
-          description: Payment type.
-          enum:
-          - REGULAR
-          - RETURN
-        returns_payment_with_id:
-          type: string
-          format: uuid
-          description: If the `payment_type` is `RETURN`, provides the payment ID of the original payment that this payment returns. Otherwise, this field value is set to `null`.
-        returned_by_payment_with_id:
-          type: string
-          format: uuid
-          description: If the `payment_type` is `REGULAR` and the payment has an associated return payment, provides the payment ID of the return payment. Otherwise, this field value is set to `null`.
-        execution_results:
-          type: array
-          description: Represents the actual movement of funds in a payment. Each execution result corresponds to a quote element and represents its execution in a payment.
-          items:
-            $ref: '#/components/schemas/ExecutionResult'
-        liquidation_execution_results:
-          type: array
-          description: Represents the actual movement of funds in a payment as part of liquidation of a Wallet Receive payment.
-          items:
-            $ref: '#/components/schemas/ExecutionResult'
-        liquidation_details:
-          $ref: '#/components/schemas/LiquidationDetails'
-        push_forward_execution_results:
-          type: array
-          description: Represents the movement of funds after an On-Demand Liquidity payment fails at intermediary transfer or destination exchange.
-          items:
-            $ref: '#/components/schemas/ExecutionResult'
-      description: JSON response object that represents a payment. A payment is the movement of value across accounts on potentially different RippleNet instances involving one or more currencies.
-    Label:
-      properties:
-        label:
-          type: string
-          description: Label to be attached
-      description: Label object
-    FeeInfo:
-      type: object
-      required:
-      - nodes
-      - total_fees
-      properties:
-        nodes:
-          type: object
-          description: Fees charged by each node participating in the payment.
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/FeeDetails'
-        total_fees:
-          type: array
-          description: Total fees charged in the payment, separated by currency.
-          items:
-            $ref: '#/components/schemas/TotalFees'
-      description: Itemized list of fees charged by each node.
-    FXRate:
-      type: object
-      required:
-      - base_currency_code
-      - counter_currency_code
-      - rate
-      - type
-      properties:
-        rate:
-          type: number
-          example: 3.25
-          description: Exchange rate between a base and counter currency.
-        base_currency_code:
-          type: string
-          example: USD
-          description: Currency code of the base currency.
-        counter_currency_code:
-          type: string
-          example: GBP
-          description: Currency code of the counter currency.
-        type:
-          type: string
-          example: buy
-          description: Order type of the exchange rate. Valid values are `buy` or `sell`.
-      description: The details of an FX Rate for a quote or payment.
-    FeeDetails:
-      type: object
-      required:
-      - fee_value
-      - fee_currency
-      - category
-      properties:
-        fee_value:
-          type: number
-          description: value of the fee
-        fee_currency:
-          type: string
-          description: currency of the fee charged
-        category:
-          type: string
-          description: category of the fee
-        fee_description:
-          type: string
-          description: optional description of the fee
-    PaymentAcceptRequest:
-      type: object
-      required:
-      - quote_id
-      properties:
-        quote_id:
-          type: string
-          format: uuid
-          example: 9bb53b3b-a774-43e2-9a1b-f18fbc3640f7
-          description: ID of the quote to accept and continue as a payment.
-        sender_end_to_end_id:
-          type: string
-          maxLength: 128
-          description: ID that the sender can specify. Persisted on all RippleNet instances that participate in the payment.
-        internal_id:
-          type: string
-          maxLength: 128
-          description: Internal ID that the sender can specify. Only visible to the sender. Only the sending RippleNet instance stores this ID.
-        user_info:
-          type: object
-          description: 'Your receiver defines the required [User info](/products/payments-odl/api-docs/ripplenet/resources/srpo/user-info) structure. Provide the structure as required by your use case.
-
-
-            **Payout Service (SLS) customers**: Use the ISO20022 descriptions used with the [RippleNet Payment Object (RPO)](/products/payments-odl/api-docs/ripplenet/resources/srpo/supporting-info-full-json-schema) structure.
-
-
-            **One-to-one liquidation customers**: Use the [Outbound instructions](/products/payments-odl/api-docs/ripplenet/resources/outbound-instructions/#payout-examples) format.
-
-            '
-          properties: {}
-      description: Use this JSON request object to accept a quote ID to start the payment process.
   securitySchemes:
-    TokenAuth:
+    Bearer:
       type: apiKey
+      description: All operations require a `Bearer` access token in the `Authorization` header of each request.<br>Learn about [authentication](/products/payments-odl/api-docs/ripplenet/best-practices/authentication/).
       name: Authorization
       in: header
-externalDocs:
-  description: Click here for the API docs
-  url: https://palisade.readme.io

@@ -1,15 +1,14 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Transactions API
-  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
-  version: '2.0'
+  title: Ripple Labs Transactions API
+  version: '1.0'
+  description: 'Operations tagged Transactions across 2 of this provider''s published API definitions: ripple-labs-palisade-wallet-openapi-original.yml, ripple-labs-rlusd-openapi-original.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.sandbox.palisade.co
   description: Sandbox server (uses TESTNET data, private keys and accounts)
 - url: https://api.palisade.co
   description: Palisade server (uses MAINNET data, private keys and accounts)
-security:
-- TokenAuth: []
+- url: https://api.ripple.com
 tags:
 - name: Transactions
   description: Used to manage transactions
@@ -975,6 +974,13 @@ paths:
           type: string
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v2/transactions/transfer/estimate-fee:
     post:
       summary: Estimate the fee for a transfer transaction
@@ -1077,6 +1083,13 @@ paths:
         required: true
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v2/transactions:list:
     post:
       summary: List transactions
@@ -1179,6 +1192,13 @@ paths:
         required: true
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v2/vaults/{vaultId}/wallets/{walletId}/transactions:
     get:
       summary: List wallet transactions
@@ -2171,6 +2191,13 @@ paths:
           type: string
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v2/vaults/{vaultId}/wallets/{walletId}/transactions/raw:
     post:
       summary: Create a new raw transaction
@@ -2308,6 +2335,13 @@ paths:
         required: true
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v2/vaults/{vaultId}/wallets/{walletId}/transactions/sign-plaintext:
     post:
       summary: (BETA) Create a new sign plaintext transaction
@@ -2430,6 +2464,13 @@ paths:
         required: true
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v2/vaults/{vaultId}/wallets/{walletId}/transactions/transfer:
     post:
       summary: Create a new transfer transaction
@@ -2591,6 +2632,13 @@ paths:
         required: true
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v2/vaults/{vaultId}/wallets/{walletId}/transactions/{transactionId}:
     get:
       summary: Get a transaction
@@ -2706,6 +2754,13 @@ paths:
           type: string
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v2/vaults/{vaultId}/wallets/{walletId}/transactions/{transactionId}/freeze:
     put:
       summary: Freeze a transaction
@@ -2827,6 +2882,13 @@ paths:
           type: string
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v2/vaults/{vaultId}/wallets/{walletId}/transactions/{transactionId}/unfreeze:
     put:
       summary: Unfreeze a transaction
@@ -2948,6 +3010,13 @@ paths:
           type: string
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v2/vaults/{vaultId}/wallets/{walletId}/transactions:list:
     post:
       summary: List wallet transactions
@@ -3089,6 +3158,13 @@ paths:
         required: true
       tags:
       - Transactions
+      security:
+      - TokenAuth: []
+    servers:
+    - url: https://api.sandbox.palisade.co
+      description: Sandbox server (uses TESTNET data, private keys and accounts)
+    - url: https://api.palisade.co
+      description: Palisade server (uses MAINNET data, private keys and accounts)
   /v1/stablecoin/transactions:
     get:
       summary: List transactions
@@ -3165,6 +3241,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/InternalServerError'
+    servers:
+    - url: https://api.ripple.com
   /v1/stablecoin/transactions/{id}:
     get:
       summary: Get a transaction
@@ -3198,6 +3276,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+    servers:
+    - url: https://api.ripple.com
   /v1/stablecoin/transactions/{id}/destination:
     put:
       summary: Approve a pending redemption
@@ -3254,8 +3334,628 @@ paths:
           $ref: '#/components/responses/Conflict'
         '500':
           $ref: '#/components/responses/InternalServerError'
+    servers:
+    - url: https://api.ripple.com
 components:
   schemas:
+    v2FreezeType:
+      type: string
+      enum:
+      - FREEZE_TYPE_MANUAL
+      - FREEZE_TYPE_AUTO_RISK
+      - FREEZE_TYPE_AUTO_AMOUNT
+      - FREEZE_TYPE_COMPLIANCE
+      - FREEZE_TYPE_AUTO_WALLET_SETTING
+    v2Retryability:
+      type: string
+      enum:
+      - RETRYABLE
+      - NOT_RETRYABLE
+    v2TransactionFilter:
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/v2TransactionStatusFilter'
+          - description: Filter by transaction status using enum names such as CONFIRMED or FAILED
+        blockchain:
+          allOf:
+          - $ref: '#/components/schemas/v2BlockchainFilter'
+          - description: Filter by blockchain using common.v2.Blockchain enum names such as ETHEREUM or BITCOIN
+        assetSymbol:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by asset symbol (e.g. ETH, BTC, USDC)
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by creation timestamp; supports before/after, between, relative_days
+        qty:
+          allOf:
+          - $ref: '#/components/schemas/v2NumericFilter'
+          - description: Filter by transferred quantity as an arbitrary precision numeric string; supports eq/not_eq/in/not_in/gt/gte/lt/lte.
+        originAddress:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by origin (sending) address (case-insensitive)
+        destinationAddress:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by destination (receiving) address (case-insensitive)
+        transactionId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Search by Palisade transaction ID (UUID). Supports eq/in/contains.
+        transactionHash:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Search by on-chain transaction hash (case-insensitive). Supports eq/in only.
+        externalId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Search by customer-assigned external transaction ID. Supports eq/in/contains.
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-update timestamp; supports before/after, between, relative_days. Mirrors the updated_at sort field.
+        correlationId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by correlation ID. Supports eq/in/contains.
+        type:
+          allOf:
+          - $ref: '#/components/schemas/v2TransactionActionFilter'
+          - description: Filter by transaction type using enum names such as PALISADE_TRANSFER or WEB3_SIGN
+    TimestampFilterTimestampRange:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          example: '2024-08-01T00:00:00Z'
+          description: Start of time range (inclusive)
+        end:
+          type: string
+          format: date-time
+          example: '2024-08-31T23:59:59Z'
+          description: End of time range (inclusive)
+    v2BlockchainFilter:
+      type: object
+      properties:
+        eq:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - description: Exact blockchain match
+        notEq:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - description: Exclude this blockchain
+        in:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Blockchain'
+          description: Blockchain is in this list
+        notIn:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Blockchain'
+          description: Blockchain is not in this list
+    v2FeeEstimate:
+      type: object
+      properties:
+        evm:
+          allOf:
+          - $ref: '#/components/schemas/v2EvmFeeEstimate'
+          - type: object
+            example:
+              gas_price: '0.007'
+              base_fee: '155.672'
+              priority_fee: '0.001'
+              gas_limit: 21000
+            description: EVM specific fee estimates
+        networkFees:
+          type: object
+          example:
+            slowest: '0.00001'
+            slow: '0.00005'
+            medium: '0.00010'
+            fast: '0.00015'
+            fastest: '0.0002'
+          additionalProperties:
+            type: string
+          description: Map of fee options where keys are fee types (slowest, slow, medium, fast, fastest) and values are the fee amounts in base asset units
+      required:
+      - networkFees
+    v2SigningPayload:
+      type: object
+      properties:
+        inputIndex:
+          type: integer
+          format: int64
+          example: 0
+          description: The index of the UTXO input this signing payload corresponds to
+        signingHash:
+          type: string
+          example: 30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671
+          description: The signing hash for this UTXO input
+        signature:
+          type: string
+          example: 3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43
+          description: The signature for this UTXO input
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID that owns this signing payload. If omitted, signers use the parent transaction wallet. Native multi-wallet transactions must set this on every signing payload.
+      required:
+      - inputIndex
+      - signingHash
+    v2Problem:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        reason:
+          type: string
+        domain:
+          type: string
+        message:
+          type: string
+        retryability:
+          $ref: '#/components/schemas/v2Retryability'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    commonv2Asset:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 5:0xbehbehfb:USDC
+          description: ID is unique across all blockchains and created by combining the blockchain ID, contract address, and symbol
+        standard:
+          allOf:
+          - $ref: '#/components/schemas/v2Standard'
+          - type: string
+            example: ERC20
+            description: The standard of the asset
+        symbol:
+          type: string
+          example: LINK
+          description: The currency symbol of the asset
+        name:
+          type: string
+          example: Chainlink
+          description: The human readable name of the asset
+        blockchain:
+          $ref: '#/components/schemas/v2Blockchain'
+        decimals:
+          type: integer
+          format: int32
+          example: 18
+          description: Count of decimal places for the asset
+        vetted:
+          type: boolean
+          example: true
+          description: Whether the asset is vetted on the regulated platform
+        enabled:
+          type: boolean
+          example: true
+          description: Whether the asset is currently enabled on the platform
+        contract:
+          type: string
+          example: '0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e'
+          description: The token contract address. This field will be empty if the asset is the native coin of the blockchain
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the asset was created
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-03-29T10:22:22.420Z'
+          description: The date and time the asset was last updated
+        organizationId:
+          type: string
+          description: Organization ID for custom assets
+        coingeckoId:
+          type: string
+          example: ethereum
+          description: CoinGecko identifier for price data (optional for testnet assets)
+        source:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetSource'
+          - type: string
+            example: ASSET_SOURCE_COINGECKO
+            description: Data source for this asset
+        sourceMetadata:
+          allOf:
+          - $ref: '#/components/schemas/protobufAny'
+          - type: object
+            description: JSON metadata about the source
+        lastSyncedAt:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:22:22.420Z'
+          description: When this asset was last synchronized
+        syncVersion:
+          type: integer
+          format: int32
+          example: 1
+          description: Version counter for sync updates
+        contractAddressChecksummed:
+          type: string
+          example: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+          description: Checksummed version of the contract address
+        iconUrl:
+          type: string
+          example: https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png
+          description: Public URL for the asset icon. Registry asset REST endpoints populate this when configured; other Asset responses may omit it.
+          readOnly: true
+      required:
+      - id
+      - standard
+      - symbol
+      - blockchain
+      - createdAt
+    v2EstimateTransferFeeRequest:
+      type: object
+      properties:
+        blockchain:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - type: string
+            example: ETHEREUM
+        contract:
+          type: string
+          example: '0xdAC17F958D2ee523a2206206994597C13D831ec7'
+          description: The contract/issuing address
+        symbol:
+          type: string
+          example: USD
+          description: The asset symbol
+        originAddress:
+          type: string
+          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
+          description: The origin address
+        destinationAddress:
+          type: string
+          example: TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy
+          description: Optional destination address. When provided, allows for more accurate fee estimation on chains where transfer costs vary based on recipient state (e.g., TRON, Solana).
+      required:
+      - blockchain
+      - symbol
+      - originAddress
+    v2Standard:
+      type: string
+      enum:
+      - NATIVE
+      - ERC20
+      - ISSUED_CURRENCY
+      - ERC721
+      - SPL
+      - CUSTOM
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2FilterResponse:
+      type: object
+      properties:
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
+    v2AssetChange:
+      type: object
+      properties:
+        purpose:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetChangePurpose'
+          - type: string
+            example: TRANSFER
+            description: Purpose of this asset change
+        asset:
+          allOf:
+          - $ref: '#/components/schemas/commonv2Asset'
+          - type: object
+            description: The asset that is part of this change
+        qty:
+          type: string
+          example: '155.672'
+          description: The quantity of the asset to transfer
+        source:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetChangeWallet'
+          - type: string
+            description: Source of this asset change
+        destination:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetChangeWallet'
+          - type: string
+            description: Destination of this asset change
+      required:
+      - purpose
+      - asset
+      - qty
+    v2TransactionStatusFilter:
+      type: object
+      properties:
+        eq:
+          allOf:
+          - $ref: '#/components/schemas/transactionsv2TransactionStatus'
+          - description: Exact transaction status match
+        notEq:
+          allOf:
+          - $ref: '#/components/schemas/transactionsv2TransactionStatus'
+          - description: Exclude this transaction status
+        in:
+          type: array
+          items:
+            $ref: '#/components/schemas/transactionsv2TransactionStatus'
+          description: Transaction status is in this list
+        notIn:
+          type: array
+          items:
+            $ref: '#/components/schemas/transactionsv2TransactionStatus'
+          description: Transaction status is not in this list
+    v2FreezeInfo:
+      type: object
+      properties:
+        isFrozen:
+          type: boolean
+          example: false
+          description: Whether the transaction is currently frozen
+        history:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2FreezeHistoryEntry'
+            - type: object
+          description: History of all freeze/unfreeze actions. Latest entry contains current state details when frozen.
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2XRPTransactionConfig:
+      type: object
+      properties:
+        sourceTag:
+          type: string
+          example: '123456'
+          description: The source tag for XRP transactions
+        destinationTag:
+          type: string
+          example: '123456'
+          description: The destination tag for XRP transactions
+    v2TimestampFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Exact timestamp match
+        notEq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Not equal to timestamp
+        before:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Before this timestamp
+        after:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: After this timestamp
+        gte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Greater than or equal to timestamp
+        lte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Less than or equal to timestamp
+        between:
+          allOf:
+          - $ref: '#/components/schemas/TimestampFilterTimestampRange'
+          - description: Between two timestamps (inclusive)
+        isNull:
+          type: boolean
+          description: Check if field is null
+        relativeDays:
+          type: integer
+          format: int32
+          example: -7
+          description: Relative days from now (negative for past, positive for future)
+    v2AssetSource:
+      type: string
+      enum:
+      - ASSET_SOURCE_LEGACY
+      - ASSET_SOURCE_AUTO
+      - ASSET_SOURCE_COINGECKO
+      - ASSET_SOURCE_PALISADE
+      - ASSET_SOURCE_CUSTOMER
+    v2FreezeAction:
+      type: string
+      enum:
+      - FREEZE_ACTION_FREEZE
+      - FREEZE_ACTION_UNFREEZE
+    v2NumericFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Equals
+        notEq:
+          type: string
+          description: Not equal to
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+        gt:
+          type: string
+          description: Greater than
+        gte:
+          type: string
+          description: Greater than or equal to
+        lt:
+          type: string
+          description: Less than
+        lte:
+          type: string
+          description: Less than or equal to
+    v2TransactionActionFilter:
+      type: object
+      properties:
+        eq:
+          allOf:
+          - $ref: '#/components/schemas/transactionsv2TransactionAction'
+          - description: Exact transaction type match
+        notEq:
+          allOf:
+          - $ref: '#/components/schemas/transactionsv2TransactionAction'
+          - description: Exclude this transaction type
+        in:
+          type: array
+          items:
+            $ref: '#/components/schemas/transactionsv2TransactionAction'
+          description: Transaction type is in this list
+        notIn:
+          type: array
+          items:
+            $ref: '#/components/schemas/transactionsv2TransactionAction'
+          description: Transaction type is not in this list
+    v2EvmFeeEstimate:
+      type: object
+      properties:
+        gasPrice:
+          type: string
+          format: uint64
+          example: '155'
+          description: Gas price in wei (base_fee + priority_fee)
+        baseFee:
+          type: string
+          format: uint64
+          example: '155'
+          description: Base Fee in wei
+        priorityFee:
+          type: string
+          format: uint64
+          example: '155'
+          description: Average priority Fee in wei
+        gasLimit:
+          type: string
+          format: uint64
+          example: '21000'
+          description: Gas limit
+      required:
+      - gasPrice
+      - baseFee
+      - priorityFee
+      - gasLimit
+    v2ListTransactionsRequest:
+      type: object
+      properties:
+        filter:
+          allOf:
+          - $ref: '#/components/schemas/v2TransactionFilter'
+          - description: 'Optional filters: status, type, blockchain, asset_symbol, created_at range, updated_at range, qty range, origin_address, destination_address, transaction_id, transaction_hash, external_id, correlation_id. Each sub-filter is AND-ed.'
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/v2FilterRequest'
+          - description: 'Pagination and sorting. Sortable fields: created_at, updated_at, amount, status.'
+        search:
+          type: string
+          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
+          description: Case-insensitive free-text search over transaction ID, transaction hash, external ID, correlation ID, asset symbol, origin address, and destination address.
+    v2ListTransactionsResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        transactions:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/transactionsv2Transaction'
+            - type: object
+    v2AssetChangePurpose:
+      type: string
+      enum:
+      - FEE
+      - TRANSFER
     transactionsv2Transaction:
       type: object
       properties:
@@ -3437,370 +4137,6 @@ components:
       - qty
       - signOnly
       - freezeInfo
-    TransactionListResponse:
-      type: object
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transaction'
-        totalElements:
-          type: integer
-          description: Total number of matching transactions
-        totalPages:
-          type: integer
-          description: Total number of pages
-        size:
-          type: integer
-          description: Page size
-        number:
-          type: integer
-          description: Current page number (0-indexed)
-    v2TransactionStatusFilter:
-      type: object
-      properties:
-        eq:
-          allOf:
-          - $ref: '#/components/schemas/transactionsv2TransactionStatus'
-          - description: Exact transaction status match
-        notEq:
-          allOf:
-          - $ref: '#/components/schemas/transactionsv2TransactionStatus'
-          - description: Exclude this transaction status
-        in:
-          type: array
-          items:
-            $ref: '#/components/schemas/transactionsv2TransactionStatus'
-          description: Transaction status is in this list
-        notIn:
-          type: array
-          items:
-            $ref: '#/components/schemas/transactionsv2TransactionStatus'
-          description: Transaction status is not in this list
-    ProblemDetail:
-      type: object
-      description: 'Error response following RFC 9457 (Problem Details for HTTP APIs), the successor to RFC 7807.
-
-        '
-      properties:
-        type:
-          type: string
-          format: uri
-          description: URI reference identifying the problem type
-        title:
-          type: string
-          description: Short, human-readable summary of the problem
-        status:
-          type: integer
-          description: HTTP status code
-        code:
-          type: string
-          description: Machine-readable error code
-          enum:
-          - TRANSACTION_NOT_FOUND
-          - TRANSACTION_INVALID_STATUS_TRANSITION
-          - TRANSACTION_DESTINATION_TYPE_IMMUTABLE
-          - INVALID_REQUEST_BODY
-          - UNKNOWN_EXCEPTION
-    commonv2Asset:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 5:0xbehbehfb:USDC
-          description: ID is unique across all blockchains and created by combining the blockchain ID, contract address, and symbol
-        standard:
-          allOf:
-          - $ref: '#/components/schemas/v2Standard'
-          - type: string
-            example: ERC20
-            description: The standard of the asset
-        symbol:
-          type: string
-          example: LINK
-          description: The currency symbol of the asset
-        name:
-          type: string
-          example: Chainlink
-          description: The human readable name of the asset
-        blockchain:
-          $ref: '#/components/schemas/v2Blockchain'
-        decimals:
-          type: integer
-          format: int32
-          example: 18
-          description: Count of decimal places for the asset
-        vetted:
-          type: boolean
-          example: true
-          description: Whether the asset is vetted on the regulated platform
-        enabled:
-          type: boolean
-          example: true
-          description: Whether the asset is currently enabled on the platform
-        contract:
-          type: string
-          example: '0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846e'
-          description: The token contract address. This field will be empty if the asset is the native coin of the blockchain
-        createdAt:
-          type: string
-          format: date-time
-          example: '2022-03-29T10:22:22.420Z'
-          description: The date and time the asset was created
-        updatedAt:
-          type: string
-          format: date-time
-          example: '2022-03-29T10:22:22.420Z'
-          description: The date and time the asset was last updated
-        organizationId:
-          type: string
-          description: Organization ID for custom assets
-        coingeckoId:
-          type: string
-          example: ethereum
-          description: CoinGecko identifier for price data (optional for testnet assets)
-        source:
-          allOf:
-          - $ref: '#/components/schemas/v2AssetSource'
-          - type: string
-            example: ASSET_SOURCE_COINGECKO
-            description: Data source for this asset
-        sourceMetadata:
-          allOf:
-          - $ref: '#/components/schemas/protobufAny'
-          - type: object
-            description: JSON metadata about the source
-        lastSyncedAt:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:22:22.420Z'
-          description: When this asset was last synchronized
-        syncVersion:
-          type: integer
-          format: int32
-          example: 1
-          description: Version counter for sync updates
-        contractAddressChecksummed:
-          type: string
-          example: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
-          description: Checksummed version of the contract address
-        iconUrl:
-          type: string
-          example: https://static.palisade.co/registry/assets/coingecko/production/usd-coin.png
-          description: Public URL for the asset icon. Registry asset REST endpoints populate this when configured; other Asset responses may omit it.
-          readOnly: true
-      required:
-      - id
-      - standard
-      - symbol
-      - blockchain
-      - createdAt
-    transactionsv2Address:
-      type: object
-      properties:
-        id:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: Either addressID or walletID, or allowAddressID, or not set when the address does not exist within palisade e.g. a deposit from outside of Palisade
-        counterpartyId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The counterparty ID
-        vaultId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The vault ID
-        type:
-          allOf:
-          - $ref: '#/components/schemas/transactionsv2AddressType'
-          - type: string
-            example: EXTERNAL
-            description: The address type
-        address:
-          type: string
-          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
-          description: The address
-      required:
-      - type
-      - address
-    v2XRPTransactionConfig:
-      type: object
-      properties:
-        sourceTag:
-          type: string
-          example: '123456'
-          description: The source tag for XRP transactions
-        destinationTag:
-          type: string
-          example: '123456'
-          description: The destination tag for XRP transactions
-    v2Standard:
-      type: string
-      enum:
-      - NATIVE
-      - ERC20
-      - ISSUED_CURRENCY
-      - ERC721
-      - SPL
-      - CUSTOM
-    transactionsv2AddressType:
-      type: string
-      enum:
-      - COUNTERPARTY
-      - WALLET
-      - EXTERNAL
-      - ALLOW_ADDRESS
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    v2TransactionActionFilter:
-      type: object
-      properties:
-        eq:
-          allOf:
-          - $ref: '#/components/schemas/transactionsv2TransactionAction'
-          - description: Exact transaction type match
-        notEq:
-          allOf:
-          - $ref: '#/components/schemas/transactionsv2TransactionAction'
-          - description: Exclude this transaction type
-        in:
-          type: array
-          items:
-            $ref: '#/components/schemas/transactionsv2TransactionAction'
-          description: Transaction type is in this list
-        notIn:
-          type: array
-          items:
-            $ref: '#/components/schemas/transactionsv2TransactionAction'
-          description: Transaction type is not in this list
-    v2ListWalletTransactionsResponse:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/v2FilterResponse'
-        transactions:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/transactionsv2Transaction'
-            - type: object
-    TimestampFilterTimestampRange:
-      type: object
-      properties:
-        start:
-          type: string
-          format: date-time
-          example: '2024-08-01T00:00:00Z'
-          description: Start of time range (inclusive)
-        end:
-          type: string
-          format: date-time
-          example: '2024-08-31T23:59:59Z'
-          description: End of time range (inclusive)
-    v2FreezeType:
-      type: string
-      enum:
-      - FREEZE_TYPE_MANUAL
-      - FREEZE_TYPE_AUTO_RISK
-      - FREEZE_TYPE_AUTO_AMOUNT
-      - FREEZE_TYPE_COMPLIANCE
-      - FREEZE_TYPE_AUTO_WALLET_SETTING
-    v2TimestampFilter:
-      type: object
-      properties:
-        eq:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Exact timestamp match
-        notEq:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Not equal to timestamp
-        before:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Before this timestamp
-        after:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: After this timestamp
-        gte:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Greater than or equal to timestamp
-        lte:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Less than or equal to timestamp
-        between:
-          allOf:
-          - $ref: '#/components/schemas/TimestampFilterTimestampRange'
-          - description: Between two timestamps (inclusive)
-        isNull:
-          type: boolean
-          description: Check if field is null
-        relativeDays:
-          type: integer
-          format: int32
-          example: -7
-          description: Relative days from now (negative for past, positive for future)
-    TransactionEndpoint:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          enum:
-          - FIAT
-          - CRYPTO
-          description: Endpoint type
-        walletId:
-          type: string
-          nullable: true
-          description: Wallet identifier (e.g. `RIP0000001`). Present when type is `CRYPTO`.
-        address:
-          type: string
-          nullable: true
-          description: 'The customer''s on-chain address on this leg. Present when type is `CRYPTO`
-
-            and the on-chain leg has been initiated. EVM addresses include the `0x` prefix.
-
-            '
-        chain:
-          type: string
-          nullable: true
-          description: Blockchain network name (e.g. XRPL, ETH). Present when type is `CRYPTO`.
-        transactionHash:
-          type: string
-          nullable: true
-          description: 'On-chain transaction hash for this leg. Present when type is `CRYPTO` and the on-chain leg has settled.
-
-            EVM chains (e.g. ETH) return the hash with the `0x` prefix; XRPL hashes are
-
-            uppercase hex without a prefix.
-
-            '
-        counterpartyAddress:
-          type: string
-          nullable: true
-          description: 'The Ripple-side internal account address that participated in this on-chain leg
-
-            (the counterparty to your wallet). Present when type is `CRYPTO` and the on-chain leg
-
-            has been initiated. EVM addresses include the `0x` prefix.
-
-            '
     v2FreezeHistoryEntry:
       type: object
       properties:
@@ -3842,131 +4178,31 @@ components:
           format: double
           example: 85.5
           description: Risk score that triggered auto-freeze (0-100)
-    v2FreezeInfo:
-      type: object
-      properties:
-        isFrozen:
-          type: boolean
-          example: false
-          description: Whether the transaction is currently frozen
-        history:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2FreezeHistoryEntry'
-            - type: object
-          description: History of all freeze/unfreeze actions. Latest entry contains current state details when frozen.
-    v2SigningPayload:
-      type: object
-      properties:
-        inputIndex:
-          type: integer
-          format: int64
-          example: 0
-          description: The index of the UTXO input this signing payload corresponds to
-        signingHash:
-          type: string
-          example: 30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671
-          description: The signing hash for this UTXO input
-        signature:
-          type: string
-          example: 3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43
-          description: The signature for this UTXO input
-        walletId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The wallet ID that owns this signing payload. If omitted, signers use the parent transaction wallet. Native multi-wallet transactions must set this on every signing payload.
-      required:
-      - inputIndex
-      - signingHash
-    v2AssetSource:
+    transactionsv2TransactionStatus:
       type: string
       enum:
-      - ASSET_SOURCE_LEGACY
-      - ASSET_SOURCE_AUTO
-      - ASSET_SOURCE_COINGECKO
-      - ASSET_SOURCE_PALISADE
-      - ASSET_SOURCE_CUSTOMER
-    v2AssetChangePurpose:
+      - REQUESTED
+      - POLICY_CHECK_PENDING
+      - POLICY_CHECK_PASSED
+      - APPROVAL_CHECK_PENDING
+      - APPROVAL_CHECK_PASSED
+      - COMPILATION_PENDING
+      - COMPILED
+      - SIGNATURE_PENDING
+      - SIGNED
+      - PUBLISH_PENDING
+      - PUBLISHED
+      - CONFIRMATION_PENDING
+      - CONFIRMED
+      - REJECTED
+      - FAILED
+    transactionsv2AddressType:
       type: string
       enum:
-      - FEE
-      - TRANSFER
-    v2FilterResponse:
-      type: object
-      properties:
-        previousPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the previous page of results
-        nextPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        total:
-          type: integer
-          format: int32
-          example: 100
-          description: The total number of results
-      required:
-      - total
-    UpdateTransactionDestination:
-      type: object
-      required:
-      - type
-      description: 'Approval payload for a `PENDING` (flexible redemption) transaction. `FIAT` directs the
-
-        redemption to your default bank account (creates a `REDEMPTION`); `CRYPTO` bridges the funds
-
-        to one of your wallets (creates a `BRIDGE`) and requires `walletId`.
-
-        '
-      properties:
-        type:
-          type: string
-          enum:
-          - FIAT
-          - CRYPTO
-          description: 'Destination type. `FIAT` creates a `REDEMPTION` settled to your default bank account;
-
-            `CRYPTO` creates a `BRIDGE` transfer to one of your wallets.
-
-            '
-        walletId:
-          type: string
-          description: 'Target wallet identifier (e.g. `RIP0000001`). Required when `type` is `CRYPTO`;
-
-            must be omitted when `type` is `FIAT`.
-
-            '
-    v2EvmFeeEstimate:
-      type: object
-      properties:
-        gasPrice:
-          type: string
-          format: uint64
-          example: '155'
-          description: Gas price in wei (base_fee + priority_fee)
-        baseFee:
-          type: string
-          format: uint64
-          example: '155'
-          description: Base Fee in wei
-        priorityFee:
-          type: string
-          format: uint64
-          example: '155'
-          description: Average priority Fee in wei
-        gasLimit:
-          type: string
-          format: uint64
-          example: '21000'
-          description: Gas limit
-      required:
-      - gasPrice
-      - baseFee
-      - priorityFee
-      - gasLimit
+      - COUNTERPARTY
+      - WALLET
+      - EXTERNAL
+      - ALLOW_ADDRESS
     v2Blockchain:
       type: string
       enum:
@@ -3982,348 +4218,40 @@ components:
       - SOLANA
       - TRON
       - BITCOIN
-    v2FeeEstimate:
-      type: object
-      properties:
-        evm:
-          allOf:
-          - $ref: '#/components/schemas/v2EvmFeeEstimate'
-          - type: object
-            example:
-              gas_price: '0.007'
-              base_fee: '155.672'
-              priority_fee: '0.001'
-              gas_limit: 21000
-            description: EVM specific fee estimates
-        networkFees:
-          type: object
-          example:
-            slowest: '0.00001'
-            slow: '0.00005'
-            medium: '0.00010'
-            fast: '0.00015'
-            fastest: '0.0002'
-          additionalProperties:
-            type: string
-          description: Map of fee options where keys are fee types (slowest, slow, medium, fast, fastest) and values are the fee amounts in base asset units
-      required:
-      - networkFees
-    v2NumericFilter:
-      type: object
-      properties:
-        eq:
-          type: string
-          description: Equals
-        notEq:
-          type: string
-          description: Not equal to
-        in:
-          type: array
-          items:
-            type: string
-          description: Value is in the list
-        notIn:
-          type: array
-          items:
-            type: string
-          description: Value is not in the list
-        isNull:
-          type: boolean
-          description: Check if field is null
-        gt:
-          type: string
-          description: Greater than
-        gte:
-          type: string
-          description: Greater than or equal to
-        lt:
-          type: string
-          description: Less than
-        lte:
-          type: string
-          description: Less than or equal to
-    v2EstimateTransferFeeRequest:
-      type: object
-      properties:
-        blockchain:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - type: string
-            example: ETHEREUM
-        contract:
-          type: string
-          example: '0xdAC17F958D2ee523a2206206994597C13D831ec7'
-          description: The contract/issuing address
-        symbol:
-          type: string
-          example: USD
-          description: The asset symbol
-        originAddress:
-          type: string
-          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
-          description: The origin address
-        destinationAddress:
-          type: string
-          example: TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy
-          description: Optional destination address. When provided, allows for more accurate fee estimation on chains where transfer costs vary based on recipient state (e.g., TRON, Solana).
-      required:
-      - blockchain
-      - symbol
-      - originAddress
-    v2ListTransactionsRequest:
-      type: object
-      properties:
-        filter:
-          allOf:
-          - $ref: '#/components/schemas/v2TransactionFilter'
-          - description: 'Optional filters: status, type, blockchain, asset_symbol, created_at range, updated_at range, qty range, origin_address, destination_address, transaction_id, transaction_hash, external_id, correlation_id. Each sub-filter is AND-ed.'
-        pagination:
-          allOf:
-          - $ref: '#/components/schemas/v2FilterRequest'
-          - description: 'Pagination and sorting. Sortable fields: created_at, updated_at, amount, status.'
-        search:
-          type: string
-          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
-          description: Case-insensitive free-text search over transaction ID, transaction hash, external ID, correlation ID, asset symbol, origin address, and destination address.
-    v2Problem:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        reason:
-          type: string
-        domain:
-          type: string
-        message:
-          type: string
-        retryability:
-          $ref: '#/components/schemas/v2Retryability'
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-    v2Retryability:
-      type: string
-      enum:
-      - RETRYABLE
-      - NOT_RETRYABLE
-    v2AssetChange:
-      type: object
-      properties:
-        purpose:
-          allOf:
-          - $ref: '#/components/schemas/v2AssetChangePurpose'
-          - type: string
-            example: TRANSFER
-            description: Purpose of this asset change
-        asset:
-          allOf:
-          - $ref: '#/components/schemas/commonv2Asset'
-          - type: object
-            description: The asset that is part of this change
-        qty:
-          type: string
-          example: '155.672'
-          description: The quantity of the asset to transfer
-        source:
-          allOf:
-          - $ref: '#/components/schemas/v2AssetChangeWallet'
-          - type: string
-            description: Source of this asset change
-        destination:
-          allOf:
-          - $ref: '#/components/schemas/v2AssetChangeWallet'
-          - type: string
-            description: Destination of this asset change
-      required:
-      - purpose
-      - asset
-      - qty
-    v2TransactionFilter:
-      type: object
-      properties:
-        status:
-          allOf:
-          - $ref: '#/components/schemas/v2TransactionStatusFilter'
-          - description: Filter by transaction status using enum names such as CONFIRMED or FAILED
-        blockchain:
-          allOf:
-          - $ref: '#/components/schemas/v2BlockchainFilter'
-          - description: Filter by blockchain using common.v2.Blockchain enum names such as ETHEREUM or BITCOIN
-        assetSymbol:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by asset symbol (e.g. ETH, BTC, USDC)
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/v2TimestampFilter'
-          - description: Filter by creation timestamp; supports before/after, between, relative_days
-        qty:
-          allOf:
-          - $ref: '#/components/schemas/v2NumericFilter'
-          - description: Filter by transferred quantity as an arbitrary precision numeric string; supports eq/not_eq/in/not_in/gt/gte/lt/lte.
-        originAddress:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by origin (sending) address (case-insensitive)
-        destinationAddress:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by destination (receiving) address (case-insensitive)
-        transactionId:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Search by Palisade transaction ID (UUID). Supports eq/in/contains.
-        transactionHash:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Search by on-chain transaction hash (case-insensitive). Supports eq/in only.
-        externalId:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Search by customer-assigned external transaction ID. Supports eq/in/contains.
-        updatedAt:
-          allOf:
-          - $ref: '#/components/schemas/v2TimestampFilter'
-          - description: Filter by last-update timestamp; supports before/after, between, relative_days. Mirrors the updated_at sort field.
-        correlationId:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by correlation ID. Supports eq/in/contains.
-        type:
-          allOf:
-          - $ref: '#/components/schemas/v2TransactionActionFilter'
-          - description: Filter by transaction type using enum names such as PALISADE_TRANSFER or WEB3_SIGN
-    v2FreezeAction:
-      type: string
-      enum:
-      - FREEZE_ACTION_FREEZE
-      - FREEZE_ACTION_UNFREEZE
-    transactionsv2TransactionAction:
-      type: string
-      enum:
-      - DEPOSIT
-      - WITHDRAWAL
-      - WEB3_RAW
-      - WEB3_SIGN
-      - PASSKEY_RAW
-      - PASSKEY_SIGN
-      - PALISADE_TRANSFER
-      - PALISADE_RAW
-      - PALISADE_MANAGED
-      - PALISADE_SIGN_PLAINTEXT
-      - PALISADE_SWEEP
-    v2StringFilter:
-      type: object
-      properties:
-        eq:
-          type: string
-          description: Exact match
-        notEq:
-          type: string
-          description: Not equal to
-        contains:
-          type: string
-          description: Contains substring (case-insensitive)
-        startsWith:
-          type: string
-          description: Starts with prefix (case-insensitive)
-        endsWith:
-          type: string
-          description: Ends with suffix (case-insensitive)
-        in:
-          type: array
-          items:
-            type: string
-          description: Value is in the list
-        notIn:
-          type: array
-          items:
-            type: string
-          description: Value is not in the list
-        isNull:
-          type: boolean
-          description: Check if field is null
-    Transaction:
-      type: object
-      required:
-      - id
-      - status
-      - amount
-      - token
-      - source
-      - createdAt
-      - updatedAt
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique transaction identifier
-        type:
-          type: string
-          enum:
-          - ISSUANCE
-          - REDEMPTION
-          - BRIDGE
-          nullable: true
-          description: 'Transaction type. Null while the transaction is `PENDING` (flexible redemption)
-
-            and a destination has not yet been chosen.
-
-            '
-        status:
-          type: string
-          enum:
-          - PROCESSING
-          - PENDING
-          - COMPLETED
-          - FAILED
-          - CANCELED
-          description: 'Current transaction status. `COMPLETED`, `FAILED`, and `CANCELED` are terminal.
-
-            `CANCELED` currently applies to `ISSUANCE` transactions canceled before settlement.
-
-            `PENDING` applies to flexible-redemption transactions awaiting approval via
-
-            [Approve a pending redemption](#operation/updateTransactionDestination); `type` and
-
-            `destination` are null until approved.
-
-            '
-        amount:
-          type: string
-          description: Transaction amount as a decimal string (e.g. "10000.00")
-        token:
-          type: string
-          enum:
-          - RLUSD
-          description: Always RLUSD
-        source:
-          $ref: '#/components/schemas/TransactionEndpoint'
-        destination:
-          nullable: true
-          description: 'Destination endpoint. Null while the transaction is `PENDING` (flexible redemption)
-
-            and a destination has not yet been chosen.
-
-            '
-          allOf:
-          - $ref: '#/components/schemas/TransactionEndpoint'
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp when the transaction was created
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp when the transaction was last updated
     v2SortOrder:
       type: string
       enum:
       - SORT_ORDER_ASC
       - SORT_ORDER_DESC
-    v2ListTransactionsResponse:
+    transactionsv2Address:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Either addressID or walletID, or allowAddressID, or not set when the address does not exist within palisade e.g. a deposit from outside of Palisade
+        counterpartyId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The counterparty ID
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        type:
+          allOf:
+          - $ref: '#/components/schemas/transactionsv2AddressType'
+          - type: string
+            example: EXTERNAL
+            description: The address type
+        address:
+          type: string
+          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
+          description: The address
+      required:
+      - type
+      - address
+    v2ListWalletTransactionsResponse:
       type: object
       properties:
         filter:
@@ -4334,27 +4262,6 @@ components:
             allOf:
             - $ref: '#/components/schemas/transactionsv2Transaction'
             - type: object
-    v2BlockchainFilter:
-      type: object
-      properties:
-        eq:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - description: Exact blockchain match
-        notEq:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - description: Exclude this blockchain
-        in:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2Blockchain'
-          description: Blockchain is in this list
-        notIn:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2Blockchain'
-          description: Blockchain is not in this list
     v2AssetChangeWallet:
       type: object
       properties:
@@ -4396,47 +4303,227 @@ components:
           allOf:
           - $ref: '#/components/schemas/v2SortOrder'
           - description: Sort order (ASC or DESC)
-    transactionsv2TransactionStatus:
+    transactionsv2TransactionAction:
       type: string
       enum:
-      - REQUESTED
-      - POLICY_CHECK_PENDING
-      - POLICY_CHECK_PASSED
-      - APPROVAL_CHECK_PENDING
-      - APPROVAL_CHECK_PASSED
-      - COMPILATION_PENDING
-      - COMPILED
-      - SIGNATURE_PENDING
-      - SIGNED
-      - PUBLISH_PENDING
-      - PUBLISHED
-      - CONFIRMATION_PENDING
-      - CONFIRMED
-      - REJECTED
-      - FAILED
-    rpcStatus:
+      - DEPOSIT
+      - WITHDRAWAL
+      - WEB3_RAW
+      - WEB3_SIGN
+      - PASSKEY_RAW
+      - PASSKEY_SIGN
+      - PALISADE_TRANSFER
+      - PALISADE_RAW
+      - PALISADE_MANAGED
+      - PALISADE_SIGN_PLAINTEXT
+      - PALISADE_SWEEP
+    ProblemDetail:
+      type: object
+      description: 'Error response following RFC 9457 (Problem Details for HTTP APIs), the successor to RFC 7807.
+
+        '
+      properties:
+        type:
+          type: string
+          format: uri
+          description: URI reference identifying the problem type
+        title:
+          type: string
+          description: Short, human-readable summary of the problem
+        status:
+          type: integer
+          description: HTTP status code
+        code:
+          type: string
+          description: Machine-readable error code
+          enum:
+          - TRANSACTION_NOT_FOUND
+          - TRANSACTION_INVALID_STATUS_TRANSITION
+          - TRANSACTION_DESTINATION_TYPE_IMMUTABLE
+          - INVALID_REQUEST_BODY
+          - UNKNOWN_EXCEPTION
+    UpdateTransactionDestination:
+      type: object
+      required:
+      - type
+      description: 'Approval payload for a `PENDING` (flexible redemption) transaction. `FIAT` directs the
+
+        redemption to your default bank account (creates a `REDEMPTION`); `CRYPTO` bridges the funds
+
+        to one of your wallets (creates a `BRIDGE`) and requires `walletId`.
+
+        '
+      properties:
+        type:
+          type: string
+          enum:
+          - FIAT
+          - CRYPTO
+          description: 'Destination type. `FIAT` creates a `REDEMPTION` settled to your default bank account;
+
+            `CRYPTO` creates a `BRIDGE` transfer to one of your wallets.
+
+            '
+        walletId:
+          type: string
+          description: 'Target wallet identifier (e.g. `RIP0000001`). Required when `type` is `CRYPTO`;
+
+            must be omitted when `type` is `FIAT`.
+
+            '
+    TransactionEndpoint:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - FIAT
+          - CRYPTO
+          description: Endpoint type
+        walletId:
+          type:
+          - string
+          - 'null'
+          description: Wallet identifier (e.g. `RIP0000001`). Present when type is `CRYPTO`.
+        address:
+          type:
+          - string
+          - 'null'
+          description: 'The customer''s on-chain address on this leg. Present when type is `CRYPTO`
+
+            and the on-chain leg has been initiated. EVM addresses include the `0x` prefix.
+
+            '
+        chain:
+          type:
+          - string
+          - 'null'
+          description: Blockchain network name (e.g. XRPL, ETH). Present when type is `CRYPTO`.
+        transactionHash:
+          type:
+          - string
+          - 'null'
+          description: 'On-chain transaction hash for this leg. Present when type is `CRYPTO` and the on-chain leg has settled.
+
+            EVM chains (e.g. ETH) return the hash with the `0x` prefix; XRPL hashes are
+
+            uppercase hex without a prefix.
+
+            '
+        counterpartyAddress:
+          type:
+          - string
+          - 'null'
+          description: 'The Ripple-side internal account address that participated in this on-chain leg
+
+            (the counterparty to your wallet). Present when type is `CRYPTO` and the on-chain leg
+
+            has been initiated. EVM addresses include the `0x` prefix.
+
+            '
+    Transaction:
+      type: object
+      required:
+      - id
+      - status
+      - amount
+      - token
+      - source
+      - createdAt
+      - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique transaction identifier
+        type:
+          type:
+          - string
+          - 'null'
+          enum:
+          - ISSUANCE
+          - REDEMPTION
+          - BRIDGE
+          description: 'Transaction type. Null while the transaction is `PENDING` (flexible redemption)
+
+            and a destination has not yet been chosen.
+
+            '
+        status:
+          type: string
+          enum:
+          - PROCESSING
+          - PENDING
+          - COMPLETED
+          - FAILED
+          - CANCELED
+          description: 'Current transaction status. `COMPLETED`, `FAILED`, and `CANCELED` are terminal.
+
+            `CANCELED` currently applies to `ISSUANCE` transactions canceled before settlement.
+
+            `PENDING` applies to flexible-redemption transactions awaiting approval via
+
+            [Approve a pending redemption](#operation/updateTransactionDestination); `type` and
+
+            `destination` are null until approved.
+
+            '
+        amount:
+          type: string
+          description: Transaction amount as a decimal string (e.g. "10000.00")
+        token:
+          type: string
+          enum:
+          - RLUSD
+          description: Always RLUSD
+        source:
+          $ref: '#/components/schemas/TransactionEndpoint'
+        destination:
+          description: 'Destination endpoint. Null while the transaction is `PENDING` (flexible redemption)
+
+            and a destination has not yet been chosen.
+
+            '
+          allOf:
+          - $ref: '#/components/schemas/TransactionEndpoint'
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was last updated
+    TransactionListResponse:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
+        content:
           type: array
           items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
+            $ref: '#/components/schemas/Transaction'
+        totalElements:
+          type: integer
+          description: Total number of matching transactions
+        totalPages:
+          type: integer
+          description: Total number of pages
+        size:
+          type: integer
+          description: Page size
+        number:
+          type: integer
+          description: Current page number (0-indexed)
   responses:
-    BadRequest:
-      description: Invalid request parameters or body
+    NotFound:
+      description: Resource does not exist
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/ProblemDetail'
-    NotFound:
-      description: Resource does not exist
+    Unauthorized:
+      description: Missing or expired access token
       content:
         application/problem+json:
           schema:
@@ -4453,12 +4540,6 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/ProblemDetail'
-    Unauthorized:
-      description: Missing or expired access token
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetail'
     Forbidden:
       description: Insufficient scope for the requested operation
       content:
@@ -4471,11 +4552,28 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/ProblemDetail'
+    BadRequest:
+      description: Invalid request parameters or body
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
   securitySchemes:
     TokenAuth:
       type: apiKey
       name: Authorization
       in: header
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.ripple.com/v2/oauth/token
+          scopes:
+            rlusd_customers:read: Read transaction data
+            rlusd_customers:write: Approve pending redemptions
 externalDocs:
   description: Click here for the API docs
   url: https://palisade.readme.io
+x-refined-from:
+- ripple-labs-palisade-wallet-openapi-original.yml
+- ripple-labs-rlusd-openapi-original.yml

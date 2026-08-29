@@ -1,15 +1,15 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Liquidations API
-  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
-  version: '2.0'
+  description: "The {% $env.PUBLIC_VAR_SL %} service splits large XRP liquidations into smaller liquidations over a specified time period. For more information, see [Smart Liquidation](../../ripplenet/system-components/liquidation/smart-liquidation/).\n\nCheck out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).\n\n### Authentication\n\nAll API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../../ripplenet/best-practices/authentication/).\n\n### API environments\n\nThe {% $env.PUBLIC_VAR_SLAPI %} assigns a `[domainPrefix]` based on the environment. Your tenant information is automatically derived from your API credentials. \n\n| Environment  | Domain Prefix |\tDomain | Base URL|\n| --- | --- | --- | --- |\n| Test | `liquidation-test.pub.prod` | `ripplenet.com` | <div style=\"font-size: 13px;font-family:'Red Hat Mono'; !important\">`liquidation-test.pub.prod.ripplenet.com`</div> |\n| Production | `liquidation.pub.prod` | `ripplenet.com` | `liquidation.pub.prod.ripplenet.com` |\n\nFor more information about base URLs, see [API base URLs](/products/payments-odl/api-docs/ripplenet/best-practices/baseurls/)."
+  version: 1.0.0
+  title: Smart Liquidation Liquidations API
 servers:
-- url: https://api.sandbox.palisade.co
-  description: Sandbox server (uses TESTNET data, private keys and accounts)
-- url: https://api.palisade.co
-  description: Palisade server (uses MAINNET data, private keys and accounts)
+- url: https://liquidation-test.pub.prod.ripplenet.com
+  description: Test environment<br/>Learn about <a href="https://docs.ripple.com/ripplenet/implementation/baseurls/#base-url-by-api-environment" class="api-console-href">API environments</a>
+- url: https://liquidation.pub.prod.ripplenet.com
+  description: Production environment
 security:
-- TokenAuth: []
+- Bearer: []
 tags:
 - name: Liquidations
   description: 'Use these operations to retrieve liquidations from the Smart Liquidation service.
@@ -314,6 +314,24 @@ paths:
                     timestamp: '2018-04-06T20:33:35Z'
 components:
   schemas:
+    ErrorCodeEnum:
+      type: string
+      description: Type of problem.
+      enum:
+      - BAD_REQUEST
+      - INVALID_DATES
+      - INVALID_VENUE_AND_OR_CURRENCY
+      - INVALID_LIQUIDATION_AMOUNT
+      - NOT_FOUND
+      - REFERENCE_ID_NOT_UNIQUE
+      - AUTH_PROBLEM
+      - GENERIC_CLIENT_ERROR
+      - GENERIC_SERVER_ERROR
+    LiquidationSourceEnum:
+      type: string
+      enum:
+      - xrrn
+      - operator
     Sort:
       type: object
       properties:
@@ -332,163 +350,52 @@ components:
           type: boolean
           description: True if the sort direction is descending
           example: false
-    LiquidationListResponse:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - type: object
-        required:
-        - results
-        properties:
-          results:
-            type: array
-            description: Array of all liquidation objects that match the specified query parameters, if any
-            items:
-              $ref: '#/components/schemas/LiquidationSummary'
-    TradeExecution:
-      allOf:
-      - $ref: '#/components/schemas/Entity'
-      - type: object
-        required:
-        - trade_request_id
-        - venue
-        properties:
-          trade_request_id:
-            type: string
-            description: The identifier of the trade request
-          venue:
-            type: string
-            description: The exchange used by this trade
-          venue_id:
-            type: string
-            description: The mapped id for the exchange used by this trade
-          amount:
-            type: number
-            format: decimal
-            description: The amount of XRP sent by this trade
-          adjusted_amount:
-            type: number
-            format: decimal
-            description: The adjusted amount of XRP sent by this trade
-          proceeds:
-            type: number
-            format: decimal
-            description: The amount of XRP liquidated
-          adjusted_proceeds:
-            type: number
-            format: decimal
-            description: The adjusted amount of XRP liquidated
-          start_date:
-            type: string
-            format: date-time
-            example: '2018-04-06T20:33:35Z'
-            description: Start date (inclusive) of last activity
-          end_date:
-            type: string
-            format: date-time
-            example: '2018-04-06T20:33:35Z'
-            description: Start date (inclusive) of last activity
-          incentive_type:
-            type: string
-            description: The type of incentive (also called slippage)
-          incentive_value:
-            type: number
-            format: decimal
-            description: Amount of incentive (also called slippage) used
-          is_pushed_forward:
-            type: boolean
-            description: True if the funds from a failed trade will be made available in fiat currency
-          adjusted_trade_difference:
-            type: number
-            description: The trade amount including incentives
-          executed_slippage_bps:
-            type: integer
-    LiquidationSourceEnum:
-      type: string
-      enum:
-      - xrrn
-      - operator
-    LiquidationSummary:
-      allOf:
-      - $ref: '#/components/schemas/Entity'
-      - $ref: '#/components/schemas/LiquidationRequest'
-      - type: object
-        required:
-        - id
-        - status
-        - liquidation_source
-        properties:
-          liquidation_source:
-            $ref: '#/components/schemas/LiquidationSourceEnum'
-          status:
-            $ref: '#/components/schemas/LiquidationStatusEnum'
-    Page:
+    LiquidationRequest:
       type: object
       required:
-      - first
-      - last
-      - number
-      - numberOfElements
-      - size
-      - totalElements
-      - totalPages
-      - sort
+      - unique_reference_id
+      - destination_venue
+      - destination_currency
+      - destination_amount
+      - bridge_currency_code
       properties:
-        first:
-          type: boolean
-          description: True if this is the first page
-        last:
-          type: boolean
-          description: True if this is the last page
-        number:
-          type: integer
-          description: Page number
-        numberOfElements:
-          type: integer
-          description: Number of elements in this request
-        size:
-          type: integer
-          description: Number of objects returned per page
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object
-    EstimateTypeEnum:
-      type: string
-      enum:
-      - firm
-      - indicative
-    Entity:
-      type: object
-      required:
-      - id
-      - account_id
-      - created_at
-      - modified_at
-      properties:
-        id:
+        unique_reference_id:
           type: string
-          description: Unique liquidation identifier
+          description: The unique 32-character string representing the liquidation
+        ripplenet_payment_id:
+          type: string
           format: uuid
-        account_id:
+          description: Unique identifier for a RippleNet payment
+        ripplenet_payment_created_at:
+          description: Timestamp when the RippleNet payment was created
           type: string
-          description: The identifier of the account requesting the liquidation
-        created_at:
-          type: string
-          description: Date specified in ISO-8601 format, for example `2018-04-06T20:33:35Z`
           format: date-time
-          example: '2018-04-06T20:33:35Z'
-        modified_at:
+        ripplenet_sender_address:
+          description: RippleNet address of the sender
           type: string
-          description: Date specified in ISO-8601 format, for example `2018-04-06T20:33:35Z`
+          example: sf_gbp@rn.us.ca.san_francisco
+        ripplenet_receiver_address:
+          description: RippleNet address of the receiver
+          example: sf_gbp@rn.us.ca.san_francisco
+          type: string
+        destination_amount:
+          description: The total amount available for withdrawal after all fees have been collected
+          type: number
+          format: decimal
+          example: 10000
+        destination_currency:
+          type: string
+          description: The 3-letter currency code of the destination currency
+          example: usd
+        destination_venue:
+          type: string
+          description: The name of the exchange where XRP is liquidated into fiat currency
+          example: bitso
+        estimate_type:
+          $ref: '#/components/schemas/EstimateTypeEnum'
+        expires_at:
+          type: string
+          description: The expiration time of the liquidation
           format: date-time
           example: '2018-04-06T20:33:35Z'
     ErrorResponse:
@@ -517,40 +424,11 @@ components:
         liquidationId:
           type: string
           description: Unique identifier of the liquidation.
-    ErrorCodeEnum:
+    EstimateTypeEnum:
       type: string
-      description: Type of problem.
       enum:
-      - BAD_REQUEST
-      - INVALID_DATES
-      - INVALID_VENUE_AND_OR_CURRENCY
-      - INVALID_LIQUIDATION_AMOUNT
-      - NOT_FOUND
-      - REFERENCE_ID_NOT_UNIQUE
-      - AUTH_PROBLEM
-      - GENERIC_CLIENT_ERROR
-      - GENERIC_SERVER_ERROR
-    Liquidation:
-      allOf:
-      - $ref: '#/components/schemas/LiquidationSummary'
-      - type: object
-        required:
-        - trade_requests
-        - execution_summary
-        properties:
-          status:
-            $ref: '#/components/schemas/LiquidationStatusEnum'
-          trade_requests:
-            type: array
-            description: An array of trade objects representing the trades of the liquidation
-            items:
-              $ref: '#/components/schemas/LiquidationTrade'
-          execution_strategy:
-            $ref: '#/components/schemas/ExecutionStrategy'
-          execution_summary:
-            $ref: '#/components/schemas/ExecutionSummary'
-          trading_summary:
-            $ref: '#/components/schemas/TradingSummary'
+      - firm
+      - indicative
     LiquidationTrade:
       allOf:
       - $ref: '#/components/schemas/Entity'
@@ -611,6 +489,31 @@ components:
           estimated_trade_displacement_bps:
             type: integer
             description: trade displacement bps in estimate
+    Entity:
+      type: object
+      required:
+      - id
+      - account_id
+      - created_at
+      - modified_at
+      properties:
+        id:
+          type: string
+          description: Unique liquidation identifier
+          format: uuid
+        account_id:
+          type: string
+          description: The identifier of the account requesting the liquidation
+        created_at:
+          type: string
+          description: Date specified in ISO-8601 format, for example `2018-04-06T20:33:35Z`
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+        modified_at:
+          type: string
+          description: Date specified in ISO-8601 format, for example `2018-04-06T20:33:35Z`
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
     LiquidationTradeStatusEnum:
       type: string
       enum:
@@ -623,29 +526,6 @@ components:
       - PARTIALLY_COMPLETED
       - FAILED
       - FAILED_RETRYABLE
-    ExecutionStrategy:
-      type: object
-      description: The trade execution strategy
-      required:
-      - maxAmountPerTrade
-      - minimumTradeInterval
-      properties:
-        maxAmountPerTrade:
-          type: number
-          format: decimal
-          description: The maximum amount (in destination currency) per trade
-        minimumTradeInterval:
-          type: integer
-          description: The minimum interval (in seconds) between creation of trades
-    LiquidationStatusEnum:
-      type: string
-      enum:
-      - CREATED
-      - QUEUED
-      - STARTED
-      - COMPLETED
-      - PARTIALLY_COMPLETED
-      - FAILED
     TradingSummary:
       type: object
       description: The trading summary
@@ -666,6 +546,139 @@ components:
           type: number
           format: decimal
           description: the total amount of fiat that has not yet been delivered but is eligible to be delivered
+    TradeExecution:
+      allOf:
+      - $ref: '#/components/schemas/Entity'
+      - type: object
+        required:
+        - trade_request_id
+        - venue
+        properties:
+          trade_request_id:
+            type: string
+            description: The identifier of the trade request
+          venue:
+            type: string
+            description: The exchange used by this trade
+          venue_id:
+            type: string
+            description: The mapped id for the exchange used by this trade
+          amount:
+            type: number
+            format: decimal
+            description: The amount of XRP sent by this trade
+          adjusted_amount:
+            type: number
+            format: decimal
+            description: The adjusted amount of XRP sent by this trade
+          proceeds:
+            type: number
+            format: decimal
+            description: The amount of XRP liquidated
+          adjusted_proceeds:
+            type: number
+            format: decimal
+            description: The adjusted amount of XRP liquidated
+          start_date:
+            type: string
+            format: date-time
+            example: '2018-04-06T20:33:35Z'
+            description: Start date (inclusive) of last activity
+          end_date:
+            type: string
+            format: date-time
+            example: '2018-04-06T20:33:35Z'
+            description: Start date (inclusive) of last activity
+          incentive_type:
+            type: string
+            description: The type of incentive (also called slippage)
+          incentive_value:
+            type: number
+            format: decimal
+            description: Amount of incentive (also called slippage) used
+          is_pushed_forward:
+            type: boolean
+            description: True if the funds from a failed trade will be made available in fiat currency
+          adjusted_trade_difference:
+            type: number
+            description: The trade amount including incentives
+          executed_slippage_bps:
+            type: integer
+    LiquidationListResponse:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - type: object
+        required:
+        - results
+        properties:
+          results:
+            type: array
+            description: Array of all liquidation objects that match the specified query parameters, if any
+            items:
+              $ref: '#/components/schemas/LiquidationSummary'
+    LiquidationStatusEnum:
+      type: string
+      enum:
+      - CREATED
+      - QUEUED
+      - STARTED
+      - COMPLETED
+      - PARTIALLY_COMPLETED
+      - FAILED
+    LiquidationSummary:
+      allOf:
+      - $ref: '#/components/schemas/Entity'
+      - $ref: '#/components/schemas/LiquidationRequest'
+      - type: object
+        required:
+        - id
+        - status
+        - liquidation_source
+        properties:
+          liquidation_source:
+            $ref: '#/components/schemas/LiquidationSourceEnum'
+          status:
+            $ref: '#/components/schemas/LiquidationStatusEnum'
+    Page:
+      type: object
+      required:
+      - first
+      - last
+      - number
+      - numberOfElements
+      - size
+      - totalElements
+      - totalPages
+      - sort
+      properties:
+        first:
+          type: boolean
+          description: True if this is the first page
+        last:
+          type: boolean
+          description: True if this is the last page
+        number:
+          type: integer
+          description: Page number
+        numberOfElements:
+          type: integer
+          description: Number of elements in this request
+        size:
+          type: integer
+          description: Number of objects returned per page
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object
     ExecutionSummary:
       type: object
       description: The trade execution summary
@@ -706,59 +719,43 @@ components:
           description: The conversion rate from XRP to destination currency (fiat)
         incentive_type:
           type: string
-    LiquidationRequest:
+    Liquidation:
+      allOf:
+      - $ref: '#/components/schemas/LiquidationSummary'
+      - type: object
+        required:
+        - trade_requests
+        - execution_summary
+        properties:
+          status:
+            $ref: '#/components/schemas/LiquidationStatusEnum'
+          trade_requests:
+            type: array
+            description: An array of trade objects representing the trades of the liquidation
+            items:
+              $ref: '#/components/schemas/LiquidationTrade'
+          execution_strategy:
+            $ref: '#/components/schemas/ExecutionStrategy'
+          execution_summary:
+            $ref: '#/components/schemas/ExecutionSummary'
+          trading_summary:
+            $ref: '#/components/schemas/TradingSummary'
+    ExecutionStrategy:
       type: object
+      description: The trade execution strategy
       required:
-      - unique_reference_id
-      - destination_venue
-      - destination_currency
-      - destination_amount
-      - bridge_currency_code
+      - maxAmountPerTrade
+      - minimumTradeInterval
       properties:
-        unique_reference_id:
-          type: string
-          description: The unique 32-character string representing the liquidation
-        ripplenet_payment_id:
-          type: string
-          format: uuid
-          description: Unique identifier for a RippleNet payment
-        ripplenet_payment_created_at:
-          description: Timestamp when the RippleNet payment was created
-          type: string
-          format: date-time
-        ripplenet_sender_address:
-          description: RippleNet address of the sender
-          type: string
-          example: sf_gbp@rn.us.ca.san_francisco
-        ripplenet_receiver_address:
-          description: RippleNet address of the receiver
-          example: sf_gbp@rn.us.ca.san_francisco
-          type: string
-        destination_amount:
-          description: The total amount available for withdrawal after all fees have been collected
+        maxAmountPerTrade:
           type: number
           format: decimal
-          example: 10000
-        destination_currency:
-          type: string
-          description: The 3-letter currency code of the destination currency
-          example: usd
-        destination_venue:
-          type: string
-          description: The name of the exchange where XRP is liquidated into fiat currency
-          example: bitso
-        estimate_type:
-          $ref: '#/components/schemas/EstimateTypeEnum'
-        expires_at:
-          type: string
-          description: The expiration time of the liquidation
-          format: date-time
-          example: '2018-04-06T20:33:35Z'
+          description: The maximum amount (in destination currency) per trade
+        minimumTradeInterval:
+          type: integer
+          description: The minimum interval (in seconds) between creation of trades
   securitySchemes:
-    TokenAuth:
+    Bearer:
       type: apiKey
       name: Authorization
       in: header
-externalDocs:
-  description: Click here for the API docs
-  url: https://palisade.readme.io

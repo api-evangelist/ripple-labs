@@ -1,15 +1,41 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Rates API
-  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
-  version: '2.0'
+  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
+
+
+    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
+
+
+    ### Authentication
+
+
+    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
+
+
+    ### API environments
+
+
+    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
+
+
+    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
+
+
+    | Environment  | Domaing Prefix | Domain | Base URL |
+
+    | --- | --- | --- | --- |
+
+    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
+
+    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
+
+    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  version: 4.0.0
+  title: RippleNet Server Rates API
 servers:
-- url: https://api.sandbox.palisade.co
-  description: Sandbox server (uses TESTNET data, private keys and accounts)
-- url: https://api.palisade.co
-  description: Palisade server (uses MAINNET data, private keys and accounts)
+- url: //[domainPrefix].ripplexcurrent.com/v4
 security:
-- TokenAuth: []
+- Bearer: []
 tags:
 - name: Rates
   description: '
@@ -200,27 +226,14 @@ paths:
       security:
       - Bearer: []
 components:
+  requestBodies:
+    RateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RateRequest'
+      required: true
   schemas:
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
     RateRequest:
       type: object
       required:
@@ -283,6 +296,138 @@ components:
           enum:
           - BPS
       description: Use this JSON request body to create an exchange rate for a base and counter currency.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    RatePerAccountRequest:
+      type: object
+      required:
+      - destination_ledger
+      - destination_ledger_account
+      - source_ledger
+      - source_ledger_account
+      properties:
+        source_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the source ledger associated with the exchange rate.
+        destination_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the destination ledger associated with the exchange rate.
+        source_ledger_account:
+          type: string
+          example: alias_usd_lon
+          description: Set to the account on the source ledger associated with the rate.
+        destination_ledger_account:
+          type: string
+          example: conct_gbp_lon
+          description: Set to the account on the destination ledger associated with the rate.
+      description: Use the `account` request object to create an exchange rate that applies to exchanges between a specific source ledger account and destination ledger account.
+    RatePerLedgerRequest:
+      type: object
+      required:
+      - destination_ledger
+      - source_ledger
+      properties:
+        source_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the source ledger associated with the exchange rate.
+        destination_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the destination ledger associated with the exchange rate.
+      description: Use the `ledger` request object to create an exchange rate that applies to exchanges between a specific source ledger and destination ledger.
+    Rates:
+      type: object
+      required:
+      - content
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            description: Provides an array of rate objects.
+            type: array
+            items:
+              $ref: '#/components/schemas/RateResponse'
+      description: Provides a `content` array of rate objects and a set of pagination information fields.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
     RateResponse:
       type: object
       required:
@@ -396,130 +541,9 @@ components:
           enum:
           - BPS
       description: JSON response object that represents an exchange rate.
-    RatePerLedgerRequest:
-      type: object
-      required:
-      - destination_ledger
-      - source_ledger
-      properties:
-        source_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the source ledger associated with the exchange rate.
-        destination_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the destination ledger associated with the exchange rate.
-      description: Use the `ledger` request object to create an exchange rate that applies to exchanges between a specific source ledger and destination ledger.
-    RatePerAccountRequest:
-      type: object
-      required:
-      - destination_ledger
-      - destination_ledger_account
-      - source_ledger
-      - source_ledger_account
-      properties:
-        source_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the source ledger associated with the exchange rate.
-        destination_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the destination ledger associated with the exchange rate.
-        source_ledger_account:
-          type: string
-          example: alias_usd_lon
-          description: Set to the account on the source ledger associated with the rate.
-        destination_ledger_account:
-          type: string
-          example: conct_gbp_lon
-          description: Set to the account on the destination ledger associated with the rate.
-      description: Use the `account` request object to create an exchange rate that applies to exchanges between a specific source ledger account and destination ledger account.
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
-    Rates:
-      type: object
-      required:
-      - content
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            description: Provides an array of rate objects.
-            type: array
-            items:
-              $ref: '#/components/schemas/RateResponse'
-      description: Provides a `content` array of rate objects and a set of pagination information fields.
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
-  requestBodies:
-    RateRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RateRequest'
-      required: true
   securitySchemes:
-    TokenAuth:
+    Bearer:
       type: apiKey
+      description: All operations require a `Bearer` access token in the `Authorization` header of each request.<br>Learn about [authentication](/products/payments-odl/api-docs/ripplenet/best-practices/authentication/).
       name: Authorization
       in: header
-externalDocs:
-  description: Click here for the API docs
-  url: https://palisade.readme.io

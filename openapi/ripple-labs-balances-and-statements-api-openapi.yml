@@ -1,15 +1,41 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Balances and statements API
-  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
-  version: '2.0'
+  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
+
+
+    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
+
+
+    ### Authentication
+
+
+    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
+
+
+    ### API environments
+
+
+    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
+
+
+    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
+
+
+    | Environment  | Domaing Prefix | Domain | Base URL |
+
+    | --- | --- | --- | --- |
+
+    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
+
+    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
+
+    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  version: 4.0.0
+  title: RippleNet Server Balances and statements API
 servers:
-- url: https://api.sandbox.palisade.co
-  description: Sandbox server (uses TESTNET data, private keys and accounts)
-- url: https://api.palisade.co
-  description: Palisade server (uses MAINNET data, private keys and accounts)
+- url: //[domainPrefix].ripplexcurrent.com/v4
 security:
-- TokenAuth: []
+- Bearer: []
 tags:
 - name: Balances and statements
   description: '
@@ -291,6 +317,258 @@ paths:
       - Bearer: []
 components:
   schemas:
+    StatementRecord:
+      type: object
+      required:
+      - balance_change
+      - balance_result
+      - created_at
+      - end_to_end_id
+      - internal_id
+      - returned_by_payment_with_id
+      - returns_payment_with_id
+      - transaction_id
+      - transaction_state
+      - transaction_type
+      - sender_address
+      - receiver_address
+      properties:
+        transaction_id:
+          type: string
+          format: uuid
+          example: 9eca588f-e89d-4629-82fa-da9c4646310f
+          description: ID of the payment or transfer that caused an account balance change.
+        transaction_type:
+          type: string
+          example: PAYMENT
+          description: Type of transaction that caused an account balance change.
+          enum:
+          - PAYMENT
+          - TRANSFER
+          - EXCHANGE_TRANSFER
+        transaction_state:
+          type: string
+          example: COMPLETED
+          description: Current state of the payment or transfer.
+        balance_change:
+          type: number
+          example: -15
+          description: Account balance change caused by the transaction.
+        balance_result:
+          type: number
+          example: -909
+          description: Account balance after the transaction.
+        created_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T21:28:28.354Z'
+          description: Time at which the transaction was created, as an ISO-8601 timestamp in UTC.
+        end_to_end_id:
+          type: string
+          example: 91ecb6bd-4dd8-4b53-a900-72b79f3064e4
+          description: ID that the sender of a transaction can specify. Persisted on all xCurrent instances that participated in the transaction.
+        internal_id:
+          type: string
+          example: 8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c
+          description: Internal identifier that the sender can optionally specify. Only visible to the sender. Only the sending xCurrent instance stores this ID.
+        venue_id:
+          type: string
+          example: nz7RpAujYgnQtjEM
+          description: The id from an exchange associated with a transaction involving an exchange account.
+        transaction_hash:
+          type: string
+          example: DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6
+          description: Hash representing the unique identifier for the transfer of funds in the XRP ledger.
+        returns_payment_with_id:
+          type: string
+          format: uuid
+          description: The `payment_id` of the original payment that this payment returns, if this is a returned payment. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
+        returned_by_payment_with_id:
+          type: string
+          format: uuid
+          description: The `payment_id` of the return payment that returned this payment, if this is a returned payment. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
+        balance_change_created_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T21:28:28.354Z'
+          description: Timestamp of when the balance change was created
+        sender_address:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the sending account. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
+        receiver_address:
+          type: string
+          example: rn.mx.mexico
+          description: RippleNet address of the recieving account. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
+      description: Provides details about a transaction included in an account statement.
+    PoolAccountBalance:
+      type: object
+      properties:
+        pool_account_name:
+          type: string
+          description: Name of the pool account.
+        balance:
+          type: number
+          description: Aggregated balance of linked accounts which form this pool account.
+        owner:
+          type: string
+          description: The RippleNet peer who owns this pool account.
+        currency:
+          type: string
+          description: The currency of pool account.
+        linked_accounts:
+          type: array
+          description: Accounts linked to this pool account.
+          items:
+            type: string
+    StatementResponse:
+      type: object
+      required:
+      - account_name
+      - closing_balance
+      - currency
+      - end_datetime
+      - generated_at
+      - opening_balance
+      - owner
+      - start_datetime
+      - transactions
+      properties:
+        account_name:
+          type: string
+          example: trans_usd_sf
+          description: Name of the account the statement covers.
+        start_datetime:
+          type: string
+          format: date-time
+          example: '2018-08-06T23:13:55.997Z'
+          description: Lower bound of the date-time range the statement covers, as an ISO-8601 timestamp in UTC.
+        end_datetime:
+          type: string
+          format: date-time
+          example: '2020-08-06T23:13:55.997Z'
+          description: Upper bound of the date-time range the statement covers, as an ISO-8601 timestamp in UTC.
+        generated_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T21:58:23.621Z'
+          description: Time at which the statement was generated, as an ISO-8601 timestamp in UTC.
+        currency:
+          type: string
+          example: USD
+          description: Currency supported by the account.
+        owner:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: Owner of the account
+        opening_balance:
+          type: number
+          example: 0
+          description: Opening balance of the account for the given date range.
+        closing_balance:
+          type: number
+          example: -909
+          description: Closing balance of the account for the given date range.
+        transactions:
+          $ref: '#/components/schemas/Transactions'
+      description: Provides a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range.
+    InstitutionBalance:
+      type: object
+      required:
+      - currency_balances
+      - institution
+      - institution_address
+      properties:
+        institution:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet unique internal ID of the institution that owns the balances provided in the `currency_balances` array.
+        institution_address:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the institution that owns the balances provided in the `currency_balances` array.
+        currency_balances:
+          type: array
+          description: Provides balance details for accounts owned by a RippleNet address. The response does not guarantee a fixed number of elements, or a fixed order of elements, in the returned list.
+          items:
+            $ref: '#/components/schemas/CurrencyBalance'
+        pool_account_balances:
+          type: array
+          description: Provides balance details of pool accounts, along with RippleNet accounts linked to those pool accounts.
+          items:
+            $ref: '#/components/schemas/PoolAccountBalance'
+      description: Provides balance details for accounts owned by a RippleNet address.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    Balances:
+      type: object
+      required:
+      - errors
+      - local_balance
+      - remote_balances
+      properties:
+        local_balance:
+          description: Provides balance details for accounts owned by a RippleNet address.
+          items:
+            $ref: '#/components/schemas/InstitutionBalance'
+        remote_balances:
+          type: array
+          description: Provides balance details for accounts owned by a RippleNet address.
+          items:
+            $ref: '#/components/schemas/InstitutionBalance'
+        errors:
+          type: array
+          description: Lists any errors encountered when returning balance details.
+          items:
+            type: string
+      description: Provides balances for all accounts owned by a RippleNet address.
+    CurrencyBalance:
+      type: object
+      required:
+      - account_balances
+      - aggregate_balance
+      - currency
+      properties:
+        currency:
+          type: string
+          example: USD
+          description: Currency of the balances provided.
+        aggregate_balance:
+          type: number
+          example: 0
+          description: Aggregated balance for the given currrency.
+        account_balances:
+          type: array
+          description: Provides balance details for accounts that support the given currency.
+          items:
+            $ref: '#/components/schemas/AccountBalance'
+      description: Provides balance details for accounts owned by a RippleNet address.
     AccountBalance:
       type: object
       properties:
@@ -381,263 +659,9 @@ components:
           example: 1
           description: Total number of pages for the given request
       description: Provides a `content` array of statement record objects and a set of pagination information fields.
-    Balances:
-      type: object
-      required:
-      - errors
-      - local_balance
-      - remote_balances
-      properties:
-        local_balance:
-          description: Provides balance details for accounts owned by a RippleNet address.
-          items:
-            $ref: '#/components/schemas/InstitutionBalance'
-        remote_balances:
-          type: array
-          description: Provides balance details for accounts owned by a RippleNet address.
-          items:
-            $ref: '#/components/schemas/InstitutionBalance'
-        errors:
-          type: array
-          description: Lists any errors encountered when returning balance details.
-          items:
-            type: string
-      description: Provides balances for all accounts owned by a RippleNet address.
-    InstitutionBalance:
-      type: object
-      required:
-      - currency_balances
-      - institution
-      - institution_address
-      properties:
-        institution:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet unique internal ID of the institution that owns the balances provided in the `currency_balances` array.
-        institution_address:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet address of the institution that owns the balances provided in the `currency_balances` array.
-        currency_balances:
-          type: array
-          description: Provides balance details for accounts owned by a RippleNet address. The response does not guarantee a fixed number of elements, or a fixed order of elements, in the returned list.
-          items:
-            $ref: '#/components/schemas/CurrencyBalance'
-        pool_account_balances:
-          type: array
-          description: Provides balance details of pool accounts, along with RippleNet accounts linked to those pool accounts.
-          items:
-            $ref: '#/components/schemas/PoolAccountBalance'
-      description: Provides balance details for accounts owned by a RippleNet address.
-    StatementResponse:
-      type: object
-      required:
-      - account_name
-      - closing_balance
-      - currency
-      - end_datetime
-      - generated_at
-      - opening_balance
-      - owner
-      - start_datetime
-      - transactions
-      properties:
-        account_name:
-          type: string
-          example: trans_usd_sf
-          description: Name of the account the statement covers.
-        start_datetime:
-          type: string
-          format: date-time
-          example: '2018-08-06T23:13:55.997Z'
-          description: Lower bound of the date-time range the statement covers, as an ISO-8601 timestamp in UTC.
-        end_datetime:
-          type: string
-          format: date-time
-          example: '2020-08-06T23:13:55.997Z'
-          description: Upper bound of the date-time range the statement covers, as an ISO-8601 timestamp in UTC.
-        generated_at:
-          type: string
-          format: date-time
-          example: '2019-10-01T21:58:23.621Z'
-          description: Time at which the statement was generated, as an ISO-8601 timestamp in UTC.
-        currency:
-          type: string
-          example: USD
-          description: Currency supported by the account.
-        owner:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: Owner of the account
-        opening_balance:
-          type: number
-          example: 0
-          description: Opening balance of the account for the given date range.
-        closing_balance:
-          type: number
-          example: -909
-          description: Closing balance of the account for the given date range.
-        transactions:
-          $ref: '#/components/schemas/Transactions'
-      description: Provides a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range.
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
-    PoolAccountBalance:
-      type: object
-      properties:
-        pool_account_name:
-          type: string
-          description: Name of the pool account.
-        balance:
-          type: number
-          description: Aggregated balance of linked accounts which form this pool account.
-        owner:
-          type: string
-          description: The RippleNet peer who owns this pool account.
-        currency:
-          type: string
-          description: The currency of pool account.
-        linked_accounts:
-          type: array
-          description: Accounts linked to this pool account.
-          items:
-            type: string
-    StatementRecord:
-      type: object
-      required:
-      - balance_change
-      - balance_result
-      - created_at
-      - end_to_end_id
-      - internal_id
-      - returned_by_payment_with_id
-      - returns_payment_with_id
-      - transaction_id
-      - transaction_state
-      - transaction_type
-      - sender_address
-      - receiver_address
-      properties:
-        transaction_id:
-          type: string
-          format: uuid
-          example: 9eca588f-e89d-4629-82fa-da9c4646310f
-          description: ID of the payment or transfer that caused an account balance change.
-        transaction_type:
-          type: string
-          example: PAYMENT
-          description: Type of transaction that caused an account balance change.
-          enum:
-          - PAYMENT
-          - TRANSFER
-          - EXCHANGE_TRANSFER
-        transaction_state:
-          type: string
-          example: COMPLETED
-          description: Current state of the payment or transfer.
-        balance_change:
-          type: number
-          example: -15
-          description: Account balance change caused by the transaction.
-        balance_result:
-          type: number
-          example: -909
-          description: Account balance after the transaction.
-        created_at:
-          type: string
-          format: date-time
-          example: '2019-10-01T21:28:28.354Z'
-          description: Time at which the transaction was created, as an ISO-8601 timestamp in UTC.
-        end_to_end_id:
-          type: string
-          example: 91ecb6bd-4dd8-4b53-a900-72b79f3064e4
-          description: ID that the sender of a transaction can specify. Persisted on all xCurrent instances that participated in the transaction.
-        internal_id:
-          type: string
-          example: 8afd8e99-4ad4-4f4e-9bb7-018ad8c3a89c
-          description: Internal identifier that the sender can optionally specify. Only visible to the sender. Only the sending xCurrent instance stores this ID.
-        venue_id:
-          type: string
-          example: nz7RpAujYgnQtjEM
-          description: The id from an exchange associated with a transaction involving an exchange account.
-        transaction_hash:
-          type: string
-          example: DB0AFC09E0A94FC1D11F8CBABA48A184E27094F8DD32FCBC46F316E98011E2A6
-          description: Hash representing the unique identifier for the transfer of funds in the XRP ledger.
-        returns_payment_with_id:
-          type: string
-          format: uuid
-          description: The `payment_id` of the original payment that this payment returns, if this is a returned payment. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
-        returned_by_payment_with_id:
-          type: string
-          format: uuid
-          description: The `payment_id` of the return payment that returned this payment, if this is a returned payment. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
-        balance_change_created_at:
-          type: string
-          format: date-time
-          example: '2019-10-01T21:28:28.354Z'
-          description: Timestamp of when the balance change was created
-        sender_address:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet address of the sending account. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
-        receiver_address:
-          type: string
-          example: rn.mx.mexico
-          description: RippleNet address of the recieving account. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
-      description: Provides details about a transaction included in an account statement.
-    CurrencyBalance:
-      type: object
-      required:
-      - account_balances
-      - aggregate_balance
-      - currency
-      properties:
-        currency:
-          type: string
-          example: USD
-          description: Currency of the balances provided.
-        aggregate_balance:
-          type: number
-          example: 0
-          description: Aggregated balance for the given currrency.
-        account_balances:
-          type: array
-          description: Provides balance details for accounts that support the given currency.
-          items:
-            $ref: '#/components/schemas/AccountBalance'
-      description: Provides balance details for accounts owned by a RippleNet address.
   securitySchemes:
-    TokenAuth:
+    Bearer:
       type: apiKey
+      description: All operations require a `Bearer` access token in the `Authorization` header of each request.<br>Learn about [authentication](/products/payments-odl/api-docs/ripplenet/best-practices/authentication/).
       name: Authorization
       in: header
-externalDocs:
-  description: Click here for the API docs
-  url: https://palisade.readme.io

@@ -1,15 +1,18 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Authentication API
-  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
-  version: '2.0'
+  title: Ripple Mint Authentication API
+  version: 1.0.0
+  description: 'API operations for programmatic integration with Ripple Mint.
+
+    Covers transaction queries for issuance, redemption, and bridge activity,
+
+    as well as public market cap endpoints for RLUSD supply data.
+
+    '
 servers:
-- url: https://api.sandbox.palisade.co
-  description: Sandbox server (uses TESTNET data, private keys and accounts)
-- url: https://api.palisade.co
-  description: Palisade server (uses MAINNET data, private keys and accounts)
+- url: https://api.ripple.com
 security:
-- TokenAuth: []
+- oauth2: []
 tags:
 - name: Authentication
   x-displayName: Authentication
@@ -86,6 +89,19 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or expired access token
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    BadRequest:
+      description: Invalid request parameters or body
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
   schemas:
     ProblemDetail:
       type: object
@@ -112,24 +128,12 @@ components:
           - TRANSACTION_DESTINATION_TYPE_IMMUTABLE
           - INVALID_REQUEST_BODY
           - UNKNOWN_EXCEPTION
-  responses:
-    BadRequest:
-      description: Invalid request parameters or body
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetail'
-    Unauthorized:
-      description: Missing or expired access token
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetail'
   securitySchemes:
-    TokenAuth:
-      type: apiKey
-      name: Authorization
-      in: header
-externalDocs:
-  description: Click here for the API docs
-  url: https://palisade.readme.io
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.ripple.com/v2/oauth/token
+          scopes:
+            rlusd_customers:read: Read transaction data
+            rlusd_customers:write: Approve pending redemptions

@@ -1,15 +1,41 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Palisade Addresses Orchestration payments API
-  description: The Palisade API enables programmatic interaction with the various features of the Palisade platform
-  version: '2.0'
+  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
+
+
+    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
+
+
+    ### Authentication
+
+
+    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
+
+
+    ### API environments
+
+
+    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
+
+
+    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
+
+
+    | Environment  | Domaing Prefix | Domain | Base URL |
+
+    | --- | --- | --- | --- |
+
+    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
+
+    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
+
+    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  version: 4.0.0
+  title: RippleNet Server Orchestration payments API
 servers:
-- url: https://api.sandbox.palisade.co
-  description: Sandbox server (uses TESTNET data, private keys and accounts)
-- url: https://api.palisade.co
-  description: Palisade server (uses MAINNET data, private keys and accounts)
+- url: //[domainPrefix].ripplexcurrent.com/v4
 security:
-- TokenAuth: []
+- Bearer: []
 tags:
 - name: Orchestration payments
   description: ' '
@@ -477,124 +503,19 @@ paths:
                 $ref: '#/components/schemas/PaymentActionResponse'
 components:
   schemas:
-    Sort:
+    ActivityError:
       type: object
+      description: Activity error object in JSON format.
       properties:
-        direction:
+        type:
           type: string
-          description: Direction of the sort
-          example: ASC
-        property:
+          description: For recommended type values, see [Returns and failure codes](/products/payments-odl/api-docs/ripplenet/resources/error-codes/returns-and-error-codes/).
+        code:
           type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
+          description: For recommended failure codes, see [Returns and failure codes](/products/payments-odl/api-docs/ripplenet/resources/error-codes/returns-and-error-codes/#812-failure-type-codes).
+        reason:
           type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    PaymentActionRequest:
-      type: object
-      required:
-      - unique_reference_number
-      - status
-      - notification_type
-      properties:
-        unique_reference_number:
-          type: string
-          minLength: 1
-          maxLength: 64
-          pattern: ^[a-zA-Z0-9@_,:\s-]*$
-          description: Set to the unique reference number associated with the payment.
-          example: '310000015'
-        status:
-          $ref: '#/components/schemas/ActivityStatus'
-        notification_type:
-          type: string
-          minLength: 1
-          maxLength: 128
-          pattern: ^[a-zA-Z0-9_:]*$
-          example: PARTNER_SUBSTATE
-          description: 'Activity context name.
-
-
-            Use with the `status` parameter to define the action.
-
-
-            Recommended values:
-
-
-            | Value | Notification type |
-
-            | --- | --- |
-
-            | CONFIRM_LOCK | Confirm the lock  |
-
-            | CONFIRM_SETTLE | Confirm settlement |
-
-            | CONFIRM_COMPLETE | Confirm completion |
-
-            | PARTNER_SUBSTATE | Notify on partner substate<br/><br/>Use with `output.sub_state` to provide additional information. |
-
-            '
-        output:
-          $ref: '#/components/schemas/ActivityOutput'
-        error:
-          type: array
-          description: 'Array of one or more activity error objects.
-
-
-            When `status` is `FAILURE` or `DECLINED`, use this to fail a payment or decline a request to lock a payment.
-
-
-            For all other `status` values, this property can be null.
-
-            '
-          items:
-            $ref: '#/components/schemas/ActivityError'
-          example: 'null'
-    ActivityOutput:
-      type: object
-      description: 'Use this object when `notification_type` is `PARTNER_SUBSTATE`.
-
-
-        For all other values of `notification_type`, this property can be null.
-
-        '
-      properties:
-        sub_state:
-          type: string
-          minLength: 1
-          maxLength: 128
-          example: AMENDED
-          description: 'Free-form string that describes a sub-state of the payment while it is in the `EXECUTED` state, for example, `FORWARDED` or `AWAITING_COLLECTION`.
-
-
-            Displays as a `label` value in the `labels` array.
-
-
-            Also displays as the `key` value in the receiving node''s `user_info.executed` array.
-
-            '
-        memo:
-          type: string
-          example: Last name must be corrected
-          description: 'Free-form details that describe the `sub_state` of the payment, for example, `with courier heading to payout location`.
-
-
-            Displays as the `value` value in the receiving node''s `user_info.executed` array.
-
-            '
-        info:
-          type: object
-          properties: {}
-          description: Provide one or more arbitrary key/value pairs.
-          example:
-            last_name: Gonzales
+          description: The reason for the failure or lock decline.
     OrchestrationPayments:
       allOf:
       - $ref: '#/components/schemas/Page'
@@ -633,18 +554,38 @@ components:
 
             '
       description: Custom rate that the return payment quotes must use.
-    NotificationUUIDList:
-      type: object
-      properties:
-        uuids:
-          type: array
-          minItems: 1
-          items:
-            type: string
-            format: uuid
-            example: 328b3e50-7983-46d5-94a0-ef004d78db1d
-          description: List of orchestration payment notification UUIDs.
-      description: JSON request object that represents a list of orchestration payment notification UUIDs to acknolwedge.
+    ActivityStatus:
+      type: string
+      description: Activity status
+      enum:
+      - SUCCESS
+      - FAILURE
+      - DECLINED
+      - REDO
+      - SUBSTATE
+      - NOTIFY
+      - PENDING
+      - SUBTASK
+      example: SUBSTATE
+      x-enumDescriptions:
+        SUCCESS: Set status to success
+        FAILURE: 'Set status to failure
+
+
+          Use with the `error` field to provide additional information.
+
+          '
+        DECLINED: 'Set status to declined
+
+
+          Use with the `error` field to provide additional information.
+
+          '
+        REDO: Set status to redo
+        SUBSTATE: Set status to substate
+        NOTIFY: Set status to notify
+        PENDING: Set status to pending
+        SUBTASK: Set status to subtask
     OrchestrationPaymentRequest:
       type: object
       required:
@@ -920,6 +861,37 @@ components:
               LIQUIDITY_WARNINGS: Filter for liquidity warnings
               QUOTE_ERRORS: Filter for quote errors
       description: JSON request object that represents an orchestration payment.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
     OrchestrationPaymentAcceptRequest:
       type: object
       required:
@@ -965,28 +937,6 @@ components:
           properties: {}
           description: provide one or more arbitrary key/value pairs.
       description: JSON request object that represents an orchestration payment accept request.
-    OrchestrationPaymentReversalRequest:
-      type: object
-      required:
-      - sender_end_to_end_id
-      - original_payment_id
-      - reversal_reason
-      properties:
-        sender_end_to_end_id:
-          type: string
-          minLength: 1
-          maxLength: 64
-          pattern: ^[a-zA-Z0-9@_,:\s-]*$
-          description: Unique ID that the sender can specify.
-        original_payment_id:
-          type: string
-          minLength: 1
-          maxLength: 64
-          pattern: ^[a-zA-Z0-9@_,:\s-]*$
-          description: Unique ID of the payment that should be reversed.
-        reversal_reason:
-          $ref: '#/components/schemas/PaymentReversalReasonRos'
-      description: Use this JSON request object to reverse a payment.
     NotificationResponseRos:
       type: object
       properties:
@@ -1025,6 +975,125 @@ components:
           example: '2018-04-06T20:33:35Z'
           description: Date and time at which the message was modified, as an ISO-8601 timestamp in UTC.
       description: JSON request object that represents an orchestration payment notification.
+    PaymentActionRequest:
+      type: object
+      required:
+      - unique_reference_number
+      - status
+      - notification_type
+      properties:
+        unique_reference_number:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: Set to the unique reference number associated with the payment.
+          example: '310000015'
+        status:
+          $ref: '#/components/schemas/ActivityStatus'
+        notification_type:
+          type: string
+          minLength: 1
+          maxLength: 128
+          pattern: ^[a-zA-Z0-9_:]*$
+          example: PARTNER_SUBSTATE
+          description: 'Activity context name.
+
+
+            Use with the `status` parameter to define the action.
+
+
+            Recommended values:
+
+
+            | Value | Notification type |
+
+            | --- | --- |
+
+            | CONFIRM_LOCK | Confirm the lock  |
+
+            | CONFIRM_SETTLE | Confirm settlement |
+
+            | CONFIRM_COMPLETE | Confirm completion |
+
+            | PARTNER_SUBSTATE | Notify on partner substate<br/><br/>Use with `output.sub_state` to provide additional information. |
+
+            '
+        output:
+          $ref: '#/components/schemas/ActivityOutput'
+        error:
+          type: array
+          description: 'Array of one or more activity error objects.
+
+
+            When `status` is `FAILURE` or `DECLINED`, use this to fail a payment or decline a request to lock a payment.
+
+
+            For all other `status` values, this property can be null.
+
+            '
+          items:
+            $ref: '#/components/schemas/ActivityError'
+          example: 'null'
+    OrchestrationPaymentReturnRequest:
+      type: object
+      required:
+      - sender_end_to_end_id
+      - original_payment_id
+      properties:
+        sender_end_to_end_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: Unique ID that the sender can specify.
+        original_payment_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9@_,:\s-]*$
+          description: Unique ID of the payment that should be returned.
+        return_reasons:
+          type: object
+          description: Provide one or more arbitrary key/value pairs.
+          properties: {}
+        return_amount_type:
+          type: string
+          default: TOTAL_RECEIVED
+          description: 'Amount type of the return payment.
+
+            '
+          enum:
+          - TOTAL_RECEIVED
+          - TOTAL_RECEIVED_MINUS_FEES
+          x-enumDescriptions:
+            TOTAL_RECEIVED: Indicates that the sender of the return payment will send the amount they received
+            TOTAL_RECEIVED_MINUS_FEES: Indicates that the sender of the return payment will send the amount they received minus the receiving fees
+        custom_fee:
+          type: number
+          description: 'Custom fee charged and collected by the sending account.
+
+
+            Setting this field overrides all applicable fees configured on the sender''s RippleNet instance.
+
+            '
+        custom_rate:
+          $ref: '#/components/schemas/PaymentCustomRateRequest'
+        force_path_finding_and_liquidity_path_finding:
+          type: boolean
+          example: false
+          description: 'When true, this flag tells RippleNet to ignore cached value for path finding and liquidity path finding.
+
+
+            Forces performing new path finding and liquidity path finding.
+
+            '
+          default: false
+        user_info:
+          type: object
+          properties: {}
+          description: Provide one or more arbitrary key/value pairs.
+      description: Use this JSON request object to return a payment.
     OrchestrationPaymentSubmitResponse:
       type: object
       properties:
@@ -1033,38 +1102,6 @@ components:
           example: '00310000015'
           description: Sender end-to-end ID.
       description: JSON response object that represents an orchestration payment query ID.
-    ActivityStatus:
-      type: string
-      description: Activity status
-      enum:
-      - SUCCESS
-      - FAILURE
-      - DECLINED
-      - REDO
-      - SUBSTATE
-      - NOTIFY
-      - PENDING
-      - SUBTASK
-      example: SUBSTATE
-      x-enumDescriptions:
-        SUCCESS: Set status to success
-        FAILURE: 'Set status to failure
-
-
-          Use with the `error` field to provide additional information.
-
-          '
-        DECLINED: 'Set status to declined
-
-
-          Use with the `error` field to provide additional information.
-
-          '
-        REDO: Set status to redo
-        SUBSTATE: Set status to substate
-        NOTIFY: Set status to notify
-        PENDING: Set status to pending
-        SUBTASK: Set status to subtask
     NotificationAckResponse:
       type: object
       properties:
@@ -1081,6 +1118,11 @@ components:
             example: 328b3e50-7983-46d5-94a0-ef004d78db1d
             description: Invalid notification UUIDs.
       description: Orchestration payment notification acknoledge response.
+    NotificationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/NotificationResponseRos'
+      description: List response of external notifications.
     PaymentReversalReasonRos:
       type: object
       required:
@@ -1325,11 +1367,52 @@ components:
           example: No account / Unable to locate account
           description: User-defined string describing the reason for payment reversal.
       description: A structured object detailing reasons for a payment reversal.
-    OrchestrationPaymentReturnRequest:
+    NotificationUUIDList:
+      type: object
+      properties:
+        uuids:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            format: uuid
+            example: 328b3e50-7983-46d5-94a0-ef004d78db1d
+          description: List of orchestration payment notification UUIDs.
+      description: JSON request object that represents a list of orchestration payment notification UUIDs to acknolwedge.
+    PaymentActionResponse:
+      type: object
+      properties:
+        unique_reference_number:
+          type: string
+          example: '00310000015'
+          description: Unique Reference Number.
+      description: JSON response object that represents a payment action query ID.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    OrchestrationPaymentReversalRequest:
       type: object
       required:
       - sender_end_to_end_id
       - original_payment_id
+      - reversal_reason
       properties:
         sender_end_to_end_id:
           type: string
@@ -1342,48 +1425,48 @@ components:
           minLength: 1
           maxLength: 64
           pattern: ^[a-zA-Z0-9@_,:\s-]*$
-          description: Unique ID of the payment that should be returned.
-        return_reasons:
-          type: object
-          description: Provide one or more arbitrary key/value pairs.
-          properties: {}
-        return_amount_type:
+          description: Unique ID of the payment that should be reversed.
+        reversal_reason:
+          $ref: '#/components/schemas/PaymentReversalReasonRos'
+      description: Use this JSON request object to reverse a payment.
+    ActivityOutput:
+      type: object
+      description: 'Use this object when `notification_type` is `PARTNER_SUBSTATE`.
+
+
+        For all other values of `notification_type`, this property can be null.
+
+        '
+      properties:
+        sub_state:
           type: string
-          default: TOTAL_RECEIVED
-          description: 'Amount type of the return payment.
+          minLength: 1
+          maxLength: 128
+          example: AMENDED
+          description: 'Free-form string that describes a sub-state of the payment while it is in the `EXECUTED` state, for example, `FORWARDED` or `AWAITING_COLLECTION`.
+
+
+            Displays as a `label` value in the `labels` array.
+
+
+            Also displays as the `key` value in the receiving node''s `user_info.executed` array.
 
             '
-          enum:
-          - TOTAL_RECEIVED
-          - TOTAL_RECEIVED_MINUS_FEES
-          x-enumDescriptions:
-            TOTAL_RECEIVED: Indicates that the sender of the return payment will send the amount they received
-            TOTAL_RECEIVED_MINUS_FEES: Indicates that the sender of the return payment will send the amount they received minus the receiving fees
-        custom_fee:
-          type: number
-          description: 'Custom fee charged and collected by the sending account.
+        memo:
+          type: string
+          example: Last name must be corrected
+          description: 'Free-form details that describe the `sub_state` of the payment, for example, `with courier heading to payout location`.
 
 
-            Setting this field overrides all applicable fees configured on the sender''s RippleNet instance.
+            Displays as the `value` value in the receiving node''s `user_info.executed` array.
 
             '
-        custom_rate:
-          $ref: '#/components/schemas/PaymentCustomRateRequest'
-        force_path_finding_and_liquidity_path_finding:
-          type: boolean
-          example: false
-          description: 'When true, this flag tells RippleNet to ignore cached value for path finding and liquidity path finding.
-
-
-            Forces performing new path finding and liquidity path finding.
-
-            '
-          default: false
-        user_info:
+        info:
           type: object
           properties: {}
           description: Provide one or more arbitrary key/value pairs.
-      description: Use this JSON request object to return a payment.
+          example:
+            last_name: Gonzales
     OrchestrationPaymentResponse:
       type: object
       properties:
@@ -1469,68 +1552,9 @@ components:
           example: '2018-04-06T20:33:35Z'
           description: Date and time at which the orchestration payment was modified, as an ISO-8601 timestamp in UTC.
       description: JSON response object that represents an orchestration payment.
-    NotificationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/NotificationResponseRos'
-      description: List response of external notifications.
-    PaymentActionResponse:
-      type: object
-      properties:
-        unique_reference_number:
-          type: string
-          example: '00310000015'
-          description: Unique Reference Number.
-      description: JSON response object that represents a payment action query ID.
-    ActivityError:
-      type: object
-      description: Activity error object in JSON format.
-      properties:
-        type:
-          type: string
-          description: For recommended type values, see [Returns and failure codes](/products/payments-odl/api-docs/ripplenet/resources/error-codes/returns-and-error-codes/).
-        code:
-          type: string
-          description: For recommended failure codes, see [Returns and failure codes](/products/payments-odl/api-docs/ripplenet/resources/error-codes/returns-and-error-codes/#812-failure-type-codes).
-        reason:
-          type: string
-          description: The reason for the failure or lock decline.
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
   securitySchemes:
-    TokenAuth:
+    Bearer:
       type: apiKey
+      description: All operations require a `Bearer` access token in the `Authorization` header of each request.<br>Learn about [authentication](/products/payments-odl/api-docs/ripplenet/best-practices/authentication/).
       name: Authorization
       in: header
-externalDocs:
-  description: Click here for the API docs
-  url: https://palisade.readme.io
