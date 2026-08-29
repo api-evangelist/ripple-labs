@@ -21,6 +21,18 @@ x-backed-by:
 - gv
 x-tier: stub
 x-tier-reason: portfolio-lead
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -972,6 +984,9 @@ apis:
   - type: Authentication
     url: https://docs.ripple.com/products/stablecoin/api/authentication
 common:
+- type: CapabilityMap
+  url: capabilities/ripple-labs-capability-edges.yml
+  name: Ripple Labs Business Capability Map
 - type: TrustCenter
   url: security/ripple-labs-trust-center.yml
 - type: DomainSecurity
