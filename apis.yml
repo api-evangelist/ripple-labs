@@ -56,7 +56,7 @@ tags:
 - Cross-Border Payments
 - Blockchain
 - Cryptocurrency
-- Stablecoins
+- Stablecoin
 - Digital Assets
 - Custody
 - Wallets
@@ -591,6 +591,8 @@ apis:
   humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
   baseURL: https://api.ripple.com
   tags:
+  - Platform Accounts
+  tags_raw:
   - Platform accounts
   properties:
   - type: OpenAPI
@@ -784,7 +786,7 @@ apis:
   humanURL: https://docs.ripple.com/products/stablecoin/api/get-started
   baseURL: https://api.ripple.com
   tags:
-  - Request for Payment
+  - Request for payment
   tags_raw:
   - Request for payment
   properties:
