@@ -1,0 +1,78 @@
+slug: ripple-labs
+provider: Ripple Labs
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Non-orchestration payments
+  spec_file: ripple-labs-non-orchestration-payments-api-openapi.yml
+  capability_id: BC-1340.20
+  capability_id_l1: BC-1340
+  capability_name: Payment Processing Management
+  confidence: 0.8
+  evidence: POST /payments/{payment_id}/settle  settlePayment  Settle payment; POST /payments/{payment_id}/finalize  finalizePayment;
+    schemas Payment, FXRate, FeeDetails
+  reason: Operations drive the state machine of a payment instruction through lock, accept, fail, settle,
+    finalize and complete on the RippleNet payment network — payment processing/routing rather than mere
+    instruction capture. Slight ambiguity between processing and settlement sub-capabilities.
+- tag: Orchestration payments
+  spec_file: ripple-labs-orchestration-payments-api-openapi.yml
+  capability_id: BC-1340.20
+  capability_id_l1: BC-1340
+  capability_name: Payment Processing Management
+  confidence: 0.75
+  evidence: POST /v4/orchestration/payment  createOrchestrationPayment  Create orchestration payment;
+    POST /v4/orchestration/payment/reversal  reverseOrchestrationPayment
+  reason: Creates, accepts, returns and reverses orchestrated payments with status notifications — payment
+    processing/orchestration on a payment rail. Some ambiguity with Payment Initiation (BC-1340.10) since
+    create is an initiation act, hence moderated confidence.
+- tag: Request for payment
+  spec_file: ripple-labs-request-for-payment-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.72
+  evidence: POST /request_for_payment  sendRequestForPayment  Send request for payment; POST /request_for_payment/{id}/accept  acceptRequestForPayment
+  reason: 'RippleNet request-to-pay flow: create, retrieve, accept or fail a payment request — capture
+    and authorisation of payment instructions, i.e. payment initiation. Slight ambiguity between initiation
+    and processing keeps confidence moderate.'
+- tag: Transfers
+  spec_file: ripple-labs-transfers-api-openapi.yml
+  capability_id: BC-1340
+  capability_id_l1: BC-1340
+  capability_name: Payments & Card Management
+  confidence: 0.72
+  evidence: POST /transfers/execute  executeTransfer  Execute transfer; GET /transfers/estimate  getTransferEstimate  Get
+    transfer estimate
+  reason: RippleNet transfer lifecycle — quote/estimate, execute, complete — is the execution of payments
+    across the RippleNet network. Cross-border vs domestic processing is not explicitly stated, so only
+    L1 asserted.
+- tag: Beneficiary confirmation
+  spec_file: ripple-labs-beneficiary-confirmation-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.7
+  evidence: POST /account_lookups/request  initiateAccountLookup; POST /account_lookups/response  completeAccountLookup;
+    schema AccountLookup
+  reason: Beneficiary account lookup/confirmation prior to payment execution is a payment instruction
+    validation step (confirmation of payee), part of payment initiation and validation.
+- tag: Exchange transfers
+  spec_file: ripple-labs-exchange-transfers-api-openapi.yml
+  capability_id: BC-1340.40
+  capability_id_l1: BC-1340
+  capability_name: Cross-Border Payment Management
+  confidence: 0.7
+  evidence: POST /exchange_transfers/quote  getExchangeTransferQuote; POST /exchange_transfers/execute  executeExchangeTransfer;
+    schemas FiatExchangeTransferQuoteRequest, ExchangeTransferRate
+  reason: Quoting and executing fiat exchange transfers with FX rates as part of RippleNet's cross-border
+    payment flow (On-Demand Liquidity), i.e. international payment with FX conversion.
