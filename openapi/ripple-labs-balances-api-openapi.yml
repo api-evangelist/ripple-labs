@@ -504,14 +504,33 @@ paths:
       - Balances
 components:
   schemas:
-    v2AssetSource:
-      type: string
-      enum:
-      - ASSET_SOURCE_LEGACY
-      - ASSET_SOURCE_AUTO
-      - ASSET_SOURCE_COINGECKO
-      - ASSET_SOURCE_PALISADE
-      - ASSET_SOURCE_CUSTOMER
+    v2VaultBalance:
+      type: object
+      properties:
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID that the connection is associated with
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the vault
+    v2SyncWalletBalancesResponse:
+      type: object
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
     v2GetWalletBalancesResponse:
       type: object
       properties:
@@ -529,36 +548,21 @@ components:
             - type: object
       required:
       - currencyCode
-    v2GetOrgBalancesResponse:
-      type: object
-      properties:
-        currencyCode:
-          type: string
-          example: USD
-          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
-        aggregatedFiatValue:
-          type: string
-          example: '100.00'
-          description: The aggregated fiat value of the organization's balances
-        balances:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2VaultBalance'
-            - type: object
-      required:
-      - currencyCode
-    v2WalletBalance:
-      type: object
-      properties:
-        walletId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The wallet ID that the connection is associated with
-        aggregatedFiatValue:
-          type: string
-          example: '100.00'
-          description: The aggregated fiat value of the wallet
+    v2Blockchain:
+      type: string
+      enum:
+      - AVALANCHE
+      - ETHEREUM
+      - XRP_LEDGER
+      - POLYGON
+      - BNBCHAIN
+      - BASE
+      - HEDERA
+      - ARBITRUM
+      - ONE_MONEY
+      - SOLANA
+      - TRON
+      - BITCOIN
     v2Balance:
       type: object
       properties:
@@ -588,25 +592,6 @@ components:
           type: string
           example: '20.00'
           description: The balance frozen by policy actions
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    v2SyncWalletBalancesResponse:
-      type: object
-    v2VaultBalance:
-      type: object
-      properties:
-        vaultId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The vault ID that the connection is associated with
-        aggregatedFiatValue:
-          type: string
-          example: '100.00'
-          description: The aggregated fiat value of the vault
     commonv2Asset:
       type: object
       properties:
@@ -700,29 +685,31 @@ components:
       - symbol
       - blockchain
       - createdAt
-    v2Standard:
+    v2AssetSource:
       type: string
       enum:
-      - NATIVE
-      - ERC20
-      - ISSUED_CURRENCY
-      - ERC721
-      - SPL
-      - CUSTOM
-    rpcStatus:
+      - ASSET_SOURCE_LEGACY
+      - ASSET_SOURCE_AUTO
+      - ASSET_SOURCE_COINGECKO
+      - ASSET_SOURCE_PALISADE
+      - ASSET_SOURCE_CUSTOMER
+    v2WalletBalance:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        message:
+        walletId:
           type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID that the connection is associated with
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the wallet
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
     v2GetVaultBalancesResponse:
       type: object
       properties:
@@ -742,21 +729,34 @@ components:
             - type: object
       required:
       - currencyCode
-    v2Blockchain:
+    v2GetOrgBalancesResponse:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          example: USD
+          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the organization's balances
+        balances:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2VaultBalance'
+            - type: object
+      required:
+      - currencyCode
+    v2Standard:
       type: string
       enum:
-      - AVALANCHE
-      - ETHEREUM
-      - XRP_LEDGER
-      - POLYGON
-      - BNBCHAIN
-      - BASE
-      - HEDERA
-      - ARBITRUM
-      - ONE_MONEY
-      - SOLANA
-      - TRON
-      - BITCOIN
+      - NATIVE
+      - ERC20
+      - ISSUED_CURRENCY
+      - ERC721
+      - SPL
+      - CUSTOM
   securitySchemes:
     TokenAuth:
       type: apiKey

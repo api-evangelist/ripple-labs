@@ -6,9 +6,7 @@ info:
 
     Covers transaction queries for issuance, redemption, and bridge activity,
 
-    as well as public market cap endpoints for RLUSD supply data.
-
-    '
+    as well as public market cap endpoints for RLUSD supply data.'
 servers:
 - url: https://api.ripple.com
 security:
@@ -23,18 +21,14 @@ tags:
 
     | --------- | ------ | ----------- |
 
-    | [Obtain an access token](#operation/getAccessToken) | POST | Request an access token for authentication with the API. |
-
-    '
+    | Obtain an access token | POST | Request an access token for authentication with the API. |'
 paths:
   /v2/oauth/token:
     post:
       summary: Obtain an access token
       description: 'OAuth 2.0 Client Credentials grant. Returns a Bearer token valid for 1 hour.
 
-        Credentials may be passed in the request body or via HTTP Basic Auth header.
-
-        '
+        Credentials may be passed in the request body or via HTTP Basic Auth header.'
       operationId: getAccessToken
       security: []
       tags:
@@ -89,19 +83,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or expired access token
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetail'
-    BadRequest:
-      description: Invalid request parameters or body
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetail'
   schemas:
     ProblemDetail:
       type: object
@@ -128,6 +109,19 @@ components:
           - TRANSACTION_DESTINATION_TYPE_IMMUTABLE
           - INVALID_REQUEST_BODY
           - UNKNOWN_EXCEPTION
+  responses:
+    BadRequest:
+      description: Invalid request parameters or body
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    Unauthorized:
+      description: Missing or expired access token
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
   securitySchemes:
     oauth2:
       type: oauth2

@@ -1,35 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
-
-
-    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
-
-
-    ### Authentication
-
-
-    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
-
-
-    ### API environments
-
-
-    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
-
-
-    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
-
-
-    | Environment  | Domaing Prefix | Domain | Base URL |
-
-    | --- | --- | --- | --- |
-
-    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
-
-    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
-
-    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  description: The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
   version: 4.0.0
   title: RippleNet Server Auditing API
 servers:
@@ -38,20 +9,16 @@ security:
 - Bearer: []
 tags:
 - name: Auditing
-  description: '
-
-    Use these operations to audit your accounts.
+  description: 'Use these operations to audit your accounts.
 
 
     | Operation | Method | Description |
 
     | -- | -- | -- |
 
-    | [Get audits](/products/payments-odl/api-docs/ripplenet/reference/openapi/auditing/getaudits) | GET   | Gets an audit trail of user actions and configuration changes (to accounts, fees, and rates) on a RippleNet instance. |
+    | Get audits | GET | Gets an audit trail of user actions and configuration changes (to accounts, fees, and rates) on a RippleNet instance. |
 
-    | [Get event trail for payment](/products/payments-odl/api-docs/ripplenet/reference/openapi/auditing/geteventtrailforpayment)  | GET   | Gets an audit trail of a payment''s state changes on a local RippleNet instance. |
-
-    '
+    | Get event trail for payment | GET | Gets an audit trail of a payment''s state changes on a local RippleNet instance. |'
 paths:
   /audit:
     get:
@@ -180,135 +147,6 @@ paths:
       - Bearer: []
 components:
   schemas:
-    EventTrailEvent:
-      type: object
-      description: Represents a single event along the audit trail of a payment on RippleNet.
-      properties:
-        featureName:
-          type: string
-          example: payment
-          description: Feature name associated with the entityId. Possible values are `payment`.
-        eventDetail:
-          type: string
-          example: Updated Payment to state PREPARED
-          description: Detailed description of the event.
-        entityId:
-          type: string
-          format: uuid
-          example: d485f100-2af7-4e48-9ab1-3c7e28775691
-          description: UUID representing an event.
-        messageAction:
-          type: string
-          example: STATE_CHANGE
-          description: String representation of the action being taken, where `DS` = downstream and `US` = upstream in the messaging processing pipeline.
-          enum:
-          - DS_STARTED
-          - DS_COMPLETED
-          - US_STARTED
-          - US_COMPLETED
-          - STATE_CHANGE
-          - FAILURE
-        createdAt:
-          type: string
-          example: '2019-10-01T18:24:28.040000Z'
-          description: Timestamp of the audit event.
-        messageSender:
-          type: string
-          format: RippleNetAddress
-          example: default
-          description: The RippleNetAddress of the originator of the message that triggered the creation of this event.
-        messageType:
-          type: string
-          example: SETTLEMENT_PREPARE
-          description: The type of message that was being processed that triggered the creation of this event.
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
-    AuditEventResponse:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            items:
-              $ref: '#/components/schemas/AuditEvent'
-      description: Paged response for AuditEvent
     AuditEvent:
       type: object
       description: Represents an audit trail of user actions and configuration changes (to accounts, fees, and rates) on RippleNet.
@@ -354,6 +192,135 @@ components:
           type: string
           example: '2019-09-30T22:55:41.365000Z'
           description: Timestamp of the audit event.
+    EventTrailEvent:
+      type: object
+      description: Represents a single event along the audit trail of a payment on RippleNet.
+      properties:
+        featureName:
+          type: string
+          example: payment
+          description: Feature name associated with the entityId. Possible values are `payment`.
+        eventDetail:
+          type: string
+          example: Updated Payment to state PREPARED
+          description: Detailed description of the event.
+        entityId:
+          type: string
+          format: uuid
+          example: d485f100-2af7-4e48-9ab1-3c7e28775691
+          description: UUID representing an event.
+        messageAction:
+          type: string
+          example: STATE_CHANGE
+          description: String representation of the action being taken, where `DS` = downstream and `US` = upstream in the messaging processing pipeline.
+          enum:
+          - DS_STARTED
+          - DS_COMPLETED
+          - US_STARTED
+          - US_COMPLETED
+          - STATE_CHANGE
+          - FAILURE
+        createdAt:
+          type: string
+          example: '2019-10-01T18:24:28.040000Z'
+          description: Timestamp of the audit event.
+        messageSender:
+          type: string
+          format: RippleNetAddress
+          example: default
+          description: The RippleNetAddress of the originator of the message that triggered the creation of this event.
+        messageType:
+          type: string
+          example: SETTLEMENT_PREPARE
+          description: The type of message that was being processed that triggered the creation of this event.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    AuditEventResponse:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/AuditEvent'
+      description: Paged response for AuditEvent
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
   securitySchemes:
     Bearer:
       type: apiKey

@@ -17,7 +17,6 @@ paths:
   /v2/vaults/tags:
     get:
       summary: List all vault tags for the organization
-      description: List all vault tags for the organization
       operationId: VaultService_ListGlobalVaultTags
       responses:
         '200':
@@ -466,12 +465,8 @@ components:
           description: The tags belonging to the vault
       required:
       - vaultId
-    protobufAny:
+    v2DeleteVaultTagResponse:
       type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
     rpcStatus:
       type: object
       properties:
@@ -486,8 +481,12 @@ components:
             allOf:
             - $ref: '#/components/schemas/protobufAny'
             - type: object
-    v2DeleteVaultTagResponse:
+    protobufAny:
       type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
   securitySchemes:
     TokenAuth:
       type: apiKey

@@ -1,35 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
-
-
-    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
-
-
-    ### Authentication
-
-
-    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
-
-
-    ### API environments
-
-
-    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
-
-
-    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
-
-
-    | Environment  | Domaing Prefix | Domain | Base URL |
-
-    | --- | --- | --- | --- |
-
-    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
-
-    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
-
-    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  description: The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
   version: 4.0.0
   title: RippleNet Server Payment expiration API
 servers:
@@ -38,26 +9,7 @@ security:
 - Bearer: []
 tags:
 - name: Payment expiration
-  description: '
-
-    Use these operations to manage payment expirations.
-
-
-    | Operation | Method | Description |
-
-    | -- | -- | -- |
-
-    | [Get payment expiry by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/getpaymentexpirybyid)  | GET    | Gets the time to live (ttl) of a payment expiry in seconds. |
-
-    | [Update payment expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/updatepaymentexpiry) | PUT    | Updates the time to live (ttl) of a payment expiry in seconds. |
-
-    | [Delete payment expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/deletepaymentexpiry)  | DELETE | Deletes a payment expiry. |
-
-    | [Get payment expiries](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/getpaymentexpiries)        | GET    | Returns all configured payment expiries. |
-
-    | [Create payment expiry](/products/payments-odl/api-docs/ripplenet/reference/openapi/payment-expiration/createpaymentexpiry) | POST   | Creates a payment expiration window, or time to live (ttl), in seconds. |
-
-    '
+  description: Use these operations to manage payment expirations.
 paths:
   /config/payments/payment_expiries/{payment_expiry_id}:
     get:
@@ -207,88 +159,6 @@ paths:
       - Bearer: []
 components:
   schemas:
-    PaymentExpiries:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            items:
-              $ref: '#/components/schemas/PaymentExpiryResponse'
-      description: Provides a `content` array of payment expiry objects and a set of pagination information fields.
-    PaymentExpiryResponse:
-      type: object
-      properties:
-        payment_ttl:
-          type: number
-          example: 5900
-          description: Payment expiration window, or time to live (ttl), in seconds. To calculate the payment expiration date, xCurrent adds this value to the payment creation timestamp.
-        sending_partner:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet address of the sender, in the format `ripplenetaddress`. For example, `rn.us.sf.san_francisco`.
-        receiving_partner:
-          type: string
-          example: rn.us.tx.austin
-          description: RippleNet address of the receiver, in the format `ripplenetaddress`. For example, `rn.us.ny.new_york`.
-        currency:
-          type: string
-          example: USD
-          description: currency of the exchange rate.
-        expiry_id:
-          type: string
-          format: uuid
-          example: 4711728c-cd35-49ec-96a5-72732b4333ec
-          description: id of payment expiry object
-      description: Use this JSON request object to update the payment time to live represented in seconds.
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
     Page:
       type: object
       properties:
@@ -339,6 +209,88 @@ components:
           type: string
           example: USD
           description: currency of the exchange rate.
+      description: Use this JSON request object to update the payment time to live represented in seconds.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    PaymentExpiries:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/PaymentExpiryResponse'
+      description: Provides a `content` array of payment expiry objects and a set of pagination information fields.
+    PaymentExpiryResponse:
+      type: object
+      properties:
+        payment_ttl:
+          type: number
+          example: 5900
+          description: Payment expiration window, or time to live (ttl), in seconds. To calculate the payment expiration date, xCurrent adds this value to the payment creation timestamp.
+        sending_partner:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the sender, in the format `ripplenetaddress`. For example, `rn.us.sf.san_francisco`.
+        receiving_partner:
+          type: string
+          example: rn.us.tx.austin
+          description: RippleNet address of the receiver, in the format `ripplenetaddress`. For example, `rn.us.ny.new_york`.
+        currency:
+          type: string
+          example: USD
+          description: currency of the exchange rate.
+        expiry_id:
+          type: string
+          format: uuid
+          example: 4711728c-cd35-49ec-96a5-72732b4333ec
+          description: id of payment expiry object
       description: Use this JSON request object to update the payment time to live represented in seconds.
   requestBodies:
     PaymentExpiry:

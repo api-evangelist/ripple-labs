@@ -17,7 +17,6 @@ paths:
   /v2/webhooks:
     get:
       summary: List webhooks
-      description: List webhooks
       operationId: WebhookService_ListWebhooks
       responses:
         '200':
@@ -959,7 +958,6 @@ paths:
   /v2/webhooks/{webhookId}/subscriptions:
     get:
       summary: List subscriptions
-      description: List subscriptions
       operationId: WebhookService_ListSubscriptions
       responses:
         '200':
@@ -1712,7 +1710,6 @@ paths:
   /v2/webhooks/{webhookId}/subscriptions:list:
     post:
       summary: List subscriptions
-      description: List subscriptions
       operationId: WebhookService_ListSubscriptions2
       responses:
         '200':
@@ -1843,7 +1840,6 @@ paths:
   /v2/webhooks:list:
     post:
       summary: List webhooks
-      description: List webhooks
       operationId: WebhookService_ListWebhooks2
       responses:
         '200':
@@ -1944,6 +1940,146 @@ paths:
       - Webhooks
 components:
   schemas:
+    v2SortOrder:
+      type: string
+      enum:
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+    v2SubscriptionFilter:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by subscription ID
+        webhookId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by webhook ID. For ListSubscriptions, the top-level webhook_id still scopes the request; if both are supplied, both predicates are AND-ed.
+        domain:
+          allOf:
+          - $ref: '#/components/schemas/v2SubscriptionDomain'
+          - description: Filter by subscription domain
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/v2SubscriptionScope'
+          - description: Filter by subscription scope
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by creation timestamp
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-update timestamp
+    v2SubscriptionScope:
+      type: string
+      enum:
+      - ORG
+    v2ListWebhooksResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        webhooks:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2Webhook'
+            - type: object
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+    v2CreateWebhookRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Palisade Transactions
+          description: The webhook name.
+        description:
+          type: string
+          example: A webhook used to monitor transactions
+          description: The webhook description.
+        endpoint:
+          type: string
+          example: https://palisade.co/webhook
+          description: The webhook endpoint to send data to
+      required:
+      - name
+      - endpoint
+    v2FilterResponse:
+      type: object
+      properties:
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
+    v2SubscriptionDomain:
+      type: string
+      enum:
+      - TRANSACTION
+      - WALLET
+      - APPROVAL
+    v2FilterRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 50
+          description: Number of results per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: Token for pagination from previous response
+        orderBy:
+          type: string
+          example: created_at
+          description: Field to order results by
+        order:
+          allOf:
+          - $ref: '#/components/schemas/v2SortOrder'
+          - description: Sort order (ASC or DESC)
     v2Webhook:
       type: object
       properties:
@@ -2022,6 +2158,12 @@ components:
       - publicKey
       - successCount
       - failureCount
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
     TimestampFilterTimestampRange:
       type: object
       properties:
@@ -2035,75 +2177,6 @@ components:
           format: date-time
           example: '2024-08-31T23:59:59Z'
           description: End of time range (inclusive)
-    v2FilterResponse:
-      type: object
-      properties:
-        previousPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the previous page of results
-        nextPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        total:
-          type: integer
-          format: int32
-          example: 100
-          description: The total number of results
-      required:
-      - total
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
-    v2StringFilter:
-      type: object
-      properties:
-        eq:
-          type: string
-          description: Exact match
-        notEq:
-          type: string
-          description: Not equal to
-        contains:
-          type: string
-          description: Contains substring (case-insensitive)
-        startsWith:
-          type: string
-          description: Starts with prefix (case-insensitive)
-        endsWith:
-          type: string
-          description: Ends with suffix (case-insensitive)
-        in:
-          type: array
-          items:
-            type: string
-          description: Value is in the list
-        notIn:
-          type: array
-          items:
-            type: string
-          description: Value is not in the list
-        isNull:
-          type: boolean
-          description: Check if field is null
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
     v2ListWebhooksRequest:
       type: object
       properties:
@@ -2128,6 +2201,40 @@ components:
           type: string
           example: transactions
           description: Case-insensitive search over webhook ID, name, description, and endpoint.
+    v2SubscriptionConfig:
+      type: object
+      properties:
+        domain:
+          allOf:
+          - $ref: '#/components/schemas/v2SubscriptionDomain'
+          - type: string
+            example: TRANSACTION
+            description: The domain to subscribe to
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/v2SubscriptionScope'
+          - type: string
+            example: ORG
+            description: The scope to subscribe to
+      required:
+      - domain
+      - scope
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2DeleteSubscriptionResponse:
+      type: object
     v2TimestampFilter:
       type: object
       properties:
@@ -2173,58 +2280,6 @@ components:
           format: int32
           example: -7
           description: Relative days from now (negative for past, positive for future)
-    v2DeleteSubscriptionResponse:
-      type: object
-    v2SubscriptionScope:
-      type: string
-      enum:
-      - ORG
-    v2SubscriptionFilter:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by subscription ID
-        webhookId:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by webhook ID. For ListSubscriptions, the top-level webhook_id still scopes the request; if both are supplied, both predicates are AND-ed.
-        domain:
-          allOf:
-          - $ref: '#/components/schemas/v2SubscriptionDomain'
-          - description: Filter by subscription domain
-        scope:
-          allOf:
-          - $ref: '#/components/schemas/v2SubscriptionScope'
-          - description: Filter by subscription scope
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/v2TimestampFilter'
-          - description: Filter by creation timestamp
-        updatedAt:
-          allOf:
-          - $ref: '#/components/schemas/v2TimestampFilter'
-          - description: Filter by last-update timestamp
-    v2ListWebhooksResponse:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/v2FilterResponse'
-        webhooks:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2Webhook'
-            - type: object
-    v2DeleteWebhookResponse:
-      type: object
-    v2SubscriptionDomain:
-      type: string
-      enum:
-      - TRANSACTION
-      - WALLET
-      - APPROVAL
     v2WebhookFilter:
       type: object
       properties:
@@ -2260,47 +2315,8 @@ components:
           allOf:
           - $ref: '#/components/schemas/v2TimestampFilter'
           - description: Filter by last-failure timestamp
-    v2SubscriptionConfig:
+    v2DeleteWebhookResponse:
       type: object
-      properties:
-        domain:
-          allOf:
-          - $ref: '#/components/schemas/v2SubscriptionDomain'
-          - type: string
-            example: TRANSACTION
-            description: The domain to subscribe to
-        scope:
-          allOf:
-          - $ref: '#/components/schemas/v2SubscriptionScope'
-          - type: string
-            example: ORG
-            description: The scope to subscribe to
-      required:
-      - domain
-      - scope
-    v2CreateWebhookRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Palisade Transactions
-          description: The webhook name.
-        description:
-          type: string
-          example: A webhook used to monitor transactions
-          description: The webhook description.
-        endpoint:
-          type: string
-          example: https://palisade.co/webhook
-          description: The webhook endpoint to send data to
-      required:
-      - name
-      - endpoint
-    v2SortOrder:
-      type: string
-      enum:
-      - SORT_ORDER_ASC
-      - SORT_ORDER_DESC
     v2Subscription:
       type: object
       properties:
@@ -2357,26 +2373,6 @@ components:
             allOf:
             - $ref: '#/components/schemas/v2Subscription'
             - type: object
-    v2FilterRequest:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-          format: int32
-          example: 50
-          description: Number of results per page (default 50, max 1000)
-        pageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: Token for pagination from previous response
-        orderBy:
-          type: string
-          example: created_at
-          description: Field to order results by
-        order:
-          allOf:
-          - $ref: '#/components/schemas/v2SortOrder'
-          - description: Sort order (ASC or DESC)
   securitySchemes:
     TokenAuth:
       type: apiKey

@@ -1,35 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
-
-
-    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
-
-
-    ### Authentication
-
-
-    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
-
-
-    ### API environments
-
-
-    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
-
-
-    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
-
-
-    | Environment  | Domaing Prefix | Domain | Base URL |
-
-    | --- | --- | --- | --- |
-
-    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
-
-    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
-
-    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  description: The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
   version: 4.0.0
   title: RippleNet Server Diagnostics API
 servers:
@@ -38,20 +9,16 @@ security:
 - Bearer: []
 tags:
 - name: Diagnostics
-  description: '
-
-    Use these operations to view RippleNet Server health.
+  description: 'Use these operations to view RippleNet Server health.
 
 
     | Operation | Method | Description |
 
     | -- | -- | -- |
 
-    | [Check health](/products/payments-odl/api-docs/ripplenet/reference/openapi/diagnostics/checkhealth)       | GET | Gets the health status of the xCurrent server. |
+    | Check health | GET | Gets the health status of the xCurrent server. |
 
-    | [Check heartbeat](/products/payments-odl/api-docs/ripplenet/reference/openapi/diagnostics/checkheartbeat) | GET | Gets the health status of the xCurrent server''s peers.  |
-
-    '
+    | Check heartbeat | GET | Gets the health status of the xCurrent server''s peers. |'
 paths:
   /health:
     get:
@@ -97,21 +64,6 @@ paths:
                 $ref: '#/components/schemas/RippleNetProblem'
 components:
   schemas:
-    HealthCheck:
-      type: object
-      properties:
-        service:
-          type: string
-          example: database
-          description: Name of the service.
-        healthy:
-          type: boolean
-          description: Returns `true` if the service is up and running, and `false` if it is down or unreachable.
-        detail:
-          type: string
-          example: Message queue unreachable.
-          description: Reason for health check failure, if any.
-      description: Health check information for a single component.
     RippleNetProblem:
       type: object
       description: Represents a request to create and update a payout method record.
@@ -159,6 +111,21 @@ components:
           example: Failed to perform health check
           description: Reason for health check failure, if any.
       description: Provides a high-level status of the health of the xCurrent server.
+    HealthCheck:
+      type: object
+      properties:
+        service:
+          type: string
+          example: database
+          description: Name of the service.
+        healthy:
+          type: boolean
+          description: Returns `true` if the service is up and running, and `false` if it is down or unreachable.
+        detail:
+          type: string
+          example: Message queue unreachable.
+          description: Reason for health check failure, if any.
+      description: Health check information for a single component.
     Heartbeat:
       type: object
       required:

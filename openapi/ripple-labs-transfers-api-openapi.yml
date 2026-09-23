@@ -1,35 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
-
-
-    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
-
-
-    ### Authentication
-
-
-    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
-
-
-    ### API environments
-
-
-    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
-
-
-    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
-
-
-    | Environment  | Domaing Prefix | Domain | Base URL |
-
-    | --- | --- | --- | --- |
-
-    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
-
-    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
-
-    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  description: The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
   version: 4.0.0
   title: RippleNet Server Transfers API
 servers:
@@ -38,30 +9,7 @@ security:
 - Bearer: []
 tags:
 - name: Transfers
-  description: '
-
-    Use these operations to manage your transfers.
-
-
-    | Operation | Method | Description |
-
-    | -- | -- | -- |
-
-    | [Get transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransfers)                 | GET    | Gets a list of transfers. |
-
-    | [Get transfer estimate](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransferestimate)  | GET    | Get an estimate of the fee to make an "outbound" transfer from an exchange (connected to xRapid) to an another account outside of RippleNet (such as a bank account).  |
-
-    | [Get transfer by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransferbyid)         | GET    | Gets a transfer by ID. |
-
-    | [Execute transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/executetransfer)           | POST   | Transfers funds between accounts.  |
-
-    | [Complete transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/completetransfer)         | POST   | Updates the state of a transfer to `COMPLETED`. |
-
-    | [Add transfer labels](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/addtransferlabels)       | PUT    | Adds a list of labels to the transfer. To retrieve transfers by label, see [Get transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/gettransfers) |
-
-    | [Delete transfer labels](/products/payments-odl/api-docs/ripplenet/reference/openapi/transfers/deletetransferlabels) | DELETE | Deletes one or more existing labels from the transfer. |
-
-    '
+  description: Use these operations to manage your transfers.
 paths:
   /transfers:
     get:
@@ -400,54 +348,37 @@ paths:
       - Bearer: []
 components:
   schemas:
-    Sort:
+    Page:
       type: object
       properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
+        first:
           type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
+          description: true if  this is the first page.
+        last:
           type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
     TransferUserInfo:
       type: object
       description: Custom information about a transfer provided by a RippleNet address involved in the transfer.
@@ -480,6 +411,34 @@ components:
           format: date-time
           example: '2019-10-01T21:28:28.357Z'
           description: timestamp of when this user info was created
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
     TransferRequest:
       type: object
       required:
@@ -519,37 +478,26 @@ components:
           description: Provide one or more arbitrary key/value pairs.
           properties: {}
       description: Use this JSON request body to execute a transfer.
-    Page:
+    Sort:
       type: object
       properties:
-        first:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
           type: boolean
-          description: true if  this is the first page.
-        last:
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
           type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
+          example: true
+        descending:
+          type: boolean
+          example: false
     TransferResponse:
       type: object
       required:

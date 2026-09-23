@@ -1,35 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
-
-
-    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
-
-
-    ### Authentication
-
-
-    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
-
-
-    ### API environments
-
-
-    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
-
-
-    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
-
-
-    | Environment  | Domaing Prefix | Domain | Base URL |
-
-    | --- | --- | --- | --- |
-
-    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
-
-    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
-
-    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  description: The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
   version: 4.0.0
   title: RippleNet Server Rates API
 servers:
@@ -38,26 +9,22 @@ security:
 - Bearer: []
 tags:
 - name: Rates
-  description: '
-
-    Use these operations to manage your rates.
+  description: 'Use these operations to manage your rates.
 
 
     | Operation | Method | Description |
 
     | -- | -- | -- |
 
-    | [Get rates](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/getrates)         | GET    | Gets a list of configured exchange rates. |
+    | Get rates | GET | Gets a list of configured exchange rates. |
 
-    | [Create rate](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/createrate)     | POST   | Creates an exchange rate for a specified currency pair. |
+    | Create rate | POST | Creates an exchange rate for a specified currency pair. |
 
-    | [Get rate by ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/getratebyid) | GET    | Gets a configured exchange rate by ID. |
+    | Get rate by ID | GET | Gets a configured exchange rate by ID. |
 
-    | [Update rate](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/updaterate)     | PUT    | Updates an existing exchange rate. |
+    | Update rate | PUT | Updates an existing exchange rate. |
 
-    | [Delete rate](/products/payments-odl/api-docs/ripplenet/reference/openapi/rates/deleterate)     | DELETE | Deletes an exchange rate. Once deleted, an exchange rate cannot be accessed. |
-
-    '
+    | Delete rate | DELETE | Deletes an exchange rate. Once deleted, an exchange rate cannot be accessed. |'
 paths:
   /config/rates:
     get:
@@ -109,11 +76,10 @@ paths:
       description: 'Creates an exchange rate for a specified currency pair.
 
 
-        **Example** - Applying a margin to the live FX rate:<br>
+        **Example** - Applying a margin to the live FX rate:
 
-        A USD-GBP live FX rate of 0.80 is provided by a third-party rate provider and you want to reduce that rate by 20 BPS. In this API call, you would set `"value_type": "MARGIN"`, then `"margin_type": "BPS"`, and `"rate": "20"`. After that, during the `Get quotes` call, the final FX rate will be calculated as 0.80*(1-(20/10000))=`0.7984` and then applied during quote creation.
 
-        '
+        A USD-GBP live FX rate of 0.80 is provided by a third-party rate provider and you want to reduce that rate by 20 BPS. In this API call, you would set `"value_type": "MARGIN"`, then `"margin_type": "BPS"`, and `"rate": "20"`. After that, during the `Get quotes` call, the final FX rate will be calculated as 0.80*(1-(20/10000))=`0.7984` and then applied during quote creation.'
       operationId: createRate
       requestBody:
         $ref: '#/components/requestBodies/RateRequest'
@@ -169,11 +135,10 @@ paths:
       description: 'Updates an existing exchange rate. With this call, you can change `value_type` from `RATE` to `MARGIN` (and vice versa), change the actual `rate` value of the specified value type, or both.
 
 
-        **Example** - Updating an existing margin applied to the live FX rate:<br>
+        **Example** - Updating an existing margin applied to the live FX rate:
 
-        A USD-GBP live FX rate of 0.80 is provided by a third-party rate provider and you currently reduce that rate by 20 BPS. You now want to change it and reduce it by 10 BPS instead. To do so, set `"rate": "10"` in the request. Once the change is applied, the final FX rate is calculated as 0.80*(1-(10/10000))=`0.7992` during the `Get quotes` call, and then applied during quote creation.
 
-        '
+        A USD-GBP live FX rate of 0.80 is provided by a third-party rate provider and you currently reduce that rate by 20 BPS. You now want to change it and reduce it by 10 BPS instead. To do so, set `"rate": "10"` in the request. Once the change is applied, the final FX rate is calculated as 0.80*(1-(10/10000))=`0.7992` during the `Get quotes` call, and then applied during quote creation.'
       operationId: updateRate
       parameters:
       - name: rate_id
@@ -226,14 +191,20 @@ paths:
       security:
       - Bearer: []
 components:
-  requestBodies:
-    RateRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RateRequest'
-      required: true
   schemas:
+    Rates:
+      type: object
+      required:
+      - content
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            description: Provides an array of rate objects.
+            type: array
+            items:
+              $ref: '#/components/schemas/RateResponse'
+      description: Provides a `content` array of rate objects and a set of pagination information fields.
     RateRequest:
       type: object
       required:
@@ -296,138 +267,6 @@ components:
           enum:
           - BPS
       description: Use this JSON request body to create an exchange rate for a base and counter currency.
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
-    RatePerAccountRequest:
-      type: object
-      required:
-      - destination_ledger
-      - destination_ledger_account
-      - source_ledger
-      - source_ledger_account
-      properties:
-        source_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the source ledger associated with the exchange rate.
-        destination_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the destination ledger associated with the exchange rate.
-        source_ledger_account:
-          type: string
-          example: alias_usd_lon
-          description: Set to the account on the source ledger associated with the rate.
-        destination_ledger_account:
-          type: string
-          example: conct_gbp_lon
-          description: Set to the account on the destination ledger associated with the rate.
-      description: Use the `account` request object to create an exchange rate that applies to exchanges between a specific source ledger account and destination ledger account.
-    RatePerLedgerRequest:
-      type: object
-      required:
-      - destination_ledger
-      - source_ledger
-      properties:
-        source_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the source ledger associated with the exchange rate.
-        destination_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the destination ledger associated with the exchange rate.
-      description: Use the `ledger` request object to create an exchange rate that applies to exchanges between a specific source ledger and destination ledger.
-    Rates:
-      type: object
-      required:
-      - content
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            description: Provides an array of rate objects.
-            type: array
-            items:
-              $ref: '#/components/schemas/RateResponse'
-      description: Provides a `content` array of rate objects and a set of pagination information fields.
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
     RateResponse:
       type: object
       required:
@@ -541,6 +380,132 @@ components:
           enum:
           - BPS
       description: JSON response object that represents an exchange rate.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    RatePerLedgerRequest:
+      type: object
+      required:
+      - destination_ledger
+      - source_ledger
+      properties:
+        source_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the source ledger associated with the exchange rate.
+        destination_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the destination ledger associated with the exchange rate.
+      description: Use the `ledger` request object to create an exchange rate that applies to exchanges between a specific source ledger and destination ledger.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    RatePerAccountRequest:
+      type: object
+      required:
+      - destination_ledger
+      - destination_ledger_account
+      - source_ledger
+      - source_ledger_account
+      properties:
+        source_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the source ledger associated with the exchange rate.
+        destination_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the destination ledger associated with the exchange rate.
+        source_ledger_account:
+          type: string
+          example: alias_usd_lon
+          description: Set to the account on the source ledger associated with the rate.
+        destination_ledger_account:
+          type: string
+          example: conct_gbp_lon
+          description: Set to the account on the destination ledger associated with the rate.
+      description: Use the `account` request object to create an exchange rate that applies to exchanges between a specific source ledger account and destination ledger account.
+  requestBodies:
+    RateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RateRequest'
+      required: true
   securitySchemes:
     Bearer:
       type: apiKey

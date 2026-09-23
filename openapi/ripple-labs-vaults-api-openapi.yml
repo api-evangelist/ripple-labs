@@ -1003,34 +1003,132 @@ paths:
       - Vaults
 components:
   schemas:
-    v2ListVaultsRequest:
+    v2SortOrder:
+      type: string
+      enum:
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+    v2FilterResponse:
+      type: object
+      properties:
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2CreateVaultRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Treasury vault
+          description: The name of the vault
+        description:
+          type: string
+          example: A vault used by the treasury department
+          description: The description of the vault
+        externalId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: External ID of this vault, unique to the organization
+        correlationId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Correlation ID for tracking correlating actions with this vault creation
+      required:
+      - name
+    v2ListVaultsResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        vaults:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2Vault'
+            - type: object
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+    v2FilterRequest:
       type: object
       properties:
         pageSize:
           type: integer
           format: int32
-          example: 1000
-          description: The number of results to return per page (default 50, max 1000)
+          example: 50
+          description: Number of results per page (default 50, max 1000)
         pageToken:
           type: string
           example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        correlationId:
+          description: Token for pagination from previous response
+        orderBy:
           type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: Correlation ID for tracking various actions on the vault
-        pagination:
+          example: created_at
+          description: Field to order results by
+        order:
           allOf:
-          - $ref: '#/components/schemas/v2FilterRequest'
-          - description: 'Pagination and sorting. Sortable fields: name, created_at, updated_at.'
-        filter:
-          allOf:
-          - $ref: '#/components/schemas/v2VaultFilter'
-          - description: Optional vault filters. Each populated sub-filter is AND-ed.
-        search:
+          - $ref: '#/components/schemas/v2SortOrder'
+          - description: Sort order (ASC or DESC)
+    protobufAny:
+      type: object
+      properties:
+        '@type':
           type: string
-          example: Treasury
-          description: Case-insensitive search over vault ID, name, description, external ID, and correlation ID.
+      additionalProperties: {}
     v2Vault:
       type: object
       properties:
@@ -1074,48 +1172,47 @@ components:
       - createdAt
       - updatedAt
       - name
-    v2SortOrder:
-      type: string
-      enum:
-      - SORT_ORDER_ASC
-      - SORT_ORDER_DESC
-    v2StringFilter:
+    v2ListVaultsRequest:
       type: object
       properties:
-        eq:
+        pageSize:
+          type: integer
+          format: int32
+          example: 1000
+          description: The number of results to return per page (default 50, max 1000)
+        pageToken:
           type: string
-          description: Exact match
-        notEq:
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        correlationId:
           type: string
-          description: Not equal to
-        contains:
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Correlation ID for tracking various actions on the vault
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/v2FilterRequest'
+          - description: 'Pagination and sorting. Sortable fields: name, created_at, updated_at.'
+        filter:
+          allOf:
+          - $ref: '#/components/schemas/v2VaultFilter'
+          - description: Optional vault filters. Each populated sub-filter is AND-ed.
+        search:
           type: string
-          description: Contains substring (case-insensitive)
-        startsWith:
-          type: string
-          description: Starts with prefix (case-insensitive)
-        endsWith:
-          type: string
-          description: Ends with suffix (case-insensitive)
-        in:
-          type: array
-          items:
-            type: string
-          description: Value is in the list
-        notIn:
-          type: array
-          items:
-            type: string
-          description: Value is not in the list
-        isNull:
-          type: boolean
-          description: Check if field is null
-    protobufAny:
+          example: Treasury
+          description: Case-insensitive search over vault ID, name, description, external ID, and correlation ID.
+    TimestampFilterTimestampRange:
       type: object
       properties:
-        '@type':
+        start:
           type: string
-      additionalProperties: {}
+          format: date-time
+          example: '2024-08-01T00:00:00Z'
+          description: Start of time range (inclusive)
+        end:
+          type: string
+          format: date-time
+          example: '2024-08-31T23:59:59Z'
+          description: End of time range (inclusive)
     v2TimestampFilter:
       type: object
       properties:
@@ -1161,60 +1258,6 @@ components:
           format: int32
           example: -7
           description: Relative days from now (negative for past, positive for future)
-    v2FilterRequest:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-          format: int32
-          example: 50
-          description: Number of results per page (default 50, max 1000)
-        pageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: Token for pagination from previous response
-        orderBy:
-          type: string
-          example: created_at
-          description: Field to order results by
-        order:
-          allOf:
-          - $ref: '#/components/schemas/v2SortOrder'
-          - description: Sort order (ASC or DESC)
-    TimestampFilterTimestampRange:
-      type: object
-      properties:
-        start:
-          type: string
-          format: date-time
-          example: '2024-08-01T00:00:00Z'
-          description: Start of time range (inclusive)
-        end:
-          type: string
-          format: date-time
-          example: '2024-08-31T23:59:59Z'
-          description: End of time range (inclusive)
-    v2CreateVaultRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Treasury vault
-          description: The name of the vault
-        description:
-          type: string
-          example: A vault used by the treasury department
-          description: The description of the vault
-        externalId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: External ID of this vault, unique to the organization
-        correlationId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: Correlation ID for tracking correlating actions with this vault creation
-      required:
-      - name
     v2VaultFilter:
       type: object
       properties:
@@ -1246,49 +1289,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/v2TimestampFilter'
           - description: Filter by last-update timestamp
-    v2FilterResponse:
-      type: object
-      properties:
-        previousPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the previous page of results
-        nextPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        total:
-          type: integer
-          format: int32
-          example: 100
-          description: The total number of results
-      required:
-      - total
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
-    v2ListVaultsResponse:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/v2FilterResponse'
-        vaults:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2Vault'
-            - type: object
   securitySchemes:
     TokenAuth:
       type: apiKey

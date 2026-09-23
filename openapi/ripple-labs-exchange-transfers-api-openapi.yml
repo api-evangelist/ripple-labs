@@ -1,35 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
-
-
-    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
-
-
-    ### Authentication
-
-
-    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
-
-
-    ### API environments
-
-
-    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
-
-
-    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
-
-
-    | Environment  | Domaing Prefix | Domain | Base URL |
-
-    | --- | --- | --- | --- |
-
-    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
-
-    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
-
-    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  description: The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
   version: 4.0.0
   title: RippleNet Server Exchange transfers API
 servers:
@@ -38,26 +9,7 @@ security:
 - Bearer: []
 tags:
 - name: Exchange transfers
-  description: '
-
-    Use these operations to manage exchange transfers.
-
-
-    | Operation | Method | Description |
-
-    | -- | -- | -- |
-
-    | [Get exchange transfers](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/getexchangetransfers)  | GET   | List all exchange transfers. |
-
-    | [Execute exchange transfer](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/executeexchangetransfer) | POST  | Execute an exchange transfer to move funds from one of your accounts in one currency, to another one of your accounts in another currency.   |
-
-    | [Get exchange transfer quote ](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/getexchangetransferquote)  | POST  | Requests a quote for an exchange transfer. |
-
-    | [Complete exchange transfer ](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/completeexchangetransfer) | POST  | Updates the status of an exchange transfer to `COMPLETED`. Make this request once the exchange transfer has been made on both the ledger and on internal systems. |
-
-    | [Get exchange transfer by ID ](/products/payments-odl/api-docs/ripplenet/reference/openapi/exchange-transfers/getexchangetransferbyid)  | GET   | Gets an exchange transfer by ID. |
-
-    '
+  description: Use these operations to manage exchange transfers.
 paths:
   /exchange_transfers:
     get:
@@ -110,9 +62,7 @@ paths:
       description: 'Execute an exchange transfer to move funds from one of your accounts in one currency (USD, for example) to another one of your accounts in another currency (EUR, for example) at an exchange rate set by your peer who maintains both of your accounts on their ledger. An exchange transfer enables you to fund a foreign currency account from your domestic currency account in bulk.
 
 
-        Before you make this request, you may want to use the Quote Exchange Transfer request to see a quote for the exchange transfer you want to make.
-
-        '
+        Before you make this request, you may want to use the Quote Exchange Transfer request to see a quote for the exchange transfer you want to make.'
       operationId: executeExchangeTransfer
       requestBody:
         content:
@@ -225,60 +175,6 @@ paths:
       - Bearer: []
 components:
   schemas:
-    FiatExchangeTransferExecuteRequest:
-      type: object
-      required:
-      - amount
-      - amount_type
-      - receiver_address
-      - sender_address
-      properties:
-        sender_address:
-          type: string
-          example: alias_usd_lon@rn.eur.uk.london
-          description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        receiver_address:
-          type: string
-          example: conct_gbp_lon@rn.eur.uk.london
-          description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        amount:
-          type: number
-          minimum: 0
-          example: 100
-          description: Amount transferred, expressed in the curency of the account indicated by the `amount_type` value.
-        amount_type:
-          type: string
-          example: SENDER_AMOUNT
-          description: Amount type used for the exchange transfer.<p>To indicate that the `amount` is expressed in the currency of the account provided by the `sender_address` value, set to `SENDER_AMOUNT`.</p> <p>To indicate that the `amount` is expressed in the currency of the account provided by the `receiver_address` value, set to `RECEIVER_AMOUNT`.</p>
-          enum:
-          - SENDER_AMOUNT
-          - RECEIVER_AMOUNT
-        end_to_end_id:
-          type: string
-          maxLength: 128
-          example: 378910
-          description: ID set by the sender that is persisted on all fiat node instances that participated in the transfer.
-        internal_id:
-          type: string
-          maxLength: 128
-          example: 1987
-          description: Internal ID that the sender can optionally specify. Only visible to the sender. Only the sending fiat node instance stores this ID.
-        user_info:
-          type: object
-          description: Provide one or more arbitrary key/value pairs.
-          properties: {}
-      description: JSON request object to execute an exchange transfer.
-    ExchangeTransfers:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            description: Provides an array of exchange transfer objects.
-            items:
-              $ref: '#/components/schemas/FiatExchangeTransferExecuteResponse'
-      description: Provides a `content` array of exchange transfer objects and a set of pagination information fields.
     ExchangeTransferRate:
       type: object
       required:
@@ -304,54 +200,6 @@ components:
           example: BUY
           description: Rate type used to make the exchange transfer. Valid values are `BUY` or `SELL`.
       description: Describes an exchange rate used in an exchange transfer.
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
     FiatExchangeTransferQuoteResponse:
       type: object
       required:
@@ -431,6 +279,34 @@ components:
           - SENDER_AMOUNT
           - RECEIVER_AMOUNT
       description: Use this JSON request body to request a quote for an exchange transfer.
+    FiatExchangeTransferUserInfo:
+      type: object
+      required:
+      - json
+      - node_address
+      - state
+      description: Custom information about an exchange transfer provided by a RippleNet address involved in the exchange transfer.
+      properties:
+        node_address:
+          type: string
+          example: rn.us.ny.new_york
+          description: RippleNet address of the fiat node instance that set the user information.
+        state:
+          type: string
+          example: EXECUTED
+          description: State of the exchange transfer set when the RippleNet address set the user information.
+          enum:
+          - EXECUTED
+          - COMPLETED
+          - FAILED
+        json:
+          type: object
+          description: One or more arbitrary key/value pairs.
+          properties: {}
+        created_at:
+          type: string
+          format: date-time
+          description: timestamp of when this user info was created
     Page:
       type: object
       properties:
@@ -462,34 +338,65 @@ components:
           items:
             $ref: '#/components/schemas/Sort'
       description: Paginated response base object.
-    FiatExchangeTransferUserInfo:
+    RippleNetProblem:
       type: object
-      required:
-      - json
-      - node_address
-      - state
-      description: Custom information about an exchange transfer provided by a RippleNet address involved in the exchange transfer.
+      description: Represents a request to create and update a payout method record.
       properties:
-        node_address:
+        type:
           type: string
-          example: rn.us.ny.new_york
-          description: RippleNet address of the fiat node instance that set the user information.
-        state:
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
           type: string
-          example: EXECUTED
-          description: State of the exchange transfer set when the RippleNet address set the user information.
-          enum:
-          - EXECUTED
-          - COMPLETED
-          - FAILED
-        json:
-          type: object
-          description: One or more arbitrary key/value pairs.
-          properties: {}
-        created_at:
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
           type: string
-          format: date-time
-          description: timestamp of when this user info was created
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    ExchangeTransfers:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            description: Provides an array of exchange transfer objects.
+            items:
+              $ref: '#/components/schemas/FiatExchangeTransferExecuteResponse'
+      description: Provides a `content` array of exchange transfer objects and a set of pagination information fields.
     FiatExchangeTransferExecuteResponse:
       type: object
       required:
@@ -571,6 +478,49 @@ components:
           items:
             $ref: '#/components/schemas/FiatExchangeTransferUserInfo'
       description: JSON response object that represents an exchange transfer.
+    FiatExchangeTransferExecuteRequest:
+      type: object
+      required:
+      - amount
+      - amount_type
+      - receiver_address
+      - sender_address
+      properties:
+        sender_address:
+          type: string
+          example: alias_usd_lon@rn.eur.uk.london
+          description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        receiver_address:
+          type: string
+          example: conct_gbp_lon@rn.eur.uk.london
+          description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        amount:
+          type: number
+          minimum: 0
+          example: 100
+          description: Amount transferred, expressed in the curency of the account indicated by the `amount_type` value.
+        amount_type:
+          type: string
+          example: SENDER_AMOUNT
+          description: Amount type used for the exchange transfer.<p>To indicate that the `amount` is expressed in the currency of the account provided by the `sender_address` value, set to `SENDER_AMOUNT`.</p> <p>To indicate that the `amount` is expressed in the currency of the account provided by the `receiver_address` value, set to `RECEIVER_AMOUNT`.</p>
+          enum:
+          - SENDER_AMOUNT
+          - RECEIVER_AMOUNT
+        end_to_end_id:
+          type: string
+          maxLength: 128
+          example: 378910
+          description: ID set by the sender that is persisted on all fiat node instances that participated in the transfer.
+        internal_id:
+          type: string
+          maxLength: 128
+          example: 1987
+          description: Internal ID that the sender can optionally specify. Only visible to the sender. Only the sending fiat node instance stores this ID.
+        user_info:
+          type: object
+          description: Provide one or more arbitrary key/value pairs.
+          properties: {}
+      description: JSON request object to execute an exchange transfer.
   securitySchemes:
     Bearer:
       type: apiKey

@@ -1,35 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
-
-
-    Check out the [best practices](../../ripplenet/best-practices/) and [tutorials](../../ripplenet/tutorials/).
-
-
-    ### Authentication
-
-
-    All API operations require a bearer access token for your target environment.<br>Learn how to [request the access token](../best-practices/authentication/#request-the-access-token).
-
-
-    ### API environments
-
-
-    The RippleNet Server API creates a dynamic `[domainPrefix]` that consists of `{tenant}.{environment}`.
-
-
-    **Note**: This example uses `aperture` as the tenant. Your tenant ID is different.
-
-
-    | Environment  | Domaing Prefix | Domain | Base URL |
-
-    | --- | --- | --- | --- |
-
-    | Test | `aperture.test` | `ripplexcurrent.com`| `https://aperture.test.ripplexcurrent.com` |
-
-    | UAT | `aperture.uat` | `ripplexcurrent.com`| `https://aperture.uat.ripplexcurrent.com` |
-
-    | Production | `aperture.prod` | `ripplexcurrent.com`| `https://aperture.prod.ripplexcurrent.com` |'
+  description: The {% $env.PUBLIC_VAR_RNSERVER %} API provides you the ability to develop custom applications to manage or interact with your RippleNet instance.
   version: 4.0.0
   title: RippleNet Server Pool accounts API
 servers:
@@ -38,20 +9,16 @@ security:
 - Bearer: []
 tags:
 - name: Pool accounts
-  description: '
-
-    Use these operations to configure your RippleNet pool accounts.
+  description: 'Use these operations to configure your RippleNet pool accounts.
 
 
     | Operation | Method | Description |
 
     | -- | -- | -- |
 
-    | [Get all pool accounts](/products/payments-odl/api-docs/ripplenet/reference/openapi/pool-accounts/getallpoolaccounts)                               | GET    | Returns a list of all pool accounts on a RippleNet node. |
+    | Get all pool accounts | GET | Returns a list of all pool accounts on a RippleNet node. |
 
-    | [Get pool account by pool account ID](/products/payments-odl/api-docs/ripplenet/reference/openapi/pool-accounts/getpoolaccountbypoolaccountid)               | GET    | Get a pool account by its pool account ID. |
-
-    '
+    | Get pool account by pool account ID | GET | Get a pool account by its pool account ID. |'
 paths:
   /config/pool_accounts:
     get:

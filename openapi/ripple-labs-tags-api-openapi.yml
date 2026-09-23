@@ -112,6 +112,20 @@ paths:
       - Tags
 components:
   schemas:
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
     v2WalletTag:
       type: object
       properties:
@@ -169,20 +183,6 @@ components:
           items:
             allOf:
             - $ref: '#/components/schemas/v2VaultTag'
-            - type: object
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
             - type: object
   securitySchemes:
     TokenAuth:
