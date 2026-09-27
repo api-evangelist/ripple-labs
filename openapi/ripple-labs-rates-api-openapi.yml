@@ -192,81 +192,97 @@ paths:
       - Bearer: []
 components:
   schemas:
-    Rates:
+    Page:
       type: object
-      required:
-      - content
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            description: Provides an array of rate objects.
-            type: array
-            items:
-              $ref: '#/components/schemas/RateResponse'
-      description: Provides a `content` array of rate objects and a set of pagination information fields.
-    RateRequest:
-      type: object
-      required:
-      - base_currency
-      - counter_currency
-      - expiration_offset
-      - order_type
-      - rate
       properties:
-        expiration_offset:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
           type: integer
-          example: 95000
-          description: Set to the amount of time in milliseconds that the rate is valid for after the rate's `created_date` value. Set to `0` to indicate that the rate does not expire. The value returned in the response object for this field is `null`. Refer to the `expires_at` value in the response object to verify your expiration offset timing.
-        order_type:
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    RatePerAccountRequest:
+      type: object
+      required:
+      - destination_ledger
+      - destination_ledger_account
+      - source_ledger
+      - source_ledger_account
+      properties:
+        source_ledger:
           type: string
-          example: buy
-          description: Set to the order type for the exchange rate.
-          enum:
-          - buy
-          - sell
-        rate:
-          type: number
-          example: 0.89
-          description: "This value of this field represents either rate or margin based on what you specify in the `value_type` field. \n\nIf you specify `value_type=rate`, set the value of this field to the exchange rate for a base and counter currency. The rate can use up to 6 decimal\nplaces. \n\nIf you specify `value_type=margin`, set the value of this field depending on the unit of margin you specified in the `margin_type` field.\n"
-        base_currency:
+          example: rn.eur.uk.london
+          description: Set to the source ledger associated with the exchange rate.
+        destination_ledger:
           type: string
-          example: USD
-          description: Set to the base currency of the exchange rate.
-        counter_currency:
+          example: rn.eur.uk.london
+          description: Set to the destination ledger associated with the exchange rate.
+        source_ledger_account:
           type: string
-          example: GBP
-          description: Set to the counter currency of the exchange rate.
-        ledger:
-          $ref: '#/components/schemas/RatePerLedgerRequest'
-        account:
-          $ref: '#/components/schemas/RatePerAccountRequest'
-        lower_limit:
-          type: number
-          example: 0
-          description: To create a slab-based exchange rate, provide the lower limit of the slab. You must also provide an `upper_limit` value.
-        upper_limit:
-          type: number
-          example: 1000
-          description: To create a slab-based exchange rate, provide the upper limit of the slab. You must also provide a `lower_limit` value.
-        payout_method:
+          example: alias_usd_lon
+          description: Set to the account on the source ledger associated with the rate.
+        destination_ledger_account:
           type: string
-          example: LOCAL_RAILS
-          description: The payout method for the rate.
-        value_type:
+          example: conct_gbp_lon
+          description: Set to the account on the destination ledger associated with the rate.
+      description: Use the `account` request object to create an exchange rate that applies to exchanges between a specific source ledger account and destination ledger account.
+    Sort:
+      type: object
+      properties:
+        direction:
           type: string
-          example: MARGIN
-          description: Specify whether you want to use a live exchange rate (`MARGIN`) or an exchange rate manually configured by Ripple (`RATE`). If you set this value to `MARGIN`, you must also provide `margin_type`.
-          enum:
-          - MARGIN
-          - RATE
-        margin_type:
+          description: Direction of the sort
+          example: ASC
+        property:
           type: string
-          example: BPS
-          description: Specify the unit of margin to be applied (BPS) in addition to the rate provided by Ripple. Specify this field only if you set `value_type` = `MARGIN`.
-          enum:
-          - BPS
-      description: Use this JSON request body to create an exchange rate for a base and counter currency.
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    RatePerLedgerRequest:
+      type: object
+      required:
+      - destination_ledger
+      - source_ledger
+      properties:
+        source_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the source ledger associated with the exchange rate.
+        destination_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the destination ledger associated with the exchange rate.
+      description: Use the `ledger` request object to create an exchange rate that applies to exchanges between a specific source ledger and destination ledger.
     RateResponse:
       type: object
       required:
@@ -380,37 +396,81 @@ components:
           enum:
           - BPS
       description: JSON response object that represents an exchange rate.
-    Page:
+    RateRequest:
       type: object
+      required:
+      - base_currency
+      - counter_currency
+      - expiration_offset
+      - order_type
+      - rate
       properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
+        expiration_offset:
           type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
+          example: 95000
+          description: Set to the amount of time in milliseconds that the rate is valid for after the rate's `created_date` value. Set to `0` to indicate that the rate does not expire. The value returned in the response object for this field is `null`. Refer to the `expires_at` value in the response object to verify your expiration offset timing.
+        order_type:
+          type: string
+          example: buy
+          description: Set to the order type for the exchange rate.
+          enum:
+          - buy
+          - sell
+        rate:
+          type: number
+          example: 0.89
+          description: "This value of this field represents either rate or margin based on what you specify in the `value_type` field. \n\nIf you specify `value_type=rate`, set the value of this field to the exchange rate for a base and counter currency. The rate can use up to 6 decimal\nplaces. \n\nIf you specify `value_type=margin`, set the value of this field depending on the unit of margin you specified in the `margin_type` field.\n"
+        base_currency:
+          type: string
+          example: USD
+          description: Set to the base currency of the exchange rate.
+        counter_currency:
+          type: string
+          example: GBP
+          description: Set to the counter currency of the exchange rate.
+        ledger:
+          $ref: '#/components/schemas/RatePerLedgerRequest'
+        account:
+          $ref: '#/components/schemas/RatePerAccountRequest'
+        lower_limit:
+          type: number
+          example: 0
+          description: To create a slab-based exchange rate, provide the lower limit of the slab. You must also provide an `upper_limit` value.
+        upper_limit:
+          type: number
+          example: 1000
+          description: To create a slab-based exchange rate, provide the upper limit of the slab. You must also provide a `lower_limit` value.
+        payout_method:
+          type: string
+          example: LOCAL_RAILS
+          description: The payout method for the rate.
+        value_type:
+          type: string
+          example: MARGIN
+          description: Specify whether you want to use a live exchange rate (`MARGIN`) or an exchange rate manually configured by Ripple (`RATE`). If you set this value to `MARGIN`, you must also provide `margin_type`.
+          enum:
+          - MARGIN
+          - RATE
+        margin_type:
+          type: string
+          example: BPS
+          description: Specify the unit of margin to be applied (BPS) in addition to the rate provided by Ripple. Specify this field only if you set `value_type` = `MARGIN`.
+          enum:
+          - BPS
+      description: Use this JSON request body to create an exchange rate for a base and counter currency.
+    Rates:
+      type: object
+      required:
+      - content
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            description: Provides an array of rate objects.
+            type: array
+            items:
+              $ref: '#/components/schemas/RateResponse'
+      description: Provides a `content` array of rate objects and a set of pagination information fields.
     RippleNetProblem:
       type: object
       description: Represents a request to create and update a payout method record.
@@ -439,66 +499,6 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
-    RatePerLedgerRequest:
-      type: object
-      required:
-      - destination_ledger
-      - source_ledger
-      properties:
-        source_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the source ledger associated with the exchange rate.
-        destination_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the destination ledger associated with the exchange rate.
-      description: Use the `ledger` request object to create an exchange rate that applies to exchanges between a specific source ledger and destination ledger.
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    RatePerAccountRequest:
-      type: object
-      required:
-      - destination_ledger
-      - destination_ledger_account
-      - source_ledger
-      - source_ledger_account
-      properties:
-        source_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the source ledger associated with the exchange rate.
-        destination_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the destination ledger associated with the exchange rate.
-        source_ledger_account:
-          type: string
-          example: alias_usd_lon
-          description: Set to the account on the source ledger associated with the rate.
-        destination_ledger_account:
-          type: string
-          example: conct_gbp_lon
-          description: Set to the account on the destination ledger associated with the rate.
-      description: Use the `account` request object to create an exchange rate that applies to exchanges between a specific source ledger account and destination ledger account.
   requestBodies:
     RateRequest:
       content:

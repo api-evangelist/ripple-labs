@@ -475,8 +475,12 @@ paths:
       - Wallet Tags
 components:
   schemas:
-    v2DeleteWalletTagResponse:
+    protobufAny:
       type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
     rpcStatus:
       type: object
       properties:
@@ -512,12 +516,8 @@ components:
       required:
       - walletId
       - vaultId
-    protobufAny:
+    v2DeleteWalletTagResponse:
       type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
   securitySchemes:
     TokenAuth:
       type: apiKey

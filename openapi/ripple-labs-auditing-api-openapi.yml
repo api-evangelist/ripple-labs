@@ -147,51 +147,6 @@ paths:
       - Bearer: []
 components:
   schemas:
-    AuditEvent:
-      type: object
-      description: Represents an audit trail of user actions and configuration changes (to accounts, fees, and rates) on RippleNet.
-      properties:
-        actor:
-          type: string
-          example: super_user_client
-          description: Person or middleware who took the action.
-        action:
-          type: string
-          example: KEY_UPDATE
-          description: Action that triggered the event.
-        eventId:
-          type: string
-          format: uuid
-          example: 3d5d0831-762c-4e0c-980c-635b38fd9caf
-          description: UUID representing the event.
-        message:
-          type: string
-          example: "Added public key class PublicKeyRecord {\n    publicKey: MCowBQYDK2VwAyEAb8Q2YzrbTIwrUn7u5Q6hJimp7jBFHx500MfDM4XVNJ0=\n    keyIntent: SIGNING_PUBLIC_KEY\n    keyType: ED_25519\n    keyVersion: 1\n    expiryDateTime: 2089-09-23T17:27:50.331Z\n} for RippleNet address rn.us.ny.new_york"
-          description: Message describing the audit event.
-        metadata:
-          type: string
-          example: '{"ip":"0:0:0:0:0:0:0:1","uri":"/internal/key_service/addresses/rn.us.ny.new_york/keys"}'
-          description: Information about the event, such as IP Address and URI.
-        domain:
-          type: string
-          example: CONFIG_MANAGEMENT
-          enum:
-          - USER_MANAGEMENT
-          - CONFIG_MANAGEMENT
-          - OTHER
-          description: Represents the audit event domain.
-        level:
-          type: string
-          example: INFO
-          enum:
-          - INFO
-          - WARN
-          - ERROR
-          description: Represents the audit event level.
-        timeStamp:
-          type: string
-          example: '2019-09-30T22:55:41.365000Z'
-          description: Timestamp of the audit event.
     EventTrailEvent:
       type: object
       description: Represents a single event along the audit trail of a payment on RippleNet.
@@ -264,6 +219,80 @@ components:
           items:
             $ref: '#/components/schemas/Sort'
       description: Paginated response base object.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    AuditEvent:
+      type: object
+      description: Represents an audit trail of user actions and configuration changes (to accounts, fees, and rates) on RippleNet.
+      properties:
+        actor:
+          type: string
+          example: super_user_client
+          description: Person or middleware who took the action.
+        action:
+          type: string
+          example: KEY_UPDATE
+          description: Action that triggered the event.
+        eventId:
+          type: string
+          format: uuid
+          example: 3d5d0831-762c-4e0c-980c-635b38fd9caf
+          description: UUID representing the event.
+        message:
+          type: string
+          example: "Added public key class PublicKeyRecord {\n    publicKey: MCowBQYDK2VwAyEAb8Q2YzrbTIwrUn7u5Q6hJimp7jBFHx500MfDM4XVNJ0=\n    keyIntent: SIGNING_PUBLIC_KEY\n    keyType: ED_25519\n    keyVersion: 1\n    expiryDateTime: 2089-09-23T17:27:50.331Z\n} for RippleNet address rn.us.ny.new_york"
+          description: Message describing the audit event.
+        metadata:
+          type: string
+          example: '{"ip":"0:0:0:0:0:0:0:1","uri":"/internal/key_service/addresses/rn.us.ny.new_york/keys"}'
+          description: Information about the event, such as IP Address and URI.
+        domain:
+          type: string
+          example: CONFIG_MANAGEMENT
+          enum:
+          - USER_MANAGEMENT
+          - CONFIG_MANAGEMENT
+          - OTHER
+          description: Represents the audit event domain.
+        level:
+          type: string
+          example: INFO
+          enum:
+          - INFO
+          - WARN
+          - ERROR
+          description: Represents the audit event level.
+        timeStamp:
+          type: string
+          example: '2019-09-30T22:55:41.365000Z'
+          description: Timestamp of the audit event.
+    AuditEventResponse:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/AuditEvent'
+      description: Paged response for AuditEvent
     RippleNetProblem:
       type: object
       description: Represents a request to create and update a payout method record.
@@ -292,35 +321,6 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
-    AuditEventResponse:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            items:
-              $ref: '#/components/schemas/AuditEvent'
-      description: Paged response for AuditEvent
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
   securitySchemes:
     Bearer:
       type: apiKey

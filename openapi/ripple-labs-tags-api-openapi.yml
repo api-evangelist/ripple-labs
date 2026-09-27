@@ -112,41 +112,6 @@ paths:
       - Tags
 components:
   schemas:
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
-    v2WalletTag:
-      type: object
-      properties:
-        walletId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The wallet ID
-        vaultId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The vault ID
-        tags:
-          type: array
-          example:
-          - Issuing wallet
-          items:
-            type: string
-          description: The tags belonging to the wallet
-      required:
-      - walletId
-      - vaultId
     protobufAny:
       type: object
       properties:
@@ -169,6 +134,41 @@ components:
           description: The tags belonging to the vault
       required:
       - vaultId
+    v2WalletTag:
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        tags:
+          type: array
+          example:
+          - Issuing wallet
+          items:
+            type: string
+          description: The tags belonging to the wallet
+      required:
+      - walletId
+      - vaultId
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
     v2ListGlobalTagsResponse:
       type: object
       properties:

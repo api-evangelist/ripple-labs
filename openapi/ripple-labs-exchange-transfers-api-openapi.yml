@@ -175,81 +175,6 @@ paths:
       - Bearer: []
 components:
   schemas:
-    ExchangeTransferRate:
-      type: object
-      required:
-      - base_currency
-      - counter_currency
-      - rate
-      - rate_type
-      properties:
-        rate:
-          type: number
-          example: 0.89
-          description: Exchange rate used to make the exchange transfer.
-        base_currency:
-          type: string
-          example: USD
-          description: Base currency for custom rate for the sending account.
-        counter_currency:
-          type: string
-          example: GBP
-          description: Counter currency for custom rate for the sending account.
-        rate_type:
-          type: string
-          example: BUY
-          description: Rate type used to make the exchange transfer. Valid values are `BUY` or `SELL`.
-      description: Describes an exchange rate used in an exchange transfer.
-    FiatExchangeTransferQuoteResponse:
-      type: object
-      required:
-      - destination_amount
-      - destination_currency
-      - fx_transfer_rate
-      - receiver_address
-      - sender_address
-      - source_amount
-      - source_currency
-      - type
-      properties:
-        type:
-          type: string
-          description: Indicates the exchange transfer's quoted FX rate type.
-          default: FIRM
-          example: INDICATIVE
-          enum:
-          - FIRM
-          - INDICATIVE
-          x-enumDescriptions:
-            FIRM: A firm exchange rate ensures that the quoted and delivered transfer amounts are equal.
-            INDICATIVE: An indicative exchange rate allows for movement between quoted rate and transfer execution, such that the quoted amount and delivered amount may differ.
-        sender_address:
-          type: string
-          example: alias_usd_lon@rn.eur.uk.london
-          description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        receiver_address:
-          type: string
-          example: conct_gbp_lon@rn.eur.uk.london
-          description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        source_amount:
-          type: number
-          example: 100
-          description: Sending amount of the exchange transfer.
-        destination_amount:
-          type: number
-          example: 89
-          description: Receiving amount of the exchange transfer.
-        source_currency:
-          type: string
-          example: USD
-          description: Sending currency of the exchange transfer.
-        destination_currency:
-          type: string
-          example: GBP
-          description: Receiving currency of the exchange transfer.
-        fx_transfer_rate:
-          $ref: '#/components/schemas/ExchangeTransferRate'
-      description: JSON response object that represents a quote for an exchange transfer.
     FiatExchangeTransferQuoteRequest:
       type: object
       required:
@@ -338,34 +263,81 @@ components:
           items:
             $ref: '#/components/schemas/Sort'
       description: Paginated response base object.
-    RippleNetProblem:
+    FiatExchangeTransferQuoteResponse:
       type: object
-      description: Represents a request to create and update a payout method record.
+      required:
+      - destination_amount
+      - destination_currency
+      - fx_transfer_rate
+      - receiver_address
+      - sender_address
+      - source_amount
+      - source_currency
+      - type
       properties:
         type:
           type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
+          description: Indicates the exchange transfer's quoted FX rate type.
+          default: FIRM
+          example: INDICATIVE
+          enum:
+          - FIRM
+          - INDICATIVE
+          x-enumDescriptions:
+            FIRM: A firm exchange rate ensures that the quoted and delivered transfer amounts are equal.
+            INDICATIVE: An indicative exchange rate allows for movement between quoted rate and transfer execution, such that the quoted amount and delivered amount may differ.
+        sender_address:
           type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
+          example: alias_usd_lon@rn.eur.uk.london
+          description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        receiver_address:
           type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
+          example: conct_gbp_lon@rn.eur.uk.london
+          description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        source_amount:
           type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
+          example: 100
+          description: Sending amount of the exchange transfer.
+        destination_amount:
+          type: number
+          example: 89
+          description: Receiving amount of the exchange transfer.
+        source_currency:
           type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
+          example: USD
+          description: Sending currency of the exchange transfer.
+        destination_currency:
           type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
+          example: GBP
+          description: Receiving currency of the exchange transfer.
+        fx_transfer_rate:
+          $ref: '#/components/schemas/ExchangeTransferRate'
+      description: JSON response object that represents a quote for an exchange transfer.
+    ExchangeTransferRate:
+      type: object
+      required:
+      - base_currency
+      - counter_currency
+      - rate
+      - rate_type
+      properties:
+        rate:
+          type: number
+          example: 0.89
+          description: Exchange rate used to make the exchange transfer.
+        base_currency:
+          type: string
+          example: USD
+          description: Base currency for custom rate for the sending account.
+        counter_currency:
+          type: string
+          example: GBP
+          description: Counter currency for custom rate for the sending account.
+        rate_type:
+          type: string
+          example: BUY
+          description: Rate type used to make the exchange transfer. Valid values are `BUY` or `SELL`.
+      description: Describes an exchange rate used in an exchange transfer.
     Sort:
       type: object
       properties:
@@ -386,17 +358,49 @@ components:
         descending:
           type: boolean
           example: false
-    ExchangeTransfers:
+    FiatExchangeTransferExecuteRequest:
       type: object
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            description: Provides an array of exchange transfer objects.
-            items:
-              $ref: '#/components/schemas/FiatExchangeTransferExecuteResponse'
-      description: Provides a `content` array of exchange transfer objects and a set of pagination information fields.
+      required:
+      - amount
+      - amount_type
+      - receiver_address
+      - sender_address
+      properties:
+        sender_address:
+          type: string
+          example: alias_usd_lon@rn.eur.uk.london
+          description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        receiver_address:
+          type: string
+          example: conct_gbp_lon@rn.eur.uk.london
+          description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        amount:
+          type: number
+          minimum: 0
+          example: 100
+          description: Amount transferred, expressed in the curency of the account indicated by the `amount_type` value.
+        amount_type:
+          type: string
+          example: SENDER_AMOUNT
+          description: Amount type used for the exchange transfer.<p>To indicate that the `amount` is expressed in the currency of the account provided by the `sender_address` value, set to `SENDER_AMOUNT`.</p> <p>To indicate that the `amount` is expressed in the currency of the account provided by the `receiver_address` value, set to `RECEIVER_AMOUNT`.</p>
+          enum:
+          - SENDER_AMOUNT
+          - RECEIVER_AMOUNT
+        end_to_end_id:
+          type: string
+          maxLength: 128
+          example: 378910
+          description: ID set by the sender that is persisted on all fiat node instances that participated in the transfer.
+        internal_id:
+          type: string
+          maxLength: 128
+          example: 1987
+          description: Internal ID that the sender can optionally specify. Only visible to the sender. Only the sending fiat node instance stores this ID.
+        user_info:
+          type: object
+          description: Provide one or more arbitrary key/value pairs.
+          properties: {}
+      description: JSON request object to execute an exchange transfer.
     FiatExchangeTransferExecuteResponse:
       type: object
       required:
@@ -478,49 +482,45 @@ components:
           items:
             $ref: '#/components/schemas/FiatExchangeTransferUserInfo'
       description: JSON response object that represents an exchange transfer.
-    FiatExchangeTransferExecuteRequest:
+    ExchangeTransfers:
       type: object
-      required:
-      - amount
-      - amount_type
-      - receiver_address
-      - sender_address
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            description: Provides an array of exchange transfer objects.
+            items:
+              $ref: '#/components/schemas/FiatExchangeTransferExecuteResponse'
+      description: Provides a `content` array of exchange transfer objects and a set of pagination information fields.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
       properties:
-        sender_address:
+        type:
           type: string
-          example: alias_usd_lon@rn.eur.uk.london
-          description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        receiver_address:
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
           type: string
-          example: conct_gbp_lon@rn.eur.uk.london
-          description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        amount:
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
           type: number
-          minimum: 0
-          example: 100
-          description: Amount transferred, expressed in the curency of the account indicated by the `amount_type` value.
-        amount_type:
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
           type: string
-          example: SENDER_AMOUNT
-          description: Amount type used for the exchange transfer.<p>To indicate that the `amount` is expressed in the currency of the account provided by the `sender_address` value, set to `SENDER_AMOUNT`.</p> <p>To indicate that the `amount` is expressed in the currency of the account provided by the `receiver_address` value, set to `RECEIVER_AMOUNT`.</p>
-          enum:
-          - SENDER_AMOUNT
-          - RECEIVER_AMOUNT
-        end_to_end_id:
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
           type: string
-          maxLength: 128
-          example: 378910
-          description: ID set by the sender that is persisted on all fiat node instances that participated in the transfer.
-        internal_id:
-          type: string
-          maxLength: 128
-          example: 1987
-          description: Internal ID that the sender can optionally specify. Only visible to the sender. Only the sending fiat node instance stores this ID.
-        user_info:
-          type: object
-          description: Provide one or more arbitrary key/value pairs.
-          properties: {}
-      description: JSON request object to execute an exchange transfer.
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
   securitySchemes:
     Bearer:
       type: apiKey

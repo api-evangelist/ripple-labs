@@ -1929,173 +1929,6 @@ paths:
       - Addresses
 components:
   schemas:
-    v2SortOrder:
-      type: string
-      enum:
-      - SORT_ORDER_ASC
-      - SORT_ORDER_DESC
-    v2StringFilter:
-      type: object
-      properties:
-        eq:
-          type: string
-          description: Exact match
-        notEq:
-          type: string
-          description: Not equal to
-        contains:
-          type: string
-          description: Contains substring (case-insensitive)
-        startsWith:
-          type: string
-          description: Starts with prefix (case-insensitive)
-        endsWith:
-          type: string
-          description: Ends with suffix (case-insensitive)
-        in:
-          type: array
-          items:
-            type: string
-          description: Value is in the list
-        notIn:
-          type: array
-          items:
-            type: string
-          description: Value is not in the list
-        isNull:
-          type: boolean
-          description: Check if field is null
-    v2BlockchainFilter:
-      type: object
-      properties:
-        eq:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - description: Exact blockchain match
-        notEq:
-          allOf:
-          - $ref: '#/components/schemas/v2Blockchain'
-          - description: Exclude this blockchain
-        in:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2Blockchain'
-          description: Blockchain is in this list
-        notIn:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2Blockchain'
-          description: Blockchain is not in this list
-    v2ListGlobalAddressesRequest:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-          format: int32
-          example: 1000
-          description: The number of results to return per page (default 50, max 1000)
-        pageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        address:
-          type: string
-          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
-          description: The on-chain address to search for
-        pagination:
-          allOf:
-          - $ref: '#/components/schemas/v2FilterRequest'
-          - description: 'Pagination and sorting. Sortable fields: address, name, status, active, created_at, updated_at.'
-        filter:
-          allOf:
-          - $ref: '#/components/schemas/v2AddressFilter'
-          - description: Optional address filters. Each populated sub-filter is AND-ed.
-        search:
-          type: string
-          example: Treasury
-          description: Case-insensitive search over address ID, on-chain address, name, and description.
-    v2AddressDetails:
-      type: object
-      properties:
-        type:
-          allOf:
-          - $ref: '#/components/schemas/counterpartyv2AddressType'
-          - type: string
-            example: EXTERNAL
-            description: The address type
-        externalAddress:
-          $ref: '#/components/schemas/v2ExternalAddress'
-      required:
-      - type
-    v2FilterResponse:
-      type: object
-      properties:
-        previousPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the previous page of results
-        nextPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        total:
-          type: integer
-          format: int32
-          example: 100
-          description: The total number of results
-      required:
-      - total
-    v2ListAddressesResponse:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/v2FilterResponse'
-        addresses:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/counterpartyv2Address'
-            - type: object
-    v2Custodian:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Palisade Financial
-          description: The Virtual Asset Service Provider's name
-        dId:
-          type: string
-          example: did:example:123456789abcdefghi
-          description: The Virtual Asset Service Provider's Decentralized Identifier
-      required:
-      - name
-      - dId
-    v2FilterRequest:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-          format: int32
-          example: 50
-          description: Number of results per page (default 50, max 1000)
-        pageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: Token for pagination from previous response
-        orderBy:
-          type: string
-          example: created_at
-          description: Field to order results by
-        order:
-          allOf:
-          - $ref: '#/components/schemas/v2SortOrder'
-          - description: Sort order (ASC or DESC)
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
     TimestampFilterTimestampRange:
       type: object
       properties:
@@ -2109,67 +1942,8 @@ components:
           format: date-time
           example: '2024-08-31T23:59:59Z'
           description: End of time range (inclusive)
-    counterpartyv2AddressType:
-      type: string
-      enum:
-      - EXTERNAL
-    rpcStatus:
+    v2DeleteAddressResponse:
       type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
-    v2AddressFilter:
-      type: object
-      properties:
-        addressId:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by address ID
-        counterpartyId:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by counterparty ID. For scoped address list requests, the top-level counterparty_id still scopes the request; if both are supplied, both predicates are AND-ed.
-        address:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by on-chain address
-        name:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by address name
-        description:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by address description
-        status:
-          allOf:
-          - $ref: '#/components/schemas/v2AddressStatus'
-          - description: Filter by address status
-        active:
-          allOf:
-          - $ref: '#/components/schemas/v2BoolFilter'
-          - description: Filter by active status
-        blockchain:
-          allOf:
-          - $ref: '#/components/schemas/v2BlockchainFilter'
-          - description: Filter by supported blockchain
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/v2TimestampFilter'
-          - description: Filter by creation timestamp
-        updatedAt:
-          allOf:
-          - $ref: '#/components/schemas/v2TimestampFilter'
-          - description: Filter by last-update timestamp
     v2ListGlobalAddressesResponse:
       type: object
       properties:
@@ -2181,51 +1955,6 @@ components:
             allOf:
             - $ref: '#/components/schemas/counterpartyv2Address'
             - type: object
-    v2TimestampFilter:
-      type: object
-      properties:
-        eq:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Exact timestamp match
-        notEq:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Not equal to timestamp
-        before:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Before this timestamp
-        after:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: After this timestamp
-        gte:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Greater than or equal to timestamp
-        lte:
-          type: string
-          format: date-time
-          example: '2024-08-08T10:00:00Z'
-          description: Less than or equal to timestamp
-        between:
-          allOf:
-          - $ref: '#/components/schemas/TimestampFilterTimestampRange'
-          - description: Between two timestamps (inclusive)
-        isNull:
-          type: boolean
-          description: Check if field is null
-        relativeDays:
-          type: integer
-          format: int32
-          example: -7
-          description: Relative days from now (negative for past, positive for future)
     counterpartyv2Address:
       type: object
       properties:
@@ -2287,6 +2016,317 @@ components:
       - details
       - status
       - active
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2AddressFilter:
+      type: object
+      properties:
+        addressId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by address ID
+        counterpartyId:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by counterparty ID. For scoped address list requests, the top-level counterparty_id still scopes the request; if both are supplied, both predicates are AND-ed.
+        address:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by on-chain address
+        name:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by address name
+        description:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by address description
+        status:
+          allOf:
+          - $ref: '#/components/schemas/v2AddressStatus'
+          - description: Filter by address status
+        active:
+          allOf:
+          - $ref: '#/components/schemas/v2BoolFilter'
+          - description: Filter by active status
+        blockchain:
+          allOf:
+          - $ref: '#/components/schemas/v2BlockchainFilter'
+          - description: Filter by supported blockchain
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by creation timestamp
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-update timestamp
+    v2BoolFilter:
+      type: object
+      properties:
+        eq:
+          type: boolean
+          description: Equals
+        isNull:
+          type: boolean
+          description: Check if field is null
+    v2Custodian:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Palisade Financial
+          description: The Virtual Asset Service Provider's name
+        dId:
+          type: string
+          example: did:example:123456789abcdefghi
+          description: The Virtual Asset Service Provider's Decentralized Identifier
+      required:
+      - name
+      - dId
+    v2AddressDetails:
+      type: object
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/counterpartyv2AddressType'
+          - type: string
+            example: EXTERNAL
+            description: The address type
+        externalAddress:
+          $ref: '#/components/schemas/v2ExternalAddress'
+      required:
+      - type
+    v2Blockchain:
+      type: string
+      enum:
+      - AVALANCHE
+      - ETHEREUM
+      - XRP_LEDGER
+      - POLYGON
+      - BNBCHAIN
+      - BASE
+      - HEDERA
+      - ARBITRUM
+      - ONE_MONEY
+      - SOLANA
+      - TRON
+      - BITCOIN
+    v2ListGlobalAddressesRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 1000
+          description: The number of results to return per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        address:
+          type: string
+          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
+          description: The on-chain address to search for
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/v2FilterRequest'
+          - description: 'Pagination and sorting. Sortable fields: address, name, status, active, created_at, updated_at.'
+        filter:
+          allOf:
+          - $ref: '#/components/schemas/v2AddressFilter'
+          - description: Optional address filters. Each populated sub-filter is AND-ed.
+        search:
+          type: string
+          example: Treasury
+          description: Case-insensitive search over address ID, on-chain address, name, and description.
+    v2AddressStatus:
+      type: string
+      enum:
+      - CREATED
+      - ENABLED
+      - REJECTED
+      - DELETED
+      - ERROR
+      - COMPLIANCE_PENDING
+      - COMPLIANCE_COMPLETE
+      - CREATION_APPROVAL_PENDING
+      - CREATION_APPROVAL_COMPLETE
+      - DELETION_APPROVAL_PENDING
+      - DELETION_APPROVAL_COMPLETE
+    v2FilterResponse:
+      type: object
+      properties:
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
+    v2SortOrder:
+      type: string
+      enum:
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2ListAddressesResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        addresses:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/counterpartyv2Address'
+            - type: object
+    v2FilterRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 50
+          description: Number of results per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: Token for pagination from previous response
+        orderBy:
+          type: string
+          example: created_at
+          description: Field to order results by
+        order:
+          allOf:
+          - $ref: '#/components/schemas/v2SortOrder'
+          - description: Sort order (ASC or DESC)
+    v2BlockchainFilter:
+      type: object
+      properties:
+        eq:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - description: Exact blockchain match
+        notEq:
+          allOf:
+          - $ref: '#/components/schemas/v2Blockchain'
+          - description: Exclude this blockchain
+        in:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Blockchain'
+          description: Blockchain is in this list
+        notIn:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Blockchain'
+          description: Blockchain is not in this list
+    v2TimestampFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Exact timestamp match
+        notEq:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Not equal to timestamp
+        before:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Before this timestamp
+        after:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: After this timestamp
+        gte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Greater than or equal to timestamp
+        lte:
+          type: string
+          format: date-time
+          example: '2024-08-08T10:00:00Z'
+          description: Less than or equal to timestamp
+        between:
+          allOf:
+          - $ref: '#/components/schemas/TimestampFilterTimestampRange'
+          - description: Between two timestamps (inclusive)
+        isNull:
+          type: boolean
+          description: Check if field is null
+        relativeDays:
+          type: integer
+          format: int32
+          example: -7
+          description: Relative days from now (negative for past, positive for future)
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+    counterpartyv2AddressType:
+      type: string
+      enum:
+      - EXTERNAL
     v2ExternalAddress:
       type: object
       properties:
@@ -2313,46 +2353,6 @@ components:
       - address
       - name
       - blockchains
-    v2AddressStatus:
-      type: string
-      enum:
-      - CREATED
-      - ENABLED
-      - REJECTED
-      - DELETED
-      - ERROR
-      - COMPLIANCE_PENDING
-      - COMPLIANCE_COMPLETE
-      - CREATION_APPROVAL_PENDING
-      - CREATION_APPROVAL_COMPLETE
-      - DELETION_APPROVAL_PENDING
-      - DELETION_APPROVAL_COMPLETE
-    v2Blockchain:
-      type: string
-      enum:
-      - AVALANCHE
-      - ETHEREUM
-      - XRP_LEDGER
-      - POLYGON
-      - BNBCHAIN
-      - BASE
-      - HEDERA
-      - ARBITRUM
-      - ONE_MONEY
-      - SOLANA
-      - TRON
-      - BITCOIN
-    v2DeleteAddressResponse:
-      type: object
-    v2BoolFilter:
-      type: object
-      properties:
-        eq:
-          type: boolean
-          description: Equals
-        isNull:
-          type: boolean
-          description: Check if field is null
   securitySchemes:
     TokenAuth:
       type: apiKey

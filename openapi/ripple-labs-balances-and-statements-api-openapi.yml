@@ -267,6 +267,177 @@ paths:
       - Bearer: []
 components:
   schemas:
+    InstitutionBalance:
+      type: object
+      required:
+      - currency_balances
+      - institution
+      - institution_address
+      properties:
+        institution:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet unique internal ID of the institution that owns the balances provided in the `currency_balances` array.
+        institution_address:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the institution that owns the balances provided in the `currency_balances` array.
+        currency_balances:
+          type: array
+          description: Provides balance details for accounts owned by a RippleNet address. The response does not guarantee a fixed number of elements, or a fixed order of elements, in the returned list.
+          items:
+            $ref: '#/components/schemas/CurrencyBalance'
+        pool_account_balances:
+          type: array
+          description: Provides balance details of pool accounts, along with RippleNet accounts linked to those pool accounts.
+          items:
+            $ref: '#/components/schemas/PoolAccountBalance'
+      description: Provides balance details for accounts owned by a RippleNet address.
+    Transactions:
+      type: object
+      required:
+      - content
+      - first
+      - last
+      - number
+      - numberOfElements
+      - size
+      - sort
+      - totalPages
+      - total_elements
+      properties:
+        content:
+          type: array
+          description: Provides an array of statement record objects.
+          items:
+            $ref: '#/components/schemas/StatementRecord'
+        total_elements:
+          type: integer
+          format: int64
+          example: 1
+          description: total elements in paginated response
+        sort:
+          type: string
+          description: retained for backward compatibility
+        first:
+          type: boolean
+          example: true
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          example: true
+          description: true if  this is the last page.
+        number:
+          type: integer
+          example: 0
+          description: page number
+        numberOfElements:
+          type: integer
+          example: 1
+          description: Number Of elements in this request
+        size:
+          type: integer
+          example: 10
+          description: page size
+        totalPages:
+          type: integer
+          example: 1
+          description: Total number of pages for the given request
+      description: Provides a `content` array of statement record objects and a set of pagination information fields.
+    CurrencyBalance:
+      type: object
+      required:
+      - account_balances
+      - aggregate_balance
+      - currency
+      properties:
+        currency:
+          type: string
+          example: USD
+          description: Currency of the balances provided.
+        aggregate_balance:
+          type: number
+          example: 0
+          description: Aggregated balance for the given currrency.
+        account_balances:
+          type: array
+          description: Provides balance details for accounts that support the given currency.
+          items:
+            $ref: '#/components/schemas/AccountBalance'
+      description: Provides balance details for accounts owned by a RippleNet address.
+    Balances:
+      type: object
+      required:
+      - errors
+      - local_balance
+      - remote_balances
+      properties:
+        local_balance:
+          description: Provides balance details for accounts owned by a RippleNet address.
+          items:
+            $ref: '#/components/schemas/InstitutionBalance'
+        remote_balances:
+          type: array
+          description: Provides balance details for accounts owned by a RippleNet address.
+          items:
+            $ref: '#/components/schemas/InstitutionBalance'
+        errors:
+          type: array
+          description: Lists any errors encountered when returning balance details.
+          items:
+            type: string
+      description: Provides balances for all accounts owned by a RippleNet address.
+    StatementResponse:
+      type: object
+      required:
+      - account_name
+      - closing_balance
+      - currency
+      - end_datetime
+      - generated_at
+      - opening_balance
+      - owner
+      - start_datetime
+      - transactions
+      properties:
+        account_name:
+          type: string
+          example: trans_usd_sf
+          description: Name of the account the statement covers.
+        start_datetime:
+          type: string
+          format: date-time
+          example: '2018-08-06T23:13:55.997Z'
+          description: Lower bound of the date-time range the statement covers, as an ISO-8601 timestamp in UTC.
+        end_datetime:
+          type: string
+          format: date-time
+          example: '2020-08-06T23:13:55.997Z'
+          description: Upper bound of the date-time range the statement covers, as an ISO-8601 timestamp in UTC.
+        generated_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T21:58:23.621Z'
+          description: Time at which the statement was generated, as an ISO-8601 timestamp in UTC.
+        currency:
+          type: string
+          example: USD
+          description: Currency supported by the account.
+        owner:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: Owner of the account
+        opening_balance:
+          type: number
+          example: 0
+          description: Opening balance of the account for the given date range.
+        closing_balance:
+          type: number
+          example: -909
+          description: Closing balance of the account for the given date range.
+        transactions:
+          $ref: '#/components/schemas/Transactions'
+      description: Provides a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range.
     AccountBalance:
       type: object
       properties:
@@ -306,6 +477,26 @@ components:
           example: 1000000
           description: Maximum balance allowed by the owner of a nostro account. RippleNet Server uses the lesser of this value and the `maximum_allowed_balance` to set the account balance maximum.
       description: Provides balance details for each account owned by a RippleNet address.
+    PoolAccountBalance:
+      type: object
+      properties:
+        pool_account_name:
+          type: string
+          description: Name of the pool account.
+        balance:
+          type: number
+          description: Aggregated balance of linked accounts which form this pool account.
+        owner:
+          type: string
+          description: The RippleNet peer who owns this pool account.
+        currency:
+          type: string
+          description: The currency of pool account.
+        linked_accounts:
+          type: array
+          description: Accounts linked to this pool account.
+          items:
+            type: string
     StatementRecord:
       type: object
       required:
@@ -418,197 +609,6 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
-    Balances:
-      type: object
-      required:
-      - errors
-      - local_balance
-      - remote_balances
-      properties:
-        local_balance:
-          description: Provides balance details for accounts owned by a RippleNet address.
-          items:
-            $ref: '#/components/schemas/InstitutionBalance'
-        remote_balances:
-          type: array
-          description: Provides balance details for accounts owned by a RippleNet address.
-          items:
-            $ref: '#/components/schemas/InstitutionBalance'
-        errors:
-          type: array
-          description: Lists any errors encountered when returning balance details.
-          items:
-            type: string
-      description: Provides balances for all accounts owned by a RippleNet address.
-    Transactions:
-      type: object
-      required:
-      - content
-      - first
-      - last
-      - number
-      - numberOfElements
-      - size
-      - sort
-      - totalPages
-      - total_elements
-      properties:
-        content:
-          type: array
-          description: Provides an array of statement record objects.
-          items:
-            $ref: '#/components/schemas/StatementRecord'
-        total_elements:
-          type: integer
-          format: int64
-          example: 1
-          description: total elements in paginated response
-        sort:
-          type: string
-          description: retained for backward compatibility
-        first:
-          type: boolean
-          example: true
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          example: true
-          description: true if  this is the last page.
-        number:
-          type: integer
-          example: 0
-          description: page number
-        numberOfElements:
-          type: integer
-          example: 1
-          description: Number Of elements in this request
-        size:
-          type: integer
-          example: 10
-          description: page size
-        totalPages:
-          type: integer
-          example: 1
-          description: Total number of pages for the given request
-      description: Provides a `content` array of statement record objects and a set of pagination information fields.
-    StatementResponse:
-      type: object
-      required:
-      - account_name
-      - closing_balance
-      - currency
-      - end_datetime
-      - generated_at
-      - opening_balance
-      - owner
-      - start_datetime
-      - transactions
-      properties:
-        account_name:
-          type: string
-          example: trans_usd_sf
-          description: Name of the account the statement covers.
-        start_datetime:
-          type: string
-          format: date-time
-          example: '2018-08-06T23:13:55.997Z'
-          description: Lower bound of the date-time range the statement covers, as an ISO-8601 timestamp in UTC.
-        end_datetime:
-          type: string
-          format: date-time
-          example: '2020-08-06T23:13:55.997Z'
-          description: Upper bound of the date-time range the statement covers, as an ISO-8601 timestamp in UTC.
-        generated_at:
-          type: string
-          format: date-time
-          example: '2019-10-01T21:58:23.621Z'
-          description: Time at which the statement was generated, as an ISO-8601 timestamp in UTC.
-        currency:
-          type: string
-          example: USD
-          description: Currency supported by the account.
-        owner:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: Owner of the account
-        opening_balance:
-          type: number
-          example: 0
-          description: Opening balance of the account for the given date range.
-        closing_balance:
-          type: number
-          example: -909
-          description: Closing balance of the account for the given date range.
-        transactions:
-          $ref: '#/components/schemas/Transactions'
-      description: Provides a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range.
-    PoolAccountBalance:
-      type: object
-      properties:
-        pool_account_name:
-          type: string
-          description: Name of the pool account.
-        balance:
-          type: number
-          description: Aggregated balance of linked accounts which form this pool account.
-        owner:
-          type: string
-          description: The RippleNet peer who owns this pool account.
-        currency:
-          type: string
-          description: The currency of pool account.
-        linked_accounts:
-          type: array
-          description: Accounts linked to this pool account.
-          items:
-            type: string
-    InstitutionBalance:
-      type: object
-      required:
-      - currency_balances
-      - institution
-      - institution_address
-      properties:
-        institution:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet unique internal ID of the institution that owns the balances provided in the `currency_balances` array.
-        institution_address:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet address of the institution that owns the balances provided in the `currency_balances` array.
-        currency_balances:
-          type: array
-          description: Provides balance details for accounts owned by a RippleNet address. The response does not guarantee a fixed number of elements, or a fixed order of elements, in the returned list.
-          items:
-            $ref: '#/components/schemas/CurrencyBalance'
-        pool_account_balances:
-          type: array
-          description: Provides balance details of pool accounts, along with RippleNet accounts linked to those pool accounts.
-          items:
-            $ref: '#/components/schemas/PoolAccountBalance'
-      description: Provides balance details for accounts owned by a RippleNet address.
-    CurrencyBalance:
-      type: object
-      required:
-      - account_balances
-      - aggregate_balance
-      - currency
-      properties:
-        currency:
-          type: string
-          example: USD
-          description: Currency of the balances provided.
-        aggregate_balance:
-          type: number
-          example: 0
-          description: Aggregated balance for the given currrency.
-        account_balances:
-          type: array
-          description: Provides balance details for accounts that support the given currency.
-          items:
-            $ref: '#/components/schemas/AccountBalance'
-      description: Provides balance details for accounts owned by a RippleNet address.
   securitySchemes:
     Bearer:
       type: apiKey

@@ -51,7 +51,7 @@ modified: '2026-07-21'
 image: https://ripple.com/favicon.ico
 tags:
 - Company
-- Financial-Services
+- Financial Services
 - Payments
 - Cross-Border Payments
 - Blockchain
@@ -73,6 +73,7 @@ tags_raw:
 - Custody
 - Wallet
 - Fintech
+- Financial-Services
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
