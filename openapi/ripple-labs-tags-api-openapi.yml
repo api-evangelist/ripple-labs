@@ -112,28 +112,6 @@ paths:
       - Tags
 components:
   schemas:
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    v2VaultTag:
-      type: object
-      properties:
-        vaultId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The vault ID
-        tags:
-          type: array
-          example:
-          - Treasury vault
-          items:
-            type: string
-          description: The tags belonging to the vault
-      required:
-      - vaultId
     v2WalletTag:
       type: object
       properties:
@@ -169,6 +147,28 @@ components:
             allOf:
             - $ref: '#/components/schemas/protobufAny'
             - type: object
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2VaultTag:
+      type: object
+      properties:
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        tags:
+          type: array
+          example:
+          - Treasury vault
+          items:
+            type: string
+          description: The tags belonging to the vault
+      required:
+      - vaultId
     v2ListGlobalTagsResponse:
       type: object
       properties:

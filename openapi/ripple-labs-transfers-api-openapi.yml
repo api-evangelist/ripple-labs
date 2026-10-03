@@ -348,57 +348,6 @@ paths:
       - Bearer: []
 components:
   schemas:
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
     TransferUserInfo:
       type: object
       description: Custom information about a transfer provided by a RippleNet address involved in the transfer.
@@ -431,6 +380,16 @@ components:
           format: date-time
           example: '2019-10-01T21:28:28.357Z'
           description: timestamp of when this user info was created
+    Transfers:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            description: Provides an array of transfer objects.
+            items:
+              $ref: '#/components/schemas/TransferResponse'
+      description: Provides a `content` array of transfer objects and a set of pagination information fields.
     TransferResponse:
       type: object
       required:
@@ -507,6 +466,26 @@ components:
           items:
             type: string
       description: JSON response object representing a transfer.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
     TransferRequest:
       type: object
       required:
@@ -574,16 +553,37 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
-    Transfers:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            description: Provides an array of transfer objects.
-            items:
-              $ref: '#/components/schemas/TransferResponse'
-      description: Provides a `content` array of transfer objects and a set of pagination information fields.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
   securitySchemes:
     Bearer:
       type: apiKey

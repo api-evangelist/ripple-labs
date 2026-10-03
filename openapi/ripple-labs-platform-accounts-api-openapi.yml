@@ -398,28 +398,15 @@ paths:
       - Bearer: []
 components:
   schemas:
-    UpdatePlatformAccountRequest:
+    PlatformAccountsBalances:
       type: object
-      description: Request object for updating a Ripplenet platform account.
+      description: Object representing list of platforms, their accounts and their respective balances
       properties:
-        name:
-          type: string
-          description: Name of the platform account.
-        platform_id:
-          type: string
-          format: uuid
-          description: The unique identifier for the RippleNet platform where this account is defined.
-        description:
-          type: string
-          maxLength: 512
-          description: A short description of the platform account.
-        external_account_id:
-          type: string
-          description: Unique reference identifier for the real world account which is represented by this platform account.
-        currency:
-          type: string
-          maxLength: 3
-          description: The currency of the account. Ripple recommends using ISO-4217 currency codes.
+        platforms:
+          type: array
+          description: List of platforms
+          items:
+            $ref: '#/components/schemas/PlatformItem'
     PlatformAccountItem:
       type: object
       description: Represents a Platform Account
@@ -448,6 +435,68 @@ components:
           type: array
           items:
             type: string
+    PlatformAccountsPage:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/PlatformAccountResponse'
+      description: Paged response for account lookups
+    CreatePlatformRequest:
+      type: object
+      description: Request object for creating a RippleNet platform, which maps to a real world financial institution.
+      required:
+      - name
+      - platform_type
+      - institution
+      - servicer_code
+      properties:
+        name:
+          type: string
+          description: Name of the platform.
+        platform_type:
+          type: string
+          description: The type of institution this platform represents (WALLET_PROVIDER, FIAT_INSTITUTION, or DIGITAL_EXCHANGE).
+          enum:
+          - WALLET_PROVIDER
+          - FIAT_INSTITUTION
+          - DIGITAL_EXCHANGE
+        description:
+          type: string
+          maxLength: 512
+          description: A short description of the platform.
+        institution:
+          type: string
+          description: Name of the institution this platform represents.
+        servicer_code:
+          type: string
+          description: Akin to the routing number (US), Sort Code (UK), or IFSC code (India).
+    UpdatePlatformRequest:
+      type: object
+      description: 'Request object for updating a RippleNet platform, which maps to a real world financial institution. **Note**: `platform_type` is set on the creation of the platform and cannot be updated.'
+      properties:
+        name:
+          type: string
+          description: Name of the platform.
+        platform_type:
+          type: string
+          description: The type of institution this platform represents (WALLET_PROVIDER, FIAT_INSTITUTION, or DIGITAL_EXCHANGE).
+          enum:
+          - WALLET_PROVIDER
+          - FIAT_INSTITUTION
+          - DIGITAL_EXCHANGE
+        description:
+          type: string
+          maxLength: 512
+          description: A short description of the platform.
+        institution:
+          type: string
+          description: Name of the institution this platform represents.
+        servicer_code:
+          type: string
+          description: Akin to the routing number (US), Sort Code (UK), or IFSC code (India).
     Transactions:
       type: object
       required:
@@ -499,118 +548,28 @@ components:
           example: 1
           description: Total number of pages for the given request
       description: Provides a `content` array of statement record objects and a set of pagination information fields.
-    Page:
+    UpdatePlatformAccountRequest:
       type: object
+      description: Request object for updating a Ripplenet platform account.
       properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
-    PlatformResponse:
-      type: object
-      description: Response object for creating a Ripplenet platform, which maps to a real world financial institution.
-      properties:
+        name:
+          type: string
+          description: Name of the platform account.
         platform_id:
           type: string
           format: uuid
-          description: Unique identifier for the RippleNet platform.
-        name:
-          type: string
-          description: Name of the RippleNet platform.
-        platform_type:
-          type: string
-          description: The type of institution this RippleNet platform represents (WALLET_PROVIDER, FIAT_INSTITUTION, or DIGITAL_EXCHANGE).
-          enum:
-          - WALLET_PROVIDER
-          - FIAT_INSTITUTION
-          - DIGITAL_EXCHANGE
+          description: The unique identifier for the RippleNet platform where this account is defined.
         description:
           type: string
           maxLength: 512
-          description: A short description of the RippleNet platform.
-        institution:
+          description: A short description of the platform account.
+        external_account_id:
           type: string
-          description: Name of the institution this RippleNet platform represents.
-        servicer_code:
+          description: Unique reference identifier for the real world account which is represented by this platform account.
+        currency:
           type: string
-          description: Akin to the routing number (US), Sort Code (UK), or IFSC code (India).
-    UpdatePlatformRequest:
-      type: object
-      description: 'Request object for updating a RippleNet platform, which maps to a real world financial institution. **Note**: `platform_type` is set on the creation of the platform and cannot be updated.'
-      properties:
-        name:
-          type: string
-          description: Name of the platform.
-        platform_type:
-          type: string
-          description: The type of institution this platform represents (WALLET_PROVIDER, FIAT_INSTITUTION, or DIGITAL_EXCHANGE).
-          enum:
-          - WALLET_PROVIDER
-          - FIAT_INSTITUTION
-          - DIGITAL_EXCHANGE
-        description:
-          type: string
-          maxLength: 512
-          description: A short description of the platform.
-        institution:
-          type: string
-          description: Name of the institution this platform represents.
-        servicer_code:
-          type: string
-          description: Akin to the routing number (US), Sort Code (UK), or IFSC code (India).
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    PlatformAccountsPage:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            items:
-              $ref: '#/components/schemas/PlatformAccountResponse'
-      description: Paged response for account lookups
+          maxLength: 3
+          description: The currency of the account. Ripple recommends using ISO-4217 currency codes.
     StatementResponse:
       type: object
       required:
@@ -662,42 +621,51 @@ components:
         transactions:
           $ref: '#/components/schemas/Transactions'
       description: Provides a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range.
-    PlatformAccountsBalances:
+    PlatformItem:
       type: object
-      description: Object representing list of platforms, their accounts and their respective balances
+      description: Represents a Platform
       properties:
-        platforms:
-          type: array
-          description: List of platforms
-          items:
-            $ref: '#/components/schemas/PlatformItem'
-    CreatePlatformAccountRequest:
-      type: object
-      description: Request object for creating a Ripplenet platform account.
-      required:
-      - name
-      - platform_id
-      - external_account_id
-      - currency
-      properties:
-        name:
-          type: string
-          description: Name of the platform account.
         platform_id:
+          description: Platform ID
           type: string
           format: uuid
-          description: The unique identifier for the RippleNet platform where this account is defined.
-        description:
+        name:
+          description: Identifier representing the name of the platform
           type: string
-          maxLength: 512
-          description: A short description of the platform account.
-        external_account_id:
+        institution:
+          description: Institution being represented by this platform
           type: string
-          description: Unique reference identifier for the real world account which is represented by this platform account.
-        currency:
+        type:
+          description: Type of the platform
           type: string
-          maxLength: 3
-          description: The currency of the account. Ripple recommends using ISO-4217 currency codes.
+        servicer_code:
+          description: Account servicer code, if applicable of the real world platform
+          type: string
+        accounts:
+          type: array
+          description: List of Platform Accounts a Platform
+          items:
+            $ref: '#/components/schemas/PlatformAccountItem'
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
     StatementRecord:
       type: object
       required:
@@ -810,31 +778,34 @@ components:
         balance:
           type: number
           description: Real world account balance of the platform account (if available)
-    PlatformItem:
+    PlatformResponse:
       type: object
-      description: Represents a Platform
+      description: Response object for creating a Ripplenet platform, which maps to a real world financial institution.
       properties:
         platform_id:
-          description: Platform ID
           type: string
           format: uuid
+          description: Unique identifier for the RippleNet platform.
         name:
-          description: Identifier representing the name of the platform
           type: string
+          description: Name of the RippleNet platform.
+        platform_type:
+          type: string
+          description: The type of institution this RippleNet platform represents (WALLET_PROVIDER, FIAT_INSTITUTION, or DIGITAL_EXCHANGE).
+          enum:
+          - WALLET_PROVIDER
+          - FIAT_INSTITUTION
+          - DIGITAL_EXCHANGE
+        description:
+          type: string
+          maxLength: 512
+          description: A short description of the RippleNet platform.
         institution:
-          description: Institution being represented by this platform
           type: string
-        type:
-          description: Type of the platform
-          type: string
+          description: Name of the institution this RippleNet platform represents.
         servicer_code:
-          description: Account servicer code, if applicable of the real world platform
           type: string
-        accounts:
-          type: array
-          description: List of Platform Accounts a Platform
-          items:
-            $ref: '#/components/schemas/PlatformAccountItem'
+          description: Akin to the routing number (US), Sort Code (UK), or IFSC code (India).
     RippleNetProblem:
       type: object
       description: Represents a request to create and update a payout method record.
@@ -863,35 +834,64 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
-    CreatePlatformRequest:
+    CreatePlatformAccountRequest:
       type: object
-      description: Request object for creating a RippleNet platform, which maps to a real world financial institution.
+      description: Request object for creating a Ripplenet platform account.
       required:
       - name
-      - platform_type
-      - institution
-      - servicer_code
+      - platform_id
+      - external_account_id
+      - currency
       properties:
         name:
           type: string
-          description: Name of the platform.
-        platform_type:
+          description: Name of the platform account.
+        platform_id:
           type: string
-          description: The type of institution this platform represents (WALLET_PROVIDER, FIAT_INSTITUTION, or DIGITAL_EXCHANGE).
-          enum:
-          - WALLET_PROVIDER
-          - FIAT_INSTITUTION
-          - DIGITAL_EXCHANGE
+          format: uuid
+          description: The unique identifier for the RippleNet platform where this account is defined.
         description:
           type: string
           maxLength: 512
-          description: A short description of the platform.
-        institution:
+          description: A short description of the platform account.
+        external_account_id:
           type: string
-          description: Name of the institution this platform represents.
-        servicer_code:
+          description: Unique reference identifier for the real world account which is represented by this platform account.
+        currency:
           type: string
-          description: Akin to the routing number (US), Sort Code (UK), or IFSC code (India).
+          maxLength: 3
+          description: The currency of the account. Ripple recommends using ISO-4217 currency codes.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
   securitySchemes:
     Bearer:
       type: apiKey

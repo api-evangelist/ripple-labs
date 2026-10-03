@@ -237,20 +237,89 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    liquidation_trade_request_status:
+    beneficiary_name:
       type: string
       minLength: 1
       maxLength: 128
-      description: Reserved for future use.
-    source_result_proceeds:
+      description: 'Complete name of the person receiving the payment.
+
+
+        **Note**: Values are only viewable by the customer requesting the report.
+
+        '
+    remitter_account:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: 'Account number at the sending institution for the payment remitter.
+
+
+        **Note**: Values are only viewable by the customer requesting the report.
+
+        '
+    balance_result:
       type: number
-      description: XRP amount after exchange of the `source_result_adjusted_amount` at the `source_exchange`.
-    withdrawal_result_details_transaction_id:
+      description: Account balance after the transaction.
+    ReportFormatEnum:
+      type: string
+      description: 'The report format of the downloadable report.
+
+        '
+      enum:
+      - CSV
+      - JSON
+      x-enumDescriptions:
+        CSV: A CSV file is a text file that uses a comma to delimit values. Each line of text corresponds to a unique record.
+        JSON: JSON (Javascript Object Notation) is a file format that uses human-readable text to store and transmit data objects consisting of attribute-value pairs and arrays.
+    sent_amount:
+      type: number
+      description: The payment amount sent.
+      example: 40
+    fx_spot_rate:
+      type: number
+      description: '**[Sender only]**
+
+
+        The foreign exchange spot rate sourced from Refinitiv, CurrencyLayer, or another third-party source.
+
+        '
+      example: 58.70956379
+    balance_change:
+      type: number
+      description: The change in account balance caused by the corresponding transaction.
+    source_result_adjusted_proceeds:
+      type: number
+      description: XRP amount after deduction of the conversion fees from `source_result_proceeds`.
+    ssa_account:
+      type: string
+      description: The SSA account name and address of the sender in `accountname@ripplenetaddress` format.
+      minLength: 1
+      maxLength: 128
+    remitter_name:
       type: string
       minLength: 1
       maxLength: 128
-      description: XRP transaction hash if there is on-ledger movement.
-      example: 5b0a25b79595123d80dd27c0808fb554
+      description: 'Complete name of the person originating the payment.
+
+
+        **Note**: Values are only viewable by the customer requesting the report.
+
+        '
+    sender_customer:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: The name of the sending institution.
+      example: examplecorp_sf
+    receiver_customer:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: Name of the receiving institution.
+      example: sf
+    ssa_balance_change:
+      type: number
+      description: The change in SSA balance caused by the corresponding transaction.
     transaction_state:
       type: string
       minLength: 1
@@ -263,69 +332,85 @@ components:
         EXECUTED: Transaction has executed.
         FAILED: Transaction has failed.
       example: COMPLETE
-    beneficiary_name:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: 'Complete name of the person receiving the payment.
-
-
-        **Note**: Values are only viewable by the customer requesting the report.
-
-        '
-    withdrawal_result_fee_amount:
+    withdrawal_result_amount:
       type: number
       description: '**[Sender only]**
 
 
-        Withdrawal fee charged by the `source_exchange`. This is substracted from the total `withdrawal_result_amount`.
+        Final amount of XRP at `source_exchange` wallet to be withdrawn after `withdrawal_result_fee_amount` fees and `withdrawal_result_incentive_value` incentives have been applied.
+
+
+        **Note**: This value can be higher or lower than `source_result_proceeds` depending on whether the incentives were positive or negative.
 
         '
-    destination_result_proceeds:
+      example: 39.846668
+    deposit_result_fee_amount:
       type: number
       description: '**[Receiver only]**
 
 
-        Amount of fiat currency received for payout without fee.
+        Deposit fee charged in XRP by the `destination_exchange`.
 
         '
-    internal_payment_state:
+    intermediary_delta:
+      type: number
+    sender_address:
       type: string
       minLength: 1
       maxLength: 128
-      description: '**[Ripple internal]**
-
-
-        Ripple uses this information for troubleshooting purposes.
-
-        '
-      example: DONE
-    source_result_adjusted_proceeds:
-      type: number
-      description: XRP amount after deduction of the conversion fees from `source_result_proceeds`.
+      description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`.
+      example: new_york@rn.us.ny.new_york
+    report_name:
+      type: string
+      minLength: 1
+      maxLength: 256
+      description: User defined name of the report.
+      example: My custom report
+    balance_change_currency:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: The [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) currency code associated with the transaction account.
+      example: usd
+    destination_result_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: Unique identifier for the destination trade at the `destination_exchange`.
+      example: 2c3367d2-ab12-3456-78c9-d9edbf6bcbc5
     transaction_id:
       type: string
       minLength: 1
       maxLength: 128
       description: Unique identifier of the balance change between two accounts.
       example: a557eb2d-abcd-1234-a9a0-fdb5b52aaa02
-    destination_result_amount:
+    deposit_result_amount:
       type: number
       description: '**[Receiver only]**
 
 
-        The final XRP amount at destination wallet to be liquidated into received fiat currency.
+        The total amount of XRP deposited into the destination wallet. Must equal `withdrawal_result_amount`, minus negligible ledger fees.
 
         '
-    destination_result_adjusted_amount:
+    receiver_address:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`.
+      example: new_york@rn.us.ny.new_york
+    source_result_adjusted_amount:
       type: number
-      description: '**[Receiver only]**
-
-
-        The final XRP amount at destination wallet to be liquidated including fees.
-
-        '
-    ReportRecord:
+      description: Fiat amount after deduction of source exchange fee.
+    received_currency:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: The [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) currency code of the `received_amount`.
+      example: PHP
+    destination_result_adjusted_proceeds:
+      type: number
+      description: Amount of fiat currency received for payout including fees.
+    ReportDownloadRecordLink:
       required:
       - endDate
       - reportFormat
@@ -351,104 +436,60 @@ components:
           $ref: '#/components/schemas/ReportStatusEnum'
         startDate:
           type: string
-          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) start date (inclusive) of the report.
+          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) start date (inclusive) for a requested report.
           format: date-time
           example: '2018-04-06T19:33:35Z'
         endDate:
           type: string
-          description: 'The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) end date (inclusive) of the report.
+          description: 'The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) end date (inclusive) for a requested report.
 
 
-            **Note**: Must be after `startDate`, but no more than 90 days after.
+            **Note**:  Must be after `startDate`, but no more than 90 days after.
 
             '
           format: date-time
           example: '2018-04-06T20:33:35Z'
         createdOn:
           $ref: '#/components/schemas/report_created_on'
-    ReportStatusEnum:
-      type: string
-      description: 'The status of the report.
+        downloadLink:
+          type: string
+          minLength: 1
+          maxLength: 2048
+          description: 'Link where you can download the report in the available format. This field is available when the report `status` is `READY`.
 
-        '
-      enum:
-      - PENDING
-      - READY
-      - FAILED
-      - EMPTY
-      x-enumDescriptions:
-        PENDING: Report isn't ready for download.
-        READY: Report is ready for download.
-        FAILED: Unable generate the report.
-        EMPTY: Report has no transactions for the date range.
-      example: READY
-    source_result_amount:
+            '
+          format: uri
+          example: https://reporting-test.rnc.ripplenet.com/v1/reports/download/497f6eca-6276-4993-bfeb-53cbbbba6f08
+        reportCreatedBy:
+          $ref: '#/components/schemas/ReportCreatedBy'
+    transfer_currency:
+      type: string
+      description: The three-letter code of the currency associated with this transfer.
+      minLength: 1
+      maxLength: 128
+    ReportsMetadataResponse:
+      required:
+      - reports
+      type: object
+      additionalProperties: false
+      properties:
+        reports:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ReportMetadata'
+    ssa_transfer_amount:
       type: number
-      description: Fiat amount before deduction of source exchange fee.
-    balance_result:
+      description: The SSA transfer amount.
+    ssa_balance_result:
       type: number
-      description: Account balance after the transaction.
-    remitter_name:
+      description: The SSA account balance after the transaction is complete.
+    withdrawal_result_details_transaction_id:
       type: string
       minLength: 1
       maxLength: 128
-      description: 'Complete name of the person originating the payment.
-
-
-        **Note**: Values are only viewable by the customer requesting the report.
-
-        '
-    CreatedByEnum:
-      type: string
-      description: 'Query for report types based on the entity that initiated report creation.
-
-
-        | Value      | Description                                        |
-
-        |------------|----------------------------------------------------|
-
-        | SCHEDULER  | Get automated system-generated reports. |
-
-        | USER       | Customized reports generated by users through the UI. |
-
-        | API        | Customized reports generated using the API. |
-
-        '
-      enum:
-      - USER
-      - SCHEDULER
-      - API
-      example: USER
-    deposit_result_id:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: '**[Receiver only]**
-
-
-        Unique identifier for the deposit at the `destination_exchange`.
-
-        '
-      example: 18700e69-1234-abcd-5678-cb17d5ccdbca
-    ssa_transfer_currency:
-      type: string
-      description: The three-letter code of the currency associated with this SSA transfer.
-      minLength: 1
-      maxLength: 128
-    source_result_adjusted_amount:
-      type: number
-      description: Fiat amount after deduction of source exchange fee.
-    ReportFormatEnum:
-      type: string
-      description: 'The report format of the downloadable report.
-
-        '
-      enum:
-      - CSV
-      - JSON
-      x-enumDescriptions:
-        CSV: A CSV file is a text file that uses a comma to delimit values. Each line of text corresponds to a unique record.
-        JSON: JSON (Javascript Object Notation) is a file format that uses human-readable text to store and transmit data objects consisting of attribute-value pairs and arrays.
+      description: XRP transaction hash if there is on-ledger movement.
+      example: 5b0a25b79595123d80dd27c0808fb554
     FailureConversionSsaTransaction:
       title: Failure conversion & SSA
       x-implements:
@@ -503,6 +544,252 @@ components:
           $ref: '#/components/schemas/ssa_transfer_state'
       x-tags:
       - Report data fields
+    received_amount:
+      type: number
+      description: The payment amount received by the beneficiary.
+      example: 39.45
+    ErrorResponse:
+      required:
+      - type
+      - errorCode
+      - title
+      - time
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          format: uri
+          example: https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1
+        errorCode:
+          type: string
+          example: RPT_1
+        title:
+          type: string
+          minLength: 1
+          maxLength: 128
+          example: BAD_REQUEST
+        detail:
+          type: string
+          minLength: 1
+          maxLength: 2048
+          example: Required field missing
+        time:
+          type: string
+          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) error timestamp.
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+    liquidation_status:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: Reserved for future use.
+    venue_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: The unique identifier associated with a transaction involving an exchange account. Sometimes it's called "exchange id" or "order id".
+      example: 8eef087a-abcd-1234-922d-e802b1126ea0
+    payment_state:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: The state of a payment at the moment it is queried.
+      example: COMPLETED
+    PaymentOpsReportTransaction:
+      title: Payment operations
+      type: object
+      additionalProperties: false
+      x-parent: PaymentOpsReportTransactionBase
+      properties:
+        end_to_end_id:
+          $ref: '#/components/schemas/end_to_end_id'
+        ripplenet_payment_id:
+          $ref: '#/components/schemas/ripplenet_payment_id'
+        quote_ts:
+          type: string
+          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) timestamp of the quote.
+          format: date-time
+        created_at:
+          type: string
+          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) timestamp when the transaction was created.
+          format: date-time
+          example: '2022-10-02T20:57:13.606Z'
+        executed_at:
+          type: string
+          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) timestamp when the payment was settled.
+          format: date-time
+          example: '2022-10-02T20:57:20.62Z'
+        sender_address:
+          $ref: '#/components/schemas/sender_address'
+        sender_customer:
+          $ref: '#/components/schemas/sender_customer'
+        sent_amount:
+          $ref: '#/components/schemas/sent_amount'
+        sent_currency:
+          $ref: '#/components/schemas/sent_currency'
+        withdrawal_result_amount:
+          $ref: '#/components/schemas/withdrawal_result_amount'
+        receiver_address:
+          $ref: '#/components/schemas/receiver_address'
+        receiver_customer:
+          $ref: '#/components/schemas/receiver_customer'
+        received_amount:
+          $ref: '#/components/schemas/received_amount'
+        received_currency:
+          $ref: '#/components/schemas/received_currency'
+        fx_spot_rate:
+          $ref: '#/components/schemas/fx_spot_rate'
+        source_exchange:
+          $ref: '#/components/schemas/source_exchange'
+        destination_exchange:
+          $ref: '#/components/schemas/destination_exchange'
+        payment_method:
+          $ref: '#/components/schemas/payment_method'
+        payment_state:
+          $ref: '#/components/schemas/payment_state'
+        remitter_name:
+          $ref: '#/components/schemas/remitter_name'
+        remitter_account:
+          $ref: '#/components/schemas/remitter_account'
+        beneficiary_name:
+          $ref: '#/components/schemas/beneficiary_name'
+        beneficiary_account:
+          $ref: '#/components/schemas/beneficiary_account'
+        payment_batch_id:
+          $ref: '#/components/schemas/payment_batch_id'
+      x-jackson-property-order:
+        props:
+        - end_to_end_id
+        - ripplenet_payment_id
+        - quote_ts
+        - created_at
+        - executed_at
+        - sender_address
+        - sender_customer
+        - sent_amount
+        - sent_currency
+        - withdrawal_result_amount
+        - receiver_address
+        - receiver_customer
+        - received_amount
+        - received_currency
+        - fx_spot_rate
+        - source_exchange
+        - destination_exchange
+        - payment_method
+        - payment_state
+        - remitter_name
+        - remitter_account
+        - beneficiary_name
+        - beneficiary_account
+        - payment_batch_id
+      description: These are the data fields for the `PAYMENT_OPS` report you download from the [Get a report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport) operation. Use this report for high-level payment investigation and reporting.
+      x-tags:
+      - Report data fields
+    ripplenet_payment_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: The unique payment identifier.
+      example: 70eccd4f-abcd-1234-a655-3aeddff19e4a
+    ssa_transfer_state:
+      type: string
+      description: The state of the SSA transfer.
+      minLength: 1
+      maxLength: 128
+    ReportCreatedBy:
+      type: string
+      minLength: 1
+      maxLength: 128
+      example: Norma Jean
+      description: 'Identifies the entity that initiated the report creation.
+
+
+        | Value       | Description                                        |
+
+        |-------------|----------------------------------------------------|
+
+        | SCHEDULER   | Automated system-generated report initiated by the scheduler. |
+
+        | API         | User-generated report initiated through the API. |
+
+        | [full name] | Full name of the user who initiated the creation of the report through the UI. |
+
+        | null        | Legacy support for older reports. |
+
+        '
+    ReportRequest:
+      required:
+      - reportName
+      - reportType
+      - reportFormat
+      - startDate
+      - endDate
+      type: object
+      additionalProperties: false
+      properties:
+        reportName:
+          $ref: '#/components/schemas/report_name'
+        startDate:
+          type: string
+          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) start date (inclusive) for requested report.
+          format: date-time
+          example: '2018-04-06T19:33:35Z'
+        endDate:
+          type: string
+          description: 'The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) end date (inclusive) for a requested report.
+
+
+            **Note**: Must be after `startDate`, but no more than 90 days after.
+
+            '
+          format: date-time
+          example: '2018-04-06T20:33:35Z'
+        reportType:
+          $ref: '#/components/schemas/ReportTypeEnum'
+        reportFormat:
+          $ref: '#/components/schemas/ReportFormatEnum'
+    withdrawal_result_incentive_value:
+      type: number
+      description: '**[Sender only]**
+
+
+        The incentive value in XRP applied to `source_result_proceeds` to arrive at the `withdrawal_result_amount` value.
+
+        '
+    payment_method:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: "**[Sender only]**\n\nMethod for completing the payment. This is a freeform text field that accepts custom strings for payment methods, for example:\n\n  - CSM_ID_IDR\n  - MSISDN_ID_IDR\n  - CASHPICKUP_ID_IDR\n  - CARD_CN_CNY\n\n  Or you can use RippleNet payment method values:\n\n  - REAL_TIME_GROSS_SETTLEMENT_SYSTEM\n  - REAL_TIME_NET_SETTLEMENT_SYSTEM\n  - MASS_NET_PAYMENT_SYSTEM\n  - BOOK_TRANSFER\n  - CASH_PAYOUT\n  - WALLET_PAYMENT\n  - OTHER\n"
+      example: CSM_TH_THB
+    internal_payment_state:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: '**[Ripple internal]**
+
+
+        Ripple uses this information for troubleshooting purposes.
+
+        '
+      example: DONE
+    payment_batch_id:
+      type: string
+      minLength: 1
+      maxLength: 36
+      description: 'Unique identifier for a batch of payments.
+
+
+        **Note**: This field is only populated for payments that are part of a batch.
+
+        '
+    end_to_end_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: The unique ID that the sender specifies. It persists on all RippleNet instances that participate in the payment.
     ReportMetadata:
       required:
       - endDate
@@ -546,124 +833,71 @@ components:
           $ref: '#/components/schemas/report_created_on'
         reportCreatedBy:
           $ref: '#/components/schemas/ReportCreatedBy'
-    ReportDownloadRecordLink:
-      required:
-      - endDate
-      - reportFormat
-      - reportId
-      - startDate
-      - reportStatus
-      - reportType
-      type: object
-      additionalProperties: false
-      properties:
-        reportId:
-          type: string
-          description: Unique identifier for a report.
-          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-          format: uuid
-        reportName:
-          $ref: '#/components/schemas/report_name'
-        reportType:
-          $ref: '#/components/schemas/ReportTypeEnum'
-        reportFormat:
-          $ref: '#/components/schemas/ReportFormatEnum'
-        reportStatus:
-          $ref: '#/components/schemas/ReportStatusEnum'
-        startDate:
-          type: string
-          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) start date (inclusive) for a requested report.
-          format: date-time
-          example: '2018-04-06T19:33:35Z'
-        endDate:
-          type: string
-          description: 'The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) end date (inclusive) for a requested report.
-
-
-            **Note**:  Must be after `startDate`, but no more than 90 days after.
-
-            '
-          format: date-time
-          example: '2018-04-06T20:33:35Z'
-        createdOn:
-          $ref: '#/components/schemas/report_created_on'
-        downloadLink:
-          type: string
-          minLength: 1
-          maxLength: 2048
-          description: 'Link where you can download the report in the available format. This field is available when the report `status` is `READY`.
-
-            '
-          format: uri
-          example: https://reporting-test.rnc.ripplenet.com/v1/reports/download/497f6eca-6276-4993-bfeb-53cbbbba6f08
-        reportCreatedBy:
-          $ref: '#/components/schemas/ReportCreatedBy'
-    ssa_transfer_amount:
-      type: number
-      description: The SSA transfer amount.
-    report_created_on:
-      type: string
-      description: Report creation time
-      format: date-time
-      example: '2018-04-06T20:33:35Z'
     fx_rate:
       type: number
       description: The foreign exchange rate associated with the failure conversion transaction.
-    sender_address:
+    ssa_remote_transfer_id:
       type: string
+      description: The unique identifier of the SSA transfer from the SSA funding account to the SSA account.
       minLength: 1
       maxLength: 128
-      description: RippleNet account name and address of the sender, in the format `accountname@ripplenetaddress`.
-      example: new_york@rn.us.ny.new_york
-    ssa_transfer_state:
-      type: string
-      description: The state of the SSA transfer.
-      minLength: 1
-      maxLength: 128
-    ssa_balance_result:
-      type: number
-      description: The SSA account balance after the transaction is complete.
-    liquidation_status:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: Reserved for future use.
-    venue_id:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: The unique identifier associated with a transaction involving an exchange account. Sometimes it's called "exchange id" or "order id".
-      example: 8eef087a-abcd-1234-922d-e802b1126ea0
-    received_currency:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: The [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) currency code of the `received_amount`.
-      example: PHP
-    sent_amount:
-      type: number
-      description: The payment amount sent.
-      example: 40
-    sender_customer:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: The name of the sending institution.
-      example: examplecorp_sf
-    ssa_balance_change:
-      type: number
-      description: The change in SSA balance caused by the corresponding transaction.
-    destination_result_adjusted_proceeds:
-      type: number
-      description: Amount of fiat currency received for payout including fees.
-    deposit_result_amount:
+    destination_result_proceeds:
       type: number
       description: '**[Receiver only]**
 
 
-        The total amount of XRP deposited into the destination wallet. Must equal `withdrawal_result_amount`, minus negligible ledger fees.
+        Amount of fiat currency received for payout without fee.
 
         '
+    source_result_amount:
+      type: number
+      description: Fiat amount before deduction of source exchange fee.
+    destination_exchange:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: '**[Receiver only]**
+
+
+        The destination exchange for the payment.
+
+        '
+      example: independentreserve
+    destination_result_adjusted_amount:
+      type: number
+      description: '**[Receiver only]**
+
+
+        The final XRP amount at destination wallet to be liquidated including fees.
+
+        '
+    source_exchange:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: '**[Sender only]**
+
+
+        The source exchange where the sender originates the payment.
+
+        '
+      example: bitstamp
+    ReportStatusEnum:
+      type: string
+      description: 'The status of the report.
+
+        '
+      enum:
+      - PENDING
+      - READY
+      - FAILED
+      - EMPTY
+      x-enumDescriptions:
+        PENDING: Report isn't ready for download.
+        READY: Report is ready for download.
+        FAILED: Unable generate the report.
+        EMPTY: Report has no transactions for the date range.
+      example: READY
     ReportTypeEnum:
       type: string
       description: 'The report type of the downloadable report.
@@ -677,48 +911,41 @@ components:
         PAYMENT_OPS: Basic payment report suitable for high-level payment investigation and reporting.</br>View [Payment report data fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/paymentopsreporttransaction).
         RECON: Reconciliation report suitable for reconciliation and detailed state-by-state investigation.</br>View [Reconciliation report data fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/reconciliationreporttransaction).
         FAILURE_CONVERSION_SSA: Failure conversion & SSA report suitable for failed payments investigation.</br>View [Failure conversion & SSA report data fields](/products/payments-odl/api-docs/report_service/reference/openapi/report-data-fields/failureconversionssatransaction).
-    receiver_customer:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: Name of the receiving institution.
-      example: sf
-    balance_change_currency:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: The [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) currency code associated with the transaction account.
-      example: usd
-    receiver_address:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: RippleNet account name and address of the receiver, in the format `accountname@ripplenetaddress`.
-      example: new_york@rn.us.ny.new_york
     execution_result_type:
       type: string
       description: The type of failure conversion transaction.
       minLength: 1
       maxLength: 128
-    balance_change:
-      type: number
-      description: The change in account balance caused by the corresponding transaction.
-    destination_result_incentive_value:
-      type: number
-      description: 'The incentive value (XRP) to be added into the total `destination_result_amount`.
+    withdrawal_result_id:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: '**[Sender only]**
+
+
+        Unique identifier for the withdrawal transaction at the `source_exchange`.
 
         '
-    ssa_account:
-      type: string
-      description: The SSA account name and address of the sender in `accountname@ripplenetaddress` format.
-      minLength: 1
-      maxLength: 128
-    ripplenet_payment_id:
+      example: 2b325317-abcd-1234-9aa2-0d5eb2c3c0e1
+    deposit_result_id:
       type: string
       minLength: 1
       maxLength: 128
-      description: The unique payment identifier.
-      example: 70eccd4f-abcd-1234-a655-3aeddff19e4a
+      description: '**[Receiver only]**
+
+
+        Unique identifier for the deposit at the `destination_exchange`.
+
+        '
+      example: 18700e69-1234-abcd-5678-cb17d5ccdbca
+    withdrawal_result_fee_amount:
+      type: number
+      description: '**[Sender only]**
+
+
+        Withdrawal fee charged by the `source_exchange`. This is substracted from the total `withdrawal_result_amount`.
+
+        '
     ReconciliationReportTransaction:
       title: Reconciliation
       x-implements:
@@ -827,182 +1054,55 @@ components:
       description: These are the data fields for the `RECON` report you download from the [Get a report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport) operation. Use this for reconciliation and detailed state-by-state investigation.
       x-tags:
       - Report data fields
-    deposit_result_fee_amount:
+    report_created_on:
+      type: string
+      description: Report creation time
+      format: date-time
+      example: '2018-04-06T20:33:35Z'
+    liquidation_trade_request_status:
+      type: string
+      minLength: 1
+      maxLength: 128
+      description: Reserved for future use.
+    destination_result_incentive_value:
+      type: number
+      description: 'The incentive value (XRP) to be added into the total `destination_result_amount`.
+
+        '
+    CreatedByEnum:
+      type: string
+      description: 'Query for report types based on the entity that initiated report creation.
+
+
+        | Value      | Description                                        |
+
+        |------------|----------------------------------------------------|
+
+        | SCHEDULER  | Get automated system-generated reports. |
+
+        | USER       | Customized reports generated by users through the UI. |
+
+        | API        | Customized reports generated using the API. |
+
+        '
+      enum:
+      - USER
+      - SCHEDULER
+      - API
+      example: USER
+    destination_result_amount:
       type: number
       description: '**[Receiver only]**
 
 
-        Deposit fee charged in XRP by the `destination_exchange`.
+        The final XRP amount at destination wallet to be liquidated into received fiat currency.
 
         '
-    ReportsMetadataResponse:
-      required:
-      - reports
-      type: object
-      additionalProperties: false
-      properties:
-        reports:
-          type: array
-          minItems: 0
-          items:
-            $ref: '#/components/schemas/ReportMetadata'
-    received_amount:
-      type: number
-      description: The payment amount received by the beneficiary.
-      example: 39.45
-    fx_spot_rate:
-      type: number
-      description: '**[Sender only]**
-
-
-        The foreign exchange spot rate sourced from Refinitiv, CurrencyLayer, or another third-party source.
-
-        '
-      example: 58.70956379
-    payment_method:
+    ssa_transfer_currency:
       type: string
+      description: The three-letter code of the currency associated with this SSA transfer.
       minLength: 1
       maxLength: 128
-      description: "**[Sender only]**\n\nMethod for completing the payment. This is a freeform text field that accepts custom strings for payment methods, for example:\n\n  - CSM_ID_IDR\n  - MSISDN_ID_IDR\n  - CASHPICKUP_ID_IDR\n  - CARD_CN_CNY\n\n  Or you can use RippleNet payment method values:\n\n  - REAL_TIME_GROSS_SETTLEMENT_SYSTEM\n  - REAL_TIME_NET_SETTLEMENT_SYSTEM\n  - MASS_NET_PAYMENT_SYSTEM\n  - BOOK_TRANSFER\n  - CASH_PAYOUT\n  - WALLET_PAYMENT\n  - OTHER\n"
-      example: CSM_TH_THB
-    PaymentOpsReportTransaction:
-      title: Payment operations
-      type: object
-      additionalProperties: false
-      x-parent: PaymentOpsReportTransactionBase
-      properties:
-        end_to_end_id:
-          $ref: '#/components/schemas/end_to_end_id'
-        ripplenet_payment_id:
-          $ref: '#/components/schemas/ripplenet_payment_id'
-        quote_ts:
-          type: string
-          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) timestamp of the quote.
-          format: date-time
-        created_at:
-          type: string
-          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) timestamp when the transaction was created.
-          format: date-time
-          example: '2022-10-02T20:57:13.606Z'
-        executed_at:
-          type: string
-          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) timestamp when the payment was settled.
-          format: date-time
-          example: '2022-10-02T20:57:20.62Z'
-        sender_address:
-          $ref: '#/components/schemas/sender_address'
-        sender_customer:
-          $ref: '#/components/schemas/sender_customer'
-        sent_amount:
-          $ref: '#/components/schemas/sent_amount'
-        sent_currency:
-          $ref: '#/components/schemas/sent_currency'
-        withdrawal_result_amount:
-          $ref: '#/components/schemas/withdrawal_result_amount'
-        receiver_address:
-          $ref: '#/components/schemas/receiver_address'
-        receiver_customer:
-          $ref: '#/components/schemas/receiver_customer'
-        received_amount:
-          $ref: '#/components/schemas/received_amount'
-        received_currency:
-          $ref: '#/components/schemas/received_currency'
-        fx_spot_rate:
-          $ref: '#/components/schemas/fx_spot_rate'
-        source_exchange:
-          $ref: '#/components/schemas/source_exchange'
-        destination_exchange:
-          $ref: '#/components/schemas/destination_exchange'
-        payment_method:
-          $ref: '#/components/schemas/payment_method'
-        payment_state:
-          $ref: '#/components/schemas/payment_state'
-        remitter_name:
-          $ref: '#/components/schemas/remitter_name'
-        remitter_account:
-          $ref: '#/components/schemas/remitter_account'
-        beneficiary_name:
-          $ref: '#/components/schemas/beneficiary_name'
-        beneficiary_account:
-          $ref: '#/components/schemas/beneficiary_account'
-        payment_batch_id:
-          $ref: '#/components/schemas/payment_batch_id'
-      x-jackson-property-order:
-        props:
-        - end_to_end_id
-        - ripplenet_payment_id
-        - quote_ts
-        - created_at
-        - executed_at
-        - sender_address
-        - sender_customer
-        - sent_amount
-        - sent_currency
-        - withdrawal_result_amount
-        - receiver_address
-        - receiver_customer
-        - received_amount
-        - received_currency
-        - fx_spot_rate
-        - source_exchange
-        - destination_exchange
-        - payment_method
-        - payment_state
-        - remitter_name
-        - remitter_account
-        - beneficiary_name
-        - beneficiary_account
-        - payment_batch_id
-      description: These are the data fields for the `PAYMENT_OPS` report you download from the [Get a report](/products/payments-odl/api-docs/report_service/reference/openapi/reports/getreport) operation. Use this report for high-level payment investigation and reporting.
-      x-tags:
-      - Report data fields
-    withdrawal_result_incentive_value:
-      type: number
-      description: '**[Sender only]**
-
-
-        The incentive value in XRP applied to `source_result_proceeds` to arrive at the `withdrawal_result_amount` value.
-
-        '
-    ReportCreatedBy:
-      type: string
-      minLength: 1
-      maxLength: 128
-      example: Norma Jean
-      description: 'Identifies the entity that initiated the report creation.
-
-
-        | Value       | Description                                        |
-
-        |-------------|----------------------------------------------------|
-
-        | SCHEDULER   | Automated system-generated report initiated by the scheduler. |
-
-        | API         | User-generated report initiated through the API. |
-
-        | [full name] | Full name of the user who initiated the creation of the report through the UI. |
-
-        | null        | Legacy support for older reports. |
-
-        '
-    sent_currency:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: The [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) currency code of the of `sent_amount`.
-      example: USD
-    withdrawal_result_amount:
-      type: number
-      description: '**[Sender only]**
-
-
-        Final amount of XRP at `source_exchange` wallet to be withdrawn after `withdrawal_result_fee_amount` fees and `withdrawal_result_incentive_value` incentives have been applied.
-
-
-        **Note**: This value can be higher or lower than `source_result_proceeds` depending on whether the incentives were positive or negative.
-
-        '
-      example: 39.846668
     beneficiary_account:
       type: string
       minLength: 1
@@ -1013,59 +1113,53 @@ components:
         **Note**: Values are only viewable by the customer requesting the report.
 
         '
-    ErrorResponse:
+    ReportRecord:
       required:
-      - type
-      - errorCode
-      - title
-      - time
+      - endDate
+      - reportFormat
+      - reportId
+      - startDate
+      - reportStatus
+      - reportType
       type: object
       additionalProperties: false
       properties:
-        type:
+        reportId:
           type: string
-          format: uri
-          example: https://docs.ripple.com/payments-odl/api-docs/report_service/reference/#error/RPT_1
-        errorCode:
+          description: Unique identifier for a report.
+          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          format: uuid
+        reportName:
+          $ref: '#/components/schemas/report_name'
+        reportType:
+          $ref: '#/components/schemas/ReportTypeEnum'
+        reportFormat:
+          $ref: '#/components/schemas/ReportFormatEnum'
+        reportStatus:
+          $ref: '#/components/schemas/ReportStatusEnum'
+        startDate:
           type: string
-          example: RPT_1
-        title:
+          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) start date (inclusive) of the report.
+          format: date-time
+          example: '2018-04-06T19:33:35Z'
+        endDate:
           type: string
-          minLength: 1
-          maxLength: 128
-          example: BAD_REQUEST
-        detail:
-          type: string
-          minLength: 1
-          maxLength: 2048
-          example: Required field missing
-        time:
-          type: string
-          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) error timestamp.
+          description: 'The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) end date (inclusive) of the report.
+
+
+            **Note**: Must be after `startDate`, but no more than 90 days after.
+
+            '
           format: date-time
           example: '2018-04-06T20:33:35Z'
-    withdrawal_result_id:
+        createdOn:
+          $ref: '#/components/schemas/report_created_on'
+    sent_currency:
       type: string
       minLength: 1
       maxLength: 128
-      description: '**[Sender only]**
-
-
-        Unique identifier for the withdrawal transaction at the `source_exchange`.
-
-        '
-      example: 2b325317-abcd-1234-9aa2-0d5eb2c3c0e1
-    source_exchange:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: '**[Sender only]**
-
-
-        The source exchange where the sender originates the payment.
-
-        '
-      example: bitstamp
+      description: The [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) currency code of the of `sent_amount`.
+      example: USD
     transaction_type:
       type: string
       minLength: 1
@@ -1078,154 +1172,10 @@ components:
         FIAT_TRANSFER: Transfers of fiat.
         TRADE: Trade transfers.
       example: TRADE
-    end_to_end_id:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: The unique ID that the sender specifies. It persists on all RippleNet instances that participate in the payment.
-    transfer_currency:
-      type: string
-      description: The three-letter code of the currency associated with this transfer.
-      minLength: 1
-      maxLength: 128
-    report_name:
-      type: string
-      minLength: 1
-      maxLength: 256
-      description: User defined name of the report.
-      example: My custom report
-    remitter_account:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: 'Account number at the sending institution for the payment remitter.
-
-
-        **Note**: Values are only viewable by the customer requesting the report.
-
-        '
-    ssa_remote_transfer_id:
-      type: string
-      description: The unique identifier of the SSA transfer from the SSA funding account to the SSA account.
-      minLength: 1
-      maxLength: 128
-    payment_state:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: The state of a payment at the moment it is queried.
-      example: COMPLETED
-    ReportRequest:
-      required:
-      - reportName
-      - reportType
-      - reportFormat
-      - startDate
-      - endDate
-      type: object
-      additionalProperties: false
-      properties:
-        reportName:
-          $ref: '#/components/schemas/report_name'
-        startDate:
-          type: string
-          description: The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) start date (inclusive) for requested report.
-          format: date-time
-          example: '2018-04-06T19:33:35Z'
-        endDate:
-          type: string
-          description: 'The [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) end date (inclusive) for a requested report.
-
-
-            **Note**: Must be after `startDate`, but no more than 90 days after.
-
-            '
-          format: date-time
-          example: '2018-04-06T20:33:35Z'
-        reportType:
-          $ref: '#/components/schemas/ReportTypeEnum'
-        reportFormat:
-          $ref: '#/components/schemas/ReportFormatEnum'
-    destination_exchange:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: '**[Receiver only]**
-
-
-        The destination exchange for the payment.
-
-        '
-      example: independentreserve
-    intermediary_delta:
+    source_result_proceeds:
       type: number
-    destination_result_id:
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: Unique identifier for the destination trade at the `destination_exchange`.
-      example: 2c3367d2-ab12-3456-78c9-d9edbf6bcbc5
-    payment_batch_id:
-      type: string
-      minLength: 1
-      maxLength: 36
-      description: 'Unique identifier for a batch of payments.
-
-
-        **Note**: This field is only populated for payments that are part of a batch.
-
-        '
+      description: XRP amount after exchange of the `source_result_adjusted_amount` at the `source_exchange`.
   examples:
-    PaymentOpsReportResponse:
-      value:
-        end_to_end_id: string
-        ripplenet_payment_id: 70eccd4f-abcd-1234-a655-3aeddff19e4a
-        quote_ts: '2019-08-24T14:15:22Z'
-        created_at: '2022-10-02T20:57:13.606Z'
-        executed_at: '2022-10-02T20:57:20.62Z'
-        sender_address: new_york@rn.us.ny.new_york
-        sender_customer: examplecorp_sf
-        sent_amount: 40
-        sent_currency: USD
-        withdrawal_result_amount: 39.846668
-        receiver_address: new_york@rn.us.ny.new_york
-        receiver_customer: sf
-        received_amount: 39.45
-        received_currency: PHP
-        fx_spot_rate: 58.70956379
-        source_exchange: bitstamp
-        destination_exchange: independentreserve
-        payment_method: CSM_TH_THB
-        payment_state: COMPLETED
-        remitter_name: string
-        remitter_account: string
-        beneficiary_name: string
-        beneficiary_account: string
-        payment_batch_id: 497f6eca-1234-5678-bfeb-53cbbbba6f08
-    FailureConversionSsaReportResponse:
-      value:
-        end_to_end_id: 0f1cf226-7586-4324-b4c0-520e602e6acd
-        ripplenet_payment_id: 70eccd4f-abcd-1234-a655-3aeddff19e4a
-        execution_result_type: CRYPTO_TRANSFER
-        execution_timestamp: '2019-08-24T14:15:22Z'
-        fiat_adjusted_value: 0
-        fx_rate: 0
-        intermediary_delta: -1.205453
-        payment_state: COMPLETED
-        sent_amount: 40
-        sent_currency: USD
-        received_amount: 39.45
-        received_currency: PHP
-        transfer_currency: XRP
-        venue_id: 8eef087a-abcd-1234-922d-e802b1126ea0
-        ssa_account: customer@test.jane-doe-env
-        sender_customer: examplecorp_sf
-        ssa_remote_transfer_id: d9b9063a-35e1-4c7d-8a0a-f4b1d93ac03e
-        ssa_transfer_amount: 0
-        ssa_balance_change: 0
-        ssa_balance_result: 0
-        ssa_transfer_currency: XRP
-        ssa_transfer_state: PREPARED
     ReconReportResponse:
       value:
         end_to_end_id: string
@@ -1272,6 +1222,56 @@ components:
         destination_result_proceeds: 0
         destination_result_adjusted_proceeds: 0
         liquidation_status: string
+        payment_batch_id: 497f6eca-1234-5678-bfeb-53cbbbba6f08
+    FailureConversionSsaReportResponse:
+      value:
+        end_to_end_id: 0f1cf226-7586-4324-b4c0-520e602e6acd
+        ripplenet_payment_id: 70eccd4f-abcd-1234-a655-3aeddff19e4a
+        execution_result_type: CRYPTO_TRANSFER
+        execution_timestamp: '2019-08-24T14:15:22Z'
+        fiat_adjusted_value: 0
+        fx_rate: 0
+        intermediary_delta: -1.205453
+        payment_state: COMPLETED
+        sent_amount: 40
+        sent_currency: USD
+        received_amount: 39.45
+        received_currency: PHP
+        transfer_currency: XRP
+        venue_id: 8eef087a-abcd-1234-922d-e802b1126ea0
+        ssa_account: customer@test.jane-doe-env
+        sender_customer: examplecorp_sf
+        ssa_remote_transfer_id: d9b9063a-35e1-4c7d-8a0a-f4b1d93ac03e
+        ssa_transfer_amount: 0
+        ssa_balance_change: 0
+        ssa_balance_result: 0
+        ssa_transfer_currency: XRP
+        ssa_transfer_state: PREPARED
+    PaymentOpsReportResponse:
+      value:
+        end_to_end_id: string
+        ripplenet_payment_id: 70eccd4f-abcd-1234-a655-3aeddff19e4a
+        quote_ts: '2019-08-24T14:15:22Z'
+        created_at: '2022-10-02T20:57:13.606Z'
+        executed_at: '2022-10-02T20:57:20.62Z'
+        sender_address: new_york@rn.us.ny.new_york
+        sender_customer: examplecorp_sf
+        sent_amount: 40
+        sent_currency: USD
+        withdrawal_result_amount: 39.846668
+        receiver_address: new_york@rn.us.ny.new_york
+        receiver_customer: sf
+        received_amount: 39.45
+        received_currency: PHP
+        fx_spot_rate: 58.70956379
+        source_exchange: bitstamp
+        destination_exchange: independentreserve
+        payment_method: CSM_TH_THB
+        payment_state: COMPLETED
+        remitter_name: string
+        remitter_account: string
+        beneficiary_name: string
+        beneficiary_account: string
         payment_batch_id: 497f6eca-1234-5678-bfeb-53cbbbba6f08
   securitySchemes:
     Bearer:

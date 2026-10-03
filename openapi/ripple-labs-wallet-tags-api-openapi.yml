@@ -475,6 +475,8 @@ paths:
       - Wallet Tags
 components:
   schemas:
+    v2DeleteWalletTagResponse:
+      type: object
     protobufAny:
       type: object
       properties:
@@ -516,8 +518,6 @@ components:
       required:
       - walletId
       - vaultId
-    v2DeleteWalletTagResponse:
-      type: object
   securitySchemes:
     TokenAuth:
       type: apiKey

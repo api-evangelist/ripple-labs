@@ -293,6 +293,45 @@ components:
           items:
             $ref: '#/components/schemas/PoolAccountBalance'
       description: Provides balance details for accounts owned by a RippleNet address.
+    AccountBalance:
+      type: object
+      properties:
+        account_name:
+          type: string
+          example: trans_usd_sf
+          description: Name of the account, which acts as the account's unique identifier on RippleNet.
+        balance:
+          type: number
+          example: -909
+          description: Balance available in the account.
+        owner:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the owner of the account.
+        currency:
+          type: string
+          example: USD
+          description: Currency supported by the account.
+        minimum_allowed_balance:
+          type: number
+          example: -1500000
+          description: Minimum balance allowed for the account.
+        maximum_allowed_balance:
+          type: number
+          example: 1000000
+          description: Maximum balance allowed for the account.
+        low_liquidity_threshold:
+          type: number
+          example: 1000
+          description: When the `balance` value for a sender account meets or is less than this amount after payment settlement execution, a low-liquidity message is logged at the INFO level.
+        owner_min_allowed_balance:
+          type: number
+          description: Minimum balance allowed by the owner of a nostro account. RippleNet Server uses the greater of this value and the `minimum_allowed_balance` to set the account balance minimum.
+        owner_max_allowed_balance:
+          type: number
+          example: 1000000
+          description: Maximum balance allowed by the owner of a nostro account. RippleNet Server uses the lesser of this value and the `maximum_allowed_balance` to set the account balance maximum.
+      description: Provides balance details for each account owned by a RippleNet address.
     Transactions:
       type: object
       required:
@@ -365,28 +404,6 @@ components:
           items:
             $ref: '#/components/schemas/AccountBalance'
       description: Provides balance details for accounts owned by a RippleNet address.
-    Balances:
-      type: object
-      required:
-      - errors
-      - local_balance
-      - remote_balances
-      properties:
-        local_balance:
-          description: Provides balance details for accounts owned by a RippleNet address.
-          items:
-            $ref: '#/components/schemas/InstitutionBalance'
-        remote_balances:
-          type: array
-          description: Provides balance details for accounts owned by a RippleNet address.
-          items:
-            $ref: '#/components/schemas/InstitutionBalance'
-        errors:
-          type: array
-          description: Lists any errors encountered when returning balance details.
-          items:
-            type: string
-      description: Provides balances for all accounts owned by a RippleNet address.
     StatementResponse:
       type: object
       required:
@@ -438,65 +455,6 @@ components:
         transactions:
           $ref: '#/components/schemas/Transactions'
       description: Provides a statement for an account that lists payments and transfers that impacted the account's balance during a specified date-time range.
-    AccountBalance:
-      type: object
-      properties:
-        account_name:
-          type: string
-          example: trans_usd_sf
-          description: Name of the account, which acts as the account's unique identifier on RippleNet.
-        balance:
-          type: number
-          example: -909
-          description: Balance available in the account.
-        owner:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet address of the owner of the account.
-        currency:
-          type: string
-          example: USD
-          description: Currency supported by the account.
-        minimum_allowed_balance:
-          type: number
-          example: -1500000
-          description: Minimum balance allowed for the account.
-        maximum_allowed_balance:
-          type: number
-          example: 1000000
-          description: Maximum balance allowed for the account.
-        low_liquidity_threshold:
-          type: number
-          example: 1000
-          description: When the `balance` value for a sender account meets or is less than this amount after payment settlement execution, a low-liquidity message is logged at the INFO level.
-        owner_min_allowed_balance:
-          type: number
-          description: Minimum balance allowed by the owner of a nostro account. RippleNet Server uses the greater of this value and the `minimum_allowed_balance` to set the account balance minimum.
-        owner_max_allowed_balance:
-          type: number
-          example: 1000000
-          description: Maximum balance allowed by the owner of a nostro account. RippleNet Server uses the lesser of this value and the `maximum_allowed_balance` to set the account balance maximum.
-      description: Provides balance details for each account owned by a RippleNet address.
-    PoolAccountBalance:
-      type: object
-      properties:
-        pool_account_name:
-          type: string
-          description: Name of the pool account.
-        balance:
-          type: number
-          description: Aggregated balance of linked accounts which form this pool account.
-        owner:
-          type: string
-          description: The RippleNet peer who owns this pool account.
-        currency:
-          type: string
-          description: The currency of pool account.
-        linked_accounts:
-          type: array
-          description: Accounts linked to this pool account.
-          items:
-            type: string
     StatementRecord:
       type: object
       required:
@@ -581,6 +539,48 @@ components:
           example: rn.mx.mexico
           description: RippleNet address of the recieving account. Always set to `null` if the `transaction_type` is set to `TRANSFER`.
       description: Provides details about a transaction included in an account statement.
+    PoolAccountBalance:
+      type: object
+      properties:
+        pool_account_name:
+          type: string
+          description: Name of the pool account.
+        balance:
+          type: number
+          description: Aggregated balance of linked accounts which form this pool account.
+        owner:
+          type: string
+          description: The RippleNet peer who owns this pool account.
+        currency:
+          type: string
+          description: The currency of pool account.
+        linked_accounts:
+          type: array
+          description: Accounts linked to this pool account.
+          items:
+            type: string
+    Balances:
+      type: object
+      required:
+      - errors
+      - local_balance
+      - remote_balances
+      properties:
+        local_balance:
+          description: Provides balance details for accounts owned by a RippleNet address.
+          items:
+            $ref: '#/components/schemas/InstitutionBalance'
+        remote_balances:
+          type: array
+          description: Provides balance details for accounts owned by a RippleNet address.
+          items:
+            $ref: '#/components/schemas/InstitutionBalance'
+        errors:
+          type: array
+          description: Lists any errors encountered when returning balance details.
+          items:
+            type: string
+      description: Provides balances for all accounts owned by a RippleNet address.
     RippleNetProblem:
       type: object
       description: Represents a request to create and update a payout method record.

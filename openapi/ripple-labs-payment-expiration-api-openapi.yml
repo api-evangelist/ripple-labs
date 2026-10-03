@@ -159,37 +159,6 @@ paths:
       - Bearer: []
 components:
   schemas:
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
     PaymentExpiry:
       type: object
       properties:
@@ -210,6 +179,15 @@ components:
           example: USD
           description: currency of the exchange rate.
       description: Use this JSON request object to update the payment time to live represented in seconds.
+    PaymentExpiries:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/PaymentExpiryResponse'
+      description: Provides a `content` array of payment expiry objects and a set of pagination information fields.
     Sort:
       type: object
       properties:
@@ -230,15 +208,6 @@ components:
         descending:
           type: boolean
           example: false
-    PaymentExpiries:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            items:
-              $ref: '#/components/schemas/PaymentExpiryResponse'
-      description: Provides a `content` array of payment expiry objects and a set of pagination information fields.
     PaymentExpiryResponse:
       type: object
       properties:
@@ -292,6 +261,37 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
   requestBodies:
     PaymentExpiry:
       content:

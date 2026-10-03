@@ -995,6 +995,156 @@ paths:
       - Counterparties
 components:
   schemas:
+    commonv2Address:
+      type: object
+      properties:
+        address1:
+          type: string
+          example: Flat B
+          description: The first line of the address
+        address2:
+          type: string
+          example: 10 Mayo Road
+          description: The second line of the address
+        city:
+          type: string
+          example: London
+          description: The city of the address
+        state:
+          type: string
+          example: Greater London
+          description: The state of the address
+        postCode:
+          type: string
+          example: W1 1AA
+          description: The postal code of the address
+        country:
+          type: string
+          example: United Kingdom
+          description: The country of the address
+      required:
+      - address1
+      - city
+      - state
+      - postCode
+      - country
+    v2CounterpartyDetails:
+      type: object
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/v2CounterpartyType'
+          - type: string
+            example: ORGANIZATION
+            description: The counterparty type
+        individual:
+          $ref: '#/components/schemas/v2Individual'
+        organization:
+          $ref: '#/components/schemas/counterpartyv2Organization'
+        dApp:
+          $ref: '#/components/schemas/v2DApp'
+      required:
+      - type
+    v2ListCounterpartiesRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 1000
+          description: The number of results to return per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/v2FilterRequest'
+          - description: 'Pagination and sorting. Sortable fields: name, type, created_at, updated_at.'
+        filter:
+          allOf:
+          - $ref: '#/components/schemas/v2CounterpartyFilter'
+          - description: Optional counterparty filters. Each populated sub-filter is AND-ed.
+        search:
+          type: string
+          example: Treasury
+          description: Case-insensitive search over counterparty ID, name, description, and counterparty details.
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2CounterpartyType:
+      type: string
+      enum:
+      - ORGANIZATION
+      - INDIVIDUAL
+      - DAPP
+    v2StringFilter:
+      type: object
+      properties:
+        eq:
+          type: string
+          description: Exact match
+        notEq:
+          type: string
+          description: Not equal to
+        contains:
+          type: string
+          description: Contains substring (case-insensitive)
+        startsWith:
+          type: string
+          description: Starts with prefix (case-insensitive)
+        endsWith:
+          type: string
+          description: Ends with suffix (case-insensitive)
+        in:
+          type: array
+          items:
+            type: string
+          description: Value is in the list
+        notIn:
+          type: array
+          items:
+            type: string
+          description: Value is not in the list
+        isNull:
+          type: boolean
+          description: Check if field is null
+    v2SortOrder:
+      type: string
+      enum:
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+    v2FilterRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+          example: 50
+          description: Number of results per page (default 50, max 1000)
+        pageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: Token for pagination from previous response
+        orderBy:
+          type: string
+          example: created_at
+          description: Field to order results by
+        order:
+          allOf:
+          - $ref: '#/components/schemas/v2SortOrder'
+          - description: Sort order (ASC or DESC)
     TimestampFilterTimestampRange:
       type: object
       properties:
@@ -1008,6 +1158,72 @@ components:
           format: date-time
           example: '2024-08-31T23:59:59Z'
           description: End of time range (inclusive)
+    v2DeleteCounterpartyResponse:
+      type: object
+    v2DApp:
+      type: object
+    counterpartyv2Organization:
+      type: object
+      properties:
+        legalName:
+          type: string
+          example: Palisade Financial
+          description: The full legal name of the organization
+        address:
+          $ref: '#/components/schemas/commonv2Address'
+      required:
+      - legalName
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v2CounterpartyFilter:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by counterparty ID
+        name:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by counterparty name
+        description:
+          allOf:
+          - $ref: '#/components/schemas/v2StringFilter'
+          - description: Filter by counterparty description
+        type:
+          allOf:
+          - $ref: '#/components/schemas/v2CounterpartyType'
+          - description: Filter by counterparty type
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by creation timestamp
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/v2TimestampFilter'
+          - description: Filter by last-update timestamp
+    v2FilterResponse:
+      type: object
+      properties:
+        previousPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the previous page of results
+        nextPageToken:
+          type: string
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: The token to retrieve the next page of results
+        total:
+          type: integer
+          format: int32
+          example: 100
+          description: The total number of results
+      required:
+      - total
     v2Counterparty:
       type: object
       properties:
@@ -1060,148 +1276,6 @@ components:
       - name
       - details
       - addressCount
-    counterpartyv2Organization:
-      type: object
-      properties:
-        legalName:
-          type: string
-          example: Palisade Financial
-          description: The full legal name of the organization
-        address:
-          $ref: '#/components/schemas/commonv2Address'
-      required:
-      - legalName
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    v2DApp:
-      type: object
-    v2CounterpartyFilter:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by counterparty ID
-        name:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by counterparty name
-        description:
-          allOf:
-          - $ref: '#/components/schemas/v2StringFilter'
-          - description: Filter by counterparty description
-        type:
-          allOf:
-          - $ref: '#/components/schemas/v2CounterpartyType'
-          - description: Filter by counterparty type
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/v2TimestampFilter'
-          - description: Filter by creation timestamp
-        updatedAt:
-          allOf:
-          - $ref: '#/components/schemas/v2TimestampFilter'
-          - description: Filter by last-update timestamp
-    v2CounterpartyType:
-      type: string
-      enum:
-      - ORGANIZATION
-      - INDIVIDUAL
-      - DAPP
-    v2FilterResponse:
-      type: object
-      properties:
-        previousPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the previous page of results
-        nextPageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        total:
-          type: integer
-          format: int32
-          example: 100
-          description: The total number of results
-      required:
-      - total
-    v2CounterpartyDetails:
-      type: object
-      properties:
-        type:
-          allOf:
-          - $ref: '#/components/schemas/v2CounterpartyType'
-          - type: string
-            example: ORGANIZATION
-            description: The counterparty type
-        individual:
-          $ref: '#/components/schemas/v2Individual'
-        organization:
-          $ref: '#/components/schemas/counterpartyv2Organization'
-        dApp:
-          $ref: '#/components/schemas/v2DApp'
-      required:
-      - type
-    v2SortOrder:
-      type: string
-      enum:
-      - SORT_ORDER_ASC
-      - SORT_ORDER_DESC
-    v2Individual:
-      type: object
-      properties:
-        firstName:
-          type: string
-          example: Joe
-          description: The persons first name
-        lastName:
-          type: string
-          example: Bloggs
-          description: The persons last name
-        address:
-          $ref: '#/components/schemas/commonv2Address'
-      required:
-      - firstName
-      - lastName
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
-    v2FilterRequest:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-          format: int32
-          example: 50
-          description: Number of results per page (default 50, max 1000)
-        pageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: Token for pagination from previous response
-        orderBy:
-          type: string
-          example: created_at
-          description: Field to order results by
-        order:
-          allOf:
-          - $ref: '#/components/schemas/v2SortOrder'
-          - description: Sort order (ASC or DESC)
     v2CreateCounterpartyRequest:
       type: object
       properties:
@@ -1221,6 +1295,33 @@ components:
       required:
       - name
       - details
+    v2ListCounterpartiesResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        counterparties:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2Counterparty'
+            - type: object
+    v2Individual:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Joe
+          description: The persons first name
+        lastName:
+          type: string
+          example: Bloggs
+          description: The persons last name
+        address:
+          $ref: '#/components/schemas/commonv2Address'
+      required:
+      - firstName
+      - lastName
     v2TimestampFilter:
       type: object
       properties:
@@ -1266,107 +1367,6 @@ components:
           format: int32
           example: -7
           description: Relative days from now (negative for past, positive for future)
-    v2ListCounterpartiesRequest:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-          format: int32
-          example: 1000
-          description: The number of results to return per page (default 50, max 1000)
-        pageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: The token to retrieve the next page of results
-        pagination:
-          allOf:
-          - $ref: '#/components/schemas/v2FilterRequest'
-          - description: 'Pagination and sorting. Sortable fields: name, type, created_at, updated_at.'
-        filter:
-          allOf:
-          - $ref: '#/components/schemas/v2CounterpartyFilter'
-          - description: Optional counterparty filters. Each populated sub-filter is AND-ed.
-        search:
-          type: string
-          example: Treasury
-          description: Case-insensitive search over counterparty ID, name, description, and counterparty details.
-    v2StringFilter:
-      type: object
-      properties:
-        eq:
-          type: string
-          description: Exact match
-        notEq:
-          type: string
-          description: Not equal to
-        contains:
-          type: string
-          description: Contains substring (case-insensitive)
-        startsWith:
-          type: string
-          description: Starts with prefix (case-insensitive)
-        endsWith:
-          type: string
-          description: Ends with suffix (case-insensitive)
-        in:
-          type: array
-          items:
-            type: string
-          description: Value is in the list
-        notIn:
-          type: array
-          items:
-            type: string
-          description: Value is not in the list
-        isNull:
-          type: boolean
-          description: Check if field is null
-    v2DeleteCounterpartyResponse:
-      type: object
-    commonv2Address:
-      type: object
-      properties:
-        address1:
-          type: string
-          example: Flat B
-          description: The first line of the address
-        address2:
-          type: string
-          example: 10 Mayo Road
-          description: The second line of the address
-        city:
-          type: string
-          example: London
-          description: The city of the address
-        state:
-          type: string
-          example: Greater London
-          description: The state of the address
-        postCode:
-          type: string
-          example: W1 1AA
-          description: The postal code of the address
-        country:
-          type: string
-          example: United Kingdom
-          description: The country of the address
-      required:
-      - address1
-      - city
-      - state
-      - postCode
-      - country
-    v2ListCounterpartiesResponse:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/v2FilterResponse'
-        counterparties:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2Counterparty'
-            - type: object
   securitySchemes:
     TokenAuth:
       type: apiKey

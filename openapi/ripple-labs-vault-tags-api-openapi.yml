@@ -469,8 +469,6 @@ components:
             allOf:
             - $ref: '#/components/schemas/protobufAny'
             - type: object
-    v2DeleteVaultTagResponse:
-      type: object
     v2VaultTag:
       type: object
       properties:
@@ -487,6 +485,8 @@ components:
           description: The tags belonging to the vault
       required:
       - vaultId
+    v2DeleteVaultTagResponse:
+      type: object
   securitySchemes:
     TokenAuth:
       type: apiKey

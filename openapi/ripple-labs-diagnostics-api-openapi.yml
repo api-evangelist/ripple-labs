@@ -64,6 +64,34 @@ paths:
                 $ref: '#/components/schemas/RippleNetProblem'
 components:
   schemas:
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
     Heartbeat:
       type: object
       required:
@@ -99,6 +127,21 @@ components:
           items:
             type: string
       description: Provides the health status of the xCurrent server’s peers.
+    HealthCheck:
+      type: object
+      properties:
+        service:
+          type: string
+          example: database
+          description: Name of the service.
+        healthy:
+          type: boolean
+          description: Returns `true` if the service is up and running, and `false` if it is down or unreachable.
+        detail:
+          type: string
+          example: Message queue unreachable.
+          description: Reason for health check failure, if any.
+      description: Health check information for a single component.
     Health:
       type: object
       required:
@@ -118,49 +161,6 @@ components:
           example: Failed to perform health check
           description: Reason for health check failure, if any.
       description: Provides a high-level status of the health of the xCurrent server.
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
-    HealthCheck:
-      type: object
-      properties:
-        service:
-          type: string
-          example: database
-          description: Name of the service.
-        healthy:
-          type: boolean
-          description: Returns `true` if the service is up and running, and `false` if it is down or unreachable.
-        detail:
-          type: string
-          example: Message queue unreachable.
-          description: Reason for health check failure, if any.
-      description: Health check information for a single component.
   securitySchemes:
     Bearer:
       type: apiKey

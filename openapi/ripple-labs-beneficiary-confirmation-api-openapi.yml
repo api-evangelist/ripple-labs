@@ -228,46 +228,6 @@ paths:
       - Bearer: []
 components:
   schemas:
-    AccountLookups:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            items:
-              $ref: '#/components/schemas/AccountLookup'
-      description: Paged response for account lookups
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
     CompleteAccountLookupRequest:
       type: object
       description: Complete account lookup request to validate the Beneficiary before initiating the payment.
@@ -339,6 +299,91 @@ components:
         redacted_account_currency:
           type: string
           description: The 3 character currency code for the account as per ISO-4217 standards
+    InitiateAccountLookupRequest:
+      type: object
+      description: Initiate account lookup request to validate a beneficiary's account details before sending a payment.
+      required:
+      - destination_address
+      - country_code
+      - account_id
+      - account_id_type
+      properties:
+        account_currency:
+          type: string
+          description: The 3 character currency code for the account as per ISO-4217 standards
+        clearing_system_code:
+          type: string
+          maxLength: 50
+          description: Clearing system code
+        destination_address:
+          type: string
+          description: RippleNet address of the receiver.
+        first_name:
+          type: string
+          maxLength: 40
+          description: First name of the beneficiary.
+        middle_name:
+          type: string
+          maxLength: 40
+          description: Middle name of the beneficiary.
+        last_name:
+          type: string
+          maxLength: 40
+          description: Last name of the beneficiary.
+        org_name:
+          type: string
+          maxLength: 140
+          description: Name of the organization.
+        country_code:
+          type: string
+          maxLength: 2
+          description: Country of the beneficiary. Alpha-2 Code format per ISO 3166-1.
+        account_id:
+          type: string
+          maxLength: 40
+          description: Identifier for the Account, e.g account number.
+        account_id_type:
+          type: string
+          description: "Account ID type. Possible values are\n  - `AIIN` - (default) Account Issue Identification Number\n  - `BBAN` - Basic Bank Account Number\n  - `CARD` - PAN of the card identifying the account\n  - `CUID` - CHIPS Universal Identifier\n  - `UPIC` - Universal Payment Identification Code\n  - `EMail` - Email Address\n  - `MSISDN` - Mobile Subscriber Integrated Service Digital Network (i.e., phone number)\n  - `DMST` - Domestic\n  - `Other` - Other identifier (e.g., PayID)"
+          enum:
+          - AIIN
+          - BBAN
+          - CARD
+          - CUID
+          - UPIC
+          - EMAIL
+          - MSISDN
+          - DMST
+          - OTHER
+    AccountLookups:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccountLookup'
+      description: Paged response for account lookups
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
     AccountLookup:
       type: object
       description: Response to the sender/receiver for Account Lookup.
@@ -454,82 +499,6 @@ components:
         branch_code:
           type: string
           description: The Branch code (e.g., routing code) that the receiver has on their system.
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    InitiateAccountLookupRequest:
-      type: object
-      description: Initiate account lookup request to validate a beneficiary's account details before sending a payment.
-      required:
-      - destination_address
-      - country_code
-      - account_id
-      - account_id_type
-      properties:
-        account_currency:
-          type: string
-          description: The 3 character currency code for the account as per ISO-4217 standards
-        clearing_system_code:
-          type: string
-          maxLength: 50
-          description: Clearing system code
-        destination_address:
-          type: string
-          description: RippleNet address of the receiver.
-        first_name:
-          type: string
-          maxLength: 40
-          description: First name of the beneficiary.
-        middle_name:
-          type: string
-          maxLength: 40
-          description: Middle name of the beneficiary.
-        last_name:
-          type: string
-          maxLength: 40
-          description: Last name of the beneficiary.
-        org_name:
-          type: string
-          maxLength: 140
-          description: Name of the organization.
-        country_code:
-          type: string
-          maxLength: 2
-          description: Country of the beneficiary. Alpha-2 Code format per ISO 3166-1.
-        account_id:
-          type: string
-          maxLength: 40
-          description: Identifier for the Account, e.g account number.
-        account_id_type:
-          type: string
-          description: "Account ID type. Possible values are\n  - `AIIN` - (default) Account Issue Identification Number\n  - `BBAN` - Basic Bank Account Number\n  - `CARD` - PAN of the card identifying the account\n  - `CUID` - CHIPS Universal Identifier\n  - `UPIC` - Universal Payment Identification Code\n  - `EMail` - Email Address\n  - `MSISDN` - Mobile Subscriber Integrated Service Digital Network (i.e., phone number)\n  - `DMST` - Domestic\n  - `Other` - Other identifier (e.g., PayID)"
-          enum:
-          - AIIN
-          - BBAN
-          - CARD
-          - CUID
-          - UPIC
-          - EMAIL
-          - MSISDN
-          - DMST
-          - OTHER
     AccountLookupStatus:
       type: string
       enum:
@@ -565,6 +534,37 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
   securitySchemes:
     Bearer:
       type: apiKey

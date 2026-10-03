@@ -118,21 +118,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
-    MarketCapSupply:
-      type: object
-      required:
-      - balance
-      - chainBalances
-      description: Aggregate supply figure with a per-chain breakdown.
-      properties:
-        balance:
-          $ref: '#/components/schemas/MarketCapBalance'
-          description: Aggregate balance across all chains.
-        chainBalances:
-          type: object
-          description: Per-chain balance breakdown. Keys are blockchain network names (e.g. `XRPL`, `ETH`).
-          additionalProperties:
-            $ref: '#/components/schemas/MarketCapBalance'
     ProblemDetail:
       type: object
       description: 'Error response following RFC 9457 (Problem Details for HTTP APIs), the successor to RFC 7807.
@@ -172,15 +157,30 @@ components:
           - integer
           - 'null'
           description: Ledger index at which this balance was last observed. Absent when not applicable.
+    MarketCapSupply:
+      type: object
+      required:
+      - balance
+      - chainBalances
+      description: Aggregate supply figure with a per-chain breakdown.
+      properties:
+        balance:
+          $ref: '#/components/schemas/MarketCapBalance'
+          description: Aggregate balance across all chains.
+        chainBalances:
+          type: object
+          description: Per-chain balance breakdown. Keys are blockchain network names (e.g. `XRPL`, `ETH`).
+          additionalProperties:
+            $ref: '#/components/schemas/MarketCapBalance'
   responses:
-    NotFound:
-      description: Resource does not exist
+    InternalServerError:
+      description: Unexpected server error
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/ProblemDetail'
-    InternalServerError:
-      description: Unexpected server error
+    NotFound:
+      description: Resource does not exist
       content:
         application/problem+json:
           schema:

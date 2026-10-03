@@ -257,89 +257,68 @@ paths:
       - Bearer: []
 components:
   schemas:
-    RippleNetNodeRequestForPaymentUserInfo:
+    RippleNetNodeRequestForPaymentRequest:
       type: object
       required:
-      - node_address
+      - amount
+      - currency
+      - quote_type
+      - receiver_address
+      - sender_address
       properties:
-        node_address:
+        sender_address:
           type: string
-          description: RippleNet address of the node that provided the user information.
-        requested:
-          type: array
-          description: User information optionally provided when sending the request for payment.
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        accepted:
-          type: array
-          description: User information optionally provided when accepting the request for payment.
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-        failed:
-          type: array
-          description: User information optionally provided when failing the request payment.
-          items:
-            $ref: '#/components/schemas/UserInfoEntry'
-      description: User information provided across the payment lifecycle.
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
+          example: trans_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet address of the node that is receiving the request for payment, or the eventual sender of the payment.
+        receiver_address:
           type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
+          example: trans_gbp_lon@rn.eur.uk.london
+          description: RippleNet address of the node that is sending the request for payment, or the eventual receiver of the payment.
+        amount:
           type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
+          example: 100.01
+          description: Amount requested to be paid.
+        currency:
           type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
+          example: USD
+          description: Currency code for the `amount` value.
+        quote_type:
           type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
+          example: SENDER_AMOUNT
+          description: Indicates how the amount field should be treated for calculating quote values.
+          enum:
+          - SENDER_AMOUNT
+          - RECEIVER_AMOUNT
+          - SENDER_INSTITUTION_AMOUNT
+          - RECEIVER_INSTITUTION_AMOUNT
+        end_to_end_id:
+          type: string
+          description: ID that the eventual payment receiver can specify. Persisted on all rippleNet node instances (namely, the sender and receiver of the payment) that participate in the request for payment.
+        user_info:
+          type: object
+          description: User-provided data with arbitrary key/value pairs.
+          properties: {}
+      description: Use this JSON object to request a request for payment.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
     RippleNetNodeRequestForPayment:
       type: object
       required:
@@ -409,68 +388,30 @@ components:
           example: 5492648d-2132-4e70-9ded-2fc86f22b321
           description: Unique identifier of a payment associated to request for payment.
       description: Use this JSON object represent a request for payment.
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    RippleNetNodeRequestForPaymentRequest:
+    RippleNetNodeRequestForPaymentUserInfo:
       type: object
       required:
-      - amount
-      - currency
-      - quote_type
-      - receiver_address
-      - sender_address
+      - node_address
       properties:
-        sender_address:
+        node_address:
           type: string
-          example: trans_usd_sf@rn.us.ca.san_francisco
-          description: RippleNet address of the node that is receiving the request for payment, or the eventual sender of the payment.
-        receiver_address:
-          type: string
-          example: trans_gbp_lon@rn.eur.uk.london
-          description: RippleNet address of the node that is sending the request for payment, or the eventual receiver of the payment.
-        amount:
-          type: number
-          example: 100.01
-          description: Amount requested to be paid.
-        currency:
-          type: string
-          example: USD
-          description: Currency code for the `amount` value.
-        quote_type:
-          type: string
-          example: SENDER_AMOUNT
-          description: Indicates how the amount field should be treated for calculating quote values.
-          enum:
-          - SENDER_AMOUNT
-          - RECEIVER_AMOUNT
-          - SENDER_INSTITUTION_AMOUNT
-          - RECEIVER_INSTITUTION_AMOUNT
-        end_to_end_id:
-          type: string
-          description: ID that the eventual payment receiver can specify. Persisted on all rippleNet node instances (namely, the sender and receiver of the payment) that participate in the request for payment.
-        user_info:
-          type: object
-          description: User-provided data with arbitrary key/value pairs.
-          properties: {}
-      description: Use this JSON object to request a request for payment.
+          description: RippleNet address of the node that provided the user information.
+        requested:
+          type: array
+          description: User information optionally provided when sending the request for payment.
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        accepted:
+          type: array
+          description: User information optionally provided when accepting the request for payment.
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+        failed:
+          type: array
+          description: User information optionally provided when failing the request payment.
+          items:
+            $ref: '#/components/schemas/UserInfoEntry'
+      description: User information provided across the payment lifecycle.
     UserInfoEntry:
       type: object
       required:
@@ -490,14 +431,6 @@ components:
           example: EXECUTING
           description: If provided, this parameter descibes payment state more granularly.
       description: User information provided as arbitrary key/value pairs.
-    FailRequestForPaymentRequest:
-      type: object
-      properties:
-        user_info:
-          type: object
-          description: User-provided data with arbitrary key/value pairs.
-          properties: {}
-      description: Use this JSON object to fail a request for payment.
     AcceptRequestForPaymentRequest:
       type: object
       required:
@@ -522,6 +455,73 @@ components:
             items:
               $ref: '#/components/schemas/RippleNetNodeRequestForPayment'
       description: 'Paged response for requests for payment includes:'
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    FailRequestForPaymentRequest:
+      type: object
+      properties:
+        user_info:
+          type: object
+          description: User-provided data with arbitrary key/value pairs.
+          properties: {}
+      description: Use this JSON object to fail a request for payment.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
   securitySchemes:
     Bearer:
       type: apiKey

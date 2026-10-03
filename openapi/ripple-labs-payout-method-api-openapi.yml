@@ -181,6 +181,14 @@ paths:
                 $ref: '#/components/schemas/RippleNetProblem'
 components:
   schemas:
+    PayoutMethods:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/PayoutMethodResponse'
     PayoutMethodRequest:
       type: object
       description: Represents a request to create and update a payout method record.
@@ -230,37 +238,6 @@ components:
           required:
           - time_value
           - time_unit
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
     Sort:
       type: object
       properties:
@@ -333,14 +310,6 @@ components:
           required:
           - time_value
           - time_unit
-    PayoutMethods:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            items:
-              $ref: '#/components/schemas/PayoutMethodResponse'
     RippleNetProblem:
       type: object
       description: Represents a request to create and update a payout method record.
@@ -369,6 +338,37 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
   requestBodies:
     PayoutMethodRequest:
       content:
