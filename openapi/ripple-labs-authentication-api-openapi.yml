@@ -83,6 +83,19 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    BadRequest:
+      description: Invalid request parameters or body
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    Unauthorized:
+      description: Missing or expired access token
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
   schemas:
     ProblemDetail:
       type: object
@@ -109,19 +122,6 @@ components:
           - TRANSACTION_DESTINATION_TYPE_IMMUTABLE
           - INVALID_REQUEST_BODY
           - UNKNOWN_EXCEPTION
-  responses:
-    BadRequest:
-      description: Invalid request parameters or body
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetail'
-    Unauthorized:
-      description: Missing or expired access token
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetail'
   securitySchemes:
     oauth2:
       type: oauth2

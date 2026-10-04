@@ -119,12 +119,8 @@ paths:
       - Sweep Configurations
 components:
   schemas:
-    protobufAny:
+    v2TriggerSweepConfigurationResponse:
       type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
     rpcStatus:
       type: object
       properties:
@@ -139,8 +135,12 @@ components:
             allOf:
             - $ref: '#/components/schemas/protobufAny'
             - type: object
-    v2TriggerSweepConfigurationResponse:
+    protobufAny:
       type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
   securitySchemes:
     TokenAuth:
       type: apiKey

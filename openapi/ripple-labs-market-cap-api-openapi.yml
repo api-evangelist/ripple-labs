@@ -117,7 +117,34 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  responses:
+    NotFound:
+      description: Resource does not exist
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    InternalServerError:
+      description: Unexpected server error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
   schemas:
+    MarketCapBalance:
+      type: object
+      required:
+      - amount
+      description: Balance for a single currency or chain.
+      properties:
+        amount:
+          type: string
+          description: Balance as a decimal string (e.g. "1000000000.00")
+        ledgerIndex:
+          type:
+          - integer
+          - 'null'
+          description: Ledger index at which this balance was last observed. Absent when not applicable.
     ProblemDetail:
       type: object
       description: 'Error response following RFC 9457 (Problem Details for HTTP APIs), the successor to RFC 7807.
@@ -143,20 +170,6 @@ components:
           - TRANSACTION_DESTINATION_TYPE_IMMUTABLE
           - INVALID_REQUEST_BODY
           - UNKNOWN_EXCEPTION
-    MarketCapBalance:
-      type: object
-      required:
-      - amount
-      description: Balance for a single currency or chain.
-      properties:
-        amount:
-          type: string
-          description: Balance as a decimal string (e.g. "1000000000.00")
-        ledgerIndex:
-          type:
-          - integer
-          - 'null'
-          description: Ledger index at which this balance was last observed. Absent when not applicable.
     MarketCapSupply:
       type: object
       required:
@@ -172,19 +185,6 @@ components:
           description: Per-chain balance breakdown. Keys are blockchain network names (e.g. `XRPL`, `ETH`).
           additionalProperties:
             $ref: '#/components/schemas/MarketCapBalance'
-  responses:
-    InternalServerError:
-      description: Unexpected server error
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetail'
-    NotFound:
-      description: Resource does not exist
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetail'
   parameters:
     currencyCode:
       name: currencyCode

@@ -64,6 +64,21 @@ paths:
                 $ref: '#/components/schemas/RippleNetProblem'
 components:
   schemas:
+    HealthCheck:
+      type: object
+      properties:
+        service:
+          type: string
+          example: database
+          description: Name of the service.
+        healthy:
+          type: boolean
+          description: Returns `true` if the service is up and running, and `false` if it is down or unreachable.
+        detail:
+          type: string
+          example: Message queue unreachable.
+          description: Reason for health check failure, if any.
+      description: Health check information for a single component.
     RippleNetProblem:
       type: object
       description: Represents a request to create and update a payout method record.
@@ -92,6 +107,25 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
+    Health:
+      type: object
+      required:
+      - healthy
+      properties:
+        healthy:
+          type: boolean
+          example: true
+          description: If set to `true`, the xCurrent server is up and running. If set to `false`, the xCurrent server is down.
+        services:
+          type: array
+          description: List of services and their statuses returned by the health check.
+          items:
+            $ref: '#/components/schemas/HealthCheck'
+        detail:
+          type: string
+          example: Failed to perform health check
+          description: Reason for health check failure, if any.
+      description: Provides a high-level status of the health of the xCurrent server.
     Heartbeat:
       type: object
       required:
@@ -127,40 +161,6 @@ components:
           items:
             type: string
       description: Provides the health status of the xCurrent server’s peers.
-    HealthCheck:
-      type: object
-      properties:
-        service:
-          type: string
-          example: database
-          description: Name of the service.
-        healthy:
-          type: boolean
-          description: Returns `true` if the service is up and running, and `false` if it is down or unreachable.
-        detail:
-          type: string
-          example: Message queue unreachable.
-          description: Reason for health check failure, if any.
-      description: Health check information for a single component.
-    Health:
-      type: object
-      required:
-      - healthy
-      properties:
-        healthy:
-          type: boolean
-          example: true
-          description: If set to `true`, the xCurrent server is up and running. If set to `false`, the xCurrent server is down.
-        services:
-          type: array
-          description: List of services and their statuses returned by the health check.
-          items:
-            $ref: '#/components/schemas/HealthCheck'
-        detail:
-          type: string
-          example: Failed to perform health check
-          description: Reason for health check failure, if any.
-      description: Provides a high-level status of the health of the xCurrent server.
   securitySchemes:
     Bearer:
       type: apiKey

@@ -348,38 +348,6 @@ paths:
       - Bearer: []
 components:
   schemas:
-    TransferUserInfo:
-      type: object
-      description: Custom information about a transfer provided by a RippleNet address involved in the transfer.
-      required:
-      - json
-      - node_address
-      - state
-      properties:
-        node_address:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet address of the xCurrent instance that set the user information.
-        state:
-          type: string
-          example: EXECUTED
-          description: State of the transfer set when the RippleNet address set the user information.
-          enum:
-          - PREPARED
-          - EXECUTED
-          - COMPLETED
-          - CANCELLED
-          - FAILED
-          - QUOTED
-        json:
-          type: object
-          description: One or more arbitrary key/value pairs.
-          properties: {}
-        created_at:
-          type: string
-          format: date-time
-          example: '2019-10-01T21:28:28.357Z'
-          description: timestamp of when this user info was created
     Transfers:
       allOf:
       - $ref: '#/components/schemas/Page'
@@ -390,6 +358,45 @@ components:
             items:
               $ref: '#/components/schemas/TransferResponse'
       description: Provides a `content` array of transfer objects and a set of pagination information fields.
+    TransferRequest:
+      type: object
+      required:
+      - amount
+      - receiver_address
+      - sender_address
+      properties:
+        sender_address:
+          type: string
+          example: trans_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet account name and address, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        receiver_address:
+          type: string
+          example: conct_usd_sf@rn.us.ca.san_francisco
+          description: RippleNet account name and address, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
+        amount:
+          type: number
+          minimum: 0
+          example: 15
+          description: Amount transferred, expressed in the account's currency.
+        owner_address:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: Owner RippleNet address, if different from the RippleNet address of the `sender_address` and `receiver_address`.
+        end_to_end_id:
+          type: string
+          maxLength: 128
+          example: b09dd632-660e-48c8-907f-a4f3a7d12c18
+          description: ID set by the sender that is persisted on all xCurrent instances that participated in the transfer.
+        internal_id:
+          type: string
+          maxLength: 128
+          example: 9ad3c119-1379-443b-9c0e-fa82c54ae78d
+          description: ID set by the sender that is persisted on the sending xCurrent instance only.
+        user_info:
+          type: object
+          description: Provide one or more arbitrary key/value pairs.
+          properties: {}
+      description: Use this JSON request body to execute a transfer.
     TransferResponse:
       type: object
       required:
@@ -466,93 +473,6 @@ components:
           items:
             type: string
       description: JSON response object representing a transfer.
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    TransferRequest:
-      type: object
-      required:
-      - amount
-      - receiver_address
-      - sender_address
-      properties:
-        sender_address:
-          type: string
-          example: trans_usd_sf@rn.us.ca.san_francisco
-          description: RippleNet account name and address, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        receiver_address:
-          type: string
-          example: conct_usd_sf@rn.us.ca.san_francisco
-          description: RippleNet account name and address, in the format `accountname@ripplenetaddress`. For example, `new_york@rn.us.ny.new_york`.
-        amount:
-          type: number
-          minimum: 0
-          example: 15
-          description: Amount transferred, expressed in the account's currency.
-        owner_address:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: Owner RippleNet address, if different from the RippleNet address of the `sender_address` and `receiver_address`.
-        end_to_end_id:
-          type: string
-          maxLength: 128
-          example: b09dd632-660e-48c8-907f-a4f3a7d12c18
-          description: ID set by the sender that is persisted on all xCurrent instances that participated in the transfer.
-        internal_id:
-          type: string
-          maxLength: 128
-          example: 9ad3c119-1379-443b-9c0e-fa82c54ae78d
-          description: ID set by the sender that is persisted on the sending xCurrent instance only.
-        user_info:
-          type: object
-          description: Provide one or more arbitrary key/value pairs.
-          properties: {}
-      description: Use this JSON request body to execute a transfer.
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
     Page:
       type: object
       properties:
@@ -584,6 +504,86 @@ components:
           items:
             $ref: '#/components/schemas/Sort'
       description: Paginated response base object.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
+    TransferUserInfo:
+      type: object
+      description: Custom information about a transfer provided by a RippleNet address involved in the transfer.
+      required:
+      - json
+      - node_address
+      - state
+      properties:
+        node_address:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the xCurrent instance that set the user information.
+        state:
+          type: string
+          example: EXECUTED
+          description: State of the transfer set when the RippleNet address set the user information.
+          enum:
+          - PREPARED
+          - EXECUTED
+          - COMPLETED
+          - CANCELLED
+          - FAILED
+          - QUOTED
+        json:
+          type: object
+          description: One or more arbitrary key/value pairs.
+          properties: {}
+        created_at:
+          type: string
+          format: date-time
+          example: '2019-10-01T21:28:28.357Z'
+          description: timestamp of when this user info was created
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
   securitySchemes:
     Bearer:
       type: apiKey

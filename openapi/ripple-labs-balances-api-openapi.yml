@@ -504,33 +504,6 @@ paths:
       - Balances
 components:
   schemas:
-    v2GetWalletBalancesResponse:
-      type: object
-      properties:
-        currencyCode:
-          type: string
-          example: USD
-          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
-        aggregatedFiatValue:
-          type: string
-        balances:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2Balance'
-            - type: object
-      required:
-      - currencyCode
-    v2AssetSource:
-      type: string
-      enum:
-      - ASSET_SOURCE_LEGACY
-      - ASSET_SOURCE_AUTO
-      - ASSET_SOURCE_COINGECKO
-      - ASSET_SOURCE_PALISADE
-      - ASSET_SOURCE_CUSTOMER
-    v2SyncWalletBalancesResponse:
-      type: object
     rpcStatus:
       type: object
       properties:
@@ -545,6 +518,64 @@ components:
             allOf:
             - $ref: '#/components/schemas/protobufAny'
             - type: object
+    v2SyncWalletBalancesResponse:
+      type: object
+    v2GetVaultBalancesResponse:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          example: USD
+          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the vault's balances
+        balances:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2WalletBalance'
+            - type: object
+      required:
+      - currencyCode
+    v2AssetSource:
+      type: string
+      enum:
+      - ASSET_SOURCE_LEGACY
+      - ASSET_SOURCE_AUTO
+      - ASSET_SOURCE_COINGECKO
+      - ASSET_SOURCE_PALISADE
+      - ASSET_SOURCE_CUSTOMER
+    v2Balance:
+      type: object
+      properties:
+        asset:
+          $ref: '#/components/schemas/commonv2Asset'
+        balance:
+          type: string
+          example: '200.00'
+          description: The total balance of the asset on the blockchain. When breakdown fields are present, this equals available_balance + pending_balance + frozen_balance
+        rate:
+          type: string
+          example: '0.50'
+          description: The exchange rate between the asset and 'currencyCode'
+        fiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of an asset for a wallet
+        availableBalance:
+          type: string
+          example: '150.00'
+          description: The available balance that can be spent
+        pendingBalance:
+          type: string
+          example: '30.00'
+          description: The balance tied up in pending transactions
+        frozenBalance:
+          type: string
+          example: '20.00'
+          description: The balance frozen by policy actions
     commonv2Asset:
       type: object
       properties:
@@ -638,106 +669,6 @@ components:
       - symbol
       - blockchain
       - createdAt
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    v2Balance:
-      type: object
-      properties:
-        asset:
-          $ref: '#/components/schemas/commonv2Asset'
-        balance:
-          type: string
-          example: '200.00'
-          description: The total balance of the asset on the blockchain. When breakdown fields are present, this equals available_balance + pending_balance + frozen_balance
-        rate:
-          type: string
-          example: '0.50'
-          description: The exchange rate between the asset and 'currencyCode'
-        fiatValue:
-          type: string
-          example: '100.00'
-          description: The aggregated fiat value of an asset for a wallet
-        availableBalance:
-          type: string
-          example: '150.00'
-          description: The available balance that can be spent
-        pendingBalance:
-          type: string
-          example: '30.00'
-          description: The balance tied up in pending transactions
-        frozenBalance:
-          type: string
-          example: '20.00'
-          description: The balance frozen by policy actions
-    v2VaultBalance:
-      type: object
-      properties:
-        vaultId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The vault ID that the connection is associated with
-        aggregatedFiatValue:
-          type: string
-          example: '100.00'
-          description: The aggregated fiat value of the vault
-    v2Blockchain:
-      type: string
-      enum:
-      - AVALANCHE
-      - ETHEREUM
-      - XRP_LEDGER
-      - POLYGON
-      - BNBCHAIN
-      - BASE
-      - HEDERA
-      - ARBITRUM
-      - ONE_MONEY
-      - SOLANA
-      - TRON
-      - BITCOIN
-    v2GetVaultBalancesResponse:
-      type: object
-      properties:
-        currencyCode:
-          type: string
-          example: USD
-          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
-        aggregatedFiatValue:
-          type: string
-          example: '100.00'
-          description: The aggregated fiat value of the vault's balances
-        balances:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2WalletBalance'
-            - type: object
-      required:
-      - currencyCode
-    v2Standard:
-      type: string
-      enum:
-      - NATIVE
-      - ERC20
-      - ISSUED_CURRENCY
-      - ERC721
-      - SPL
-      - CUSTOM
-    v2WalletBalance:
-      type: object
-      properties:
-        walletId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The wallet ID that the connection is associated with
-        aggregatedFiatValue:
-          type: string
-          example: '100.00'
-          description: The aggregated fiat value of the wallet
     v2GetOrgBalancesResponse:
       type: object
       properties:
@@ -757,6 +688,75 @@ components:
             - type: object
       required:
       - currencyCode
+    v2Standard:
+      type: string
+      enum:
+      - NATIVE
+      - ERC20
+      - ISSUED_CURRENCY
+      - ERC721
+      - SPL
+      - CUSTOM
+    v2VaultBalance:
+      type: object
+      properties:
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID that the connection is associated with
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the vault
+    v2GetWalletBalancesResponse:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          example: USD
+          description: The currency code to be used for the fiat value. When omitted, 'USD' will be used.
+        aggregatedFiatValue:
+          type: string
+        balances:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2Balance'
+            - type: object
+      required:
+      - currencyCode
+    v2Blockchain:
+      type: string
+      enum:
+      - AVALANCHE
+      - ETHEREUM
+      - XRP_LEDGER
+      - POLYGON
+      - BNBCHAIN
+      - BASE
+      - HEDERA
+      - ARBITRUM
+      - ONE_MONEY
+      - SOLANA
+      - TRON
+      - BITCOIN
+    v2WalletBalance:
+      type: object
+      properties:
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID that the connection is associated with
+        aggregatedFiatValue:
+          type: string
+          example: '100.00'
+          description: The aggregated fiat value of the wallet
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
   securitySchemes:
     TokenAuth:
       type: apiKey

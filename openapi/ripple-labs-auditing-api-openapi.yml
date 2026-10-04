@@ -188,26 +188,46 @@ components:
           type: string
           example: SETTLEMENT_PREPARE
           description: The type of message that was being processed that triggered the creation of this event.
-    Sort:
+    AuditEventResponse:
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            type: array
+            items:
+              $ref: '#/components/schemas/AuditEvent'
+      description: Paged response for AuditEvent
+    Page:
       type: object
       properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
+        first:
           type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
+          description: true if  this is the first page.
+        last:
           type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
     AuditEvent:
       type: object
       description: Represents an audit trail of user actions and configuration changes (to accounts, fees, and rates) on RippleNet.
@@ -253,15 +273,26 @@ components:
           type: string
           example: '2019-09-30T22:55:41.365000Z'
           description: Timestamp of the audit event.
-    AuditEventResponse:
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            type: array
-            items:
-              $ref: '#/components/schemas/AuditEvent'
-      description: Paged response for AuditEvent
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
     RippleNetProblem:
       type: object
       description: Represents a request to create and update a payout method record.
@@ -290,37 +321,6 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
   securitySchemes:
     Bearer:
       type: apiKey

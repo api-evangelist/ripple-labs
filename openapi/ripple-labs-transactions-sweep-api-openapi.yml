@@ -290,13 +290,38 @@ paths:
       - Transactions - Sweep
 components:
   schemas:
-    transactionsv2AddressType:
+    v2Retryability:
       type: string
       enum:
-      - COUNTERPARTY
-      - WALLET
-      - EXTERNAL
-      - ALLOW_ADDRESS
+      - RETRYABLE
+      - NOT_RETRYABLE
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/protobufAny'
+            - type: object
+    v2AssetSource:
+      type: string
+      enum:
+      - ASSET_SOURCE_LEGACY
+      - ASSET_SOURCE_AUTO
+      - ASSET_SOURCE_COINGECKO
+      - ASSET_SOURCE_PALISADE
+      - ASSET_SOURCE_CUSTOMER
+    v2AssetChangePurpose:
+      type: string
+      enum:
+      - FEE
+      - TRANSFER
     v2FreezeHistoryEntry:
       type: object
       properties:
@@ -338,14 +363,214 @@ components:
           format: double
           example: 85.5
           description: Risk score that triggered auto-freeze (0-100)
-    v2AssetSource:
+    transactionsv2Address:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: Either addressID or walletID, or allowAddressID, or not set when the address does not exist within palisade e.g. a deposit from outside of Palisade
+        counterpartyId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The counterparty ID
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID
+        type:
+          allOf:
+          - $ref: '#/components/schemas/transactionsv2AddressType'
+          - type: string
+            example: EXTERNAL
+            description: The address type
+        address:
+          type: string
+          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
+          description: The address
+      required:
+      - type
+      - address
+    v2FreezeType:
       type: string
       enum:
-      - ASSET_SOURCE_LEGACY
-      - ASSET_SOURCE_AUTO
-      - ASSET_SOURCE_COINGECKO
-      - ASSET_SOURCE_PALISADE
-      - ASSET_SOURCE_CUSTOMER
+      - FREEZE_TYPE_MANUAL
+      - FREEZE_TYPE_AUTO_RISK
+      - FREEZE_TYPE_AUTO_AMOUNT
+      - FREEZE_TYPE_COMPLIANCE
+      - FREEZE_TYPE_AUTO_WALLET_SETTING
+    v2SigningPayload:
+      type: object
+      properties:
+        inputIndex:
+          type: integer
+          format: int64
+          example: 0
+          description: The index of the UTXO input this signing payload corresponds to
+        signingHash:
+          type: string
+          example: 30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671
+          description: The signing hash for this UTXO input
+        signature:
+          type: string
+          example: 3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43
+          description: The signature for this UTXO input
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID that owns this signing payload. If omitted, signers use the parent transaction wallet. Native multi-wallet transactions must set this on every signing payload.
+      required:
+      - inputIndex
+      - signingHash
+    v2FreezeInfo:
+      type: object
+      properties:
+        isFrozen:
+          type: boolean
+          example: false
+          description: Whether the transaction is currently frozen
+        history:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/v2FreezeHistoryEntry'
+            - type: object
+          description: History of all freeze/unfreeze actions. Latest entry contains current state details when frozen.
+    transactionsv2AddressType:
+      type: string
+      enum:
+      - COUNTERPARTY
+      - WALLET
+      - EXTERNAL
+      - ALLOW_ADDRESS
+    v2Standard:
+      type: string
+      enum:
+      - NATIVE
+      - ERC20
+      - ISSUED_CURRENCY
+      - ERC721
+      - SPL
+      - CUSTOM
+    transactionsv2TransactionAction:
+      type: string
+      enum:
+      - DEPOSIT
+      - WITHDRAWAL
+      - WEB3_RAW
+      - WEB3_SIGN
+      - PASSKEY_RAW
+      - PASSKEY_SIGN
+      - PALISADE_TRANSFER
+      - PALISADE_RAW
+      - PALISADE_MANAGED
+      - PALISADE_SIGN_PLAINTEXT
+      - PALISADE_SWEEP
+    v2FreezeAction:
+      type: string
+      enum:
+      - FREEZE_ACTION_FREEZE
+      - FREEZE_ACTION_UNFREEZE
+    v2AssetChange:
+      type: object
+      properties:
+        purpose:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetChangePurpose'
+          - type: string
+            example: TRANSFER
+            description: Purpose of this asset change
+        asset:
+          allOf:
+          - $ref: '#/components/schemas/commonv2Asset'
+          - type: object
+            description: The asset that is part of this change
+        qty:
+          type: string
+          example: '155.672'
+          description: The quantity of the asset to transfer
+        source:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetChangeWallet'
+          - type: string
+            description: Source of this asset change
+        destination:
+          allOf:
+          - $ref: '#/components/schemas/v2AssetChangeWallet'
+          - type: string
+            description: Destination of this asset change
+      required:
+      - purpose
+      - asset
+      - qty
+    v2Problem:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        reason:
+          type: string
+        domain:
+          type: string
+        message:
+          type: string
+        retryability:
+          $ref: '#/components/schemas/v2Retryability'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    transactionsv2TransactionStatus:
+      type: string
+      enum:
+      - REQUESTED
+      - POLICY_CHECK_PENDING
+      - POLICY_CHECK_PASSED
+      - APPROVAL_CHECK_PENDING
+      - APPROVAL_CHECK_PASSED
+      - COMPILATION_PENDING
+      - COMPILED
+      - SIGNATURE_PENDING
+      - SIGNED
+      - PUBLISH_PENDING
+      - PUBLISHED
+      - CONFIRMATION_PENDING
+      - CONFIRMED
+      - REJECTED
+      - FAILED
+    v2AssetChangeWallet:
+      type: object
+      properties:
+        address:
+          type: string
+          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+          description: The blockchain address of the wallet
+        walletId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The wallet ID that is part of this change, populated only if it belongs to the same organization that is party to the transaction
+        subAccountAddress:
+          type: string
+          example: CaVHtunHxQfGYVKJ4WzUe1217UTCrREh3hg2RW8cS2Gk
+          description: The Rosetta SubAccount address (e.g., SPL token account address for Solana, contract-specific state address for other chains). This represents the actual on-chain address where the asset resides, while 'address' contains the owner wallet address.
+        vaultId:
+          type: string
+          example: ce4918bf-a199-4ce2-85a3-d0d296855384
+          description: The vault ID for the wallet that is part of this change, populated only if it belongs to the same organization that is party to the transaction
+      required:
+      - address
+    v2XRPTransactionConfig:
+      type: object
+      properties:
+        sourceTag:
+          type: string
+          example: '123456'
+          description: The source tag for XRP transactions
+        destinationTag:
+          type: string
+          example: '123456'
+          description: The destination tag for XRP transactions
     commonv2Asset:
       type: object
       properties:
@@ -439,156 +664,6 @@ components:
       - symbol
       - blockchain
       - createdAt
-    v2FreezeInfo:
-      type: object
-      properties:
-        isFrozen:
-          type: boolean
-          example: false
-          description: Whether the transaction is currently frozen
-        history:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/v2FreezeHistoryEntry'
-            - type: object
-          description: History of all freeze/unfreeze actions. Latest entry contains current state details when frozen.
-    transactionsv2TransactionStatus:
-      type: string
-      enum:
-      - REQUESTED
-      - POLICY_CHECK_PENDING
-      - POLICY_CHECK_PASSED
-      - APPROVAL_CHECK_PENDING
-      - APPROVAL_CHECK_PASSED
-      - COMPILATION_PENDING
-      - COMPILED
-      - SIGNATURE_PENDING
-      - SIGNED
-      - PUBLISH_PENDING
-      - PUBLISHED
-      - CONFIRMATION_PENDING
-      - CONFIRMED
-      - REJECTED
-      - FAILED
-    v2ListSweepInstanceTransactionsResponse:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/v2FilterResponse'
-        transactions:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/transactionsv2Transaction'
-            - type: object
-    transactionsv2Address:
-      type: object
-      properties:
-        id:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: Either addressID or walletID, or allowAddressID, or not set when the address does not exist within palisade e.g. a deposit from outside of Palisade
-        counterpartyId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The counterparty ID
-        vaultId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The vault ID
-        type:
-          allOf:
-          - $ref: '#/components/schemas/transactionsv2AddressType'
-          - type: string
-            example: EXTERNAL
-            description: The address type
-        address:
-          type: string
-          example: '0x55502b9d5a68b0F8a48384352295BeD968aD8AA4'
-          description: The address
-      required:
-      - type
-      - address
-    v2XRPTransactionConfig:
-      type: object
-      properties:
-        sourceTag:
-          type: string
-          example: '123456'
-          description: The source tag for XRP transactions
-        destinationTag:
-          type: string
-          example: '123456'
-          description: The destination tag for XRP transactions
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/protobufAny'
-            - type: object
-    v2Blockchain:
-      type: string
-      enum:
-      - AVALANCHE
-      - ETHEREUM
-      - XRP_LEDGER
-      - POLYGON
-      - BNBCHAIN
-      - BASE
-      - HEDERA
-      - ARBITRUM
-      - ONE_MONEY
-      - SOLANA
-      - TRON
-      - BITCOIN
-    v2SortOrder:
-      type: string
-      enum:
-      - SORT_ORDER_ASC
-      - SORT_ORDER_DESC
-    v2FilterRequest:
-      type: object
-      properties:
-        pageSize:
-          type: integer
-          format: int32
-          example: 50
-          description: Number of results per page (default 50, max 1000)
-        pageToken:
-          type: string
-          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
-          description: Token for pagination from previous response
-        orderBy:
-          type: string
-          example: created_at
-          description: Field to order results by
-        order:
-          allOf:
-          - $ref: '#/components/schemas/v2SortOrder'
-          - description: Sort order (ASC or DESC)
-    v2FreezeType:
-      type: string
-      enum:
-      - FREEZE_TYPE_MANUAL
-      - FREEZE_TYPE_AUTO_RISK
-      - FREEZE_TYPE_AUTO_AMOUNT
-      - FREEZE_TYPE_COMPLIANCE
-      - FREEZE_TYPE_AUTO_WALLET_SETTING
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
     v2FilterResponse:
       type: object
       properties:
@@ -607,29 +682,11 @@ components:
           description: The total number of results
       required:
       - total
-    v2Standard:
+    v2SortOrder:
       type: string
       enum:
-      - NATIVE
-      - ERC20
-      - ISSUED_CURRENCY
-      - ERC721
-      - SPL
-      - CUSTOM
-    transactionsv2TransactionAction:
-      type: string
-      enum:
-      - DEPOSIT
-      - WITHDRAWAL
-      - WEB3_RAW
-      - WEB3_SIGN
-      - PASSKEY_RAW
-      - PASSKEY_SIGN
-      - PALISADE_TRANSFER
-      - PALISADE_RAW
-      - PALISADE_MANAGED
-      - PALISADE_SIGN_PLAINTEXT
-      - PALISADE_SWEEP
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
     transactionsv2Transaction:
       type: object
       properties:
@@ -811,115 +868,58 @@ components:
       - qty
       - signOnly
       - freezeInfo
-    v2Retryability:
-      type: string
-      enum:
-      - RETRYABLE
-      - NOT_RETRYABLE
-    v2AssetChangeWallet:
+    v2FilterRequest:
       type: object
       properties:
-        address:
-          type: string
-          example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
-          description: The blockchain address of the wallet
-        walletId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The wallet ID that is part of this change, populated only if it belongs to the same organization that is party to the transaction
-        subAccountAddress:
-          type: string
-          example: CaVHtunHxQfGYVKJ4WzUe1217UTCrREh3hg2RW8cS2Gk
-          description: The Rosetta SubAccount address (e.g., SPL token account address for Solana, contract-specific state address for other chains). This represents the actual on-chain address where the asset resides, while 'address' contains the owner wallet address.
-        vaultId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The vault ID for the wallet that is part of this change, populated only if it belongs to the same organization that is party to the transaction
-      required:
-      - address
-    v2SigningPayload:
-      type: object
-      properties:
-        inputIndex:
-          type: integer
-          format: int64
-          example: 0
-          description: The index of the UTXO input this signing payload corresponds to
-        signingHash:
-          type: string
-          example: 30674cddb3025f9681839c63d20357f54e914bd7a9ddfe53a6691f4a530a5671
-          description: The signing hash for this UTXO input
-        signature:
-          type: string
-          example: 3046022100c60dc1337d69261e7c7e92e4dac78e0c317d444d4690be2b86cc53b1989d1b0602210090c63e3a5cf692c9387292451fada038a0e4d85a2f5c91ee1e7a635df0440b43
-          description: The signature for this UTXO input
-        walletId:
-          type: string
-          example: ce4918bf-a199-4ce2-85a3-d0d296855384
-          description: The wallet ID that owns this signing payload. If omitted, signers use the parent transaction wallet. Native multi-wallet transactions must set this on every signing payload.
-      required:
-      - inputIndex
-      - signingHash
-    v2AssetChange:
-      type: object
-      properties:
-        purpose:
-          allOf:
-          - $ref: '#/components/schemas/v2AssetChangePurpose'
-          - type: string
-            example: TRANSFER
-            description: Purpose of this asset change
-        asset:
-          allOf:
-          - $ref: '#/components/schemas/commonv2Asset'
-          - type: object
-            description: The asset that is part of this change
-        qty:
-          type: string
-          example: '155.672'
-          description: The quantity of the asset to transfer
-        source:
-          allOf:
-          - $ref: '#/components/schemas/v2AssetChangeWallet'
-          - type: string
-            description: Source of this asset change
-        destination:
-          allOf:
-          - $ref: '#/components/schemas/v2AssetChangeWallet'
-          - type: string
-            description: Destination of this asset change
-      required:
-      - purpose
-      - asset
-      - qty
-    v2FreezeAction:
-      type: string
-      enum:
-      - FREEZE_ACTION_FREEZE
-      - FREEZE_ACTION_UNFREEZE
-    v2Problem:
-      type: object
-      properties:
-        code:
+        pageSize:
           type: integer
           format: int32
-        reason:
+          example: 50
+          description: Number of results per page (default 50, max 1000)
+        pageToken:
           type: string
-        domain:
+          example: cGFnZV9zaXplPTEwJnBhZ2VfdG9rZW49MjA=
+          description: Token for pagination from previous response
+        orderBy:
           type: string
-        message:
-          type: string
-        retryability:
-          $ref: '#/components/schemas/v2Retryability'
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-    v2AssetChangePurpose:
+          example: created_at
+          description: Field to order results by
+        order:
+          allOf:
+          - $ref: '#/components/schemas/v2SortOrder'
+          - description: Sort order (ASC or DESC)
+    v2ListSweepInstanceTransactionsResponse:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2FilterResponse'
+        transactions:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/transactionsv2Transaction'
+            - type: object
+    v2Blockchain:
       type: string
       enum:
-      - FEE
-      - TRANSFER
+      - AVALANCHE
+      - ETHEREUM
+      - XRP_LEDGER
+      - POLYGON
+      - BNBCHAIN
+      - BASE
+      - HEDERA
+      - ARBITRUM
+      - ONE_MONEY
+      - SOLANA
+      - TRON
+      - BITCOIN
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
   securitySchemes:
     TokenAuth:
       type: apiKey

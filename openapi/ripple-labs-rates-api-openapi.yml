@@ -192,6 +192,57 @@ paths:
       - Bearer: []
 components:
   schemas:
+    Page:
+      type: object
+      properties:
+        first:
+          type: boolean
+          description: true if  this is the first page.
+        last:
+          type: boolean
+          description: true if  this is the last page.
+        number:
+          type: integer
+          description: page number
+        numberOfElements:
+          type: integer
+          description: Number Of elements in this request
+        size:
+          type: integer
+          description: page size
+        totalElements:
+          type: integer
+          description: Total number of elements for the given request
+          format: int64
+        totalPages:
+          type: integer
+          description: Total number of pages for the given request
+        sort:
+          type: array
+          description: Sort details of this page
+          items:
+            $ref: '#/components/schemas/Sort'
+      description: Paginated response base object.
+    Sort:
+      type: object
+      properties:
+        direction:
+          type: string
+          description: Direction of the sort
+          example: ASC
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+        nullHandling:
+          type: string
+          example: NULLS_FIRST
+        ascending:
+          type: boolean
+          example: true
+        descending:
+          type: boolean
+          example: false
     RateRequest:
       type: object
       required:
@@ -254,6 +305,87 @@ components:
           enum:
           - BPS
       description: Use this JSON request body to create an exchange rate for a base and counter currency.
+    RatePerLedgerRequest:
+      type: object
+      required:
+      - destination_ledger
+      - source_ledger
+      properties:
+        source_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the source ledger associated with the exchange rate.
+        destination_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the destination ledger associated with the exchange rate.
+      description: Use the `ledger` request object to create an exchange rate that applies to exchanges between a specific source ledger and destination ledger.
+    RatePerAccountRequest:
+      type: object
+      required:
+      - destination_ledger
+      - destination_ledger_account
+      - source_ledger
+      - source_ledger_account
+      properties:
+        source_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the source ledger associated with the exchange rate.
+        destination_ledger:
+          type: string
+          example: rn.eur.uk.london
+          description: Set to the destination ledger associated with the exchange rate.
+        source_ledger_account:
+          type: string
+          example: alias_usd_lon
+          description: Set to the account on the source ledger associated with the rate.
+        destination_ledger_account:
+          type: string
+          example: conct_gbp_lon
+          description: Set to the account on the destination ledger associated with the rate.
+      description: Use the `account` request object to create an exchange rate that applies to exchanges between a specific source ledger account and destination ledger account.
+    RippleNetProblem:
+      type: object
+      description: Represents a request to create and update a payout method record.
+      properties:
+        type:
+          type: string
+          example: https://errors.ripplenet.ripple.com/error/json-processing-error
+          description: URL to the error documentation.
+        title:
+          type: string
+          example: Invalid Request Object
+          description: Summary of the returned problem.
+        detail:
+          type: string
+          example: The request parameter [account_id] is not in the correct format.
+          description: Description of the returned problem.
+        status:
+          type: number
+          example: 400
+          description: HTTP error code.
+        ripplenet_error_code:
+          type: string
+          example: E0104
+          description: RippleNet specific error code.
+        finality:
+          type: string
+          example: PERMANENT
+          description: Specifies if the request can be retried for a successful response.
+    Rates:
+      type: object
+      required:
+      - content
+      allOf:
+      - $ref: '#/components/schemas/Page'
+      - properties:
+          content:
+            description: Provides an array of rate objects.
+            type: array
+            items:
+              $ref: '#/components/schemas/RateResponse'
+      description: Provides a `content` array of rate objects and a set of pagination information fields.
     RateResponse:
       type: object
       required:
@@ -367,138 +499,6 @@ components:
           enum:
           - BPS
       description: JSON response object that represents an exchange rate.
-    Rates:
-      type: object
-      required:
-      - content
-      allOf:
-      - $ref: '#/components/schemas/Page'
-      - properties:
-          content:
-            description: Provides an array of rate objects.
-            type: array
-            items:
-              $ref: '#/components/schemas/RateResponse'
-      description: Provides a `content` array of rate objects and a set of pagination information fields.
-    RatePerLedgerRequest:
-      type: object
-      required:
-      - destination_ledger
-      - source_ledger
-      properties:
-        source_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the source ledger associated with the exchange rate.
-        destination_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the destination ledger associated with the exchange rate.
-      description: Use the `ledger` request object to create an exchange rate that applies to exchanges between a specific source ledger and destination ledger.
-    Sort:
-      type: object
-      properties:
-        direction:
-          type: string
-          description: Direction of the sort
-          example: ASC
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-        nullHandling:
-          type: string
-          example: NULLS_FIRST
-        ascending:
-          type: boolean
-          example: true
-        descending:
-          type: boolean
-          example: false
-    RatePerAccountRequest:
-      type: object
-      required:
-      - destination_ledger
-      - destination_ledger_account
-      - source_ledger
-      - source_ledger_account
-      properties:
-        source_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the source ledger associated with the exchange rate.
-        destination_ledger:
-          type: string
-          example: rn.eur.uk.london
-          description: Set to the destination ledger associated with the exchange rate.
-        source_ledger_account:
-          type: string
-          example: alias_usd_lon
-          description: Set to the account on the source ledger associated with the rate.
-        destination_ledger_account:
-          type: string
-          example: conct_gbp_lon
-          description: Set to the account on the destination ledger associated with the rate.
-      description: Use the `account` request object to create an exchange rate that applies to exchanges between a specific source ledger account and destination ledger account.
-    RippleNetProblem:
-      type: object
-      description: Represents a request to create and update a payout method record.
-      properties:
-        type:
-          type: string
-          example: https://errors.ripplenet.ripple.com/error/json-processing-error
-          description: URL to the error documentation.
-        title:
-          type: string
-          example: Invalid Request Object
-          description: Summary of the returned problem.
-        detail:
-          type: string
-          example: The request parameter [account_id] is not in the correct format.
-          description: Description of the returned problem.
-        status:
-          type: number
-          example: 400
-          description: HTTP error code.
-        ripplenet_error_code:
-          type: string
-          example: E0104
-          description: RippleNet specific error code.
-        finality:
-          type: string
-          example: PERMANENT
-          description: Specifies if the request can be retried for a successful response.
-    Page:
-      type: object
-      properties:
-        first:
-          type: boolean
-          description: true if  this is the first page.
-        last:
-          type: boolean
-          description: true if  this is the last page.
-        number:
-          type: integer
-          description: page number
-        numberOfElements:
-          type: integer
-          description: Number Of elements in this request
-        size:
-          type: integer
-          description: page size
-        totalElements:
-          type: integer
-          description: Total number of elements for the given request
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages for the given request
-        sort:
-          type: array
-          description: Sort details of this page
-          items:
-            $ref: '#/components/schemas/Sort'
-      description: Paginated response base object.
   requestBodies:
     RateRequest:
       content:

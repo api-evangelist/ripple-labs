@@ -77,32 +77,6 @@ paths:
                 $ref: '#/components/schemas/RippleNetProblem'
 components:
   schemas:
-    PoolAccountResponse:
-      type: object
-      description: Pool Account object returned to the user.
-      properties:
-        pool_account_id:
-          type: string
-          format: uuid
-          description: The Account ID of the pool account.
-        pool_account_name:
-          type: string
-          description: The name of the pool account.
-        currency:
-          type: string
-          description: Currency of the pool account.
-        description:
-          type: string
-          description: Description of the pool account.
-        owner:
-          type: string
-          example: rn.us.ca.san_francisco
-          description: RippleNet address of the owner of the pool account.
-        linkedAccountNames:
-          type: array
-          items:
-            type: string
-          description: RippleNet accounts linked to the pool account.
     RippleNetProblem:
       type: object
       description: Represents a request to create and update a payout method record.
@@ -131,6 +105,32 @@ components:
           type: string
           example: PERMANENT
           description: Specifies if the request can be retried for a successful response.
+    PoolAccountResponse:
+      type: object
+      description: Pool Account object returned to the user.
+      properties:
+        pool_account_id:
+          type: string
+          format: uuid
+          description: The Account ID of the pool account.
+        pool_account_name:
+          type: string
+          description: The name of the pool account.
+        currency:
+          type: string
+          description: Currency of the pool account.
+        description:
+          type: string
+          description: Description of the pool account.
+        owner:
+          type: string
+          example: rn.us.ca.san_francisco
+          description: RippleNet address of the owner of the pool account.
+        linkedAccountNames:
+          type: array
+          items:
+            type: string
+          description: RippleNet accounts linked to the pool account.
   securitySchemes:
     Bearer:
       type: apiKey
