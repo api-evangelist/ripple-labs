@@ -90,3 +90,34 @@
     detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
+- slug: ripple-labs-fincen-msb-registration
+  label: FinCEN (MSB registration)
+  partner_name: FinCEN (MSB registration)
+  category: Money services business
+  type: contract
+  channel: regulator-register
+  evidence: https://msb.fincen.gov/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: FinCEN MSB Registrant Search (msb.fincen.gov, full list export)
+    spec_file: null
+    standard: FinCEN MSB registration (US Bank Secrecy Act)
+    role: fincen-msb-registrant
+    registered_name: Ripple Labs (BVI) Ltd.
+    dba_name: null
+    register_id: Ripple Labs (BVI) Ltd.
+    matched_domain: ripple.com
+    matched_by: domain+name-among-holders
+    identity: wikidata Q16904931 'Ripple' P856 https://ripple.com/
+    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
+    msb_activities:
+    - 409 money transmitter
+    states_of_activity: 1
+    received_date: 11/24/2025
+    signal_note: 'participation only: an MSB registration is not a licence or a certification; activities and states
+      are context, never counted'
+    detected_by: sweep-regtech-aml.py
+    detected: '2026-10-15'
+  status: not-a-workflow
+  arazzo: null
